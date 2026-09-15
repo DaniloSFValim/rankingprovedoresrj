@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --fonte-sans: 'Inter', system-ui, sans-serif;
+  --fonte-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html { color-scheme: dark; }
+  body {
+    @apply bg-grafite-950 text-grafite-100 antialiased;
+  }
+  /* Numeros de KPI usam tabular para nao "dancar" entre atualizacoes. */
+  .numerico { font-variant-numeric: tabular-nums; }
+}
+
+@layer components {
+  .cartao {
+    @apply rounded-xl border border-grafite-800 bg-grafite-900/60 backdrop-blur;
+  }
+  .rotulo {
+    @apply text-[11px] font-medium uppercase tracking-wider text-grafite-400;
+  }
+}
