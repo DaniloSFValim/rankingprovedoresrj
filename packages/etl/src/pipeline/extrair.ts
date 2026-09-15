@@ -71,6 +71,29 @@ export interface OpcoesExtracao {
   delimitador?: string;
 }
 
+/**
+ * Detecta a codificacao do arquivo.
+ *
+ * Safras antigas da Anatel vem em latin1. Ler latin1 como UTF-8 corrompe
+ * acentos nos nomes das empresas — e nomes corrompidos quebram a normalizacao,
+ * fatiando uma mesma prestadora em varias linhas do ranking. Por isso a
+ * deteccao e automatica, e nao um sinalizador que alguem esquece de passar.
+ */
+export function detectarEncoding(caminho: string): 'utf8' | 'latin1' {
+  const amostra = Buffer.alloc(256 * 1024);
+  const descritor = fs.openSync(caminho, 'r');
+  let lidos = 0;
+  try {
+    lidos = fs.readSync(descritor, amostra, 0, amostra.length, 0);
+  } finally {
+    fs.closeSync(descritor);
+  }
+  const fatia = amostra.subarray(0, lidos);
+  // U+FFFD so aparece quando a sequencia nao e UTF-8 valida.
+  const comoUtf8 = fatia.toString('utf8');
+  return comoUtf8.includes('\uFFFD') ? 'latin1' : 'utf8';
+}
+
 /** Detecta o delimitador pela primeira linha, entre ';' ',' e tab. */
 export async function detectarDelimitador(
   caminho: string,
@@ -115,7 +138,7 @@ export async function extrairRj(
   caminhoCsv: string,
   opcoes: OpcoesExtracao = {},
 ): Promise<ResultadoExtracao> {
-  const encoding = opcoes.encoding ?? 'utf8';
+  const encoding = opcoes.encoding ?? detectarEncoding(caminhoCsv);
   const delimitador = opcoes.delimitador ?? (await detectarDelimitador(caminhoCsv, encoding));
   const overrides = opcoes.overrides ?? new Map<string, string>();
 

@@ -1,6 +1,8 @@
 /**
  * CLI do pipeline NETRANK RJ.
  *
+ *   npm run etl -- descobrir       lista os arquivos da Anatel no catalogo aberto
+ *   npm run etl -- atualizar <url>  baixa, importa e reconstroi os artefatos
  *   npm run etl -- demo            gera fixture sintetica e roda o pipeline inteiro
  *   npm run etl -- importar <csv>  importa um arquivo real da Anatel
  *   npm run etl -- build           reconstroi os artefatos a partir do warehouse
@@ -22,6 +24,8 @@ import {
   registrarFonte,
 } from './pipeline/carregar.js';
 import { extrairRj } from './pipeline/extrair.js';
+import { baixarRecurso, prepararCsvs } from './pipeline/baixar.js';
+import { anoDoRecurso, descobrirRecursos } from './sources/descoberta.js';
 import {
   auditarCompetencia,
   auditarExtracao,
@@ -236,6 +240,61 @@ async function principal(): Promise<void> {
         });
         break;
       }
+      case 'descobrir': {
+        console.log('Consultando catalogos de dados abertos...\n');
+        const { candidatos, falhas } = await descobrirRecursos();
+
+        for (const falha of falhas) {
+          console.warn(`[aviso] ${falha.catalogo}: ${falha.motivo}`);
+        }
+
+        if (candidatos.length === 0) {
+          console.error(
+            '\nNenhum recurso encontrado. Isso pode significar que os catalogos ' +
+              'estao fora do ar, que a rede bloqueia o acesso, ou que o conjunto ' +
+              'mudou de nome.\n\nAlternativa manual: baixe o CSV/ZIP pelo portal e rode\n' +
+              '  npm run etl -- importar <caminho-do-arquivo>',
+          );
+          process.exitCode = 1;
+          break;
+        }
+
+        console.log(`${candidatos.length} recurso(s) candidato(s):\n`);
+        for (const c of candidatos) {
+          const ano = anoDoRecurso(c);
+          const tamanho = c.bytes ? `${(c.bytes / 1e6).toFixed(0)} MB` : 'tamanho n/d';
+          console.log(`  [${c.formato}] ${c.nome}${ano ? ` (${ano})` : ''} — ${tamanho}`);
+          console.log(`      conjunto: ${c.conjunto}`);
+          console.log(`      ${c.url}\n`);
+        }
+        console.log('Para ingerir:  npm run etl -- atualizar <url>');
+        break;
+      }
+
+      case 'atualizar': {
+        const url = resto[0];
+        if (!url) throw new Error('Uso: npm run etl -- atualizar <url-do-recurso>');
+
+        console.log(`[baixar] ${url}`);
+        const arquivo = await baixarRecurso(url, { forcar: resto.includes('--forcar') });
+        console.log(
+          `[baixar] ${arquivo.reaproveitado ? 'reaproveitado' : 'concluido'}: ` +
+            `${(arquivo.bytes / 1e6).toFixed(1)} MB | sha256 ${arquivo.sha256.slice(0, 16)}...`,
+        );
+
+        const csvs = await prepararCsvs(arquivo);
+        console.log(`[preparar] ${csvs.length} arquivo(s) para processar`);
+
+        for (const csv of csvs) {
+          await importar(db, csv, {
+            url,
+            dadosDemonstrativos: false,
+          });
+        }
+        build(db);
+        break;
+      }
+
       case 'build':
         build(db);
         break;
@@ -244,7 +303,13 @@ async function principal(): Promise<void> {
         break;
       default:
         console.log(
-          'Comandos: demo | importar <csv> [--latin1] | build | status',
+          'Comandos:\n' +
+            '  descobrir                lista os arquivos da Anatel no catalogo aberto\n' +
+            '  atualizar <url> [--forcar]  baixa, importa e reconstroi os artefatos\n' +
+            '  importar <csv> [--latin1]   importa um arquivo ja baixado\n' +
+            '  demo                     gera fixture sintetica e roda o pipeline\n' +
+            '  build                    reconstroi artefatos a partir do warehouse\n' +
+            '  status                   estado do warehouse e alertas de qualidade',
         );
         process.exitCode = 1;
     }
