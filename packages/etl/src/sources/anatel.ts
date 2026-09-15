@@ -1,0 +1,138 @@
+/**
+ * Adaptador da fonte Anatel — Acessos de Banda Larga Fixa (SCM).
+ *
+ * ATENCAO (leia antes de confiar): o layout dos arquivos abertos da Anatel muda
+ * entre safras — colunas sao renomeadas, acentuadas ou reordenadas. Por isso
+ * NAO ha acesso posicional a colunas em lugar nenhum deste pipeline. Toda
+ * coluna e resolvida por nome, via lista de sinonimos, e um cabecalho que nao
+ * resolva as colunas obrigatorias ABORTA a importacao com erro explicito.
+ *
+ * Falhar alto e deliberado: um pipeline que "se vira" com cabecalho
+ * desconhecido produz ranking silenciosamente errado, que e o pior resultado
+ * possivel para este produto.
+ */
+
+import { canonizarTexto } from '@netrank/core';
+
+export const FONTE_ANATEL = {
+  nome: 'Anatel — Agência Nacional de Telecomunicações',
+  painel: 'https://informacoes.anatel.gov.br/paineis/acessos/banda-larga-fixa',
+  portalDados: 'https://dados.gov.br/dados/conjuntos-dados/acessos-banda-larga-fixa',
+  servico: 'SCM — Serviço de Comunicação Multimídia',
+  licenca: 'Dados abertos governamentais (Lei 12.527/2011)',
+} as const;
+
+/** Campos que o NETRANK precisa extrair de cada linha bruta. */
+export type CampoAnatel =
+  | 'ano'
+  | 'mes'
+  | 'uf'
+  | 'municipio'
+  | 'codigoIbge'
+  | 'empresa'
+  | 'cnpj'
+  | 'grupoEconomico'
+  | 'tecnologia'
+  | 'acessos';
+
+/**
+ * Sinonimos aceitos por campo, ja canonizados (sem acento, caixa alta).
+ * Estender esta tabela e a forma suportada de acomodar novas safras da fonte.
+ */
+const SINONIMOS: Record<CampoAnatel, readonly string[]> = {
+  ano: ['ANO'],
+  mes: ['MES', 'MES REFERENCIA', 'MES DE REFERENCIA'],
+  uf: ['UF', 'SIGLA UF', 'UNIDADE DA FEDERACAO'],
+  municipio: ['MUNICIPIO', 'NOME MUNICIPIO', 'NO MUNICIPIO'],
+  codigoIbge: [
+    'CODIGO IBGE', 'COD IBGE', 'CODIGO DO IBGE', 'CO MUNICIPIO',
+    'CODIGO MUNICIPIO', 'ID MUNICIPIO',
+  ],
+  empresa: ['EMPRESA', 'PRESTADORA', 'NOME PRESTADORA', 'RAZAO SOCIAL', 'NO ENTIDADE'],
+  cnpj: ['CNPJ', 'CNPJ PRESTADORA', 'CNPJ ENTIDADE'],
+  grupoEconomico: ['GRUPO ECONOMICO', 'GRUPO'],
+  tecnologia: ['TECNOLOGIA', 'TIPO TECNOLOGIA', 'MEIO DE ACESSO', 'TECNOLOGIA ACESSO'],
+  acessos: ['ACESSOS', 'QTDE ACESSOS', 'QUANTIDADE DE ACESSOS', 'QUANTIDADE ACESSOS'],
+};
+
+/** Campos sem os quais nenhum indicador do produto pode ser calculado. */
+const OBRIGATORIOS: readonly CampoAnatel[] = [
+  'ano', 'mes', 'uf', 'empresa', 'acessos',
+];
+
+export type MapaColunas = Partial<Record<CampoAnatel, string>>;
+
+export class CabecalhoIncompativelError extends Error {
+  constructor(
+    readonly faltantes: readonly CampoAnatel[],
+    readonly cabecalhoRecebido: readonly string[],
+  ) {
+    super(
+      `Cabecalho da Anatel incompativel. Campos obrigatorios nao resolvidos: ` +
+        `${faltantes.join(', ')}. Colunas recebidas: ${cabecalhoRecebido.join(' | ')}. ` +
+        `Estenda SINONIMOS em packages/etl/src/sources/anatel.ts para acomodar esta safra.`,
+    );
+    this.name = 'CabecalhoIncompativelError';
+  }
+}
+
+/**
+ * Resolve o cabecalho real do arquivo para os campos do dominio.
+ * Lanca `CabecalhoIncompativelError` se faltar campo obrigatorio.
+ */
+export function mapearCabecalho(cabecalho: readonly string[]): MapaColunas {
+  const porCanonico = new Map<string, string>();
+  for (const coluna of cabecalho) {
+    porCanonico.set(canonizarTexto(coluna), coluna);
+  }
+
+  const mapa: MapaColunas = {};
+  for (const [campo, sinonimos] of Object.entries(SINONIMOS) as Array<
+    [CampoAnatel, readonly string[]]
+  >) {
+    for (const sinonimo of sinonimos) {
+      const encontrada = porCanonico.get(sinonimo);
+      if (encontrada !== undefined) {
+        mapa[campo] = encontrada;
+        break;
+      }
+    }
+  }
+
+  const faltantes = OBRIGATORIOS.filter((campo) => mapa[campo] === undefined);
+  if (faltantes.length > 0) {
+    throw new CabecalhoIncompativelError(faltantes, cabecalho);
+  }
+  return mapa;
+}
+
+/**
+ * Converte o campo de acessos para inteiro.
+ * A Anatel usa separador de milhar "." e decimal "," em algumas safras.
+ * Valor nao numerico retorna null — a linha e contabilizada como rejeitada,
+ * nunca convertida em zero (§5).
+ */
+export function interpretarAcessos(bruto: string | undefined): number | null {
+  if (bruto === undefined) return null;
+  const limpo = bruto.trim();
+  if (limpo === '' || limpo === '-') return null;
+  const numerico = Number(limpo.replace(/\./g, '').replace(',', '.'));
+  if (!Number.isFinite(numerico) || numerico < 0) return null;
+  return Math.round(numerico);
+}
+
+/** Normaliza o mes, que aparece como "1", "01" ou "Janeiro" conforme a safra. */
+const MESES_POR_EXTENSO: Record<string, number> = {
+  JANEIRO: 1, FEVEREIRO: 2, MARCO: 3, ABRIL: 4, MAIO: 5, JUNHO: 6,
+  JULHO: 7, AGOSTO: 8, SETEMBRO: 9, OUTUBRO: 10, NOVEMBRO: 11, DEZEMBRO: 12,
+};
+
+export function interpretarMes(bruto: string | undefined): number | null {
+  if (bruto === undefined) return null;
+  const limpo = bruto.trim();
+  if (limpo === '') return null;
+  const numerico = Number(limpo);
+  if (Number.isInteger(numerico) && numerico >= 1 && numerico <= 12) return numerico;
+  const porExtenso = MESES_POR_EXTENSO[canonizarTexto(limpo)];
+  return porExtenso ?? null;
+}

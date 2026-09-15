@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.next/
+out/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.local
+
+# Dados brutos da Anatel (grandes, reprodutiveis via ETL)
+data/raw/
+data/work/
+data/*.sqlite
+data/*.sqlite-*
+
+# Artefatos gerados pelo build de dados
+apps/web/public/data/

@@ -1,0 +1,21 @@
+{
+  "name": "netrank-rj",
+  "private": true,
+  "version": "0.1.0",
+  "description": "NETRANK RJ - Inteligencia de Mercado de Banda Larga Fixa no Rio de Janeiro",
+  "workspaces": ["packages/*", "apps/*"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build:core": "npm run build -w @netrank/core",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -b --pretty false",
+    "etl": "npm run start -w @netrank/etl --",
+    "dev": "npm run dev -w @netrank/web"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8",
+    "@types/node": "^22.9.0"
+  }
+}
