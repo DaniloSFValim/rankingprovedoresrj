@@ -14,7 +14,7 @@
  * Por isso este modulo consulta a API do catalogo (CKAN) e devolve os recursos
  * candidatos. Quem decide o que baixar e o operador — o pipeline nao adivinha.
  *
- * ATENCAO AO LEITOR: os endpoints abaixo seguem o padrao CKAN, adotado pelo
+ * ATENCAO AO LEITOR: os endpoints seguem o padrao CKAN, adotado pelo
  * dados.gov.br. Eles NAO foram validados contra a API em producao no ambiente
  * em que este codigo foi escrito (sem acesso de rede a *.gov.br). Rode
  * `npm run etl -- descobrir` na primeira vez e confira a saida antes de
@@ -34,7 +34,16 @@ const CATALOGOS = [
   },
 ] as const;
 
-/** Termos usados para localizar o conjunto de acessos de banda larga fixa. */
+/**
+ * Identificador do conjunto no dados.gov.br, extraido da URL publica:
+ * https://dados.gov.br/dados/conjuntos-dados/acessos---banda-larga-fixa
+ *
+ * Consultar o conjunto pelo id e preciso; a busca textual e o plano B para o
+ * caso de o conjunto ser renomeado ou movido.
+ */
+const ID_CONJUNTO = 'acessos---banda-larga-fixa';
+
+/** Termos usados quando a consulta direta pelo id nao retorna nada. */
 const CONSULTA = 'acessos banda larga fixa';
 
 export interface RecursoCandidato {
@@ -46,6 +55,25 @@ export interface RecursoCandidato {
   url: string;
   bytes: number | null;
   atualizadoEm: string | null;
+}
+
+interface ConjuntoCkan {
+  name?: string;
+  title?: string;
+  notes?: string;
+  resources?: Array<{
+    name?: string;
+    format?: string;
+    url?: string;
+    size?: number | null;
+    last_modified?: string | null;
+    created?: string | null;
+  }>;
+}
+
+interface RespostaPacoteCkan {
+  success?: boolean;
+  result?: ConjuntoCkan;
 }
 
 interface RespostaCkan {
@@ -69,6 +97,42 @@ interface RespostaCkan {
 
 /** Formatos que o pipeline sabe processar. */
 const FORMATOS_ACEITOS = new Set(['CSV', 'ZIP', 'TXT', 'GZ']);
+
+function extrairRecursos(
+  catalogo: (typeof CATALOGOS)[number],
+  conjunto: ConjuntoCkan,
+): RecursoCandidato[] {
+  const candidatos: RecursoCandidato[] = [];
+  for (const recurso of conjunto.resources ?? []) {
+    const formato = (recurso.format ?? '').toUpperCase();
+    if (!recurso.url || !FORMATOS_ACEITOS.has(formato)) continue;
+    candidatos.push({
+      catalogo: catalogo.nome,
+      conjunto: conjunto.title ?? conjunto.name ?? '(sem titulo)',
+      conjuntoUrl: `${catalogo.portal}/${conjunto.name ?? ''}`,
+      nome: recurso.name ?? recurso.url.split('/').pop() ?? '(sem nome)',
+      formato,
+      url: recurso.url,
+      bytes: recurso.size ?? null,
+      atualizadoEm: recurso.last_modified ?? recurso.created ?? null,
+    });
+  }
+  return candidatos;
+}
+
+/** Consulta direta pelo id conhecido do conjunto. */
+async function consultarConjunto(
+  catalogo: (typeof CATALOGOS)[number],
+  sinalTempo: AbortSignal,
+): Promise<RecursoCandidato[]> {
+  const resposta = await fetch(
+    `${catalogo.base}/package_show?id=${encodeURIComponent(ID_CONJUNTO)}`,
+    { signal: sinalTempo, headers: { accept: 'application/json' } },
+  );
+  if (!resposta.ok) return [];
+  const corpo = (await resposta.json()) as RespostaPacoteCkan;
+  return corpo.result ? extrairRecursos(catalogo, corpo.result) : [];
+}
 
 async function consultarCatalogo(
   catalogo: (typeof CATALOGOS)[number],
@@ -130,7 +194,12 @@ export async function descobrirRecursos(
     const controlador = new AbortController();
     const temporizador = setTimeout(() => controlador.abort(), timeoutMs);
     try {
-      candidatos.push(...(await consultarCatalogo(catalogo, controlador.signal)));
+      // Consulta pelo id conhecido primeiro; busca textual so se nao houver retorno.
+      let encontrados = await consultarConjunto(catalogo, controlador.signal);
+      if (encontrados.length === 0) {
+        encontrados = await consultarCatalogo(catalogo, controlador.signal);
+      }
+      candidatos.push(...encontrados);
     } catch (erro) {
       falhas.push({
         catalogo: catalogo.nome,

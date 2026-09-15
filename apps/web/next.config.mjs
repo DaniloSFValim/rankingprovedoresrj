@@ -6,5 +6,14 @@ const nextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
   transpilePackages: ['@netrank/core'],
+  // @netrank/core usa imports ESM com extensao .js apontando para fontes .ts
+  // (verbatimModuleSyntax). O webpack precisa dessa equivalencia explicita.
+  webpack: (config) => {
+    config.resolve.extensionAlias = {
+      '.js': ['.ts', '.tsx', '.js'],
+      '.mjs': ['.mts', '.mjs'],
+    };
+    return config;
+  },
 };
 export default nextConfig;
