@@ -79,15 +79,71 @@ npm run etl -- demo
 > warehouse, produzem uma faixa de aviso permanente na interface, e o build
 > aborta se `NETRANK_AMBIENTE=producao`.
 
-### Rodar a aplicação
+### Malha geográfica do mapa
+
+A Anatel publica os acessos, mas não a geometria dos municípios. A malha vem da
+**API de malhas territoriais do IBGE** e as duas bases se juntam pelo código
+IBGE de 7 dígitos:
 
 ```bash
-npm run dev                  # desenvolvimento
-npm run build -w @netrank/web  # exportação estática em apps/web/out/
+npm run etl -- malhas
 ```
 
-O resultado é um site estático: pode ser servido por Cloudflare Pages, Vercel,
-Netlify ou qualquer CDN, sem servidor de aplicação nem banco em produção.
+Isso grava `apps/web/public/data/malhas/rj-municipios.json`. A junção é sempre
+por **código**, nunca por nome — grafias divergem entre IBGE e Anatel
+(`Parati`/`Paraty`, acentuação inconsistente) e casar por nome perderia
+municípios em silêncio.
+
+Sem a malha, o mapa **não desenha formas aproximadas**: cai automaticamente
+para um treemap com área proporcional ao mercado e cor pela métrica escolhida.
+A informação é a mesma; o que não acontece é inventar geografia.
+
+---
+
+## Como visualizar e publicar
+
+### Localmente
+
+```bash
+npm install
+npm run etl -- demo     # ou a ingestão real, acima
+npm run dev             # http://localhost:3000
+```
+
+Para conferir exatamente o que vai ao ar:
+
+```bash
+npm run build           # gera apps/web/out/
+npm run preview         # serve a exportação estática
+```
+
+### Publicar
+
+O resultado é um **site estático**: sem servidor de aplicação e sem banco em
+produção. Os dados são arquivos JSON gerados antes do build.
+
+| Plataforma | Configuração | O que fazer |
+|---|---|---|
+| Cloudflare Pages | `apps/web/public/_headers` | Build: `npm run build` · Saída: `apps/web/out` |
+| Netlify | `netlify.toml` | Conectar o repositório; já está configurado |
+| Vercel | `vercel.json` | Conectar o repositório; já está configurado |
+| Qualquer CDN / S3 | — | Subir o conteúdo de `apps/web/out/` |
+
+Defina `NETRANK_AMBIENTE=producao` no ambiente de build. Com essa variável, o
+build **aborta** se o warehouse contiver dados demonstrativos — a salvaguarda
+que impede fixture sintética de ir ao ar como se fosse dado da Anatel.
+
+### Ciclo de atualização mensal
+
+```bash
+npm run etl -- descobrir
+npm run etl -- atualizar <url-da-nova-competência>
+npm run etl -- status      # conferir os alertas de qualidade
+npm run build
+```
+
+O histórico anterior é preservado: a importação substitui apenas as
+competências presentes no arquivo.
 
 ---
 
@@ -156,7 +212,7 @@ extração com filtro de UF.
 | Perfis de município e de provedor | Funcionando |
 | CR1/CR3/CR5/CR10, HHI | Funcionando |
 | Expansão territorial, movimentações | Funcionando |
-| Mapa de calor municipal | Treemap — falta a malha geográfica do IBGE |
+| Mapa do Estado | Coroplético via IBGE (`etl -- malhas`), com treemap como alternativa |
 | Filtros globais, exportação, compartilhamento | Não implementados |
 | Painel administrativo | Não implementado |
 
@@ -170,8 +226,10 @@ extração com filtro de UF.
 - Os endpoints CKAN de descoberta seguem o padrão do dados.gov.br mas também
   não puderam ser testados em produção. O comando `descobrir` existe para que
   o operador confira antes de confiar.
-- O mapa municipal é um treemap, não um coroplético. Incorporar a malha do
-  IBGE é o próximo passo para essa funcionalidade.
+- Os endpoints da API de malhas do IBGE seguem a documentação pública, mas
+  também não puderam ser testados. O caminho de renderização do mapa
+  coroplético **ainda não foi exercitado contra geometria real**; a alternativa
+  em treemap está testada e é o que aparece enquanto a malha não existir.
 
 ---
 

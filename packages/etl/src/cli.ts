@@ -5,6 +5,7 @@
  *   npm run etl -- atualizar <url>  baixa, importa e reconstroi os artefatos
  *   npm run etl -- demo            gera fixture sintetica e roda o pipeline inteiro
  *   npm run etl -- importar <csv>  importa um arquivo real da Anatel
+ *   npm run etl -- malhas          baixa a malha municipal do IBGE para o mapa
  *   npm run etl -- build           reconstroi os artefatos a partir do warehouse
  *   npm run etl -- status          mostra o estado do warehouse e os alertas
  */
@@ -24,6 +25,7 @@ import {
   registrarFonte,
 } from './pipeline/carregar.js';
 import { extrairRj } from './pipeline/extrair.js';
+import { baixarMalhaMunicipios } from './pipeline/malhas.js';
 import { baixarRecurso, prepararCsvs } from './pipeline/baixar.js';
 import { anoDoRecurso, descobrirRecursos } from './sources/descoberta.js';
 import {
@@ -295,6 +297,31 @@ async function principal(): Promise<void> {
         break;
       }
 
+      case 'malhas': {
+        const municipios = db
+          .prepare('SELECT codigo_ibge, nome FROM municipios')
+          .all() as Array<{ codigo_ibge: string; nome: string }>;
+        const nomes = new Map(municipios.map((m) => [m.codigo_ibge, m.nome]));
+
+        console.log('[malhas] consultando a API de malhas do IBGE...');
+        const resultado = await baixarMalhaMunicipios(nomes);
+        console.log(
+          `[malhas] ${resultado.municipios} municipios | ` +
+            `${(resultado.bytes / 1e6).toFixed(2)} MB | ${resultado.caminho}`,
+        );
+
+        // A malha cobre o Estado inteiro; o warehouse so tem os municipios com
+        // acessos registrados. A diferenca e esperada e informada, nao e erro.
+        if (nomes.size > 0 && resultado.municipios !== nomes.size) {
+          console.log(
+            `[malhas] a malha tem ${resultado.municipios} municipios e o warehouse ` +
+              `tem ${nomes.size} com acessos registrados. Municipios sem acesso ` +
+              `aparecem no mapa sem preenchimento.`,
+          );
+        }
+        break;
+      }
+
       case 'build':
         build(db);
         break;
@@ -308,6 +335,7 @@ async function principal(): Promise<void> {
             '  atualizar <url> [--forcar]  baixa, importa e reconstroi os artefatos\n' +
             '  importar <csv> [--latin1]   importa um arquivo ja baixado\n' +
             '  demo                     gera fixture sintetica e roda o pipeline\n' +
+            '  malhas                   baixa a malha municipal do IBGE para o mapa\n' +
             '  build                    reconstroi artefatos a partir do warehouse\n' +
             '  status                   estado do warehouse e alertas de qualidade',
         );

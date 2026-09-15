@@ -1,0 +1,24 @@
+# Deploy do NETRANK RJ na Netlify.
+#
+# O site e 100% estatico: nao ha servidor de aplicacao nem banco em producao.
+# Os dados sao artefatos JSON gerados pelo ETL antes do build.
+
+[build]
+  command = "npm run build"
+  publish = "apps/web/out"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NETRANK_AMBIENTE = "producao"
+
+# Os artefatos de dados mudam apenas quando o ETL roda. Cache curto no
+# navegador, longo na CDN, com revalidacao a cada deploy.
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, s-maxage=86400"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

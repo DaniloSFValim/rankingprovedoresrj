@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
-import { MapaMunicipios } from '@/componentes/graficos/MapaMunicipios';
+import { MapaRJ } from '@/componentes/graficos/MapaRJ';
 import { lerIndiceMunicipios, lerKpis } from '@/lib/dados';
 import { corVariacao, inteiro, percentual, percentualComSinal } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
@@ -58,9 +58,12 @@ export default function PaginaMunicipios() {
         />
       </div>
 
-      <Secao titulo="Mapa de calor" descricao="Distribuição do mercado pelos municípios do Estado">
+      <Secao
+        titulo="Mapa da banda larga no RJ"
+        descricao="Distribuição do mercado pelos municípios do Estado — escolha a métrica"
+      >
         <div className="cartao p-4">
-          <MapaMunicipios municipios={municipios} />
+          <MapaRJ municipios={municipios} />
         </div>
       </Secao>
 
