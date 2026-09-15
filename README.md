@@ -122,28 +122,38 @@ npm run preview         # serve a exportação estática
 O resultado é um **site estático**: sem servidor de aplicação e sem banco em
 produção. Os dados são arquivos JSON gerados antes do build.
 
-#### Cloudflare Pages (configuração usada neste repositório)
+#### Cloudflare Pages
 
-O diretório `apps/web/out/` está **versionado no git**. O Cloudflare Pages
-serve esses arquivos diretamente, sem etapa de build:
+Conecte o repositório em **Workers & Pages → Create → Pages → Connect to Git**.
+Duas configurações funcionam — escolha uma:
+
+**A) Cloudflare constrói (recomendado)**
+
+| Campo | Valor |
+|---|---|
+| Framework preset | `Next.js (Static HTML Export)` ou `None` |
+| Build command | `npm run build` |
+| Build output directory | `apps/web/out` |
+
+Os artefatos em `apps/web/public/data/` são versionados, então o build funciona
+num clone limpo. Mudanças no front-end entram no ar sem ninguém precisar
+lembrar de recompilar.
+
+**B) Publicar o HTML já compilado**
 
 | Campo | Valor |
 |---|---|
 | Framework preset | `None` |
-| Build command | *(deixar vazio)* |
+| Build command | *(vazio)* |
 | Build output directory | `apps/web/out` |
-| Root directory | *(deixar vazio — a raiz do repositório)* |
 
-Conecte o repositório em **Workers & Pages → Create → Pages → Connect to Git**,
-selecione a branch de produção e publique. Cada `git push` republica.
+Deploy em segundos, sem instalar dependências. A contrapartida é que o
+`apps/web/out/` versionado envelhece: depois de qualquer mudança é preciso
+rodar `npm run build` e commitar a saída.
 
-> **Contrapartida:** HTML versionado envelhece. Depois de qualquer execução do
-> ETL ou mudança no front-end, é preciso rodar `npm run build` e commitar o
-> `apps/web/out/` atualizado, senão o site publicado diverge dos dados.
->
-> Para eliminar esse risco, basta deixar o Cloudflare construir: preencha
-> *Build command* com `npm run build` e mantenha a mesma saída. Aí o
-> `apps/web/out/` pode voltar a ser ignorado pelo git.
+> **Nos dois casos**, rodar o ETL na Cloudflare não funciona: o ambiente de
+> build usa npm restrito e não executa os scripts de instalação dos módulos
+> nativos (`better-sqlite3`). O ETL roda na sua máquina ou em CI comum.
 
 #### Outras plataformas
 

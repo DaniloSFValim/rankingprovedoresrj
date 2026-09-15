@@ -11,6 +11,17 @@ import {
 } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
 
+/**
+ * Rotas geradas no build.
+ *
+ * Deliberadamente NAO tolera a ausencia de artefatos: com `output: export`,
+ * uma lista vazia e tratada pelo Next como generateStaticParams ausente, e o
+ * build falha com uma mensagem interna incompreensivel. Deixar `ler...`
+ * lancar preserva o erro instrutivo, que diz exatamente qual comando rodar.
+ *
+ * Por isso os artefatos em public/data/ sao versionados: um clone limpo
+ * precisa conseguir compilar.
+ */
 export function generateStaticParams() {
   return lerIndiceMunicipios().map((m) => ({ slug: m.slug }));
 }

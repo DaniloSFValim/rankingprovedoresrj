@@ -12,10 +12,13 @@ data/work/
 data/*.sqlite
 data/*.sqlite-*
 
-# Artefatos gerados pelo build de dados.
-# Sao reproduzidos por `npm run etl -- build` e ficam fora do git; a copia que
-# vai ao ar esta versionada dentro de apps/web/out/ (ver README, secao Deploy).
-apps/web/public/data/
-
-# apps/web/out/ NAO e ignorado de proposito: e o site publicado, servido
-# diretamente pelo Cloudflare Pages sem etapa de build.
+# apps/web/public/data/ e apps/web/out/ NAO sao ignorados de proposito.
+#
+#   public/data/  artefatos analiticos gerados pelo ETL. Versionados para que
+#                 `npm run build` funcione num clone limpo — sem eles, o build
+#                 na Cloudflare falha ao coletar as rotas dinamicas.
+#   out/          site ja compilado, servido direto pelo Cloudflare Pages
+#                 quando nao ha etapa de build.
+#
+# Versionar os dois faz o deploy funcionar tanto com Build command vazio
+# quanto com `npm run build`. Ver README, secao Deploy.
