@@ -1,7 +1,6 @@
 node_modules/
 dist/
 .next/
-out/
 *.tsbuildinfo
 .DS_Store
 .env
@@ -13,5 +12,10 @@ data/work/
 data/*.sqlite
 data/*.sqlite-*
 
-# Artefatos gerados pelo build de dados
+# Artefatos gerados pelo build de dados.
+# Sao reproduzidos por `npm run etl -- build` e ficam fora do git; a copia que
+# vai ao ar esta versionada dentro de apps/web/out/ (ver README, secao Deploy).
 apps/web/public/data/
+
+# apps/web/out/ NAO e ignorado de proposito: e o site publicado, servido
+# diretamente pelo Cloudflare Pages sem etapa de build.

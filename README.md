@@ -122,9 +122,33 @@ npm run preview         # serve a exportação estática
 O resultado é um **site estático**: sem servidor de aplicação e sem banco em
 produção. Os dados são arquivos JSON gerados antes do build.
 
+#### Cloudflare Pages (configuração usada neste repositório)
+
+O diretório `apps/web/out/` está **versionado no git**. O Cloudflare Pages
+serve esses arquivos diretamente, sem etapa de build:
+
+| Campo | Valor |
+|---|---|
+| Framework preset | `None` |
+| Build command | *(deixar vazio)* |
+| Build output directory | `apps/web/out` |
+| Root directory | *(deixar vazio — a raiz do repositório)* |
+
+Conecte o repositório em **Workers & Pages → Create → Pages → Connect to Git**,
+selecione a branch de produção e publique. Cada `git push` republica.
+
+> **Contrapartida:** HTML versionado envelhece. Depois de qualquer execução do
+> ETL ou mudança no front-end, é preciso rodar `npm run build` e commitar o
+> `apps/web/out/` atualizado, senão o site publicado diverge dos dados.
+>
+> Para eliminar esse risco, basta deixar o Cloudflare construir: preencha
+> *Build command* com `npm run build` e mantenha a mesma saída. Aí o
+> `apps/web/out/` pode voltar a ser ignorado pelo git.
+
+#### Outras plataformas
+
 | Plataforma | Configuração | O que fazer |
 |---|---|---|
-| Cloudflare Pages | `apps/web/public/_headers` | Build: `npm run build` · Saída: `apps/web/out` |
 | Netlify | `netlify.toml` | Conectar o repositório; já está configurado |
 | Vercel | `vercel.json` | Conectar o repositório; já está configurado |
 | Qualquer CDN / S3 | — | Subir o conteúdo de `apps/web/out/` |
@@ -140,7 +164,11 @@ npm run etl -- descobrir
 npm run etl -- atualizar <url-da-nova-competência>
 npm run etl -- status      # conferir os alertas de qualidade
 npm run build
+
+git add apps/web/out && git commit -m "Atualiza dados para <competência>" && git push
 ```
+
+O último passo é o que publica: o Cloudflare Pages republica a cada push.
 
 O histórico anterior é preservado: a importação substitui apenas as
 competências presentes no arquivo.
