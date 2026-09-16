@@ -66,7 +66,9 @@ export async function baixarRecurso(
   const controlador = new AbortController();
   const temporizador = setTimeout(
     () => controlador.abort(),
-    opcoes.timeoutMs ?? 10 * 60_000,
+    // Os arquivos anuais da Anatel passam de 1 GB; 10 minutos e pouco quando
+    // a origem esta lenta, e um timeout curto desperdica o download inteiro.
+    opcoes.timeoutMs ?? 30 * 60_000,
   );
 
   const parcial = `${destino}.parcial`;

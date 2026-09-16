@@ -55,6 +55,18 @@ jobs:
     timeout-minutes: 60
 
     steps:
+      # Os arquivos anuais da Anatel passam de 1 GB e, descompactados, chegam
+      # a varios GB. O runner vem com toolchains pre-instalados que nao usamos
+      # e que ocupam dezenas de GB; remove-los evita "no space left on device"
+      # no meio da descompactacao.
+      - name: Liberar espaco em disco
+        if: inputs.fonte == 'anatel'
+        run: |
+          echo "Antes:"; df -h / | tail -1
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+                      /usr/local/share/boost "$AGENT_TOOLSDIRECTORY" || true
+          echo "Depois:"; df -h / | tail -1
+
       - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v5
