@@ -2,6 +2,7 @@
  * CLI do pipeline NETRANK RJ.
  *
  *   npm run etl -- descobrir       lista os arquivos da Anatel no catalogo aberto
+ *   npm run etl -- sincronizar     descobre, baixa e importa sem intervencao
  *   npm run etl -- atualizar <url>  baixa, importa e reconstroi os artefatos
  *   npm run etl -- demo            gera fixture sintetica e roda o pipeline inteiro
  *   npm run etl -- importar <csv>  importa um arquivo real da Anatel
@@ -28,6 +29,7 @@ import { extrairRj } from './pipeline/extrair.js';
 import { baixarMalhaMunicipios } from './pipeline/malhas.js';
 import { baixarRecurso, prepararCsvs } from './pipeline/baixar.js';
 import { anoDoRecurso, descobrirRecursos } from './sources/descoberta.js';
+import { descobrirESelecionar } from './pipeline/sincronizar.js';
 import {
   auditarCompetencia,
   auditarExtracao,
@@ -297,6 +299,53 @@ async function principal(): Promise<void> {
         break;
       }
 
+      case 'sincronizar': {
+        const indiceAnos = resto.indexOf('--anos');
+        const anos = indiceAnos >= 0 ? Number(resto[indiceAnos + 1]) : 2;
+        if (!Number.isInteger(anos) || anos < 1 || anos > 20) {
+          throw new Error('Uso: npm run etl -- sincronizar [--anos N]  (N entre 1 e 20)');
+        }
+
+        console.log(`[sincronizar] procurando os ${anos} ano(s) mais recentes...`);
+        const { selecionados, descartados, falhas } = await descobrirESelecionar({ anos });
+
+        for (const falha of falhas) {
+          console.warn(`[aviso] ${falha.catalogo}: ${falha.motivo}`);
+        }
+
+        if (selecionados.length === 0) {
+          console.error(
+            `\nNenhum recurso selecionavel (${descartados.length} candidato(s) descartado(s)).\n` +
+              'Rode "npm run etl -- descobrir" para inspecionar o catalogo, ou importe\n' +
+              'um arquivo manualmente com "npm run etl -- importar <csv>".',
+          );
+          process.exitCode = 1;
+          break;
+        }
+
+        // Imprimir a selecao ANTES de baixar: ninguem deve descobrir que o
+        // pipeline escolheu o arquivo errado depois que os dados ja entraram.
+        console.log(`\n[sincronizar] ${selecionados.length} recurso(s) selecionado(s):`);
+        for (const r of selecionados) {
+          console.log(`  ${anoDoRecurso(r)} | [${r.formato}] ${r.nome}`);
+          console.log(`         ${r.url}`);
+        }
+        console.log('');
+
+        for (const recurso of selecionados) {
+          const arquivo = await baixarRecurso(recurso.url);
+          console.log(
+            `[baixar] ${recurso.nome}: ${(arquivo.bytes / 1e6).toFixed(1)} MB | ` +
+              `sha256 ${arquivo.sha256.slice(0, 16)}...`,
+          );
+          for (const csv of await prepararCsvs(arquivo)) {
+            await importar(db, csv, { url: recurso.url, dadosDemonstrativos: false });
+          }
+        }
+        build(db);
+        break;
+      }
+
       case 'malhas': {
         const municipios = db
           .prepare('SELECT codigo_ibge, nome FROM municipios')
@@ -332,6 +381,7 @@ async function principal(): Promise<void> {
         console.log(
           'Comandos:\n' +
             '  descobrir                lista os arquivos da Anatel no catalogo aberto\n' +
+            '  sincronizar [--anos N]   descobre, baixa e importa sem intervencao\n' +
             '  atualizar <url> [--forcar]  baixa, importa e reconstroi os artefatos\n' +
             '  importar <csv> [--latin1]   importa um arquivo ja baixado\n' +
             '  demo                     gera fixture sintetica e roda o pipeline\n' +

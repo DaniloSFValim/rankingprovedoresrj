@@ -53,10 +53,11 @@ sem nunca ser materializado em memória.
 ```bash
 npm install
 
-# 1. Descobrir os arquivos disponíveis no catálogo
-npm run etl -- descobrir
+# Automático: descobre, baixa e importa os anos mais recentes
+npm run etl -- sincronizar --anos 2
 
-# 2. Baixar, importar e reconstruir os artefatos
+# Ou passo a passo, para inspecionar antes
+npm run etl -- descobrir
 npm run etl -- atualizar <url-do-recurso>
 
 # Alternativa: arquivo já baixado manualmente pelo portal
@@ -200,12 +201,36 @@ Defina `NETRANK_AMBIENTE=producao` no ambiente de build. Com essa variável, o
 build **aborta** se o warehouse contiver dados demonstrativos — a salvaguarda
 que impede fixture sintética de ir ao ar como se fosse dado da Anatel.
 
+### Ingestão automática (GitHub Actions)
+
+A ingestão não roda no build da Cloudflare: o ambiente usa npm restrito e não
+compila módulos nativos. O workflow `.github/workflows/dados-reais.yml` faz o
+trabalho num runner do GitHub, que tem rede liberada e compila normalmente.
+
+**Actions → Ingerir dados reais da Anatel → Run workflow**
+
+| Parâmetro | Padrão | O que faz |
+|---|---|---|
+| `anos` | `2` | Quantos anos mais recentes importar |
+| `url` | vazio | URL de um recurso específico; ignora a descoberta automática |
+| `malhas` | marcado | Baixa também a malha municipal do IBGE |
+
+O workflow roda os testes antes de tocar nos dados, importa, baixa a malha,
+reconstrói artefatos e site, **verifica que os artefatos não estão marcados
+como demonstrativos** e só então commita. O push dispara o deploy.
+
+Também roda sozinho no dia 12 de cada mês. Se os dados não mudaram, não
+commita nada.
+
+A malha é opcional dentro do workflow (`continue-on-error`): se o IBGE estiver
+fora do ar, o mapa continua como treemap e o resto da atualização não se perde.
+
 ### Ciclo de atualização mensal
 
 ```bash
-npm run etl -- descobrir
-npm run etl -- atualizar <url-da-nova-competência>
-npm run etl -- status      # conferir os alertas de qualidade
+npm run etl -- sincronizar --anos 2   # descobre, baixa e importa sozinho
+npm run etl -- malhas                 # malha municipal do IBGE
+npm run etl -- status                 # conferir os alertas de qualidade
 npm run build
 
 git add apps/web/out && git commit -m "Atualiza dados para <competência>" && git push
@@ -278,6 +303,7 @@ extração com filtro de UF.
 | Módulo | Situação |
 |---|---|
 | Ingestão Anatel, warehouse, qualidade | Funcionando |
+| Ingestão automatizada em CI | Workflow pronto, ainda não executado |
 | Ranking estadual e municipal, market share | Funcionando |
 | Crescimento, retração, corrida do ranking | Funcionando |
 | Perfis de município e de provedor | Funcionando |

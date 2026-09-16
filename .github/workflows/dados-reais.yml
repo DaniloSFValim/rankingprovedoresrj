@@ -1,0 +1,117 @@
+name: Ingerir dados reais da Anatel
+
+# Este workflow existe porque a ingestao precisa de duas coisas que o build da
+# Cloudflare nao tem: acesso de rede a *.gov.br e permissao para compilar
+# modulos nativos (better-sqlite3). O runner do GitHub tem as duas.
+#
+# Ele baixa os dados da Anatel, baixa a malha municipal do IBGE, reconstroi os
+# artefatos e o site, e commita o resultado. O push dispara o deploy.
+
+on:
+  # Execucao manual, com os parametros expostos.
+  workflow_dispatch:
+    inputs:
+      anos:
+        description: 'Quantos anos mais recentes importar'
+        required: false
+        default: '2'
+      url:
+        description: 'URL de um recurso especifico (ignora a descoberta automatica)'
+        required: false
+        default: ''
+      malhas:
+        description: 'Baixar tambem a malha municipal do IBGE'
+        type: boolean
+        required: false
+        default: true
+
+  # Dia 12 de cada mes, as 09:00 UTC. A Anatel costuma publicar a competencia
+  # do mes anterior ao longo do mes seguinte; o dia 12 e uma aposta
+  # conservadora, e a execucao e idempotente se o dado ainda nao mudou.
+  schedule:
+    - cron: '0 9 12 * *'
+
+# Necessario para commitar os artefatos de volta.
+permissions:
+  contents: write
+
+# Duas execucoes simultaneas commitariam por cima uma da outra.
+concurrency:
+  group: ingestao-dados
+  cancel-in-progress: false
+
+jobs:
+  ingerir:
+    runs-on: ubuntu-latest
+    # Baixar e processar arquivos anuais da Anatel leva tempo.
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar o motor de calculo antes de tocar nos dados
+        run: npm test
+
+      # --------------------------------------------------------------- dados
+      - name: Inspecionar o catalogo de dados abertos
+        run: npm run etl -- descobrir || true
+
+      - name: Importar recurso especifico
+        if: inputs.url != ''
+        run: npm run etl -- atualizar "${{ inputs.url }}"
+
+      - name: Sincronizar automaticamente
+        if: inputs.url == ''
+        run: npm run etl -- sincronizar --anos "${{ inputs.anos || '2' }}"
+
+      # --------------------------------------------------------------- malha
+      # A malha e opcional: se o IBGE estiver fora do ar, o mapa continua
+      # funcionando como treemap e o resto da atualizacao nao e perdido.
+      - name: Baixar a malha municipal do IBGE
+        # Sempre roda no agendamento; na execucao manual, so se marcado.
+        if: github.event_name != 'workflow_dispatch' || inputs.malhas
+        continue-on-error: true
+        run: npm run etl -- malhas
+
+      - name: Relatorio de qualidade
+        run: npm run etl -- status
+
+      # --------------------------------------------------------------- build
+      - name: Reconstruir artefatos e site
+        env:
+          NETRANK_AMBIENTE: producao
+        run: |
+          npm run etl -- build
+          npm run build
+
+      - name: Conferir que nao ha dados demonstrativos publicados
+        run: |
+          if grep -q '"dadosDemonstrativos":true' apps/web/public/data/meta.json; then
+            echo "::error::Os artefatos estao marcados como DEMONSTRATIVOS. Abortando."
+            exit 1
+          fi
+          echo "Artefatos marcados como dados reais."
+
+      - name: Commitar e publicar
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add apps/web/public/data apps/web/out
+          if git diff --staged --quiet; then
+            echo "Nenhuma mudanca nos dados. Nada a publicar."
+            exit 0
+          fi
+          COMPETENCIA=$(node -p "require('./apps/web/public/data/meta.json').competenciaAtual")
+          git commit -m "Atualiza dados da Anatel - competencia ${COMPETENCIA}" \
+                     -m "Gerado pelo workflow de ingestao. Fonte: Anatel, dados abertos. Malha municipal: IBGE."
+          # Outro push pode ter entrado enquanto o processamento rodava.
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
