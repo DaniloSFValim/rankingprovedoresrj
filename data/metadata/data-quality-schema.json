@@ -1,0 +1,108 @@
+{
+  "versao": "1.0.0",
+  "descricao": "Schema do relatório de qualidade de dados - define estrutura e critérios de validação.",
+  "estrutura": {
+    "metadados": {
+      "descricao": "Informações sobre a execução do relatório",
+      "geradoEm": "string ISO8601",
+      "competencia": "string YYYY-MM",
+      "pipelineVersao": "string semver",
+      "commitHash": "string git sha",
+      "fonteAnatel": {
+        "arquivoOrigem": "string caminho",
+        "downloadEm": "string ISO8601",
+        "tamanhoBytes": "number",
+        "sha256": "string hash"
+      }
+    },
+    "validacoes": {
+      "descricao": "Testes matemáticos e de integridade",
+      "somaCessosEstado": {
+        "esperado": "number SUM(acessos por empresa)",
+        "obtido": "number",
+        "passes": "boolean",
+        "desvio": "number (em %)"
+      },
+      "marketShareSoma": {
+        "descricao": "Soma de market share deve ser próxima de 100%",
+        "valor": "number (deve ser 99.95-100.05)",
+        "passes": "boolean"
+      },
+      "hirarquiaConcentracao": {
+        "descricao": "CR3 >= CR1, CR5 >= CR3, CR10 >= CR5",
+        "cr1": "number",
+        "cr3": "number",
+        "cr5": "number",
+        "cr10": "number",
+        "passes": "boolean",
+        "detalhe": "object com comparações"
+      },
+      "hhi": {
+        "descricao": "Índice Herfindahl-Hirschman (0-10000)",
+        "valor": "number",
+        "passes": "boolean (deve estar 0-10000)",
+        "interpretacao": "string (Desconcentrado/Moderado/Concentrado/Altamente)"
+      },
+      "municipios": {
+        "descricao": "Contagem e validações de cobertura municipal",
+        "totalMunicipipioDiferentes": "number",
+        "municipiosSemDados": "array de strings (codigos IBGE)",
+        "passes": "boolean"
+      }
+    },
+    "alertas": {
+      "descricao": "Sinalizações de anomalias ou dados suspeitos",
+      "anomalias": [
+        {
+          "tipo": "string (CLARO_MULTIPLOS_CNPJ, LESTE_TELECOM_CONSOLIDACAO, etc)",
+          "gravidade": "string (CRITICO, ALTO, MEDIO, BAIXO)",
+          "descricao": "string explicativa",
+          "empresaId": "string ID da empresa",
+          "dados": "object com contexto"
+        }
+      ],
+      "lacunas": [
+        {
+          "competencia": "string YYYY-MM",
+          "motivo": "string (ANATEL_NAO_PUBLICOU, etc)"
+        }
+      ]
+    },
+    "estatisticas": {
+      "descricao": "Sumário analítico",
+      "totalEmpresas": "number",
+      "totalAcessos": "number",
+      "topProvedor": "object { id, nome, acessos, marketShare }",
+      "mediaAcessosPorEmpresa": "number",
+      "medianaMunicipioPorEmpresa": "number",
+      "menorProvedor": "object",
+      "maiorProvedor": "object",
+      "concentracaoInterpretacao": "string (análise de CR5 e HHI)"
+    },
+    "rastreabilidade": {
+      "descricao": "Cadeia de proveniência dos dados",
+      "pipeline": {
+        "etapa": "RAW -> EXTRAIR -> CARREGAR -> CALCULAR -> ARTEFATOS",
+        "timestamps": "object com datas de cada etapa"
+      },
+      "fontes": [
+        {
+          "nome": "ANATEL",
+          "tipo": "government",
+          "url": "string do recurso",
+          "acesso": "string ISO8601"
+        }
+      ],
+      "processamento": {
+        "normalizacoes": "array de transformações aplicadas",
+        "validacoesAplicadas": "array de testes rodados"
+      }
+    }
+  },
+  "exemploCriterios": {
+    "PASSED": "Todas as validações passaram sem alertas críticos",
+    "WARNING": "Validações passaram mas há alertas ALTO/MEDIO",
+    "FAILED": "Validação crítica falhou - dado não confiável",
+    "REVIEW": "Dados suspeitos - requerem revisão manual"
+  }
+}

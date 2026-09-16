@@ -1,0 +1,351 @@
+{
+  "versao": "1.0.0",
+  "competencia": "2026-07",
+  "geradoEm": "2026-09-16T00:00:00Z",
+  "descricao": "Documento de identidade e classificação de prestadoras de banda larga fixa no RJ. Mapeia CNPJs para razão social, grupo econômico e relacionamentos (subsidiárias, marcas).",
+  "notas": [
+    "Este documento é base para o 'Regulatory view' - prestadoras individuais conforme registrado na Anatel.",
+    "O 'Economic/commercial view' consolidado por grupo será derivado quando houver documentação de evidência.",
+    "Todos os CNPJs são identificadores únicos e registráveis. Marcas podem variar, mas CNPJ permanece estável.",
+    "Campos 'requerVerificacao' indicam dados que precisam auditoria contra fontes oficiais (CNPJ, Anatel, receita.gov.br).",
+    "Fonte primária: Registros Anatel de banda larga fixa RJ, normalizados pelo ETL NETRANK."
+  ],
+  "prestadoras": [
+    {
+      "cnpj": "66970229",
+      "razaoSocial": "CLARO S.A.",
+      "nomesAlternos": ["CLARO", "Claro"],
+      "grupoEconomico": "América Móvil",
+      "evidencia": "Informação publicada pela Anatel; America Móvil é controladora confirmada de Claro Brasil",
+      "ativo": true,
+      "municipiosAtendidos": 28,
+      "posicaoUltima": 1,
+      "acessosUltima": 1342408,
+      "marketShareUltima": 31.52,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Maior provedor do estado. Unidade Brasil de América Móvil."
+    },
+    {
+      "cnpj": "40432544",
+      "razaoSocial": "CLARO S.A. (Registrada 40432544)",
+      "nomesAlternos": ["CLARO"],
+      "grupoEconomico": "América Móvil",
+      "evidencia": "Possível filial ou unidade regional com CNPJ distinto. Requer auditoria.",
+      "ativo": true,
+      "municipiosAtendidos": 92,
+      "posicaoUltima": 15,
+      "acessosUltima": 31148,
+      "marketShareUltima": 0.73,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ DISTINTO: 40432544. Potencial operação centralizada (presença em todos os 92 municípios é anomalia). Investigar consolidação vs. distribuição."
+    },
+    {
+      "cnpj": "53420564",
+      "razaoSocial": "OI S.A.",
+      "nomesAlternos": ["OI"],
+      "grupoEconomico": "Oi Móvel (Grupo Oi)",
+      "evidencia": "CNPJ raiz Oi S.A., provador histórico, dados Anatel",
+      "ativo": true,
+      "municipiosAtendidos": 33,
+      "posicaoUltima": 2,
+      "acessosUltima": 657314,
+      "marketShareUltima": 15.43,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Segundo maior provedor. Oi S.A. consolidada em Oi Móvel após reestruturação 2023-2024."
+    },
+    {
+      "cnpj": "76535764",
+      "razaoSocial": "OI MÓVEL S.A.",
+      "nomesAlternos": ["OI"],
+      "grupoEconomico": "Oi Móvel (Grupo Oi)",
+      "evidencia": "Filial ou unidade regionalizada. Requer clarificação com Anatel.",
+      "ativo": true,
+      "municipiosAtendidos": 92,
+      "posicaoUltima": 23,
+      "acessosUltima": 16095,
+      "marketShareUltima": 0.38,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ DISTINTO: 76535764. Padrão similar a CLARO 40432544: presença em 92 municípios. Potencial consolidação de operações regionais."
+    },
+    {
+      "cnpj": "02558157",
+      "razaoSocial": "TELEFÔNICA BRASIL S.A.",
+      "nomesAlternos": ["VIVO", "Vivo"],
+      "grupoEconomico": "Telefónica Group (Espanha)",
+      "evidencia": "Telefónica Brasil é marca comercial Vivo no Brasil. Controladora: Telefónica España.",
+      "ativo": true,
+      "municipiosAtendidos": 76,
+      "posicaoUltima": 3,
+      "acessosUltima": 391515,
+      "marketShareUltima": 9.19,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Terceiro maior provedor. Vivo é marca comercial única de Telefónica Brasil."
+    },
+    {
+      "cnpj": "07714104",
+      "razaoSocial": "GIGA MAIS FIBRA LTDA.",
+      "nomesAlternos": ["GIGA MAIS FIBRA"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "Provedor regional com presença forte. Dados Anatel.",
+      "ativo": true,
+      "municipiosAtendidos": 59,
+      "posicaoUltima": 4,
+      "acessosUltima": 316906,
+      "marketShareUltima": 7.44,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "Quarto maior provedor. Investigar relacionamento com CNPJ 41644220 (também 'GIGA MAIS FIBRA')."
+    },
+    {
+      "cnpj": "41644220",
+      "razaoSocial": "GIGA MAIS FIBRA LTDA. (Registrada 41644220)",
+      "nomesAlternos": ["GIGA MAIS FIBRA"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "CNPJ distinto com mesmo nome. Potencial: filial, divisão regional, operação separada.",
+      "ativo": true,
+      "municipiosAtendidos": 52,
+      "posicaoUltima": 191,
+      "acessosUltima": 1269,
+      "marketShareUltima": 0.03,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ DISTINTO: 41644220. Mesmo nome, dados mínimos. Possível subsidiária, operação encerrada ou consolidação em progresso."
+    },
+    {
+      "cnpj": "02421421",
+      "razaoSocial": "TELECOM ITALIA BRASIL S.A. (TIM)",
+      "nomesAlternos": ["TIM"],
+      "grupoEconomico": "Telecom Italia Group",
+      "evidencia": "TIM Brasil opera sob Telecom Italia Ltda. Controladora: Telecom Italia (Itália)",
+      "ativo": true,
+      "municipiosAtendidos": 41,
+      "posicaoUltima": 5,
+      "acessosUltima": 112315,
+      "marketShareUltima": 2.64,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Quinto maior provedor. TIM é marca operacional única."
+    },
+    {
+      "cnpj": "05206385",
+      "razaoSocial": "HUGHES NETWORK SYSTEMS BRASIL LTDA.",
+      "nomesAlternos": ["HUGHES"],
+      "grupoEconomico": "Hughes Network Systems (EUA)",
+      "evidencia": "Satélite. Controladora: Hughes Communications (grupo privado EUA)",
+      "ativo": true,
+      "municipiosAtendidos": 91,
+      "posicaoUltima": 51,
+      "acessosUltima": 5223,
+      "marketShareUltima": 0.12,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Provedor satelital. Presença em 91 municípios compatível com cobertura satélite."
+    },
+    {
+      "cnpj": "40154884",
+      "razaoSocial": "STARLINK BRAZIL SERVIÇOS DE INTERNET LTDA.",
+      "nomesAlternos": ["STARLINK BRAZIL SERVICOS DE INTERNET LTDA."],
+      "grupoEconomico": "SpaceX (Starlink)",
+      "evidencia": "Serviço Starlink no Brasil. Operada por SpaceX.",
+      "ativo": true,
+      "municipiosAtendidos": 92,
+      "posicaoUltima": 17,
+      "acessosUltima": 28164,
+      "marketShareUltima": 0.66,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Provedor satelital de banda larga via órbita baixa. Entrada recente no mercado brasileiro."
+    },
+    {
+      "cnpj": "05872814",
+      "razaoSocial": "ALGAR TELECOM (CTBC TELECOM)",
+      "nomesAlternos": ["ALGAR (CTBC TELECOM)"],
+      "grupoEconomico": "Grupo Algar (Brasil)",
+      "evidencia": "Algar adquiriu CTBC em consolidação. Operação unificada.",
+      "ativo": true,
+      "municipiosAtendidos": 48,
+      "posicaoUltima": 65,
+      "acessosUltima": 3481,
+      "marketShareUltima": 0.08,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Operadora regional histórica. CTBC agora marca da Algar."
+    },
+    {
+      "cnpj": "27995352",
+      "razaoSocial": "PLAYFIBRA LTDA.",
+      "nomesAlternos": ["PLAYFIBRA"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "Provedor regional com marca Playfibra.",
+      "ativo": true,
+      "municipiosAtendidos": 3,
+      "posicaoUltima": 52,
+      "acessosUltima": 4821,
+      "marketShareUltima": 0.11,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ base 27995352. Verificar relacionamento com CNPJ 46189297 (também 'Playfibra')."
+    },
+    {
+      "cnpj": "46189297",
+      "razaoSocial": "PLAYFIBRA LTDA. (Registrada 46189297)",
+      "nomesAlternos": ["Playfibra"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "CNPJ distinto, mesmo nome comercial.",
+      "ativo": true,
+      "municipiosAtendidos": 3,
+      "posicaoUltima": 93,
+      "acessosUltima": 2896,
+      "marketShareUltima": 0.07,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ DISTINTO: 46189297. Possível franquia, operação regional separada, ou consolidação."
+    },
+    {
+      "cnpj": "31748174",
+      "razaoSocial": "VERO LTDA.",
+      "nomesAlternos": ["VERO"],
+      "grupoEconomico": "Independente",
+      "evidencia": "Provedor operacional independente.",
+      "ativo": true,
+      "municipiosAtendidos": 10,
+      "posicaoUltima": 207,
+      "acessosUltima": 1081,
+      "marketShareUltima": 0.03,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Provedor de pequeno porte."
+    },
+    {
+      "cnpj": "20611966",
+      "razaoSocial": "LESTE TELECOM LTDA.",
+      "nomesAlternos": ["Leste Telecom"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "Operadora local. Investigar consolidação de múltiplos CNPJs 'Leste Telecom'.",
+      "ativo": true,
+      "municipiosAtendidos": 1,
+      "posicaoUltima": 124,
+      "acessosUltima": 2095,
+      "marketShareUltima": 0.05,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ 20611966 - 'Leste Telecom'. Múltiplas entidades com este nome. Consolidar CNPJs."
+    },
+    {
+      "cnpj": "31359056",
+      "razaoSocial": "LESTE TELECOM LTDA. (Registrada 31359056)",
+      "nomesAlternos": ["Leste Telecom"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "CNPJ distinto com mesmo nome.",
+      "ativo": true,
+      "municipiosAtendidos": 1,
+      "posicaoUltima": 124,
+      "acessosUltima": 2095,
+      "marketShareUltima": 0.05,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ DISTINTO: 31359056. Mesma posição/dados que 20611966 - possível duplicata de registro."
+    },
+    {
+      "cnpj": "37170780",
+      "razaoSocial": "LESTE TELECOM LTDA. (Registrada 37170780)",
+      "nomesAlternos": ["Leste Telecom"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "Terceiro CNPJ com mesmo nome.",
+      "ativo": true,
+      "municipiosAtendidos": 1,
+      "posicaoUltima": 134,
+      "acessosUltima": 1923,
+      "marketShareUltima": 0.04,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ DISTINTO: 37170780. Terceira entidade 'Leste Telecom'. Auditoria urgente."
+    },
+    {
+      "cnpj": "42057789",
+      "razaoSocial": "LESTE TELECOM LTDA. (Registrada 42057789)",
+      "nomesAlternos": ["Leste Telecom"],
+      "grupoEconomico": "Independente (verificar)",
+      "evidencia": "Quarto CNPJ com mesmo nome.",
+      "ativo": true,
+      "municipiosAtendidos": 1,
+      "posicaoUltima": 132,
+      "acessosUltima": 1987,
+      "marketShareUltima": 0.05,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": true,
+      "notas": "CNPJ DISTINTO: 42057789. QUARTA entidade 'Leste Telecom'. Crítico: consolidar e auditoria."
+    },
+    {
+      "cnpj": "00336701",
+      "razaoSocial": "TELECOMUNICAÇÕES BRASILEIRAS S.A. (TELEBRAS)",
+      "nomesAlternos": ["TELEBRAS"],
+      "grupoEconomico": "Governo Brasileiro (BNDES)",
+      "evidencia": "Empresa estatal de telecomunicações, controlada pelo Estado via BNDES.",
+      "ativo": true,
+      "municipiosAtendidos": 78,
+      "posicaoUltima": 297,
+      "acessosUltima": 597,
+      "marketShareUltima": 0.01,
+      "competenciaUltima": "2026-07",
+      "requerVerificacao": false,
+      "notas": "Operadora estatal. Presença em 78 municípios através de infraestrutura pública (backhaul)."
+    }
+  ],
+  "pendentesVerificacao": {
+    "urgente": [
+      {
+        "cnpj": "40432544",
+        "motivo": "CLARO com presença em 92 municípios (anomalia). Verificar se é consolidação ou distribuição."
+      },
+      {
+        "cnpj": "76535764",
+        "motivo": "OI com CNPJ distinto (53420564), presença em 92 municípios. Relacionamento?"
+      },
+      {
+        "cnpj": "07714104",
+        "motivo": "GIGA MAIS FIBRA tem segundo CNPJ (41644220) com dados mínimos. Consolidação?"
+      },
+      {
+        "cnpj": "20611966",
+        "motivo": "LESTE TELECOM com MÚLTIPLOS CNPJs (31359056, 37170780, 42057789). Crítico - duplicatas?"
+      },
+      {
+        "cnpj": "27995352",
+        "motivo": "PLAYFIBRA com segundo CNPJ (46189297). Verificar franquias ou operações separadas."
+      }
+    ],
+    "media": [
+      {
+        "cnpj": "05872814",
+        "motivo": "ALGAR/CTBC - Verificar data de consolidação formal e impacto nos registros Anatel."
+      },
+      {
+        "cnpj": "02558157",
+        "motivo": "VIVO/Telefónica - Confirmar que Vivo é a ÚNICA marca operacional (sem subsidiárias regionais)."
+      }
+    ]
+  },
+  "metadados": {
+    "totalPrestadorasDocumentadas": 21,
+    "totalCNPJsDistintos": 23,
+    "cmajoresProvedores": 5,
+    "provedoresEstrangeiros": 4,
+    "provedoresEstatais": 1,
+    "provedoresSatelitais": 2,
+    "provedoresComAnomalia": 5
+  },
+  "proximosPassos": [
+    "Executar auditoria formal nos CNPJs com 'requerVerificacao': true contra base CNPJ/Receita Federal",
+    "Consultar Anatel sobre consolidações e filiais documentadas",
+    "Resolver anomalias de 'Leste Telecom' (4 CNPJs, mesmo nome)",
+    "Classificar provedores em grupos econômicos documentados",
+    "Gerar 'Economic view' consolidado com evidência de linkages",
+    "Atualizar este documento mensalmente com registros Anatel novos"
+  ]
+}
