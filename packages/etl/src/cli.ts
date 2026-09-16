@@ -17,7 +17,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { rotularCompetencia, type ProcedenciaDados } from '@netrank/core';
-import { CAMINHOS } from './config.js';
+import { CAMINHOS, RAIZ_REPO } from './config.js';
 import { escreverCsvDemo } from './fixtures/gerar-demo.js';
 import { construirArtefatos } from './pipeline/artefatos.js';
 import {
@@ -30,6 +30,10 @@ import {
 import { extrairRj } from './pipeline/extrair.js';
 import { baixarMalhaMunicipios, processarMalhaLocal } from './pipeline/malhas.js';
 import { converterParaExtracao } from './pipeline/importar-bdd.js';
+import {
+  baixarLocalidades,
+  lerLocalidadesDeArquivo,
+} from './pipeline/nomes-municipios.js';
 import {
   consultarRj,
   criarCliente,
@@ -56,6 +60,28 @@ import {
 } from './pipeline/qualidade.js';
 import { FONTE_ANATEL } from './sources/anatel.js';
 import { abrirBanco, type Banco } from './warehouse/db.js';
+
+/**
+ * Resolve um caminho informado pelo usuario.
+ *
+ * `npm run -w` executa o comando com o diretorio de trabalho no pacote, nao na
+ * raiz do repositorio. Um caminho relativo digitado pelo operador quase sempre
+ * se refere a raiz, entao tentamos os dois — e, se nenhum existir, o erro
+ * mostra onde procuramos, em vez de um ENOENT cru.
+ */
+function resolverCaminho(informado: string): string {
+  const candidatos = [
+    path.resolve(process.cwd(), informado),
+    path.resolve(RAIZ_REPO, informado),
+  ];
+  for (const candidato of candidatos) {
+    if (fs.existsSync(candidato)) return candidato;
+  }
+  throw new Error(
+    `Arquivo nao encontrado: ${informado}\nProcurado em:\n` +
+      candidatos.map((c) => `  ${c}`).join('\n'),
+  );
+}
 
 function hashArquivo(caminho: string): string {
   return crypto.createHash('sha256').update(fs.readFileSync(caminho)).digest('hex');
@@ -255,7 +281,7 @@ async function principal(): Promise<void> {
       case 'importar': {
         const caminho = resto[0];
         if (!caminho) throw new Error('Uso: npm run etl -- importar <caminho-do-csv> [--latin1]');
-        await importar(db, path.resolve(caminho), {
+        await importar(db, resolverCaminho(caminho), {
           url: FONTE_ANATEL.portalDados,
           dadosDemonstrativos: false,
           ...(resto.includes('--latin1') ? { encoding: 'latin1' as const } : {}),
@@ -520,6 +546,34 @@ async function principal(): Promise<void> {
         break;
       }
 
+      case 'municipios': {
+        // Nomes oficiais: a malha traz so o codigo, e a Base dos Dados tambem.
+        const indiceArquivo = resto.indexOf('--arquivo');
+        const arquivo = indiceArquivo >= 0 ? resto[indiceArquivo + 1] : undefined;
+
+        const lista = arquivo
+          ? lerLocalidadesDeArquivo(resolverCaminho(arquivo))
+          : await baixarLocalidades();
+        console.log(`[municipios] ${lista.length} municipios do RJ recebidos do IBGE`);
+
+        const upsert = db.prepare(
+          `INSERT INTO municipios (codigo_ibge, nome, uf, regiao) VALUES (?, ?, 'RJ', ?)
+             ON CONFLICT(codigo_ibge) DO UPDATE SET
+               nome = excluded.nome,
+               regiao = COALESCE(excluded.regiao, municipios.regiao)`,
+        );
+        const transacao = db.transaction(() => {
+          for (const m of lista) upsert.run(m.codigoIbge, m.nome, m.regiao);
+        });
+        transacao();
+
+        const comRegiao = lista.filter((m) => m.regiao !== null).length;
+        console.log(
+          `[municipios] nomes gravados | ${comRegiao} com regiao identificada`,
+        );
+        break;
+      }
+
       case 'malhas': {
         const municipios = db
           .prepare('SELECT codigo_ibge, nome FROM municipios')
@@ -532,7 +586,7 @@ async function principal(): Promise<void> {
         let resultado;
         if (arquivoLocal) {
           console.log(`[malhas] processando arquivo local ${arquivoLocal}`);
-          resultado = processarMalhaLocal(path.resolve(arquivoLocal), nomes);
+          resultado = processarMalhaLocal(resolverCaminho(arquivoLocal), nomes);
         } else {
           console.log('[malhas] consultando a API de malhas do IBGE...');
           resultado = await baixarMalhaMunicipios(nomes);
@@ -588,6 +642,7 @@ async function principal(): Promise<void> {
             '  inventario               imprime o inventario de bases da Anatel (diagnostico)\n' +
             '  bdd-inspecionar          descreve o schema da Base dos Dados (BigQuery)\n' +
             '  bdd-importar [--anos N]  importa os dados do RJ via BigQuery\n' +
+            '  municipios [--arquivo <json>] nomes oficiais dos municipios (IBGE)\n' +
             '  malhas [--arquivo <geojson>]  malha municipal do IBGE para o mapa\n' +
             '  build                    reconstroi artefatos a partir do warehouse\n' +
             '  status                   estado do warehouse e alertas de qualidade',

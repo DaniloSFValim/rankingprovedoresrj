@@ -112,7 +112,13 @@ jobs:
           DADOS_GOV_BR_API_KEY: ${{ secrets.DADOS_GOV_BR_API_KEY }}
         run: npm run etl -- sincronizar --anos "${{ inputs.anos || '2' }}"
 
-      # --------------------------------------------------------------- malha
+      # --------------------------------------------------------------- IBGE
+      # A Base dos Dados entrega apenas o codigo do municipio. Sem os nomes
+      # oficiais, as paginas municipais exibiriam numeros.
+      - name: Nomes oficiais dos municipios (IBGE)
+        continue-on-error: true
+        run: npm run etl -- municipios
+
       # A malha e opcional: se o IBGE estiver fora do ar, o mapa continua
       # funcionando como treemap e o resto da atualizacao nao e perdido.
       - name: Baixar a malha municipal do IBGE
