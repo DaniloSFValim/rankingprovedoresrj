@@ -114,7 +114,7 @@ export default async function PaginaMunicipio({ params }: Props) {
   return (
     <main className="space-y-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
+        <div className="flex-1">
           <Link href="/municipios/" className="text-sm text-marca-400 underline-offset-2 hover:underline">
             ← Todos os municípios
           </Link>
@@ -124,50 +124,78 @@ export default async function PaginaMunicipio({ params }: Props) {
           <p className="mt-1 text-sm text-grafite-400">
             {perfil.posicaoNoEstado !== null && (
               <>
-                {perfil.posicaoNoEstado}º maior mercado do {MARCA.ufSigla} de{' '}
-                {inteiro(perfil.totalMunicipios)} municípios ·{' '}
+                {perfil.posicaoNoEstado}º maior mercado do {MARCA.ufSigla} ·{' '}
               </>
             )}
-            Código IBGE {perfil.codigoIbge}
+            {inteiro(perfil.totalMunicipios)} municípios no Estado · IBGE {perfil.codigoIbge}
           </p>
         </div>
 
-        {/* Trocar de cidade sem voltar para a lista. */}
+        {/* Trocar de cidade permanece acessível, mas não dominante */}
         <SeletorCidade cidades={cidades} slugAtual={slug} />
       </div>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi
-          rotulo="Total de acessos"
-          valor={compacto(c?.totalAcessos)}
-          detalhe={`${inteiro(c?.totalAcessos)} acessos`}
-          variacao={perfil.variacao12Meses?.percentual ?? null}
-          variacaoTexto={`${percentualComSinal(perfil.variacao12Meses?.percentual)} em 12 meses`}
-        />
-        <Kpi
-          rotulo="Provedores"
-          valor={inteiro(c?.numeroProvedores)}
-          detalhe="com acessos no município"
-        />
-        <Kpi
-          rotulo="Líder local"
-          valor={percentual(lider?.marketShare, 1)}
-          detalhe={lider?.nome ?? '—'}
-          ajuda="Provedor com maior número de acessos no município."
-        />
-        <Kpi
-          rotulo="HHI municipal"
-          valor={inteiro(c?.hhi ? Math.round(c.hhi) : null)}
-          detalhe="escala 0–10.000"
-          ajuda="Indicador estatístico de concentração do mercado local. Não constitui conclusão regulatória."
-        />
+      {/* Tamanho do mercado */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
+          <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Tamanho do Mercado</div>
+          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+          <Kpi
+            rotulo="Total de acessos"
+            valor={compacto(c?.totalAcessos)}
+            detalhe={`${inteiro(c?.totalAcessos)} acessos`}
+            variacao={perfil.variacao12Meses?.percentual ?? null}
+            variacaoTexto={`${percentualComSinal(perfil.variacao12Meses?.percentual)} em 12 meses`}
+          />
+          <Kpi
+            rotulo="Provedores ativos"
+            valor={inteiro(c?.numeroProvedores)}
+            detalhe="com acessos no município"
+          />
+          <Kpi
+            rotulo="Posição estadual"
+            valor={perfil.posicaoNoEstado !== null ? perfil.posicaoNoEstado : '—'}
+            detalhe={`de ${inteiro(perfil.totalMunicipios)} municípios`}
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi rotulo="CR1" valor={percentual(c?.cr1, 1)} detalhe="maior provedor" />
-        <Kpi rotulo="CR3" valor={percentual(c?.cr3, 1)} detalhe="três maiores" />
-        <Kpi rotulo="CR5" valor={percentual(c?.cr5, 1)} detalhe="cinco maiores" />
-        <Kpi rotulo="CR10" valor={percentual(c?.cr10, 1)} detalhe="dez maiores" />
+      {/* Liderança e concentração */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
+          <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Liderança e Concentração</div>
+          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <Kpi
+            rotulo="Líder"
+            valor={percentual(lider?.marketShare, 1)}
+            detalhe={lider?.nome ?? '—'}
+            ajuda="Provedor com maior participação (CR1)."
+          />
+          <Kpi
+            rotulo="Top 3"
+            valor={percentual(c?.cr3, 1)}
+            detalhe="três maiores"
+            ajuda="Participação dos 3 maiores provedores."
+          />
+          <Kpi
+            rotulo="Top 5"
+            valor={percentual(c?.cr5, 1)}
+            detalhe="cinco maiores"
+            ajuda="Participação dos 5 maiores provedores."
+          />
+          <Kpi
+            rotulo="HHI"
+            valor={inteiro(c?.hhi ? Math.round(c.hhi) : null)}
+            detalhe="escala 0–10.000"
+            ajuda="Índice de concentração. Não constitui conclusão regulatória."
+          />
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

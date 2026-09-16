@@ -111,22 +111,22 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Pro
         onClick={() => setAberto((a) => !a)}
         className={
           ehDestaque
-            ? 'flex w-full items-center justify-between gap-3 rounded-xl border border-marca-700 bg-marca-950/50 px-5 py-4 text-left transition hover:border-marca-500 hover:bg-marca-950'
-            : 'flex w-full items-center justify-between gap-2 rounded-lg border border-grafite-700 bg-grafite-900 px-3 py-2 text-left text-sm transition hover:border-grafite-600'
+            ? 'flex w-full items-center justify-between gap-3 rounded-xl border-2 border-marca-700 bg-marca-950/50 px-5 py-4 text-left transition hover:border-marca-500 hover:bg-marca-950 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:ring-offset-2 focus:ring-offset-grafite-950'
+            : 'flex w-full items-center justify-between gap-2 rounded-lg border border-grafite-700 bg-grafite-900 px-3 py-2 text-left text-sm transition hover:border-grafite-600 focus:outline-none focus:ring-2 focus:ring-marca-500'
         }
         aria-expanded={aberto}
         aria-haspopup="listbox"
       >
         <span className="min-w-0">
-          <span className={ehDestaque ? 'rotulo' : 'sr-only'}>
-            {ehDestaque ? 'Município' : 'Selecionar cidade'}
+          <span className={ehDestaque ? 'rotulo text-marca-300' : 'sr-only'}>
+            {ehDestaque ? 'Selecionar município' : 'Selecionar cidade'}
           </span>
           <span
             className={`block truncate ${
               ehDestaque ? 'mt-1 text-xl font-semibold text-white' : 'text-grafite-200'
             }`}
           >
-            {atual ? atual.nome : ehDestaque ? 'Buscar…' : 'Escolher município…'}
+            {atual ? atual.nome : ehDestaque ? 'Buscar um município…' : 'Escolher município…'}
           </span>
         </span>
         <span className={`shrink-0 ${ehDestaque ? 'text-marca-400' : 'text-grafite-500'}`}>▾</span>
@@ -134,19 +134,26 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Pro
 
       {aberto && (
         <div className="absolute left-0 right-0 z-50 mt-2 overflow-hidden rounded-xl border border-grafite-700 bg-grafite-900 shadow-2xl">
-          <input
-            ref={campo}
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-            onKeyDown={aoTeclar}
-            placeholder="Buscar município…"
-            className="w-full border-b border-grafite-800 bg-grafite-950 px-4 py-3 text-sm text-white outline-none placeholder:text-grafite-500"
-            aria-label="Buscar município"
-          />
+          <div className="border-b border-grafite-800 bg-grafite-950 p-3">
+            <input
+              ref={campo}
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              onKeyDown={aoTeclar}
+              placeholder="Digite para buscar um município…"
+              className="w-full bg-grafite-900 px-3 py-2 text-sm text-white outline-none placeholder:text-grafite-500 focus:ring-0"
+              aria-label="Buscar município"
+            />
+            {busca && (
+              <p className="mt-2 text-xs text-grafite-500">
+                {filtradas.length} resultado{filtradas.length !== 1 ? 's' : ''} encontrado{filtradas.length !== 1 ? 's' : ''}
+              </p>
+            )}
+          </div>
           <ul role="listbox" className="max-h-80 overflow-y-auto">
             {filtradas.length === 0 && (
-              <li className="px-4 py-3 text-sm text-grafite-400">
-                Nenhum município encontrado.
+              <li className="px-4 py-4 text-center text-sm text-grafite-400">
+                Nenhum município encontrado para "{busca}"
               </li>
             )}
             {filtradas.map((cidade, indice) => (
@@ -155,13 +162,20 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Pro
                   type="button"
                   onMouseEnter={() => setIndiceFoco(indice)}
                   onClick={() => escolher(cidade)}
-                  className={`flex w-full items-baseline justify-between gap-3 px-4 py-2.5 text-left text-sm transition ${
-                    indice === indiceFoco ? 'bg-grafite-800 text-white' : 'text-grafite-200'
+                  className={`flex w-full items-baseline justify-between gap-3 px-4 py-3 text-left text-sm transition ${
+                    indice === indiceFoco ? 'bg-marca-900/40 text-white' : 'text-grafite-200 hover:bg-grafite-800/50'
+                  } ${
+                    atual?.slug === cidade.slug ? 'border-l-2 border-marca-500 bg-grafite-800/30' : ''
                   }`}
                 >
-                  <span className="truncate">{cidade.nome}</span>
+                  <div className="flex-1 min-w-0">
+                    <span className="truncate font-medium">{cidade.nome}</span>
+                    {atual?.slug === cidade.slug && (
+                      <span className="text-xs text-marca-400"> ✓ selecionado</span>
+                    )}
+                  </div>
                   <span className="numerico shrink-0 text-xs text-grafite-500">
-                    {inteiro(cidade.totalAcessos)} acessos · {cidade.numeroProvedores} prov.
+                    {inteiro(cidade.totalAcessos)} · {cidade.numeroProvedores}
                   </span>
                 </button>
               </li>

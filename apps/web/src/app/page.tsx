@@ -45,85 +45,107 @@ export default function Home() {
 
   return (
     <main className="space-y-10">
+      {/* Cabeçalho com contexto claro */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
           Banda larga fixa — {MARCA.uf}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          Série histórica de {meta.competencias.length} meses · Fonte: Anatel
+          Estado completo · Série histórica de {meta.competencias.length} meses · Fonte: Anatel
         </p>
       </div>
 
       <AvisoLacunas meta={meta} />
 
-      {/* A pergunta mais comum de quem chega é sobre a própria cidade, então a
-          escolha vem antes dos números do Estado. O texto diz isso UMA vez: o
-          rótulo do seletor já explica a ação, e repetir a instrução ao lado
-          dele só ocupa espaço. */}
-      <section className="cartao flex flex-col gap-4 border-marca-900 bg-gradient-to-br from-marca-950/60 to-grafite-900/60 p-6 md:flex-row md:items-center md:justify-between">
-        <div className="max-w-sm">
-          <h2 className="text-lg font-semibold text-white">Ver uma cidade</h2>
+      {/* Seletor de cidade — entrada principal */}
+      <section className="cartao border-marca-900 bg-gradient-to-br from-marca-950/60 to-grafite-900/60 p-6">
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold text-white">Ver dados de uma cidade</h2>
           <p className="mt-1 text-sm text-grafite-300">
-            Ranking local, quem lidera, quem cresce e concentração — em qualquer
-            um dos {inteiro(municipios.length)} municípios do Estado.
+            Escolha um município para ver ranking local, concentração e crescimento
           </p>
-          <div className="mt-3">
-            <UltimaCidade cidades={cidades} />
+        </div>
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:gap-4">
+          <div className="flex-1">
+            <SeletorCidade variante="destaque" cidades={cidades} />
+          </div>
+          <div className="text-xs text-grafite-500">
+            {inteiro(municipios.length)} municípios disponíveis
           </div>
         </div>
-        <SeletorCidade variante="destaque" cidades={cidades} />
+        <div className="mt-4">
+          <UltimaCidade cidades={cidades} />
+        </div>
       </section>
 
-      {/* KPIs do §28 */}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi
-          rotulo="Total de acessos"
-          valor={compacto(kpis.totalAcessos)}
-          detalhe={`${inteiro(kpis.totalAcessos)} acessos`}
-          variacao={kpis.variacaoMensal?.percentual ?? null}
-          variacaoTexto={`${percentualComSinal(kpis.variacaoMensal?.percentual)} no mês`}
-        />
-        <Kpi
-          rotulo="Provedores ativos"
-          valor={inteiro(kpis.numeroProvedores)}
-          detalhe={`em ${inteiro(kpis.numeroMunicipios)} municípios`}
-          ajuda="Provedores com pelo menos um acesso registrado no Estado na competência."
-        />
-        <Kpi
-          rotulo="Maior provedor"
-          valor={percentual(kpis.lider?.marketShare, 1)}
-          detalhe={kpis.lider?.nome ?? '—'}
-          ajuda="Participação do líder estadual — equivalente ao CR1."
-        />
-        <Kpi
-          rotulo="Crescimento 12 meses"
-          valor={percentualComSinal(kpis.variacao12Meses?.percentual)}
-          detalhe={`${compacto(kpis.variacao12Meses?.absoluta)} acessos`}
-          variacao={kpis.variacao12Meses?.percentual ?? null}
-          variacaoTexto={`${compacto(kpis.variacao12Meses?.absoluta)} acessos no período`}
-        />
-        <Kpi
-          rotulo="CR5"
-          valor={percentual(concentracao?.cr5, 1)}
-          detalhe="participação dos 5 maiores"
-          ajuda="Soma das participações dos cinco maiores provedores do Estado."
-        />
-        <Kpi
-          rotulo="HHI"
-          valor={inteiro(concentracao?.hhi ? Math.round(concentracao.hhi) : null)}
-          detalhe="escala 0–10.000"
-          ajuda="Índice Herfindahl-Hirschman: soma dos quadrados das participações de todos os provedores. Indicador estatístico de concentração, sem conclusão regulatória."
-        />
-        <Kpi
-          rotulo="Municípios analisados"
-          valor={inteiro(kpis.numeroMunicipios)}
-          detalhe="com acessos registrados"
-        />
-        <Kpi
-          rotulo="Competências"
-          valor={inteiro(meta.competencias.length)}
-          detalhe={`${rotularCompetencia(meta.competencias[0]!)} → ${rotularCompetencia(kpis.competencia)}`}
-        />
+      {/* KPIs agrupados logicamente — estado geral */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
+          <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Panorama do Estado</div>
+          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <Kpi
+            rotulo="Total de acessos"
+            valor={compacto(kpis.totalAcessos)}
+            detalhe={`${inteiro(kpis.totalAcessos)} acessos`}
+            variacao={kpis.variacaoMensal?.percentual ?? null}
+            variacaoTexto={`${percentualComSinal(kpis.variacaoMensal?.percentual)} no mês`}
+          />
+          <Kpi
+            rotulo="Provedores ativos"
+            valor={inteiro(kpis.numeroProvedores)}
+            detalhe={`em ${inteiro(kpis.numeroMunicipios)} municípios`}
+            ajuda="Provedores com pelo menos um acesso registrado no Estado na competência."
+          />
+          <Kpi
+            rotulo="Maior provedor"
+            valor={percentual(kpis.lider?.marketShare, 1)}
+            detalhe={kpis.lider?.nome ?? '—'}
+            ajuda="Participação do líder estadual — equivalente ao CR1."
+          />
+          <Kpi
+            rotulo="Crescimento 12 meses"
+            valor={percentualComSinal(kpis.variacao12Meses?.percentual)}
+            detalhe={`${compacto(kpis.variacao12Meses?.absoluta)} acessos`}
+            variacao={kpis.variacao12Meses?.percentual ?? null}
+            variacaoTexto={`${compacto(kpis.variacao12Meses?.absoluta)} acessos no período`}
+          />
+        </div>
+      </div>
+
+      {/* Concentração — grupo visual secundário */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500/60 to-transparent" />
+          <div className="text-xs font-bold uppercase tracking-wide text-marca-400/80">Concentração de Mercado</div>
+          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500/60 to-transparent" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <Kpi
+            rotulo="CR5"
+            valor={percentual(concentracao?.cr5, 1)}
+            detalhe="participação dos 5 maiores"
+            ajuda="Soma das participações dos cinco maiores provedores do Estado."
+          />
+          <Kpi
+            rotulo="HHI"
+            valor={inteiro(concentracao?.hhi ? Math.round(concentracao.hhi) : null)}
+            detalhe="escala 0–10.000"
+            ajuda="Índice Herfindahl-Hirschman: soma dos quadrados das participações de todos os provedores. Indicador estatístico de concentração."
+          />
+          <Kpi
+            rotulo="Municípios"
+            valor={inteiro(kpis.numeroMunicipios)}
+            detalhe="com acessos registrados"
+          />
+          <Kpi
+            rotulo="Dados de"
+            valor={rotularCompetencia(kpis.competencia)}
+            detalhe={`${inteiro(meta.competencias.length)} meses de série`}
+          />
+        </div>
       </div>
 
       <Secao
