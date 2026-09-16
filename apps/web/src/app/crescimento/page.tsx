@@ -90,14 +90,13 @@ export default function PaginaCrescimento() {
           Crescimento e retração
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          Comparação entre {rotularCompetencia(m.competenciaComparada)} e{' '}
-          {rotularCompetencia(m.competencia)}
+          Mudanças de {rotularCompetencia(m.competenciaComparada)} para {rotularCompetencia(m.competencia)} · dados mensais
         </p>
       </div>
 
       <Secao
-        titulo="Radar dos provedores"
-        descricao="Tamanho × crescimento × participação de mercado, em 12 meses"
+        titulo="Visualização: Tamanho × Crescimento × Market Share"
+        descricao="Evolução dos provedores em 12 meses — bolhas maiores = mais acessos, cores = performance"
       >
         <div className="cartao p-3">
           {pontosRadar.length > 0 ? (

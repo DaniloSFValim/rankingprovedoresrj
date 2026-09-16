@@ -28,11 +28,14 @@ export default function PaginaCorrida() {
         </p>
       </div>
 
-      <div className="cartao p-4">
-        <CorridaRanking corrida={corrida} />
+      <div className="space-y-4">
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Posição no Ranking ao Longo do Tempo</div>
+        <div className="cartao p-4">
+          <CorridaRanking corrida={corrida} />
+        </div>
       </div>
 
-      <Secao titulo="Como ler" descricao="">
+      <Secao titulo="Como interpretar o gráfico" descricao="Guia de leitura para entender os movimentos no ranking">
         <ul className="cartao space-y-2 p-5 text-sm text-grafite-300">
           <li>
             O eixo vertical está invertido: a 1ª posição fica no topo, como num pódio.
