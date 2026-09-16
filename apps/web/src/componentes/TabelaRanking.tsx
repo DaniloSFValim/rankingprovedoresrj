@@ -24,39 +24,40 @@ export function TabelaRanking({
 
   return (
     <div className="cartao overflow-x-auto">
-      <table className="w-full min-w-[720px] text-sm">
+      <table className="w-full min-w-[720px] text-sm" role="table">
         <thead>
-          <tr className="border-b border-grafite-800 text-left">
-            <th className="w-12 px-3 py-2.5 text-right font-medium text-grafite-400">#</th>
-            <th className="px-3 py-2.5 font-medium text-grafite-400">Provedor</th>
-            <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Acessos</th>
-            <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Participação</th>
-            <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Var. mensal</th>
-            <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Var. 12 meses</th>
+          <tr className="border-b border-grafite-800 text-left" role="row">
+            <th className="w-12 px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">#</th>
+            <th className="px-3 py-2.5 font-medium text-grafite-400" scope="col">Provedor</th>
+            <th className="px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">Acessos</th>
+            <th className="px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">Participação</th>
+            <th className="px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">Var. mensal</th>
+            <th className="px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">Var. 12 meses</th>
             {!ocultarMunicipios && (
-              <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Municípios</th>
+              <th className="px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">Municípios</th>
             )}
           </tr>
         </thead>
-        <tbody>
+        <tbody role="rowgroup">
           {exibidas.map((linha) => (
             <tr
               key={linha.empresaId}
-              className="border-b border-grafite-800/60 last:border-0 hover:bg-grafite-800/40"
+              className="border-b border-grafite-800/60 last:border-0 hover:bg-grafite-800/40 focus-within:bg-grafite-800/60"
+              role="row"
             >
-              <td className="numerico px-3 py-2.5 text-right font-semibold text-grafite-300">
+              <td className="numerico px-3 py-2.5 text-right font-semibold text-grafite-300" role="cell">
                 {linha.posicao}
               </td>
-              <td className="relative px-3 py-2.5">
+              <td className="relative px-3 py-2.5" role="cell">
                 <div
                   className="absolute inset-y-1 left-0 rounded-r bg-marca-500/15"
                   style={{ width: `${(linha.marketShare / maiorShare) * 100}%` }}
-                  aria-hidden
+                  aria-hidden="true"
                 />
                 <div className="relative">
                   <Link
                     href={`/provedores/${linha.slug}/`}
-                    className="font-medium text-white underline-offset-2 hover:underline"
+                    className="font-medium text-white underline-offset-2 hover:underline focus:outline-2 focus:outline-offset-1 focus:outline-marca-400 rounded px-1"
                   >
                     {linha.nome}
                   </Link>
