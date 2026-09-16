@@ -21,7 +21,7 @@ import { CAMINHOS, RAIZ_REPO } from './config.js';
 import { escreverCsvDemo } from './fixtures/gerar-demo.js';
 import { construirArtefatos } from './pipeline/artefatos.js';
 import {
-  aplicarRetencao,
+  aplicarJanelaConsecutiva,
   carregar,
   competenciasArmazenadas,
   purgarDadosDemonstrativos,
@@ -504,12 +504,21 @@ async function principal(): Promise<void> {
         const lacunas = auditarLacunas(db);
         for (const a of lacunas) console.warn(`\n[CRITICO] ${a.mensagem}\n`);
 
-        // Uma safra pode conter competencias anteriores a janela pedida.
-        const forade = aplicarRetencao(db, anoMinimo);
-        if (forade > 0) {
-          console.log(
-            `[retencao] ${forade.toLocaleString('pt-BR')} fatos anteriores a ` +
-              `${anoMinimo} removidos (janela de ${anos} anos).`,
+        // Janela final: a maior sequencia consecutiva terminando na ultima
+        // competencia disponivel, limitada a 50 meses.
+        const janela = aplicarJanelaConsecutiva(db);
+        console.log(
+          `[janela] ${janela.meses} competencia(s) consecutiva(s): ` +
+            `${janela.inicio} a ${janela.fim}` +
+            (janela.removidos > 0
+              ? ` | ${janela.removidos.toLocaleString('pt-BR')} fatos anteriores removidos`
+              : ''),
+        );
+        if (janela.truncadaPorLacuna) {
+          console.warn(
+            `[janela] ATENCAO: a janela parou em ${janela.inicio} por falta da ` +
+              `competencia anterior na fonte, e nao pelo limite de 50 meses. ` +
+              `Uma serie menor e integra e preferivel a uma serie longa com buraco.`,
           );
         }
 

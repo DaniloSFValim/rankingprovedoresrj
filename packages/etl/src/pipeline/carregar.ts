@@ -6,7 +6,12 @@
  * permanecem intactas. Nao existe caminho de codigo que apague a serie inteira.
  */
 
-import { chaveNomeEmpresa, normalizarCnpj, type Competencia } from '@netrank/core';
+import {
+  chaveNomeEmpresa,
+  deslocarCompetencia,
+  normalizarCnpj,
+  type Competencia,
+} from '@netrank/core';
 import type { Banco } from '../warehouse/db.js';
 import type { ResultadoExtracao } from './extrair.js';
 
@@ -229,34 +234,74 @@ export function purgarDadosDemonstrativos(db: Banco): number {
   return removidos;
 }
 
+/** Numero maximo de competencias mantidas na base. */
+export const MAXIMO_COMPETENCIAS = 50;
+
+export interface JanelaAplicada {
+  inicio: Competencia | null;
+  fim: Competencia | null;
+  meses: number;
+  removidos: number;
+  /** true quando a janela foi encurtada por uma lacuna, e nao pelo limite. */
+  truncadaPorLacuna: boolean;
+}
+
 /**
- * Aplica a janela de retencao, removendo competencias anteriores a ela.
+ * Mantem a maior sequencia CONSECUTIVA de competencias terminando na mais
+ * recente disponivel, limitada a `maximo` meses.
  *
- * TENSAO DELIBERADA COM O PRINCIPIO DE HISTORICO
- * ----------------------------------------------
- * O pipeline nunca trunca a serie ao reimportar — reimportar um mes substitui
- * apenas aquele mes. Esta funcao e diferente: e uma decisao consciente de
- * produto, de analisar uma janela movel em vez de todo o historico desde 2007.
+ * POR QUE CONSECUTIVA
+ * -------------------
+ * A fonte pode ter buracos — 2023 inteiro faltou numa carga real. Uma serie
+ * com buraco e pior que uma serie curta: o grafico liga dezembro a janeiro do
+ * ano seguinte como se fossem meses consecutivos, e toda variacao que
+ * atravessa a lacuna compara periodos que nao se seguem. O numero fica errado
+ * sem parecer errado.
  *
- * O historico nao se perde: ele continua integralmente na fonte, e basta
- * aumentar `--anos` para traze-lo de volta. O que se descarta e a copia local,
- * nao o dado.
+ * Preferimos, entao, uma janela menor e integra. Se a base vai de 2022 a 2026
+ * mas 2023 falta, a janela comeca em jan/2024 — nao em 2022.
  *
- * Retorna quantos fatos foram removidos, para que a operacao apareca no log.
+ * A contagem e sempre para tras a partir da ULTIMA competencia disponivel, e
+ * nao a partir do mes corrente: a Anatel publica com defasagem, e exigir o mes
+ * atual esvaziaria a base sem motivo.
  */
-export function aplicarRetencao(db: Banco, anoMinimo: number): number {
-  const limite = `${anoMinimo}-01`;
+export function aplicarJanelaConsecutiva(
+  db: Banco,
+  maximo: number = MAXIMO_COMPETENCIAS,
+): JanelaAplicada {
+  const presentes = competenciasArmazenadas(db);
+  if (presentes.length === 0) {
+    return { inicio: null, fim: null, meses: 0, removidos: 0, truncadaPorLacuna: false };
+  }
+
+  const fim = presentes[presentes.length - 1]!;
+
+  // Caminha para tras enquanto os meses se seguirem sem buraco.
+  let inicio = fim;
+  let meses = 1;
+  let truncadaPorLacuna = false;
+  const conjunto = new Set(presentes);
+
+  while (meses < maximo) {
+    const anterior = deslocarCompetencia(inicio, -1);
+    if (!conjunto.has(anterior)) {
+      truncadaPorLacuna = true;
+      break;
+    }
+    inicio = anterior;
+    meses += 1;
+  }
+
   const transacao = db.transaction(() => {
     const removidos = db
       .prepare('DELETE FROM fato_acessos WHERE competencia < ?')
-      .run(limite).changes;
-    db.prepare('DELETE FROM alertas_qualidade WHERE competencia < ?').run(limite);
+      .run(inicio).changes;
+    db.prepare('DELETE FROM alertas_qualidade WHERE competencia < ?').run(inicio);
     return removidos;
   });
   const removidos = transacao();
 
   if (removidos > 0) {
-    // Empresas que so existiam fora da janela deixam de ter fatos.
     const limpar = db.transaction(() => {
       db.prepare(
         `DELETE FROM empresas_aliases
@@ -269,7 +314,8 @@ export function aplicarRetencao(db: Banco, anoMinimo: number): number {
     });
     limpar();
   }
-  return removidos;
+
+  return { inicio, fim, meses, removidos, truncadaPorLacuna };
 }
 
 /** Competencias presentes no warehouse, em ordem cronologica. */

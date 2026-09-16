@@ -97,16 +97,23 @@ export default function PaginaMetodologia() {
           substitui apenas aquele mês, nunca apaga os anteriores.
         </p>
         <p>
-          A plataforma analisa uma <strong>janela móvel dos últimos 5 anos</strong>.
-          Competências anteriores são descartadas da base local — não por limitação
-          técnica, mas porque o mercado de banda larga fixa mudou de estrutura o
-          bastante para que comparações com uma década atrás informem pouco sobre a
-          concorrência atual.
+          A plataforma analisa uma <strong>janela móvel de até 50 meses</strong>,
+          contada a partir da competência mais recente disponível — e não do mês
+          corrente. A Anatel publica com defasagem de alguns meses; exigir o mês
+          atual esvaziaria a base sem motivo.
         </p>
         <p>
-          O histórico completo não se perde: ele permanece integralmente na fonte da
-          Anatel, que publica desde 2007, e pode ser reincorporado a qualquer momento
-          ampliando a janela de importação.
+          A janela é sempre <strong>contínua</strong>. Se houver um mês ausente na
+          fonte, a série começa depois dele, ainda que isso resulte em menos de 50
+          meses. Uma série menor e íntegra é preferível a uma longa com buraco: num
+          gráfico, um mês faltando não aparece — a linha liga o mês anterior ao
+          seguinte, e toda variação que atravessa a lacuna compara períodos que não
+          se seguem. O número fica errado sem parecer errado.
+        </p>
+        <p>
+          O histórico completo não se perde: permanece integralmente na fonte da
+          Anatel, que publica desde 2007, e pode ser reincorporado ampliando a janela
+          de importação.
         </p>
       </Bloco>
 

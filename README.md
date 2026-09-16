@@ -276,7 +276,7 @@ trabalho num runner do GitHub, que tem rede liberada e compila normalmente.
 | Parâmetro | Padrão | O que faz |
 |---|---|---|
 | `fonte` | `anatel` | `anatel` (endereço confirmado) ou `basedosdados` (BigQuery) |
-| `anos` | `5` | Quantos anos mais recentes importar |
+| `anos` | `5` | Quantas safras anuais ler (a janela final é de 50 meses) |
 | `url` | vazio | URL de um recurso específico; ignora a descoberta automática |
 | `malhas` | marcado | Baixa também a malha municipal do IBGE |
 

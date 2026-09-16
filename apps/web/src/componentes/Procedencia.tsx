@@ -38,8 +38,9 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
     <div className="cartao border-atencao/40 bg-atencao/10 p-4 text-sm text-atencao">
       <strong>Série histórica com interrupção.</strong> {lacunas.length}{' '}
       {lacunas.length === 1 ? 'competência está ausente' : 'competências estão ausentes'}{' '}
-      da base ({periodos}). Os gráficos mostram a interrupção, e variações que
-      atravessem esse intervalo comparam meses não consecutivos. Os dados
+      da base ({periodos}). Normalmente a janela de análise para antes de uma
+      lacuna, justamente para evitar isso — se este aviso aparece, a
+      descontinuidade está dentro da janela e merece conferência. Os dados
       ausentes não foram estimados nem preenchidos.
     </div>
   );

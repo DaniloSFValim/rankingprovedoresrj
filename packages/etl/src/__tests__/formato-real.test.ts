@@ -14,7 +14,7 @@ import {
 import { extrairRjDeTexto } from '../pipeline/extrair.js';
 import { abrirBancoMemoria } from '../warehouse/db.js';
 import {
-  aplicarRetencao,
+  aplicarJanelaConsecutiva,
   carregar,
   competenciasArmazenadas,
   concluirExecucao,
@@ -238,55 +238,6 @@ describe('outros conjuntos de dados no mesmo pacote', () => {
   });
 });
 
-describe('janela de retencao', () => {
-  const extracao = (competencia: string) => ({
-    registros: [{
-      competencia, codigoIbge: '3303302', empresaId: 'nome:X',
-      tecnologia: 'FIBRA' as const, acessos: 100,
-    }],
-    empresas: new Map([['nome:X', {
-      empresaId: 'nome:X', chaveNome: 'X', nomeOriginalAnatel: 'X',
-      cnpj: null, grupoEconomico: null, origem: 'NOME_CANONICO' as const,
-    }]]),
-    municipios: new Map([['3303302', { codigoIbge: '3303302', nome: 'Niterói' }]]),
-    competencias: new Set([competencia]),
-    tecnologiasNaoMapeadas: new Map(),
-    estatisticas: { linhasLidas: 1, linhasRj: 1, linhasRejeitadas: 0, motivosRejeicao: {} },
-  });
-
-  const preparar = (competencias: string[]) => {
-    const db = abrirBancoMemoria();
-    const fonteId = registrarFonte(db, {
-      nome: 'Anatel', url: 'x', arquivo: 'a', hashSha256: null, bytes: null,
-      coletadoEm: '2026-01-01T00:00:00Z', dadosDemonstrativos: false,
-    });
-    const execucaoId = iniciarExecucao(db, fonteId);
-    for (const c of competencias) carregar(db, extracao(c), execucaoId);
-    return db;
-  };
-
-  it('remove competencias anteriores a janela', () => {
-    const db = preparar(['2021-12', '2022-01', '2026-07']);
-    expect(aplicarRetencao(db, 2022)).toBe(1);
-    expect(competenciasArmazenadas(db)).toEqual(['2022-01', '2026-07']);
-    db.close();
-  });
-
-  it('mantem janeiro do primeiro ano da janela', () => {
-    const db = preparar(['2022-01']);
-    expect(aplicarRetencao(db, 2022)).toBe(0);
-    expect(competenciasArmazenadas(db)).toEqual(['2022-01']);
-    db.close();
-  });
-
-  it('e inofensiva quando tudo esta dentro da janela', () => {
-    const db = preparar(['2025-06', '2026-07']);
-    expect(aplicarRetencao(db, 2022)).toBe(0);
-    expect(competenciasArmazenadas(db)).toHaveLength(2);
-    db.close();
-  });
-});
-
 describe('deteccao de lacunas na serie', () => {
   const extracaoMes = (competencia: string) => ({
     registros: [{
@@ -337,6 +288,87 @@ describe('deteccao de lacunas na serie', () => {
 
   it('nao considera lacuna o que esta fora do intervalo carregado', () => {
     const db = comMeses(['2026-06', '2026-07']);
+    expect(detectarLacunas(db)).toEqual([]);
+    db.close();
+  });
+});
+
+describe('janela de 50 meses consecutivos', () => {
+  const meses = (inicio: string, quantidade: number) =>
+    Array.from({ length: quantidade }, (_, i) => {
+      const [a, m] = inicio.split('-').map(Number);
+      const total = a! * 12 + (m! - 1) + i;
+      return `${Math.floor(total / 12)}-${String((total % 12) + 1).padStart(2, '0')}`;
+    });
+
+  const comMeses = (lista: string[]) => {
+    const db = abrirBancoMemoria();
+    const fonteId = registrarFonte(db, {
+      nome: 'Anatel', url: 'x', arquivo: 'a', hashSha256: null, bytes: null,
+      coletadoEm: '2026-01-01T00:00:00Z', dadosDemonstrativos: false,
+    });
+    const execucaoId = iniciarExecucao(db, fonteId);
+    for (const m of lista) {
+      carregar(db, {
+        registros: [{
+          competencia: m, codigoIbge: '3303302', empresaId: 'nome:X',
+          tecnologia: 'FIBRA' as const, acessos: 100,
+        }],
+        empresas: new Map([['nome:X', {
+          empresaId: 'nome:X', chaveNome: 'X', nomeOriginalAnatel: 'X',
+          cnpj: null, grupoEconomico: null, origem: 'NOME_CANONICO' as const,
+        }]]),
+        municipios: new Map([['3303302', { codigoIbge: '3303302', nome: 'Niterói' }]]),
+        competencias: new Set([m]),
+        tecnologiasNaoMapeadas: new Map(),
+        estatisticas: { linhasLidas: 1, linhasRj: 1, linhasRejeitadas: 0, motivosRejeicao: {} },
+      }, execucaoId);
+    }
+    return db;
+  };
+
+  it('mantem exatamente 50 meses quando ha mais que isso', () => {
+    const db = comMeses(meses('2020-01', 80));
+    const j = aplicarJanelaConsecutiva(db);
+    expect(j.meses).toBe(50);
+    expect(j.truncadaPorLacuna).toBe(false);
+    expect(competenciasArmazenadas(db)).toHaveLength(50);
+    db.close();
+  });
+
+  it('mantem tudo quando ha menos de 50 meses', () => {
+    const db = comMeses(meses('2025-01', 12));
+    const j = aplicarJanelaConsecutiva(db);
+    expect(j.meses).toBe(12);
+    expect(j.removidos).toBe(0);
+    db.close();
+  });
+
+  it('para na lacuna: prefere serie curta e integra a serie longa com buraco', () => {
+    // Caso real: 2022 presente, 2023 inteiro ausente, 2024 em diante presente.
+    const db = comMeses([...meses('2022-01', 12), ...meses('2024-01', 31)]);
+    const j = aplicarJanelaConsecutiva(db);
+
+    expect(j.truncadaPorLacuna).toBe(true);
+    expect(j.inicio).toBe('2024-01');
+    expect(j.meses).toBe(31);
+    // As doze competencias de 2022 saem: estavam do outro lado do buraco.
+    expect(competenciasArmazenadas(db)).toHaveLength(31);
+    db.close();
+  });
+
+  it('conta a partir da ultima competencia disponivel, nao do mes corrente', () => {
+    // A Anatel publica com defasagem; exigir o mes atual esvaziaria a base.
+    const db = comMeses(meses('2024-01', 10));
+    const j = aplicarJanelaConsecutiva(db);
+    expect(j.fim).toBe('2024-10');
+    expect(j.meses).toBe(10);
+    db.close();
+  });
+
+  it('nao deixa lacuna na janela resultante', () => {
+    const db = comMeses([...meses('2022-01', 12), ...meses('2024-01', 31)]);
+    aplicarJanelaConsecutiva(db);
     expect(detectarLacunas(db)).toEqual([]);
     db.close();
   });
