@@ -4,7 +4,12 @@
  * acontecer — nao a uma hipotese.
  */
 import { describe, expect, it } from 'vitest';
-import { ehArquivoIgnorado, mapearCabecalho } from '../sources/anatel.js';
+import {
+  arquivoDentroDaJanela,
+  ehArquivoIgnorado,
+  faixaDeAnos,
+  mapearCabecalho,
+} from '../sources/anatel.js';
 import { extrairRjDeTexto } from '../pipeline/extrair.js';
 import { abrirBancoMemoria } from '../warehouse/db.js';
 import {
@@ -145,5 +150,33 @@ describe('purgarDadosDemonstrativos', () => {
     expect(purgarDadosDemonstrativos(db)).toBe(0);
     expect(competenciasArmazenadas(db)).toEqual(['2026-03']);
     db.close();
+  });
+});
+
+describe('recorte por faixa de anos do nome do arquivo', () => {
+  it('le a faixa do padrao real do pacote', () => {
+    expect(faixaDeAnos('Acessos_Banda_Larga_Fixa_2007-2010.csv'))
+      .toEqual({ inicio: 2007, fim: 2010 });
+    expect(faixaDeAnos('Acessos_Banda_Larga_Fixa_2023-2026.csv'))
+      .toEqual({ inicio: 2023, fim: 2026 });
+  });
+
+  it('aceita arquivo de ano unico', () => {
+    expect(faixaDeAnos('Acessos_2026.csv')).toEqual({ inicio: 2026, fim: 2026 });
+  });
+
+  it('pula safras inteiramente anteriores a janela', () => {
+    expect(arquivoDentroDaJanela('Acessos_Banda_Larga_Fixa_2007-2010.csv', 2023)).toBe(false);
+    expect(arquivoDentroDaJanela('Acessos_Banda_Larga_Fixa_2019-2022.csv', 2023)).toBe(false);
+  });
+
+  it('mantem a safra que toca a janela, mesmo comecando antes', () => {
+    expect(arquivoDentroDaJanela('Acessos_Banda_Larga_Fixa_2023-2026.csv', 2025)).toBe(true);
+    expect(arquivoDentroDaJanela('Acessos_Banda_Larga_Fixa_2019-2022.csv', 2021)).toBe(true);
+  });
+
+  it('processa arquivo sem faixa identificavel — pular perderia dado em silencio', () => {
+    expect(faixaDeAnos('acessos_banda_larga_fixa.csv')).toBeNull();
+    expect(arquivoDentroDaJanela('acessos_banda_larga_fixa.csv', 2025)).toBe(true);
   });
 });

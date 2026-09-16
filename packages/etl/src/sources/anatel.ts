@@ -49,6 +49,45 @@ export function ehArquivoIgnorado(caminho: string): boolean {
     || /dicionario|leia[- ]?me|readme/i.test(nome);
 }
 
+/**
+ * Faixa de anos coberta por um arquivo do pacote, lida do proprio nome.
+ *
+ * O pacote da Anatel e particionado por periodo:
+ *   Acessos_Banda_Larga_Fixa_2007-2010.csv
+ *   Acessos_Banda_Larga_Fixa_2023-2026.csv
+ *
+ * Saber a faixa antes de abrir o arquivo permite pular safras inteiras que
+ * estao fora da janela pedida — o ganho vem de nao ler milhoes de linhas, e
+ * nao de descartar dimensoes do dado.
+ */
+export function faixaDeAnos(caminho: string): { inicio: number; fim: number } | null {
+  const nome = caminho.split(/[\\/]/).pop() ?? caminho;
+  const intervalo = /(\d{4})\s*[-_a]\s*(\d{4})/.exec(nome);
+  if (intervalo) {
+    const inicio = Number(intervalo[1]);
+    const fim = Number(intervalo[2]);
+    if (inicio <= fim) return { inicio, fim };
+  }
+  const unico = /(?:^|[^\d])(19|20)(\d{2})(?:[^\d]|$)/.exec(nome);
+  if (unico) {
+    const ano = Number(`${unico[1]}${unico[2]}`);
+    return { inicio: ano, fim: ano };
+  }
+  return null;
+}
+
+/**
+ * Decide se vale abrir o arquivo, dada a janela de anos desejada.
+ *
+ * Arquivo sem faixa identificavel e SEMPRE processado: pular por nao entender
+ * o nome perderia dados em silencio, que e pior do que ler demais.
+ */
+export function arquivoDentroDaJanela(caminho: string, anoMinimo: number): boolean {
+  const faixa = faixaDeAnos(caminho);
+  if (faixa === null) return true;
+  return faixa.fim >= anoMinimo;
+}
+
 export const FONTE_ANATEL = {
   nome: 'Anatel — Agência Nacional de Telecomunicações',
   painel: 'https://informacoes.anatel.gov.br/paineis/acessos/banda-larga-fixa',

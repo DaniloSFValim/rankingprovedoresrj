@@ -45,6 +45,7 @@ import {
   PROCEDENCIA_BDD,
 } from './sources/basedosdados.js';
 import { baixarRecurso, prepararCsvs } from './pipeline/baixar.js';
+import { arquivoDentroDaJanela } from './sources/anatel.js';
 import { anoDoRecurso, descobrirRecursos } from './sources/descoberta.js';
 import { descobrirESelecionar } from './pipeline/sincronizar.js';
 import { existe, sondarCandidatos } from './sources/sondagem.js';
@@ -418,13 +419,32 @@ async function principal(): Promise<void> {
         }
         console.log('');
 
+        const anoMinimo = new Date().getUTCFullYear() - anos + 1;
+
         for (const recurso of selecionados) {
           const arquivo = await baixarRecurso(recurso.url);
           console.log(
             `[baixar] ${recurso.nome}: ${(arquivo.bytes / 1e6).toFixed(1)} MB | ` +
               `sha256 ${arquivo.sha256.slice(0, 16)}...`,
           );
-          for (const csv of await prepararCsvs(arquivo)) {
+
+          const csvs = await prepararCsvs(arquivo);
+          // O pacote e particionado por periodo. Pular safras inteiras fora da
+          // janela evita ler milhoes de linhas que seriam descartadas depois.
+          const dentro = csvs.filter((c) => arquivoDentroDaJanela(c, anoMinimo));
+          const pulados = csvs.length - dentro.length;
+          if (pulados > 0) {
+            console.log(
+              `[preparar] ${pulados} arquivo(s) fora da janela (anterior a ${anoMinimo}) ignorado(s)`,
+            );
+          }
+          if (dentro.length === 0) {
+            console.warn(
+              `[preparar] nenhum arquivo dentro da janela. Aumente --anos para incluir safras anteriores.`,
+            );
+          }
+
+          for (const csv of dentro) {
             await importar(db, csv, { url: recurso.url, dadosDemonstrativos: false });
           }
         }

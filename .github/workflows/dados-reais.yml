@@ -20,9 +20,9 @@ on:
           - anatel
           - basedosdados
       anos:
-        description: 'Quantos anos mais recentes importar'
+        description: 'Quantos anos mais recentes importar (safras anteriores sao puladas)'
         required: false
-        default: '2'
+        default: '3'
       url:
         description: 'URL de um recurso especifico (ignora a descoberta automatica)'
         required: false
