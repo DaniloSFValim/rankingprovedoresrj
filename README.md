@@ -122,7 +122,40 @@ npm run preview         # serve a exportação estática
 O resultado é um **site estático**: sem servidor de aplicação e sem banco em
 produção. Os dados são arquivos JSON gerados antes do build.
 
-#### Cloudflare Pages
+#### Cloudflare Workers (configuração deste repositório)
+
+O `wrangler.toml` na raiz publica o site como **static assets only**: não há
+código de Worker, apenas os arquivos da exportação estática.
+
+| Campo | Valor |
+|---|---|
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+
+O `name` no `wrangler.toml` **precisa ser igual ao nome do Worker** criado no
+painel. Um nome diferente faz o deploy criar outro Worker em vez de atualizar
+o existente.
+
+Duas armadilhas já resolvidas no arquivo, que valem conhecer:
+
+- **Sem `wrangler.toml`, o deploy falha** num monorepo com `Cloudflare
+  application detection logic has been run in the root of a workspace`. O
+  wrangler se recusa a adivinhar qual workspace publicar.
+- **`not_found_handling = "404-page"` é obrigatório.** Ao contrário do Pages,
+  o Workers não deduz o comportamento de 404 a partir da presença de
+  `404.html` — sem a configuração explícita, responde 404 sem corpo.
+
+Validar a configuração sem publicar:
+
+```bash
+npx wrangler deploy --dry-run
+```
+
+Os arquivos `_headers` e `_redirects` são suportados nativamente, desde que
+estejam dentro do diretório de assets — o `_headers` deste projeto fica em
+`apps/web/public/`, que o Next copia para a saída.
+
+#### Cloudflare Pages (alternativa)
 
 Conecte o repositório em **Workers & Pages → Create → Pages → Connect to Git**.
 Duas configurações funcionam — escolha uma:

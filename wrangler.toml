@@ -1,0 +1,30 @@
+# Configuracao do Worker que publica o NETRANK RJ.
+#
+# O projeto e servido como "static assets only": nao ha codigo de Worker, apenas
+# os arquivos gerados pela exportacao estatica do Next. Por isso nao existe
+# `main` nem o binding ASSETS — a documentacao da Cloudflare e explicita em que
+# o binding so vale quando ha script de Worker.
+#
+# Este arquivo tambem resolve a falha "application detection logic has been run
+# in the root of a workspace": com a configuracao presente, o wrangler nao
+# precisa adivinhar o que publicar num monorepo com workspaces npm.
+#
+# ATENCAO: `name` precisa ser exatamente o nome do Worker criado no painel da
+# Cloudflare. Um nome diferente faz o `wrangler deploy` criar OUTRO Worker em
+# vez de atualizar o existente.
+name = "rankingprovedoresrj"
+
+compatibility_date = "2026-09-16"
+
+[assets]
+# Saida da exportacao estatica do Next (`npm run build`).
+directory = "./apps/web/out"
+
+# Requisicao sem asset correspondente devolve o 404.html mais proximo, com
+# status 404. Sem isto, o Workers responderia 404 sem corpo.
+not_found_handling = "404-page"
+
+# O Next esta configurado com `trailingSlash: true`, entao cada rota e uma
+# pasta com index.html. `auto-trailing-slash` serve esses arquivos com barra
+# final e os arquivos soltos sem — que e o comportamento desejado.
+html_handling = "auto-trailing-slash"
