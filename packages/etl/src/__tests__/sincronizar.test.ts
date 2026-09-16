@@ -80,3 +80,29 @@ describe('selecionarRecursos', () => {
     expect(selecionados).toHaveLength(0);
   });
 });
+
+describe('selecionarRecursos com base completa', () => {
+  const completa: RecursoCandidato = {
+    ...recurso('acessos_banda_larga_fixa.zip'),
+    catalogo: 'Anatel (endereco confirmado)',
+    baseCompleta: true,
+  };
+
+  it('seleciona a base completa mesmo sem ano no nome', () => {
+    const { selecionados } = selecionarRecursos([completa], { anos: 2, anoAtual: 2026 });
+    expect(selecionados).toHaveLength(1);
+    expect(selecionados[0]!.baseCompleta).toBe(true);
+  });
+
+  it('coloca a base completa antes das safras anuais', () => {
+    const { selecionados } = selecionarRecursos(
+      [recurso('Acessos_2026.zip'), completa, recurso('Acessos_2025.zip')],
+      { anos: 2, anoAtual: 2026 },
+    );
+    expect(selecionados[0]!.baseCompleta).toBe(true);
+    expect(selecionados.slice(1).map((r) => r.nome)).toEqual([
+      'Acessos_2025.zip',
+      'Acessos_2026.zip',
+    ]);
+  });
+});

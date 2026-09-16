@@ -203,12 +203,35 @@ Defina `NETRANK_AMBIENTE=producao` no ambiente de build. Com essa variável, o
 build **aborta** se o warehouse contiver dados demonstrativos — a salvaguarda
 que impede fixture sintética de ir ao ar como se fosse dado da Anatel.
 
-### Base dos Dados (BigQuery) — caminho preferencial
+### Anatel — endereço confirmado (caminho padrão)
 
-A descoberta automática no portal da Anatel se mostrou inviável na prática: a
-API do dados.gov.br responde **HTTP 401** e exige chave vinculada a perfil de
-Administrador de Organização, e o inventário público da Anatel raramente traz
-link direto de arquivo.
+O arquivo de acessos de banda larga fixa fica em:
+
+```
+https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/acessos_banda_larga_fixa.zip
+```
+
+São ~995 MB contendo **toda a série histórica** — não é particionado por ano.
+
+Esse endereço não foi deduzido: a descoberta por catálogo falhou
+repetidamente, e ele foi obtido por **sondagem** e confirmado contra o próprio
+servidor da Anatel. Se um dia parar de responder:
+
+```bash
+npm run etl -- sondar            # testa as variações conhecidas
+npm run etl -- sondar <url>      # confere um link antes de baixar 1 GB
+```
+
+O arquivo nunca precisa passar pela sua máquina: o runner do GitHub baixa,
+o filtro `UF = RJ` roda linha a linha durante a leitura, e apenas o recorte do
+Rio de Janeiro — menos de 1 MB — é commitado.
+
+### Base dos Dados (BigQuery) — alternativa
+
+A descoberta automática no portal da Anatel se mostrou inviável: a API do
+dados.gov.br responde **HTTP 401** e exige chave vinculada a perfil de
+Administrador de Organização, e o inventário público raramente traz link
+direto de arquivo.
 
 A [Base dos Dados](https://basedosdados.org) mantém os microdados de acessos
 de banda larga fixa da Anatel tratados e consultáveis via BigQuery.
@@ -252,7 +275,7 @@ trabalho num runner do GitHub, que tem rede liberada e compila normalmente.
 
 | Parâmetro | Padrão | O que faz |
 |---|---|---|
-| `fonte` | `basedosdados` | `basedosdados` (BigQuery) ou `anatel` (portal) |
+| `fonte` | `anatel` | `anatel` (endereço confirmado) ou `basedosdados` (BigQuery) |
 | `anos` | `2` | Quantos anos mais recentes importar |
 | `url` | vazio | URL de um recurso específico; ignora a descoberta automática |
 | `malhas` | marcado | Baixa também a malha municipal do IBGE |

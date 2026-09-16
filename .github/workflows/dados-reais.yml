@@ -15,10 +15,10 @@ on:
         description: 'Fonte dos dados'
         type: choice
         required: false
-        default: basedosdados
+        default: anatel
         options:
-          - basedosdados
           - anatel
+          - basedosdados
       anos:
         description: 'Quantos anos mais recentes importar'
         required: false
@@ -60,7 +60,7 @@ jobs:
       # e que ocupam dezenas de GB; remove-los evita "no space left on device"
       # no meio da descompactacao.
       - name: Liberar espaco em disco
-        if: inputs.fonte == 'anatel'
+        if: inputs.fonte != 'basedosdados'
         run: |
           echo "Antes:"; df -h / | tail -1
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
@@ -85,7 +85,7 @@ jobs:
       # inviavel: a API do dados.gov.br exige chave de Administrador de
       # Organizacao e o inventario publico raramente traz link direto.
       - name: Schema da Base dos Dados (diagnostico)
-        if: inputs.fonte != 'anatel'
+        if: inputs.fonte == 'basedosdados'
         continue-on-error: true
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
@@ -93,7 +93,7 @@ jobs:
         run: npm run etl -- bdd-inspecionar
 
       - name: Importar dados do RJ via BigQuery
-        if: inputs.fonte != 'anatel'
+        if: inputs.fonte == 'basedosdados'
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
           GOOGLE_CLOUD_PROJECT: ${{ vars.GCP_PROJECT_ID }}
@@ -104,17 +104,17 @@ jobs:
       # quais existem de fato. Deduzir URL e chute; confirmar com o servidor e
       # evidencia.
       - name: Sondar enderecos de arquivo da Anatel
-        if: inputs.fonte == 'anatel'
+        if: inputs.fonte != 'basedosdados'
         continue-on-error: true
         run: npm run etl -- sondar ${{ inputs.url }}
 
       - name: Inventario de bases da Anatel (diagnostico)
-        if: inputs.fonte == 'anatel'
+        if: inputs.fonte != 'basedosdados'
         continue-on-error: true
         run: npm run etl -- inventario
 
       - name: Inspecionar o catalogo de dados abertos
-        if: inputs.fonte == 'anatel'
+        if: inputs.fonte != 'basedosdados'
         continue-on-error: true
         env:
           # Opcional. A API do dados.gov.br responde 401 sem chave; sem ela a
@@ -123,11 +123,11 @@ jobs:
         run: npm run etl -- descobrir
 
       - name: Importar recurso especifico
-        if: inputs.fonte == 'anatel' && inputs.url != ''
+        if: inputs.fonte != 'basedosdados' && inputs.url != ''
         run: npm run etl -- atualizar "${{ inputs.url }}"
 
       - name: Sincronizar automaticamente
-        if: inputs.fonte == 'anatel' && inputs.url == ''
+        if: inputs.fonte != 'basedosdados' && inputs.url == ''
         env:
           DADOS_GOV_BR_API_KEY: ${{ secrets.DADOS_GOV_BR_API_KEY }}
         run: npm run etl -- sincronizar --anos "${{ inputs.anos || '2' }}"

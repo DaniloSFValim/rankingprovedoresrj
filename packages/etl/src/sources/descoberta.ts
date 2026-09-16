@@ -21,6 +21,7 @@
  * confiar no resultado.
  */
 
+import { FONTE_ANATEL, URL_ACESSOS_BANDA_LARGA_FIXA } from './anatel.js';
 import {
   baixarInventario,
   filtrarBandaLargaFixa,
@@ -69,6 +70,11 @@ export interface RecursoCandidato {
   url: string;
   bytes: number | null;
   atualizadoEm: string | null;
+  /**
+   * true quando o recurso contem todo o historico, em vez de uma safra anual.
+   * Recursos assim escapam do recorte por ano — nao ha safra a escolher.
+   */
+  baseCompleta?: boolean;
 }
 
 interface ConjuntoCkan {
@@ -218,7 +224,23 @@ export async function descobrirRecursos(
   const falhas: ResultadoDescoberta['falhas'] = [];
   const paginas: ResultadoDescoberta['paginas'] = [];
 
-  // Fonte preferencial: o inventario da Anatel nao exige chave de acesso.
+  // Endereco confirmado na origem: entra sempre, independente de catalogo.
+  // A descoberta continua rodando porque pode revelar arquivos adicionais,
+  // mas o produto nao depende mais dela para funcionar.
+  candidatos.push({
+    catalogo: 'Anatel (endereco confirmado)',
+    conjunto: 'Acessos — Banda Larga Fixa (base completa)',
+    conjuntoUrl: FONTE_ANATEL.portalDados,
+    nome: 'acessos_banda_larga_fixa.zip',
+    formato: 'ZIP',
+    url: URL_ACESSOS_BANDA_LARGA_FIXA,
+    bytes: null,
+    atualizadoEm: null,
+    baseCompleta: true,
+  });
+
+  // Fonte preferencial entre os catalogos: o inventario da Anatel nao exige
+  // chave de acesso.
   try {
     const bruto = await baixarInventario(timeoutMs);
     const { linhas } = interpretarInventario(bruto);

@@ -57,6 +57,11 @@ export function selecionarRecursos(
   });
 
   for (const candidato of ordenados) {
+    // Base completa nao tem safra a escolher: entra sempre.
+    if (candidato.baseCompleta) {
+      selecionados.push(candidato);
+      continue;
+    }
     const ano = anoDoRecurso(candidato);
     if (ano === null || ano < anoMinimo || ano > anoAtual + 1) {
       descartados.push(candidato);
@@ -72,7 +77,11 @@ export function selecionarRecursos(
 
   // Do mais antigo para o mais novo: importar em ordem cronologica faz os
   // alertas de variacao compararem contra a competencia correta.
-  selecionados.sort((a, b) => (anoDoRecurso(a) ?? 0) - (anoDoRecurso(b) ?? 0));
+  // A base completa vem primeiro; as safras anuais seguem em ordem cronologica.
+  selecionados.sort((a, b) => {
+    if (a.baseCompleta !== b.baseCompleta) return a.baseCompleta ? -1 : 1;
+    return (anoDoRecurso(a) ?? 0) - (anoDoRecurso(b) ?? 0);
+  });
   return { selecionados, descartados };
 }
 

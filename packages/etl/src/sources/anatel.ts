@@ -14,6 +14,23 @@
 
 import { canonizarTexto } from '@netrank/core';
 
+/**
+ * Endereco do arquivo de acessos de banda larga fixa.
+ *
+ * CONFIRMADO contra o servidor da Anatel — nao e deducao. A descoberta por
+ * catalogo falhou repetidamente (API do dados.gov.br exige chave de
+ * Administrador de Organizacao; o inventario publico quase nunca traz link
+ * direto), e este endereco foi obtido por sondagem e validado na origem.
+ *
+ * O arquivo nao e particionado por ano: e a base completa, com todo o
+ * historico. Por isso nao ha logica de selecao de safra aplicada a ele.
+ *
+ * Se um dia parar de responder, `npm run etl -- sondar` testa as variacoes
+ * conhecidas e relata quais existem.
+ */
+export const URL_ACESSOS_BANDA_LARGA_FIXA =
+  'https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/acessos_banda_larga_fixa.zip';
+
 export const FONTE_ANATEL = {
   nome: 'Anatel — Agência Nacional de Telecomunicações',
   painel: 'https://informacoes.anatel.gov.br/paineis/acessos/banda-larga-fixa',
