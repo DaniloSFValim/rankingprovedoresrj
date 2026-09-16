@@ -81,7 +81,7 @@ export default function PaginaRanking() {
           <p className="text-xs text-grafite-400 mb-3">💡 Dica: Use a busca global no topo para encontrar um provedor específico</p>
           <div className="grid gap-2 text-xs text-grafite-500">
             <p>Total de registros: {inteiro(ranking.length)}</p>
-            <p>Fonte: Anatel, competência {inteiro(kpis.competencia)}</p>
+            <p>Fonte: Anatel, competência {kpis.competencia}</p>
           </div>
         </div>
         <TabelaRanking linhas={ranking} />
