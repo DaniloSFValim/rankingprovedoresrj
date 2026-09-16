@@ -70,7 +70,30 @@ describe('filtrarBandaLargaFixa', () => {
     expect(r).toHaveLength(1);
   });
 
-  it('descarta linha sem URL processavel', () => {
+  it('encontra a linha mesmo quando so ha link de pagina', () => {
+    // Caso observado na execucao real: 127 das 128 linhas do inventario tem
+    // apenas link de pagina. Exigir extensao de arquivo descartava a linha certa.
+    const r = inventario(
+      'Nome;Link dados.gov.br\n' +
+        'Acessos - Banda Larga Fixa;https://dados.gov.br/dados/conjuntos-dados/acessos---banda-larga-fixa\n',
+    );
+    expect(r).toHaveLength(1);
+    expect(r[0]!.urls).toEqual([]);
+    expect(r[0]!.urlsPagina).toHaveLength(1);
+  });
+
+  it('separa link de arquivo de link de pagina na mesma linha', () => {
+    const r = inventario(
+      'Nome;Portal;Painel\n' +
+        'Acessos - Banda Larga Fixa;https://dados.gov.br/x;https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/a.zip\n',
+    );
+    expect(r[0]!.urls).toEqual([
+      'https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/a.zip',
+    ]);
+    expect(r[0]!.urlsPagina).toEqual(['https://dados.gov.br/x']);
+  });
+
+  it('descarta linha sem nenhuma URL', () => {
     const r = inventario('Nome;Link\nAcessos Banda Larga Fixa;consultar no portal\n');
     expect(r).toHaveLength(0);
   });

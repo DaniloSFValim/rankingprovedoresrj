@@ -23,6 +23,7 @@ export interface ResultadoSelecao {
   selecionados: RecursoCandidato[];
   descartados: RecursoCandidato[];
   falhas: Array<{ catalogo: string; motivo: string }>;
+  paginas: Array<{ descricao: string; url: string }>;
 }
 
 /**
@@ -78,7 +79,7 @@ export function selecionarRecursos(
 export async function descobrirESelecionar(
   criterio: CriterioSelecao,
 ): Promise<ResultadoSelecao> {
-  const { candidatos, falhas } = await descobrirRecursos();
+  const { candidatos, falhas, paginas } = await descobrirRecursos();
   const { selecionados, descartados } = selecionarRecursos(candidatos, criterio);
-  return { selecionados, descartados, falhas };
+  return { selecionados, descartados, falhas, paginas };
 }

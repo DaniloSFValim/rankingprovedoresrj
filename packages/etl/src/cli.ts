@@ -252,19 +252,34 @@ async function principal(): Promise<void> {
       }
       case 'descobrir': {
         console.log('Consultando catalogos de dados abertos...\n');
-        const { candidatos, falhas } = await descobrirRecursos();
+        const { candidatos, falhas, paginas } = await descobrirRecursos();
 
         for (const falha of falhas) {
           console.warn(`[aviso] ${falha.catalogo}: ${falha.motivo}`);
         }
 
         if (candidatos.length === 0) {
-          console.error(
-            '\nNenhum recurso encontrado. Isso pode significar que os catalogos ' +
-              'estao fora do ar, que a rede bloqueia o acesso, ou que o conjunto ' +
-              'mudou de nome.\n\nAlternativa manual: baixe o CSV/ZIP pelo portal e rode\n' +
-              '  npm run etl -- importar <caminho-do-arquivo>',
-          );
+          if (paginas.length > 0) {
+            console.log(
+              `\nNenhum link direto de arquivo, mas ${paginas.length} pagina(s) do ` +
+                `assunto certo foram localizadas:\n`,
+            );
+            for (const p of paginas) {
+              console.log(`  ${p.descricao}`);
+              console.log(`  ${p.url}\n`);
+            }
+            console.log(
+              'Abra a pagina, copie a URL do arquivo (.zip ou .csv) e rode:\n' +
+                '  npm run etl -- atualizar <url-do-arquivo>',
+            );
+          } else {
+            console.error(
+              '\nNenhum recurso encontrado. Isso pode significar que os catalogos ' +
+                'estao fora do ar, que a rede bloqueia o acesso, ou que o conjunto ' +
+                'mudou de nome.\n\nAlternativa manual: baixe o CSV/ZIP pelo portal e rode\n' +
+                '  npm run etl -- importar <caminho-do-arquivo>',
+            );
+          }
           process.exitCode = 1;
           break;
         }
@@ -313,7 +328,7 @@ async function principal(): Promise<void> {
         }
 
         console.log(`[sincronizar] procurando os ${anos} ano(s) mais recentes...`);
-        const { selecionados, descartados, falhas } = await descobrirESelecionar({ anos });
+        const { selecionados, descartados, falhas, paginas } = await descobrirESelecionar({ anos });
 
         for (const falha of falhas) {
           console.warn(`[aviso] ${falha.catalogo}: ${falha.motivo}`);
@@ -321,8 +336,13 @@ async function principal(): Promise<void> {
 
         if (selecionados.length === 0) {
           console.error(
-            `\nNenhum recurso selecionavel (${descartados.length} candidato(s) descartado(s)).\n` +
-              'Rode "npm run etl -- descobrir" para inspecionar o catalogo, ou importe\n' +
+            `\nNenhum recurso selecionavel (${descartados.length} candidato(s) descartado(s)).`,
+          );
+          for (const p of paginas) {
+            console.error(`  pagina do assunto: ${p.url}`);
+          }
+          console.error(
+            'Rode "npm run etl -- descobrir" para inspecionar o catalogo, ou importe\n' +
               'um arquivo manualmente com "npm run etl -- importar <csv>".',
           );
           process.exitCode = 1;
@@ -367,14 +387,15 @@ async function principal(): Promise<void> {
         const relevantes = filtrarBandaLargaFixa(linhas);
         console.log(`Linhas sobre acessos de banda larga fixa: ${relevantes.length}\n`);
         for (const linha of relevantes) {
-          console.log(`  ${linha.celulas.filter(Boolean).join(' | ').slice(0, 220)}`);
-          for (const url of linha.urls) console.log(`      -> ${url}`);
+          console.log(`  ${linha.celulas.filter(Boolean).join(' | ').slice(0, 300)}`);
+          for (const url of linha.urls) console.log(`      [arquivo] ${url}`);
+          for (const url of linha.urlsPagina) console.log(`      [pagina]  ${url}`);
         }
 
         if (relevantes.length === 0) {
-          console.log('Nenhuma linha casou com o filtro. Primeiras 15 linhas com URL:');
-          for (const linha of linhas.filter((l) => l.urls.length > 0).slice(0, 15)) {
-            console.log(`  ${linha.celulas.filter(Boolean).join(' | ').slice(0, 220)}`);
+          console.log('Nenhuma linha casou com o filtro. Linhas com "ACESSO" no texto:');
+          for (const linha of linhas.filter((l) => l.textoCanonico.includes('ACESSO'))) {
+            console.log(`  ${linha.celulas.filter(Boolean).join(' | ').slice(0, 300)}`);
           }
         }
         break;

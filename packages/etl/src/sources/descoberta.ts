@@ -194,6 +194,14 @@ async function consultarCatalogo(
 export interface ResultadoDescoberta {
   candidatos: RecursoCandidato[];
   falhas: Array<{ catalogo: string; motivo: string }>;
+  /**
+   * Paginas do assunto certo que nao expoem link direto de arquivo.
+   *
+   * Nao servem para download automatico, mas transformam um beco sem saida em
+   * proximo passo: o operador abre a pagina, copia a URL do arquivo e roda
+   * `atualizar <url>`.
+   */
+  paginas: Array<{ descricao: string; url: string }>;
 }
 
 /**
@@ -208,6 +216,7 @@ export async function descobrirRecursos(
 ): Promise<ResultadoDescoberta> {
   const candidatos: RecursoCandidato[] = [];
   const falhas: ResultadoDescoberta['falhas'] = [];
+  const paginas: ResultadoDescoberta['paginas'] = [];
 
   // Fonte preferencial: o inventario da Anatel nao exige chave de acesso.
   try {
@@ -218,6 +227,9 @@ export async function descobrirRecursos(
         .filter((c: string) => c && !/^https?:\/\//i.test(c))
         .join(' — ')
         .slice(0, 160);
+      for (const url of linha.urlsPagina) {
+        paginas.push({ descricao: descricao || 'Acessos — Banda Larga Fixa', url });
+      }
       for (const url of linha.urls) {
         candidatos.push({
           catalogo: 'inventario Anatel',
@@ -260,7 +272,7 @@ export async function descobrirRecursos(
 
   // Mais recentes primeiro: a safra que interessa costuma ser a ultima.
   candidatos.sort((a, b) => (b.atualizadoEm ?? '').localeCompare(a.atualizadoEm ?? ''));
-  return { candidatos, falhas };
+  return { candidatos, falhas, paginas };
 }
 
 /** Extrai o ano do nome do recurso, quando presente (ex.: "..._2026.zip"). */

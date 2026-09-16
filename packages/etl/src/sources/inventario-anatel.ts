@@ -27,8 +27,21 @@ export const URL_INVENTARIO =
 export interface LinhaInventario {
   /** Todas as celulas da linha, para diagnostico. */
   celulas: string[];
-  /** URLs de arquivos processaveis encontradas na linha. */
+  /**
+   * URLs que apontam direto para um arquivo que o pipeline sabe ler.
+   * Sao as unicas candidatas a download automatico.
+   */
   urls: string[];
+  /**
+   * URLs de pagina (sem extensao de arquivo) — portal do dados.gov.br,
+   * painel da Anatel e afins.
+   *
+   * Sao preservadas porque a execucao real mostrou que a maioria das linhas do
+   * inventario so tem links de pagina: filtrar URL por extensao descartava 127
+   * das 128 linhas. Elas nao servem para download, mas servem para o operador
+   * chegar no arquivo.
+   */
+  urlsPagina: string[];
   /** Texto concatenado da linha, canonizado — usado para filtrar por assunto. */
   textoCanonico: string;
 }
@@ -36,9 +49,13 @@ export interface LinhaInventario {
 /** Extensoes que o pipeline sabe processar. */
 const EXTENSOES = /\.(zip|csv|txt)(\?|$)/i;
 
+function ehUrl(valor: string): boolean {
+  return /^https?:\/\//i.test(valor.trim());
+}
+
 function ehUrlProcessavel(valor: string): boolean {
   const limpo = valor.trim();
-  return /^https?:\/\//i.test(limpo) && EXTENSOES.test(limpo);
+  return ehUrl(limpo) && EXTENSOES.test(limpo);
 }
 
 /**
@@ -77,6 +94,9 @@ export function interpretarInventario(bruto: Buffer): {
   const linhas: LinhaInventario[] = melhor.slice(1).map((celulas) => ({
     celulas,
     urls: celulas.filter(ehUrlProcessavel).map((u) => u.trim()),
+    urlsPagina: celulas
+      .filter((c) => ehUrl(c) && !ehUrlProcessavel(c))
+      .map((u) => u.trim()),
     textoCanonico: canonizarTexto(celulas.join(' ')),
   }));
 
@@ -109,7 +129,9 @@ export function filtrarBandaLargaFixa(
   linhas: readonly LinhaInventario[],
 ): LinhaInventario[] {
   return linhas.filter((linha) => {
-    if (linha.urls.length === 0) return false;
+    // Exigir link direto de arquivo aqui descartava a linha certa: no
+    // inventario real, quase todas as linhas so trazem link de pagina.
+    if (linha.urls.length === 0 && linha.urlsPagina.length === 0) return false;
     const texto = linha.textoCanonico;
     const temObrigatorio = TERMOS_OBRIGATORIOS.every((t) => texto.includes(t));
     const temAlternativo = TERMOS_ALTERNATIVOS.some((t) => texto.includes(t));
