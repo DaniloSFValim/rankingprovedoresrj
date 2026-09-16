@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   calcularConcentracao,
+  intervaloCompetencias,
   canonizarTexto,
   compararRankings,
   construirRanking,
@@ -57,8 +58,9 @@ export interface KpisEstado {
 
 export interface PontoSerie {
   competencia: Competencia;
-  totalAcessos: number;
-  numeroProvedores: number;
+  /** null quando a competencia nao consta na base — ausencia, nao zero. */
+  totalAcessos: number | null;
+  numeroProvedores: number | null;
   hhi: number | null;
   cr5: number | null;
 }
@@ -295,9 +297,20 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   };
 
   // ---------------------------------------------------------------- meta ----
+  // Competencias ausentes no meio da serie. Expostas para que a interface
+  // possa avisar em vez de desenhar uma reta atravessando o buraco.
+  const lacunas =
+    ctx.competencias.length >= 2
+      ? intervaloCompetencias(
+          ctx.competencias[0]!,
+          ctx.competencias[ctx.competencias.length - 1]!,
+        ).filter((c) => !new Set(ctx.competencias).has(c))
+      : [];
+
   salvar('meta.json', {
     procedencia: opcoes.procedencia,
     competencias: ctx.competencias,
+    lacunas,
     competenciaAtual: atual,
     numeroEmpresas: ctx.empresas.size,
     numeroMunicipios: ctx.municipios.size,
@@ -347,12 +360,33 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   salvar('estado/ranking.json', { competencia: atual, linhas: linhasRanking });
 
   // Serie historica do mercado estadual (§12).
-  const serie: PontoSerie[] = ctx.competencias.map((c) => {
-    const p = participantes(ctx.estadoPorCompetencia.get(c));
+  //
+  // Percorre o intervalo CONTIGUO, nao apenas as competencias presentes: mes
+  // ausente entra com null, e o grafico desenha uma interrupcao. Omitir a
+  // lacuna faria a linha ligar dezembro a janeiro do ano seguinte como se
+  // fossem consecutivos, transformando um buraco de doze meses num segmento
+  // reto que parece continuidade.
+  const serieCompleta =
+    ctx.competencias.length >= 2
+      ? intervaloCompetencias(
+          ctx.competencias[0]!,
+          ctx.competencias[ctx.competencias.length - 1]!,
+        )
+      : ctx.competencias;
+
+  const serie: PontoSerie[] = serieCompleta.map((c) => {
+    const mapa = ctx.estadoPorCompetencia.get(c);
+    if (!mapa) {
+      return {
+        competencia: c, totalAcessos: null, numeroProvedores: null,
+        hhi: null, cr5: null,
+      };
+    }
+    const p = participantes(mapa);
     const conc = calcularConcentracao(p);
     return {
       competencia: c,
-      totalAcessos: somar(ctx.estadoPorCompetencia.get(c)),
+      totalAcessos: somar(mapa),
       numeroProvedores: p.filter((x) => x.acessos > 0).length,
       hhi: conc?.hhi ?? null,
       cr5: conc?.cr5 ?? null,
@@ -452,8 +486,14 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     });
 
     // Perfil individual do municipio (§22).
-    const serieMunicipio = ctx.competencias.map((c) => {
+    const serieMunicipio = serieCompleta.map((c) => {
+      const competenciaExiste = ctx.municipalPorCompetencia.has(c);
       const mapa = ctx.municipalPorCompetencia.get(c)?.get(codigoIbge);
+      // Distingue "mes ausente da base" de "municipio sem acessos no mes":
+      // o primeiro e null, o segundo e zero de verdade.
+      if (!competenciaExiste) {
+        return { competencia: c, totalAcessos: null, numeroProvedores: null, hhi: null };
+      }
       const concC = calcularConcentracao(participantes(mapa));
       return {
         competencia: c,

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { rotularCompetencia } from '@netrank/core';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { SerieProvedor, TerritorioProvedor } from '@/componentes/graficos/SerieProvedor';
@@ -55,8 +54,9 @@ export default async function PaginaProvedor({ params }: Props) {
           {perfil.nome}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          {perfil.grupoEconomico ? `Grupo econômico: ${perfil.grupoEconomico} · ` : ''}
-          Competência {rotularCompetencia(perfil.competencia)}
+          {perfil.grupoEconomico
+            ? `Grupo econômico: ${perfil.grupoEconomico}`
+            : 'Grupo econômico não informado na fonte'}
         </p>
       </div>
 

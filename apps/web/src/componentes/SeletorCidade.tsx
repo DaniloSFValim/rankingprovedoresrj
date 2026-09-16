@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { canonizarTexto } from '@netrank/core';
 import { inteiro } from '@/lib/formato';
 
@@ -119,14 +119,14 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Pro
       >
         <span className="min-w-0">
           <span className={ehDestaque ? 'rotulo' : 'sr-only'}>
-            {ehDestaque ? 'Analisar uma cidade' : 'Selecionar cidade'}
+            {ehDestaque ? 'Município' : 'Selecionar cidade'}
           </span>
           <span
             className={`block truncate ${
               ehDestaque ? 'mt-1 text-xl font-semibold text-white' : 'text-grafite-200'
             }`}
           >
-            {atual ? atual.nome : 'Escolher município…'}
+            {atual ? atual.nome : ehDestaque ? 'Buscar…' : 'Escolher município…'}
           </span>
         </span>
         <span className={`shrink-0 ${ehDestaque ? 'text-marca-400' : 'text-grafite-500'}`}>▾</span>
@@ -202,4 +202,23 @@ export function UltimaCidade({ cidades }: { cidades: CidadeOpcao[] }) {
       ↩ Voltar para {cidade.nome}
     </a>
   );
+}
+
+/**
+ * Seletor da barra de navegação.
+ *
+ * Some nas páginas que já têm um seletor próprio e mais proeminente — a home,
+ * onde a escolha da cidade é o bloco de destaque, e a própria página de
+ * município, onde ele fica ao lado do nome da cidade.
+ *
+ * A regra é uma só: **um seletor por tela**. Dois controles idênticos na mesma
+ * página não dão mais poder ao usuário, dão dúvida sobre qual deles vale.
+ */
+export function SeletorCidadeNav({ cidades }: { cidades: CidadeOpcao[] }) {
+  const caminho = usePathname();
+  const temSeletorProprio =
+    caminho === '/' || caminho === '' || /^\/municipios\/[^/]+\/?$/.test(caminho ?? '');
+
+  if (temSeletorProprio) return null;
+  return <SeletorCidade cidades={cidades} />;
 }

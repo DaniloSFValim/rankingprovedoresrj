@@ -45,6 +45,8 @@ export function SerieMercado({ serie, altura = 300 }: { serie: PontoSerie[]; alt
           showSymbol: false,
           lineStyle: { width: 2.5 },
           areaStyle: { opacity: 0.12 },
+          // null desenha interrupcao; zero desenharia queda a zero.
+          connectNulls: false,
           data: serie.map((p) => p.totalAcessos),
         },
         {
@@ -54,6 +56,7 @@ export function SerieMercado({ serie, altura = 300 }: { serie: PontoSerie[]; alt
           smooth: true,
           showSymbol: false,
           lineStyle: { width: 1.5, type: 'dashed' },
+          connectNulls: false,
           data: serie.map((p) => p.numeroProvedores),
         },
       ],

@@ -51,6 +51,8 @@ function lerOpcional<T>(relativo: string): T | null {
 export interface Meta {
   procedencia: ProcedenciaDados;
   competencias: Competencia[];
+  /** Competências ausentes no meio da série, quando houver. */
+  lacunas?: Competencia[];
   competenciaAtual: Competencia;
   numeroEmpresas: number;
   numeroMunicipios: number;
@@ -87,8 +89,9 @@ export interface Kpis {
 
 export interface PontoSerie {
   competencia: Competencia;
-  totalAcessos: number;
-  numeroProvedores: number;
+  /** null quando a competência não consta na base — ausência, não zero. */
+  totalAcessos: number | null;
+  numeroProvedores: number | null;
   hhi: number | null;
   cr5: number | null;
 }
@@ -132,8 +135,8 @@ export interface PerfilMunicipio {
   }>;
   serie: Array<{
     competencia: Competencia;
-    totalAcessos: number;
-    numeroProvedores: number;
+    totalAcessos: number | null;
+    numeroProvedores: number | null;
     hhi: number | null;
   }>;
   tecnologia: Array<{ competencia: Competencia; distribuicao: Record<string, number> }>;

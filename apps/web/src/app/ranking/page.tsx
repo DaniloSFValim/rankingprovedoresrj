@@ -1,4 +1,3 @@
-import { rotularCompetencia } from '@netrank/core';
 import { Kpi } from '@/componentes/Kpi';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
@@ -25,8 +24,7 @@ export default function PaginaRanking() {
           Ranking dos provedores no {MARCA.ufSigla}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          {inteiro(ranking.length)} provedores com acessos registrados em{' '}
-          {rotularCompetencia(kpis.competencia)}
+          {inteiro(ranking.length)} provedores com acessos registrados
         </p>
       </div>
 

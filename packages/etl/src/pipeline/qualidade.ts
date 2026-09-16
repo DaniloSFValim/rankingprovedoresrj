@@ -7,7 +7,11 @@
  * anormal destroi justamente o sinal que o produto existe para mostrar.
  */
 
-import { deslocarCompetencia, type Competencia } from '@netrank/core';
+import {
+  deslocarCompetencia,
+  intervaloCompetencias,
+  type Competencia,
+} from '@netrank/core';
 import type { Banco } from '../warehouse/db.js';
 import type { ResultadoExtracao } from './extrair.js';
 
@@ -113,6 +117,49 @@ export function auditarCompetencia(db: Banco, competencia: Competencia): Alerta[
   }
 
   return alertas;
+}
+
+/**
+ * Detecta lacunas na serie historica carregada.
+ *
+ * Uma competencia ausente no meio da serie e invisivel num grafico: a linha
+ * simplesmente liga o mes anterior ao seguinte, e um buraco de doze meses
+ * vira um segmento reto que parece continuidade. E o tipo de erro que nao
+ * aparece olhando a tela — so aparece contando os meses.
+ *
+ * Causas possiveis: safra que falhou na importacao, arquivo ausente na fonte,
+ * ou periodo realmente nao publicado pela Anatel. O pipeline nao adivinha
+ * qual e — apenas avisa, e jamais preenche a lacuna por interpolacao.
+ */
+export function detectarLacunas(db: Banco): Competencia[] {
+  const presentes = (
+    db
+      .prepare('SELECT DISTINCT competencia FROM fato_acessos ORDER BY competencia')
+      .all() as Array<{ competencia: Competencia }>
+  ).map((r) => r.competencia);
+
+  if (presentes.length < 2) return [];
+
+  const conjunto = new Set(presentes);
+  return intervaloCompetencias(presentes[0]!, presentes[presentes.length - 1]!)
+    .filter((c) => !conjunto.has(c));
+}
+
+export function auditarLacunas(db: Banco): Alerta[] {
+  const lacunas = detectarLacunas(db);
+  if (lacunas.length === 0) return [];
+
+  return [{
+    competencia: null,
+    severidade: 'CRITICO',
+    tipo: 'lacuna_na_serie',
+    entidade: null,
+    mensagem:
+      `${lacunas.length} competencia(s) ausente(s) no meio da serie: ` +
+      `${lacunas.join(', ')}. Series temporais e variacoes que atravessem essas ` +
+      `datas ficam distorcidas. Verifique se a safra correspondente falhou na ` +
+      `importacao ou se o periodo nao consta na fonte.`,
+  }];
 }
 
 /** Alertas derivados da propria extracao, antes da carga. */

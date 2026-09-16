@@ -22,6 +22,7 @@ import {
   purgarDadosDemonstrativos,
   registrarFonte,
 } from '../pipeline/carregar.js';
+import { detectarLacunas } from '../pipeline/qualidade.js';
 import type { ResultadoExtracao } from '../pipeline/extrair.js';
 
 // Cabecalho exatamente como veio do arquivo de producao.
@@ -282,6 +283,61 @@ describe('janela de retencao', () => {
     const db = preparar(['2025-06', '2026-07']);
     expect(aplicarRetencao(db, 2022)).toBe(0);
     expect(competenciasArmazenadas(db)).toHaveLength(2);
+    db.close();
+  });
+});
+
+describe('deteccao de lacunas na serie', () => {
+  const extracaoMes = (competencia: string) => ({
+    registros: [{
+      competencia, codigoIbge: '3303302', empresaId: 'nome:X',
+      tecnologia: 'FIBRA' as const, acessos: 100,
+    }],
+    empresas: new Map([['nome:X', {
+      empresaId: 'nome:X', chaveNome: 'X', nomeOriginalAnatel: 'X',
+      cnpj: null, grupoEconomico: null, origem: 'NOME_CANONICO' as const,
+    }]]),
+    municipios: new Map([['3303302', { codigoIbge: '3303302', nome: 'Niterói' }]]),
+    competencias: new Set([competencia]),
+    tecnologiasNaoMapeadas: new Map(),
+    estatisticas: { linhasLidas: 1, linhasRj: 1, linhasRejeitadas: 0, motivosRejeicao: {} },
+  });
+
+  const comMeses = (meses: string[]) => {
+    const db = abrirBancoMemoria();
+    const fonteId = registrarFonte(db, {
+      nome: 'Anatel', url: 'x', arquivo: 'a', hashSha256: null, bytes: null,
+      coletadoEm: '2026-01-01T00:00:00Z', dadosDemonstrativos: false,
+    });
+    const execucaoId = iniciarExecucao(db, fonteId);
+    for (const m of meses) carregar(db, extracaoMes(m), execucaoId);
+    return db;
+  };
+
+  it('nao acusa lacuna em serie contigua', () => {
+    const db = comMeses(['2026-01', '2026-02', '2026-03']);
+    expect(detectarLacunas(db)).toEqual([]);
+    db.close();
+  });
+
+  it('encontra o buraco no meio da serie', () => {
+    const db = comMeses(['2026-01', '2026-04']);
+    expect(detectarLacunas(db)).toEqual(['2026-02', '2026-03']);
+    db.close();
+  });
+
+  it('reproduz o caso real: um ano inteiro ausente', () => {
+    const db = comMeses(['2022-12', '2024-01']);
+    const lacunas = detectarLacunas(db);
+    expect(lacunas).toHaveLength(12);
+    expect(lacunas[0]).toBe('2023-01');
+    expect(lacunas[11]).toBe('2023-12');
+    db.close();
+  });
+
+  it('nao considera lacuna o que esta fora do intervalo carregado', () => {
+    const db = comMeses(['2026-06', '2026-07']);
+    expect(detectarLacunas(db)).toEqual([]);
     db.close();
   });
 });

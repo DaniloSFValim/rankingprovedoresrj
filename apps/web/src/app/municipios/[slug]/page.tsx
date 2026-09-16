@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { rotularCompetencia } from '@netrank/core';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { SeletorCidade } from '@/componentes/SeletorCidade';
@@ -129,8 +128,7 @@ export default async function PaginaMunicipio({ params }: Props) {
                 {inteiro(perfil.totalMunicipios)} municípios ·{' '}
               </>
             )}
-            Competência {rotularCompetencia(perfil.competencia)} · Código IBGE{' '}
-            {perfil.codigoIbge}
+            Código IBGE {perfil.codigoIbge}
           </p>
         </div>
 

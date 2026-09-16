@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
-import { SeletorCidade, type CidadeOpcao } from '@/componentes/SeletorCidade';
+import { SeletorCidadeNav, type CidadeOpcao } from '@/componentes/SeletorCidade';
 import type { Meta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
@@ -25,7 +25,9 @@ export function Navegacao({ meta, cidades }: { meta: Meta; cidades: CidadeOpcao[
           </span>
         </Link>
 
-        <nav className="-mx-1 order-3 w-full overflow-x-auto md:order-none md:mx-0 md:w-auto">
+        {/* A rolagem horizontal existe para caber no celular. No desktop ela
+            criava uma barra de rolagem visivel logo apos o ultimo item. */}
+        <nav className="-mx-1 order-3 w-full overflow-x-auto md:order-none md:mx-0 md:w-auto md:overflow-visible">
           <ul className="flex gap-1 whitespace-nowrap">
             {ITENS.map((item) => (
               <li key={item.href}>
@@ -41,7 +43,7 @@ export function Navegacao({ meta, cidades }: { meta: Meta; cidades: CidadeOpcao[
         </nav>
 
         <div className="ml-auto flex items-center gap-4">
-          <SeletorCidade cidades={cidades} />
+          <SeletorCidadeNav cidades={cidades} />
           <div className="hidden text-right sm:block">
             <div className="rotulo">Competência</div>
             <div className="numerico text-sm font-semibold text-marca-300">

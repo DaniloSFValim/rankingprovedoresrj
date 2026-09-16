@@ -18,6 +18,33 @@ export function FaixaDemonstrativo({ meta }: { meta: Meta }) {
   );
 }
 
+/**
+ * Aviso de descontinuidade na série histórica.
+ *
+ * Uma competência ausente é invisível num gráfico: a linha liga o mês anterior
+ * ao seguinte e um buraco de doze meses vira um segmento reto que parece
+ * continuidade. Os gráficos já desenham a interrupção, mas quem lê uma tabela
+ * ou uma variação não veria nada — por isso o aviso é textual e fica no topo.
+ */
+export function AvisoLacunas({ meta }: { meta: Meta }) {
+  const lacunas = meta.lacunas ?? [];
+  if (lacunas.length === 0) return null;
+
+  const periodos = lacunas.length > 3
+    ? `${rotularCompetencia(lacunas[0]!)} a ${rotularCompetencia(lacunas[lacunas.length - 1]!)}`
+    : lacunas.map(rotularCompetencia).join(', ');
+
+  return (
+    <div className="cartao border-atencao/40 bg-atencao/10 p-4 text-sm text-atencao">
+      <strong>Série histórica com interrupção.</strong> {lacunas.length}{' '}
+      {lacunas.length === 1 ? 'competência está ausente' : 'competências estão ausentes'}{' '}
+      da base ({periodos}). Os gráficos mostram a interrupção, e variações que
+      atravessem esse intervalo comparam meses não consecutivos. Os dados
+      ausentes não foram estimados nem preenchidos.
+    </div>
+  );
+}
+
 /** Rodapé de rastreabilidade exigido pelo §5, presente em todas as páginas. */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;

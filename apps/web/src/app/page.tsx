@@ -4,6 +4,7 @@ import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { Destaques, TrocasLideranca } from '@/componentes/Destaques';
+import { AvisoLacunas } from '@/componentes/Procedencia';
 import { SeletorCidade, UltimaCidade } from '@/componentes/SeletorCidade';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
@@ -35,6 +36,12 @@ export default function Home() {
   const municipios = lerIndiceMunicipios();
 
   const concentracao = kpis.concentracao;
+  const cidades = municipios.map((m) => ({
+    slug: m.slug,
+    nome: m.nome,
+    totalAcessos: m.totalAcessos,
+    numeroProvedores: m.numeroProvedores,
+  }));
 
   return (
     <main className="space-y-10">
@@ -43,40 +50,28 @@ export default function Home() {
           Banda larga fixa — {MARCA.uf}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          Competência de referência: {rotularCompetencia(kpis.competencia)} · Série
-          histórica de {meta.competencias.length} meses · Fonte: Anatel
+          Série histórica de {meta.competencias.length} meses · Fonte: Anatel
         </p>
       </div>
 
-      {/* A pergunta mais comum de quem chega é sobre a própria cidade.
-          Por isso a escolha vem antes dos números do Estado, e não escondida
-          numa aba interna. */}
+      <AvisoLacunas meta={meta} />
+
+      {/* A pergunta mais comum de quem chega é sobre a própria cidade, então a
+          escolha vem antes dos números do Estado. O texto diz isso UMA vez: o
+          rótulo do seletor já explica a ação, e repetir a instrução ao lado
+          dele só ocupa espaço. */}
       <section className="cartao flex flex-col gap-4 border-marca-900 bg-gradient-to-br from-marca-950/60 to-grafite-900/60 p-6 md:flex-row md:items-center md:justify-between">
-        <div className="max-w-md">
-          <h2 className="text-lg font-semibold text-white">
-            Quer ver só uma cidade?
-          </h2>
+        <div className="max-w-sm">
+          <h2 className="text-lg font-semibold text-white">Ver uma cidade</h2>
           <p className="mt-1 text-sm text-grafite-300">
-            Escolha um dos {inteiro(municipios.length)} municípios e veja o mercado
-            inteiro sob a ótica dele: ranking local, quem lidera, quem cresce,
-            concentração e evolução.
+            Ranking local, quem lidera, quem cresce e concentração — em qualquer
+            um dos {inteiro(municipios.length)} municípios do Estado.
           </p>
-          <div className="mt-2">
-            <UltimaCidade
-              cidades={municipios.map((m) => ({
-                slug: m.slug, nome: m.nome,
-                totalAcessos: m.totalAcessos, numeroProvedores: m.numeroProvedores,
-              }))}
-            />
+          <div className="mt-3">
+            <UltimaCidade cidades={cidades} />
           </div>
         </div>
-        <SeletorCidade
-          variante="destaque"
-          cidades={municipios.map((m) => ({
-            slug: m.slug, nome: m.nome,
-            totalAcessos: m.totalAcessos, numeroProvedores: m.numeroProvedores,
-          }))}
-        />
+        <SeletorCidade variante="destaque" cidades={cidades} />
       </section>
 
       {/* KPIs do §28 */}

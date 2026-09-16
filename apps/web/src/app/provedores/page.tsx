@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { rotularCompetencia } from '@netrank/core';
 import { lerIndiceProvedores, lerKpis } from '@/lib/dados';
 import { inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
@@ -22,8 +21,7 @@ export default function PaginaProvedores() {
           Provedores do {MARCA.ufSigla}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          {inteiro(provedores.length)} provedores com acessos em{' '}
-          {rotularCompetencia(kpis.competencia)}
+          {inteiro(provedores.length)} provedores com acessos registrados
         </p>
       </div>
 

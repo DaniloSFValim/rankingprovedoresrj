@@ -59,6 +59,8 @@ import {
 import {
   auditarCompetencia,
   auditarExtracao,
+  auditarLacunas,
+  detectarLacunas,
   persistirAlertas,
   type Alerta,
 } from './pipeline/qualidade.js';
@@ -292,6 +294,14 @@ function status(db: Banco): void {
   console.log('\nAlertas de qualidade:');
   if (alertas.length === 0) console.log('  nenhum');
   for (const a of alertas) console.log(`  ${a.severidade}: ${a.total}`);
+
+  const lacunas = detectarLacunas(db);
+  console.log('\nContinuidade da serie:');
+  console.log(
+    lacunas.length === 0
+      ? '  sem lacunas'
+      : `  ${lacunas.length} competencia(s) ausente(s): ${lacunas.join(', ')}`,
+  );
 }
 
 async function principal(): Promise<void> {
@@ -489,6 +499,10 @@ async function principal(): Promise<void> {
         }
 
         console.log(`\n[sincronizar] ${importados} arquivo(s) importado(s) com sucesso.`);
+
+        // Lacuna no meio da serie e invisivel num grafico e precisa gritar aqui.
+        const lacunas = auditarLacunas(db);
+        for (const a of lacunas) console.warn(`\n[CRITICO] ${a.mensagem}\n`);
 
         // Uma safra pode conter competencias anteriores a janela pedida.
         const forade = aplicarRetencao(db, anoMinimo);

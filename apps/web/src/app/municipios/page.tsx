@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { rotularCompetencia } from '@netrank/core';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { MapaRJ } from '@/componentes/graficos/MapaRJ';
@@ -33,8 +32,7 @@ export default function PaginaMunicipios() {
           Municípios do {MARCA.ufSigla}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          {inteiro(municipios.length)} municípios com acessos registrados em{' '}
-          {rotularCompetencia(kpis.competencia)}
+          {inteiro(municipios.length)} municípios com acessos registrados
         </p>
       </div>
 
