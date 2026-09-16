@@ -194,6 +194,16 @@ export default function Dashboard() {
             </div>
           </Link>
 
+          <Link href="/dados">
+            <div className="cartao p-4 hover:bg-grafite-800/60 transition">
+              <h3 className="font-semibold text-white">Download de Dados</h3>
+              <p className="mt-1 text-xs text-grafite-400">
+                Exporte datasets em JSON, CSV e GeoJSON para análise e integração.
+              </p>
+              <p className="mt-2 text-xs text-marca-400">→ Acessar →</p>
+            </div>
+          </Link>
+
           <Link href="/transparencia">
             <div className="cartao p-4 hover:bg-grafite-800/60 transition">
               <h3 className="font-semibold text-white">Metodologia</h3>
