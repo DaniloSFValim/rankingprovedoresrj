@@ -61,8 +61,20 @@ jobs:
         run: npm test
 
       # --------------------------------------------------------------- dados
+      # Diagnostico primeiro: imprime o layout real do inventario da Anatel.
+      # E a unica forma de conhecer o formato da fonte, ja que o ambiente de
+      # desenvolvimento nao tem acesso de rede a *.gov.br.
+      - name: Inventario de bases da Anatel (diagnostico)
+        continue-on-error: true
+        run: npm run etl -- inventario
+
       - name: Inspecionar o catalogo de dados abertos
-        run: npm run etl -- descobrir || true
+        continue-on-error: true
+        env:
+          # Opcional. A API do dados.gov.br responde 401 sem chave; sem ela a
+          # descoberta usa apenas o inventario da Anatel, que e aberto.
+          DADOS_GOV_BR_API_KEY: ${{ secrets.DADOS_GOV_BR_API_KEY }}
+        run: npm run etl -- descobrir
 
       - name: Importar recurso especifico
         if: inputs.url != ''
@@ -70,6 +82,8 @@ jobs:
 
       - name: Sincronizar automaticamente
         if: inputs.url == ''
+        env:
+          DADOS_GOV_BR_API_KEY: ${{ secrets.DADOS_GOV_BR_API_KEY }}
         run: npm run etl -- sincronizar --anos "${{ inputs.anos || '2' }}"
 
       # --------------------------------------------------------------- malha

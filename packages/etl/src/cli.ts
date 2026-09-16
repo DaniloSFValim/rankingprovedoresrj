@@ -31,6 +31,12 @@ import { baixarRecurso, prepararCsvs } from './pipeline/baixar.js';
 import { anoDoRecurso, descobrirRecursos } from './sources/descoberta.js';
 import { descobrirESelecionar } from './pipeline/sincronizar.js';
 import {
+  baixarInventario,
+  filtrarBandaLargaFixa,
+  interpretarInventario,
+  URL_INVENTARIO,
+} from './sources/inventario-anatel.js';
+import {
   auditarCompetencia,
   auditarExtracao,
   persistirAlertas,
@@ -346,6 +352,34 @@ async function principal(): Promise<void> {
         break;
       }
 
+      case 'inventario': {
+        // Diagnostico: imprime o layout real do inventario da Anatel, para que
+        // a leitura tolerante possa ser apertada quando o formato for conhecido.
+        console.log(`[inventario] ${URL_INVENTARIO}\n`);
+        const bruto = await baixarInventario();
+        const { cabecalho, linhas } = interpretarInventario(bruto);
+
+        console.log(`Bytes: ${bruto.length}`);
+        console.log(`Colunas detectadas (${cabecalho.length}):`);
+        cabecalho.forEach((c, i) => console.log(`  [${i}] ${c}`));
+        console.log(`\nLinhas: ${linhas.length}`);
+
+        const relevantes = filtrarBandaLargaFixa(linhas);
+        console.log(`Linhas sobre acessos de banda larga fixa: ${relevantes.length}\n`);
+        for (const linha of relevantes) {
+          console.log(`  ${linha.celulas.filter(Boolean).join(' | ').slice(0, 220)}`);
+          for (const url of linha.urls) console.log(`      -> ${url}`);
+        }
+
+        if (relevantes.length === 0) {
+          console.log('Nenhuma linha casou com o filtro. Primeiras 15 linhas com URL:');
+          for (const linha of linhas.filter((l) => l.urls.length > 0).slice(0, 15)) {
+            console.log(`  ${linha.celulas.filter(Boolean).join(' | ').slice(0, 220)}`);
+          }
+        }
+        break;
+      }
+
       case 'malhas': {
         const municipios = db
           .prepare('SELECT codigo_ibge, nome FROM municipios')
@@ -385,6 +419,7 @@ async function principal(): Promise<void> {
             '  atualizar <url> [--forcar]  baixa, importa e reconstroi os artefatos\n' +
             '  importar <csv> [--latin1]   importa um arquivo ja baixado\n' +
             '  demo                     gera fixture sintetica e roda o pipeline\n' +
+            '  inventario               imprime o inventario de bases da Anatel (diagnostico)\n' +
             '  malhas                   baixa a malha municipal do IBGE para o mapa\n' +
             '  build                    reconstroi artefatos a partir do warehouse\n' +
             '  status                   estado do warehouse e alertas de qualidade',

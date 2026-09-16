@@ -21,18 +21,32 @@
  * confiar no resultado.
  */
 
+import {
+  baixarInventario,
+  filtrarBandaLargaFixa,
+  interpretarInventario,
+  URL_INVENTARIO,
+} from './inventario-anatel.js';
+
 const CATALOGOS = [
   {
     nome: 'dados.gov.br',
     base: 'https://dados.gov.br/api/3/action',
     portal: 'https://dados.gov.br/dados/conjuntos-dados',
   },
-  {
-    nome: 'dados.anatel.gov.br',
-    base: 'https://dados.anatel.gov.br/api/3/action',
-    portal: 'https://dados.anatel.gov.br/dataset',
-  },
 ] as const;
+
+/**
+ * Chave de acesso da API do dados.gov.br.
+ *
+ * A API respondeu HTTP 401 sem ela numa execucao real. A chave e obtida em
+ * https://dados.gov.br (cadastro gratuito) e fornecida pelo ambiente — nunca
+ * gravada no repositorio. Sem chave, a descoberta ainda funciona pelo
+ * inventario da Anatel, que nao exige autenticacao.
+ */
+function chaveDadosGovBr(): string | null {
+  return process.env['DADOS_GOV_BR_API_KEY']?.trim() || null;
+}
 
 /**
  * Identificador do conjunto no dados.gov.br, extraido da URL publica:
@@ -95,6 +109,14 @@ interface RespostaCkan {
   };
 }
 
+function cabecalhosCatalogo(): Record<string, string> {
+  const cabecalhos: Record<string, string> = { accept: 'application/json' };
+  const chave = chaveDadosGovBr();
+  // Nome do cabecalho conforme a documentacao da API do dados.gov.br.
+  if (chave) cabecalhos['chave-api-dados-abertos'] = chave;
+  return cabecalhos;
+}
+
 /** Formatos que o pipeline sabe processar. */
 const FORMATOS_ACEITOS = new Set(['CSV', 'ZIP', 'TXT', 'GZ']);
 
@@ -127,7 +149,7 @@ async function consultarConjunto(
 ): Promise<RecursoCandidato[]> {
   const resposta = await fetch(
     `${catalogo.base}/package_show?id=${encodeURIComponent(ID_CONJUNTO)}`,
-    { signal: sinalTempo, headers: { accept: 'application/json' } },
+    { signal: sinalTempo, headers: cabecalhosCatalogo() },
   );
   if (!resposta.ok) return [];
   const corpo = (await resposta.json()) as RespostaPacoteCkan;
@@ -141,10 +163,7 @@ async function consultarCatalogo(
   const url =
     `${catalogo.base}/package_search?q=${encodeURIComponent(CONSULTA)}&rows=25`;
 
-  const resposta = await fetch(url, {
-    signal: sinalTempo,
-    headers: { accept: 'application/json' },
-  });
+  const resposta = await fetch(url, { signal: sinalTempo, headers: cabecalhosCatalogo() });
   if (!resposta.ok) {
     throw new Error(`${catalogo.nome} respondeu HTTP ${resposta.status}`);
   }
@@ -189,6 +208,35 @@ export async function descobrirRecursos(
 ): Promise<ResultadoDescoberta> {
   const candidatos: RecursoCandidato[] = [];
   const falhas: ResultadoDescoberta['falhas'] = [];
+
+  // Fonte preferencial: o inventario da Anatel nao exige chave de acesso.
+  try {
+    const bruto = await baixarInventario(timeoutMs);
+    const { linhas } = interpretarInventario(bruto);
+    for (const linha of filtrarBandaLargaFixa(linhas)) {
+      const descricao = linha.celulas
+        .filter((c: string) => c && !/^https?:\/\//i.test(c))
+        .join(' — ')
+        .slice(0, 160);
+      for (const url of linha.urls) {
+        candidatos.push({
+          catalogo: 'inventario Anatel',
+          conjunto: descricao || 'Acessos — Banda Larga Fixa',
+          conjuntoUrl: URL_INVENTARIO,
+          nome: decodeURIComponent(url.split('/').pop() ?? url),
+          formato: (/\.(zip|csv|txt)/i.exec(url)?.[1] ?? '').toUpperCase(),
+          url,
+          bytes: null,
+          atualizadoEm: null,
+        });
+      }
+    }
+  } catch (erro) {
+    falhas.push({
+      catalogo: 'inventario Anatel',
+      motivo: erro instanceof Error ? erro.message : String(erro),
+    });
+  }
 
   for (const catalogo of CATALOGOS) {
     const controlador = new AbortController();
