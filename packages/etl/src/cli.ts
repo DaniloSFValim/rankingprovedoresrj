@@ -141,11 +141,13 @@ async function importar(
       ...(opcoes.encoding ? { encoding: opcoes.encoding } : {}),
     });
 
-    if (extracao.agregadoIgnorado) {
+    if (extracao.outroConjuntoIgnorado) {
       console.log(
-        '[extrair] arquivo de totais agregados (sem prestadora nem municipio) — ignorado.',
+        '[extrair] sem coluna de prestadora — outro conjunto de dados, ignorado.',
       );
-      concluirExecucao(db, execucaoId, 'SUCESSO', extracao.estatisticas, 'agregado ignorado');
+      concluirExecucao(
+        db, execucaoId, 'SUCESSO', extracao.estatisticas, 'outro conjunto ignorado',
+      );
       return;
     }
 
@@ -428,6 +430,8 @@ async function principal(): Promise<void> {
         console.log('');
 
         const anoMinimo = new Date().getUTCFullYear() - anos + 1;
+        const falhasArquivo: Array<{ arquivo: string; motivo: string }> = [];
+        let importados = 0;
 
         for (const recurso of selecionados) {
           const arquivo = await baixarRecurso(recurso.url);
@@ -452,10 +456,38 @@ async function principal(): Promise<void> {
             );
           }
 
+          // Um arquivo problematico nao pode descartar os que ja carregaram.
+          // Falhas sao acumuladas e relatadas ao final; o pipeline so aborta
+          // quando NENHUM arquivo entrou.
           for (const csv of dentro) {
-            await importar(db, csv, { url: recurso.url, dadosDemonstrativos: false });
+            try {
+              await importar(db, csv, { url: recurso.url, dadosDemonstrativos: false });
+              importados += 1;
+            } catch (erro) {
+              falhasArquivo.push({
+                arquivo: path.basename(csv),
+                motivo: erro instanceof Error ? erro.message : String(erro),
+              });
+              console.error(`[erro] ${path.basename(csv)}: ${
+                erro instanceof Error ? erro.message.split('\n')[0] : erro}`);
+            }
           }
         }
+
+        if (falhasArquivo.length > 0) {
+          console.warn(`\n[atencao] ${falhasArquivo.length} arquivo(s) nao importado(s):`);
+          for (const f of falhasArquivo) console.warn(`  ${f.arquivo}`);
+        }
+
+        if (importados === 0) {
+          console.error(
+            '\nNenhum arquivo foi importado. Nada a publicar.',
+          );
+          process.exitCode = 1;
+          break;
+        }
+
+        console.log(`\n[sincronizar] ${importados} arquivo(s) importado(s) com sucesso.`);
         build(db);
         break;
       }

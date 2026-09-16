@@ -19,7 +19,7 @@ import {
 } from '@netrank/core';
 import { PREFIXO_IBGE_RJ, UF_ALVO } from '../config.js';
 import {
-  ehCabecalhoAgregado,
+  ehCabecalhoDeOutroConjunto,
   interpretarAcessos,
   interpretarMes,
   mapearCabecalho,
@@ -52,10 +52,10 @@ export interface ResultadoExtracao {
   /** Coluna real do arquivo ligada a cada campo do dominio (diagnostico). */
   mapaColunas?: MapaColunas;
   /**
-   * true quando o arquivo e um agregado sem prestadora nem territorio.
-   * Nao e erro: e um arquivo que este produto nao consome.
+   * true quando o arquivo nao identifica a prestadora — outro conjunto de
+   * dados que viaja no mesmo pacote. Nao e erro: nao e nosso.
    */
-  agregadoIgnorado?: boolean;
+  outroConjuntoIgnorado?: boolean;
   registros: RegistroAgregado[];
   empresas: Map<string, EmpresaDescoberta>;
   municipios: Map<string, MunicipioDescoberto>;
@@ -170,11 +170,11 @@ export async function extrairRj(
       parse({
         delimiter: delimitador,
         columns: (cabecalho: string[]) => {
-          // Agregado sem prestadora nem territorio nao e cabecalho
-          // desconhecido: e arquivo que este produto nao consome. Abortar por
-          // causa dele descartaria uma importacao inteira ja bem-sucedida.
-          if (ehCabecalhoAgregado(cabecalho)) {
-            resultado.agregadoIgnorado = true;
+          // Arquivo sem prestadora e outro conjunto de dados, nao cabecalho
+          // desconhecido. Abortar por causa dele descartaria uma importacao
+          // inteira ja bem-sucedida.
+          if (ehCabecalhoDeOutroConjunto(cabecalho)) {
+            resultado.outroConjuntoIgnorado = true;
             return cabecalho;
           }
           // Lanca CabecalhoIncompativelError se faltar campo obrigatorio.
@@ -190,7 +190,7 @@ export async function extrairRj(
     );
 
   for await (const linha of leitor as AsyncIterable<Record<string, string>>) {
-    if (resultado.agregadoIgnorado) break;
+    if (resultado.outroConjuntoIgnorado) break;
     resultado.estatisticas.linhasLidas += 1;
     const cols = mapa!;
 

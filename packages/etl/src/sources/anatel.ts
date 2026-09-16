@@ -46,41 +46,38 @@ export const URL_ACESSOS_BANDA_LARGA_FIXA =
 export function ehArquivoIgnorado(caminho: string): boolean {
   const nome = caminho.split(/[\\/]/).pop() ?? caminho;
   return /_colunas\.csv$/i.test(nome)
-    // "_Total" e o agregado nacional (Ano, Mes, Acessos), sem UF nem empresa.
-    // Nao sustenta nenhuma analise deste produto e nao deve ser importado.
+    // Agregados e conjuntos vizinhos que viajam no mesmo pacote. A defesa real
+    // e a regra por cabecalho; isto apenas evita descompacta-los a toa.
     || /_total\.csv$/i.test(nome)
+    || /densidade/i.test(nome)
     || /dicionario|leia[- ]?me|readme/i.test(nome);
 }
 
-/**
- * Colunas que identificam QUEM presta o servico ou ONDE ele e prestado.
- *
- * Um arquivo sem nenhuma delas nao e uma safra com colunas renomeadas: e um
- * agregado. A distincao importa porque as duas situacoes pedem respostas
- * opostas — cabecalho desconhecido deve abortar a importacao, agregado deve
- * ser pulado.
- */
-const CAMPOS_IDENTIFICADORES: readonly CampoAnatel[] = [
-  'uf', 'municipio', 'codigoIbge', 'empresa', 'cnpj', 'grupoEconomico',
-];
+/** Colunas que identificam a PRESTADORA do servico. */
+const CAMPOS_PRESTADORA: readonly CampoAnatel[] = ['empresa', 'cnpj', 'grupoEconomico'];
 
 /**
- * Detecta arquivo de totais agregados pelo proprio cabecalho.
+ * Decide se o arquivo pertence a este produto.
  *
- * Complementa a regra por nome de arquivo: a Anatel pode publicar outro
- * agregado com nome diferente, e depender so do nome deixaria a importacao
- * abortar por um arquivo que deveria ser simplesmente ignorado.
+ * REGRA DE PRINCIPIO, em vez de lista de excecoes:
+ * o NETRANK analisa acessos POR PRESTADORA. Um arquivo sem nenhuma coluna que
+ * identifique a prestadora nao e uma safra com colunas renomeadas — e outro
+ * conjunto de dados, que so por acaso viaja no mesmo pacote.
  *
- * O criterio e conservador: so considera agregado quando NENHUM identificador
- * de prestadora ou de territorio existe. Um arquivo granular sempre traz ao
- * menos um deles, mesmo que com outra grafia.
+ * O pacote da Anatel traz varios desses: o total nacional (Ano, Mes, Acessos)
+ * e a densidade por domicilio (Ano, Mes, UF, Municipio, Densidade). Ambos sao
+ * dados legitimos, e nenhum dos dois responde "quem tem mercado no RJ".
+ *
+ * A distincao pede respostas opostas e por isso e explicita:
+ *   - sem prestadora  -> nao e nosso; pular com aviso;
+ *   - com prestadora mas faltando campo obrigatorio -> e nosso e esta
+ *     ilegivel; abortar alto, porque seguir produziria ranking errado.
  */
-export function ehCabecalhoAgregado(cabecalho: readonly string[]): boolean {
+export function ehCabecalhoDeOutroConjunto(cabecalho: readonly string[]): boolean {
   const canonicas = new Set(cabecalho.map(canonizarTexto));
-  const temIdentificador = CAMPOS_IDENTIFICADORES.some((campo) =>
+  return !CAMPOS_PRESTADORA.some((campo) =>
     SINONIMOS[campo].some((sinonimo) => canonicas.has(sinonimo)),
   );
-  return !temIdentificador;
 }
 
 /**

@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import {
   arquivoDentroDaJanela,
   ehArquivoIgnorado,
-  ehCabecalhoAgregado,
+  ehCabecalhoDeOutroConjunto,
   faixaDeAnos,
   mapearCabecalho,
 } from '../sources/anatel.js';
@@ -182,43 +182,56 @@ describe('recorte por faixa de anos do nome do arquivo', () => {
   });
 });
 
-describe('arquivo de totais agregados', () => {
-  // Cabecalho real do Acessos_Banda_Larga_Fixa_Total.csv, que derrubou uma
-  // importacao de 21 milhoes de linhas ja bem-sucedida.
-  const CABECALHO_TOTAL = ['Ano', 'Mês', 'Acessos'];
+describe('outros conjuntos de dados no mesmo pacote', () => {
+  // Cabecalhos reais que derrubaram importacoes de 21 milhoes de linhas.
+  const TOTAL_NACIONAL = ['Ano', 'Mês', 'Acessos'];
+  const DENSIDADE = [
+    'Ano', 'Mês', 'UF', 'Município', 'Código IBGE', 'Densidade',
+    'Nível Geográfico Densidade',
+  ];
 
-  it('reconhece o agregado pelo nome do arquivo', () => {
-    expect(ehArquivoIgnorado('Acessos_Banda_Larga_Fixa_Total.csv')).toBe(true);
+  it('reconhece o total nacional: nao identifica prestadora', () => {
+    expect(ehCabecalhoDeOutroConjunto(TOTAL_NACIONAL)).toBe(true);
   });
 
-  it('reconhece o agregado pelo cabecalho, mesmo com outro nome', () => {
-    expect(ehCabecalhoAgregado(CABECALHO_TOTAL)).toBe(true);
+  it('reconhece a densidade: tem territorio, mas nenhuma prestadora', () => {
+    expect(ehCabecalhoDeOutroConjunto(DENSIDADE)).toBe(true);
   });
 
-  it('nao confunde arquivo granular com agregado', () => {
-    expect(ehCabecalhoAgregado(CABECALHO_REAL.split(';'))).toBe(false);
+  it('nao confunde o arquivo granular com outro conjunto', () => {
+    expect(ehCabecalhoDeOutroConjunto(CABECALHO_REAL.split(';'))).toBe(false);
   });
 
-  it('basta um identificador de territorio para nao ser agregado', () => {
-    expect(ehCabecalhoAgregado(['Ano', 'Mês', 'UF', 'Acessos'])).toBe(false);
+  it('basta CNPJ ou grupo economico para o arquivo ser nosso', () => {
+    expect(ehCabecalhoDeOutroConjunto(['Ano', 'Mês', 'CNPJ', 'Acessos'])).toBe(false);
+    expect(ehCabecalhoDeOutroConjunto(['Ano', 'Grupo Econômico', 'Acessos'])).toBe(false);
   });
 
-  it('basta um identificador de prestadora para nao ser agregado', () => {
-    expect(ehCabecalhoAgregado(['Ano', 'Mês', 'Empresa', 'Acessos'])).toBe(false);
+  it('territorio sozinho NAO torna o arquivo nosso', () => {
+    // Foi este o caso da densidade: UF e municipio presentes, prestadora nao.
+    expect(ehCabecalhoDeOutroConjunto(['Ano', 'Mês', 'UF', 'Município', 'Densidade']))
+      .toBe(true);
   });
 
-  it('ignora o agregado sem abortar a importacao', async () => {
+  it('ignora sem abortar a importacao', async () => {
     const r = await extrairRjDeTexto(
-      [CABECALHO_TOTAL.join(';'), '2026;8;45000000'].join('\n'),
+      [TOTAL_NACIONAL.join(';'), '2026;8;45000000'].join('\n'),
     );
-    expect(r.agregadoIgnorado).toBe(true);
+    expect(r.outroConjuntoIgnorado).toBe(true);
     expect(r.registros).toHaveLength(0);
   });
 
-  it('cabecalho desconhecido COM identificador continua abortando', async () => {
-    // Uma safra com colunas renomeadas deve falhar alto, nao ser ignorada.
+  it('arquivo NOSSO com colunas renomeadas continua abortando alto', async () => {
+    // Tem prestadora, entao e nosso — e estar ilegivel precisa falhar, porque
+    // seguir produziria ranking errado.
     await expect(
       extrairRjDeTexto(['UF;Empresa;Municipio', 'RJ;X;Niterói'].join('\n')),
     ).rejects.toThrow(/Cabecalho da Anatel incompativel/);
+  });
+
+  it('ignora densidade e total ja pelo nome, sem descompactar', () => {
+    expect(ehArquivoIgnorado('Acessos_Banda_Larga_Fixa_Total.csv')).toBe(true);
+    expect(ehArquivoIgnorado('Densidade_Banda_Larga_Fixa.csv')).toBe(true);
+    expect(ehArquivoIgnorado('Acessos_Banda_Larga_Fixa_2026.csv')).toBe(false);
   });
 });
