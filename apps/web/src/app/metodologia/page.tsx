@@ -47,9 +47,26 @@ export default function PaginaMetodologia() {
         </p>
         <p>
           O painel público da Anatel é uma camada de visualização sobre um backend
-          proprietário. O {MARCA.nome} <strong>não raspa esse painel</strong>: consome os
-          arquivos abertos que o alimentam, cuja estrutura é estável e cujo uso para
-          reprocessamento é previsto.
+          proprietário. O {MARCA.nome} <strong>não raspa esse painel</strong>: consome
+          microdados abertos, cuja estrutura é estável e cujo uso para reprocessamento
+          é previsto.
+        </p>
+        <p className="rounded-lg border border-grafite-700 bg-grafite-950 p-3">
+          <strong className="text-grafite-200">Caminho de acesso.</strong> Os microdados
+          podem chegar por dois caminhos, e o campo &ldquo;Conjunto&rdquo; abaixo indica
+          qual foi usado. Quando a origem é a{' '}
+          <a
+            href="https://basedosdados.org"
+            className="text-marca-400 underline-offset-2 hover:underline"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            Base dos Dados
+          </a>
+          , os números continuam sendo da Anatel, mas passam por uma camada de
+          tratamento de terceiro — que não é de responsabilidade da Anatel nem desta
+          plataforma. Declaramos isso explicitamente em vez de atribuir tudo
+          diretamente à Agência.
         </p>
         <dl className="grid gap-2 sm:grid-cols-2">
           <div>
@@ -238,6 +255,15 @@ escala: 0 (pulverizado) a 10.000 (monopólio)`}</Formula>
           <li>
             Quando a fonte não traz CNPJ, a identidade do provedor depende de heurística
             de nome e está sujeita a revisão.
+          </li>
+          <li>
+            Quando os dados chegam pela Base dos Dados, há uma camada adicional de
+            tratamento entre a Anatel e esta plataforma, e a competência mais recente
+            pode demorar mais a aparecer do que na fonte original.
+          </li>
+          <li>
+            Os nomes dos municípios vêm da malha territorial do IBGE, não da base de
+            acessos. A junção entre as duas é feita pelo código IBGE.
           </li>
           <li>
             Provedores com atuação muito pequena podem entrar e sair da base entre

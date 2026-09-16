@@ -90,7 +90,9 @@ IBGE de 7 dígitos:
 npm run etl -- malhas
 ```
 
-Isso grava `apps/web/public/data/malhas/rj-municipios.json`. A junção é sempre
+Isso grava `apps/web/public/data/malhas/rj-municipios.json`. A malha também é a
+**fonte dos nomes dos municípios**: a Base dos Dados entrega apenas o código
+IBGE, e o IBGE é a autoridade sobre a nomenclatura oficial. A junção é sempre
 por **código**, nunca por nome — grafias divergem entre IBGE e Anatel
 (`Parati`/`Paraty`, acentuação inconsistente) e casar por nome perderia
 municípios em silêncio.
@@ -201,6 +203,45 @@ Defina `NETRANK_AMBIENTE=producao` no ambiente de build. Com essa variável, o
 build **aborta** se o warehouse contiver dados demonstrativos — a salvaguarda
 que impede fixture sintética de ir ao ar como se fosse dado da Anatel.
 
+### Base dos Dados (BigQuery) — caminho preferencial
+
+A descoberta automática no portal da Anatel se mostrou inviável na prática: a
+API do dados.gov.br responde **HTTP 401** e exige chave vinculada a perfil de
+Administrador de Organização, e o inventário público da Anatel raramente traz
+link direto de arquivo.
+
+A [Base dos Dados](https://basedosdados.org) mantém os microdados de acessos
+de banda larga fixa da Anatel tratados e consultáveis via BigQuery.
+
+```bash
+npm run etl -- bdd-inspecionar          # descreve o schema remoto
+npm run etl -- bdd-importar --anos 2    # importa o RJ
+```
+
+**O schema não é codificado.** Ao contrário de um CSV, o BigQuery é
+introspectável: o pipeline consulta `INFORMATION_SCHEMA`, escolhe a tabela de
+microdados e mapeia as colunas por sinônimos. Se a Base dos Dados renomear um
+campo, o comando falha dizendo qual sinônimo estender — não produz ranking
+errado.
+
+O filtro `UF = RJ` e a agregação acontecem **no servidor**, não no cliente:
+milhões de linhas nacionais viram alguns milhares de linhas do Rio de Janeiro
+antes de trafegar. É o princípio do §37 aplicado a uma fonte remota.
+
+**Credenciais.** A consulta é cobrada no *seu* projeto do Google Cloud (camada
+gratuita: 1 TB/mês, muito acima do necessário); a Base dos Dados hospeda os
+dados, mas não paga a consulta.
+
+| Onde | Nome | Conteúdo |
+|---|---|---|
+| Secret | `GCP_SERVICE_ACCOUNT_JSON` | JSON da conta de serviço |
+| Variable | `GCP_PROJECT_ID` | ID do projeto no Google Cloud |
+
+**Procedência.** Os números continuam sendo da Anatel, mas passam por
+tratamento de terceiro. A página de Metodologia declara isso explicitamente
+como *"Anatel, via Base dos Dados"* — atribuir tudo diretamente à Agência
+esconderia uma camada de processamento que não é dela nem nossa.
+
 ### Ingestão automática (GitHub Actions)
 
 A ingestão não roda no build da Cloudflare: o ambiente usa npm restrito e não
@@ -211,6 +252,7 @@ trabalho num runner do GitHub, que tem rede liberada e compila normalmente.
 
 | Parâmetro | Padrão | O que faz |
 |---|---|---|
+| `fonte` | `basedosdados` | `basedosdados` (BigQuery) ou `anatel` (portal) |
 | `anos` | `2` | Quantos anos mais recentes importar |
 | `url` | vazio | URL de um recurso específico; ignora a descoberta automática |
 | `malhas` | marcado | Baixa também a malha municipal do IBGE |
@@ -230,6 +272,8 @@ fora do ar, o mapa continua como treemap e o resto da atualização não se perd
 ```bash
 npm run etl -- sincronizar --anos 2   # descobre, baixa e importa sozinho
 npm run etl -- malhas                 # malha municipal do IBGE
+# ou, com o GeoJSON já baixado:
+npm run etl -- malhas --arquivo caminho/rj-municipios.json
 npm run etl -- status                 # conferir os alertas de qualidade
 npm run build
 
@@ -303,7 +347,8 @@ extração com filtro de UF.
 | Módulo | Situação |
 |---|---|
 | Ingestão Anatel, warehouse, qualidade | Funcionando |
-| Ingestão automatizada em CI | Workflow pronto, ainda não executado |
+| Ingestão via Base dos Dados (BigQuery) | Implementada, aguardando credenciais |
+| Ingestão automatizada em CI | Workflow pronto |
 | Ranking estadual e municipal, market share | Funcionando |
 | Crescimento, retração, corrida do ranking | Funcionando |
 | Perfis de município e de provedor | Funcionando |

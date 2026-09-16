@@ -83,6 +83,103 @@ export interface ResultadoMalha {
   municipios: number;
   bytes: number;
   endpoint: string;
+  /**
+   * Nome de cada municipio conforme o IBGE.
+   *
+   * A Base dos Dados entrega apenas o codigo IBGE; sem esta fonte, as paginas
+   * municipais exibiriam numeros no lugar de nomes. O IBGE e a autoridade
+   * sobre a nomenclatura oficial, entao e dele que o nome vem.
+   */
+  nomes: Map<string, string>;
+}
+
+/**
+ * Processa uma malha ja baixada, para quando o download automatico nao e
+ * possivel. Mesmo tratamento do caminho online.
+ */
+export function processarMalhaLocal(
+  caminhoArquivo: string,
+  nomesConhecidos: ReadonlyMap<string, string> = new Map(),
+): ResultadoMalha {
+  const bruto = fs.readFileSync(caminhoArquivo, 'utf8');
+  const colecao = JSON.parse(bruto) as ColecaoGeoJson;
+  const resultado = normalizarColecao(colecao, nomesConhecidos);
+  if (resultado.feicoes.length === 0) {
+    throw new Error(
+      `Nenhuma feicao com codigo IBGE do RJ reconhecivel em ${caminhoArquivo}. ` +
+        `Confira se o arquivo e a malha municipal do Estado do Rio de Janeiro.`,
+    );
+  }
+  return gravarMalha(resultado, `arquivo local: ${caminhoArquivo}`);
+}
+
+interface ColecaoNormalizada {
+  feicoes: Feicao[];
+  semCodigo: number;
+  nomes: Map<string, string>;
+}
+
+function normalizarColecao(
+  colecao: ColecaoGeoJson,
+  nomesConhecidos: ReadonlyMap<string, string>,
+): ColecaoNormalizada {
+  const feicoes: Feicao[] = [];
+  const nomes = new Map<string, string>();
+  let semCodigo = 0;
+
+  for (const feicao of colecao.features ?? []) {
+    const codigo = extrairCodigoIbge(feicao);
+    if (!codigo) {
+      semCodigo += 1;
+      continue;
+    }
+    const nome = nomeDaFeicao(feicao) ?? nomesConhecidos.get(codigo) ?? codigo;
+    nomes.set(codigo, nome);
+    feicoes.push({
+      type: 'Feature',
+      // O ECharts casa geometria com dados pelo campo `name`. Usamos o codigo
+      // IBGE: e estavel e nao sofre com divergencia de grafia entre fontes.
+      properties: { name: codigo, codigoIbge: codigo, nome },
+      geometry: feicao.geometry
+        ? { type: feicao.geometry.type, coordinates: reduzirPrecisao(feicao.geometry.coordinates) }
+        : null,
+    });
+  }
+
+  return { feicoes, semCodigo, nomes };
+}
+
+/** Procura o nome do municipio nas propriedades da feicao. */
+function nomeDaFeicao(feicao: Feicao): string | null {
+  for (const chave of ['nome', 'NM_MUN', 'nm_mun', 'name', 'NOME', 'municipio']) {
+    const valor = feicao.properties[chave];
+    if (typeof valor === 'string' && valor.trim() !== '' && !/^\d+$/.test(valor.trim())) {
+      return valor.trim();
+    }
+  }
+  return null;
+}
+
+function gravarMalha(normalizada: ColecaoNormalizada, endpoint: string): ResultadoMalha {
+  const destino = path.join(CAMINHOS.artefatos, 'malhas/rj-municipios.json');
+  fs.mkdirSync(path.dirname(destino), { recursive: true });
+  fs.writeFileSync(
+    destino,
+    JSON.stringify({ type: 'FeatureCollection', features: normalizada.feicoes }),
+    'utf8',
+  );
+  if (normalizada.semCodigo > 0) {
+    console.warn(
+      `[malhas] ${normalizada.semCodigo} feicao(oes) sem codigo IBGE reconhecivel foram ignoradas.`,
+    );
+  }
+  return {
+    caminho: destino,
+    municipios: normalizada.feicoes.length,
+    bytes: fs.statSync(destino).size,
+    endpoint,
+    nomes: normalizada.nomes,
+  };
 }
 
 /**
@@ -120,62 +217,15 @@ export async function baixarMalhaMunicipios(
         continue;
       }
 
-      const feicoes: Feicao[] = [];
-      let semCodigo = 0;
-
-      for (const feicao of colecao.features) {
-        const codigo = extrairCodigoIbge(feicao);
-        if (!codigo) {
-          semCodigo += 1;
-          continue;
-        }
-        feicoes.push({
-          type: 'Feature',
-          // O ECharts casa a geometria com os dados pelo campo `name`.
-          // Usamos o codigo IBGE como nome: e estavel e nao sofre com
-          // divergencia de grafia entre IBGE e Anatel.
-          properties: {
-            name: codigo,
-            codigoIbge: codigo,
-            nome: nomesPorCodigo.get(codigo) ?? String(feicao.properties['nome'] ?? codigo),
-          },
-          geometry: feicao.geometry
-            ? {
-                type: feicao.geometry.type,
-                coordinates: reduzirPrecisao(feicao.geometry.coordinates),
-              }
-            : null,
-        });
-      }
-
-      if (feicoes.length === 0) {
+      const normalizada = normalizarColecao(colecao, nomesPorCodigo);
+      if (normalizada.feicoes.length === 0) {
         falhas.push(
           `${endpoint} -> nenhuma feicao com codigo IBGE do RJ reconhecivel ` +
             `(${colecao.features.length} feicoes recebidas)`,
         );
         continue;
       }
-
-      const destino = path.join(CAMINHOS.artefatos, 'malhas/rj-municipios.json');
-      fs.mkdirSync(path.dirname(destino), { recursive: true });
-      fs.writeFileSync(
-        destino,
-        JSON.stringify({ type: 'FeatureCollection', features: feicoes }),
-        'utf8',
-      );
-
-      if (semCodigo > 0) {
-        console.warn(
-          `[malhas] ${semCodigo} feicao(oes) sem codigo IBGE reconhecivel foram ignoradas.`,
-        );
-      }
-
-      return {
-        caminho: destino,
-        municipios: feicoes.length,
-        bytes: fs.statSync(destino).size,
-        endpoint,
-      };
+      return gravarMalha(normalizada, endpoint);
     } catch (erro) {
       falhas.push(`${endpoint} -> ${erro instanceof Error ? erro.message : String(erro)}`);
     } finally {

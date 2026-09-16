@@ -6,7 +6,9 @@
  *   npm run etl -- atualizar <url>  baixa, importa e reconstroi os artefatos
  *   npm run etl -- demo            gera fixture sintetica e roda o pipeline inteiro
  *   npm run etl -- importar <csv>  importa um arquivo real da Anatel
- *   npm run etl -- malhas          baixa a malha municipal do IBGE para o mapa
+ *   npm run etl -- bdd-inspecionar  descreve o schema da Base dos Dados
+ *   npm run etl -- bdd-importar     importa os dados do RJ via BigQuery
+ *   npm run etl -- malhas           baixa a malha municipal do IBGE para o mapa
  *   npm run etl -- build           reconstroi os artefatos a partir do warehouse
  *   npm run etl -- status          mostra o estado do warehouse e os alertas
  */
@@ -26,7 +28,17 @@ import {
   registrarFonte,
 } from './pipeline/carregar.js';
 import { extrairRj } from './pipeline/extrair.js';
-import { baixarMalhaMunicipios } from './pipeline/malhas.js';
+import { baixarMalhaMunicipios, processarMalhaLocal } from './pipeline/malhas.js';
+import { converterParaExtracao } from './pipeline/importar-bdd.js';
+import {
+  consultarRj,
+  criarCliente,
+  descreverColunas,
+  escolherTabela,
+  listarTabelas,
+  mapearColunas,
+  PROCEDENCIA_BDD,
+} from './sources/basedosdados.js';
 import { baixarRecurso, prepararCsvs } from './pipeline/baixar.js';
 import { anoDoRecurso, descobrirRecursos } from './sources/descoberta.js';
 import { descobrirESelecionar } from './pipeline/sincronizar.js';
@@ -401,14 +413,147 @@ async function principal(): Promise<void> {
         break;
       }
 
+      case 'bdd-inspecionar': {
+        // Ao contrario de um CSV, o BigQuery e introspectavel. Em vez de supor
+        // nomes de coluna, perguntamos ao proprio banco.
+        const cliente = criarCliente();
+        console.log('[bdd] listando tabelas do dataset da Anatel...');
+        const tabelas = await listarTabelas(cliente);
+        console.log(`Tabelas (${tabelas.length}): ${tabelas.join(', ')}\n`);
+
+        const colunas = await descreverColunas(cliente);
+        const porTabela = new Map<string, string[]>();
+        for (const c of colunas) {
+          const lista = porTabela.get(c.tabela) ?? [];
+          lista.push(c.coluna);
+          porTabela.set(c.tabela, lista);
+        }
+        for (const [tabela, lista] of porTabela) {
+          console.log(`${tabela} (${lista.length} colunas):`);
+          for (const c of colunas.filter((x) => x.tabela === tabela)) {
+            console.log(`  ${c.coluna.padEnd(32)} ${c.tipo}`);
+          }
+          console.log('');
+        }
+
+        const escolhida = escolherTabela(porTabela);
+        console.log(`Tabela escolhida para importacao: ${escolhida ?? '(nenhuma)'}`);
+        if (escolhida) {
+          try {
+            const mapa = mapearColunas(escolhida, porTabela.get(escolhida)!);
+            console.log('Mapeamento de campos:');
+            for (const [campo, coluna] of Object.entries(mapa)) {
+              console.log(`  ${campo.padEnd(12)} -> ${coluna}`);
+            }
+          } catch (erro) {
+            console.error(erro instanceof Error ? erro.message : erro);
+          }
+        }
+        break;
+      }
+
+      case 'bdd-importar': {
+        const indice = resto.indexOf('--anos');
+        const anos = indice >= 0 ? Number(resto[indice + 1]) : 2;
+        if (!Number.isInteger(anos) || anos < 1 || anos > 30) {
+          throw new Error('Uso: npm run etl -- bdd-importar [--anos N]  (N entre 1 e 30)');
+        }
+        const anoMinimo = new Date().getUTCFullYear() - anos + 1;
+
+        const cliente = criarCliente();
+        const colunas = await descreverColunas(cliente);
+        const porTabela = new Map<string, string[]>();
+        for (const c of colunas) {
+          const lista = porTabela.get(c.tabela) ?? [];
+          lista.push(c.coluna);
+          porTabela.set(c.tabela, lista);
+        }
+        const tabela = escolherTabela(porTabela);
+        if (!tabela) throw new Error('Nenhuma tabela utilizavel no dataset da Base dos Dados.');
+
+        const mapa = mapearColunas(tabela, porTabela.get(tabela)!);
+        console.log(`[bdd] tabela ${tabela}, a partir de ${anoMinimo}`);
+        console.log('[bdd] consultando (filtro e agregacao no servidor)...');
+
+        const linhas = await consultarRj(cliente, tabela, mapa, anoMinimo);
+        console.log(`[bdd] ${linhas.length} linhas agregadas do RJ`);
+
+        const fonteId = registrarFonte(db, {
+          nome: PROCEDENCIA_BDD.fonte,
+          url: PROCEDENCIA_BDD.url,
+          arquivo: `bigquery:${tabela}`,
+          hashSha256: null,
+          bytes: null,
+          coletadoEm: new Date().toISOString(),
+          dadosDemonstrativos: false,
+        });
+        const execucaoId = iniciarExecucao(db, fonteId);
+
+        try {
+          const extracao = converterParaExtracao(linhas, carregarOverrides());
+          console.log(
+            `[bdd] ${extracao.registros.length} fatos | ` +
+              `${extracao.estatisticas.linhasRejeitadas} rejeitados | ` +
+              `${extracao.competencias.size} competencias`,
+          );
+          carregar(db, extracao, execucaoId);
+
+          const alertas: Alerta[] = [...auditarExtracao(extracao)];
+          for (const competencia of [...extracao.competencias].sort()) {
+            alertas.push(...auditarCompetencia(db, competencia));
+          }
+          persistirAlertas(db, execucaoId, alertas);
+          console.log(`[qualidade] ${alertas.length} alerta(s)`);
+          for (const a of alertas.filter((x) => x.severidade === 'CRITICO')) {
+            console.warn(`  [CRITICO] ${a.tipo}: ${a.mensagem}`);
+          }
+
+          concluirExecucao(db, execucaoId, 'SUCESSO', extracao.estatisticas);
+        } catch (erro) {
+          concluirExecucao(
+            db, execucaoId, 'FALHA',
+            { linhasLidas: 0, linhasRj: 0, linhasRejeitadas: 0, motivosRejeicao: {} },
+            erro instanceof Error ? erro.message : String(erro),
+          );
+          throw erro;
+        }
+        break;
+      }
+
       case 'malhas': {
         const municipios = db
           .prepare('SELECT codigo_ibge, nome FROM municipios')
           .all() as Array<{ codigo_ibge: string; nome: string }>;
         const nomes = new Map(municipios.map((m) => [m.codigo_ibge, m.nome]));
 
-        console.log('[malhas] consultando a API de malhas do IBGE...');
-        const resultado = await baixarMalhaMunicipios(nomes);
+        const indiceArquivo = resto.indexOf('--arquivo');
+        const arquivoLocal = indiceArquivo >= 0 ? resto[indiceArquivo + 1] : undefined;
+
+        let resultado;
+        if (arquivoLocal) {
+          console.log(`[malhas] processando arquivo local ${arquivoLocal}`);
+          resultado = processarMalhaLocal(path.resolve(arquivoLocal), nomes);
+        } else {
+          console.log('[malhas] consultando a API de malhas do IBGE...');
+          resultado = await baixarMalhaMunicipios(nomes);
+        }
+
+        // A Base dos Dados entrega apenas o codigo do municipio. O IBGE e a
+        // autoridade sobre a nomenclatura, entao o nome vem da malha — mas so
+        // preenche onde ainda nao ha nome de verdade, nunca sobrescreve.
+        const atualizar = db.prepare(
+          'UPDATE municipios SET nome = ? WHERE codigo_ibge = ? AND (nome IS NULL OR nome = codigo_ibge)',
+        );
+        let renomeados = 0;
+        const transacao = db.transaction(() => {
+          for (const [codigo, nome] of resultado.nomes) {
+            if (nome !== codigo) renomeados += atualizar.run(nome, codigo).changes;
+          }
+        });
+        transacao();
+        if (renomeados > 0) {
+          console.log(`[malhas] ${renomeados} municipio(s) passaram a exibir o nome do IBGE.`);
+        }
         console.log(
           `[malhas] ${resultado.municipios} municipios | ` +
             `${(resultado.bytes / 1e6).toFixed(2)} MB | ${resultado.caminho}`,
@@ -441,7 +586,9 @@ async function principal(): Promise<void> {
             '  importar <csv> [--latin1]   importa um arquivo ja baixado\n' +
             '  demo                     gera fixture sintetica e roda o pipeline\n' +
             '  inventario               imprime o inventario de bases da Anatel (diagnostico)\n' +
-            '  malhas                   baixa a malha municipal do IBGE para o mapa\n' +
+            '  bdd-inspecionar          descreve o schema da Base dos Dados (BigQuery)\n' +
+            '  bdd-importar [--anos N]  importa os dados do RJ via BigQuery\n' +
+            '  malhas [--arquivo <geojson>]  malha municipal do IBGE para o mapa\n' +
             '  build                    reconstroi artefatos a partir do warehouse\n' +
             '  status                   estado do warehouse e alertas de qualidade',
         );
