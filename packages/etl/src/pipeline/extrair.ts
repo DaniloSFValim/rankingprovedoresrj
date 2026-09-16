@@ -19,6 +19,7 @@ import {
 } from '@netrank/core';
 import { PREFIXO_IBGE_RJ, UF_ALVO } from '../config.js';
 import {
+  ehCabecalhoAgregado,
   interpretarAcessos,
   interpretarMes,
   mapearCabecalho,
@@ -50,6 +51,11 @@ export interface MunicipioDescoberto {
 export interface ResultadoExtracao {
   /** Coluna real do arquivo ligada a cada campo do dominio (diagnostico). */
   mapaColunas?: MapaColunas;
+  /**
+   * true quando o arquivo e um agregado sem prestadora nem territorio.
+   * Nao e erro: e um arquivo que este produto nao consome.
+   */
+  agregadoIgnorado?: boolean;
   registros: RegistroAgregado[];
   empresas: Map<string, EmpresaDescoberta>;
   municipios: Map<string, MunicipioDescoberto>;
@@ -164,6 +170,13 @@ export async function extrairRj(
       parse({
         delimiter: delimitador,
         columns: (cabecalho: string[]) => {
+          // Agregado sem prestadora nem territorio nao e cabecalho
+          // desconhecido: e arquivo que este produto nao consome. Abortar por
+          // causa dele descartaria uma importacao inteira ja bem-sucedida.
+          if (ehCabecalhoAgregado(cabecalho)) {
+            resultado.agregadoIgnorado = true;
+            return cabecalho;
+          }
           // Lanca CabecalhoIncompativelError se faltar campo obrigatorio.
           mapa = mapearCabecalho(cabecalho);
           resultado.mapaColunas = mapa;
@@ -177,6 +190,7 @@ export async function extrairRj(
     );
 
   for await (const linha of leitor as AsyncIterable<Record<string, string>>) {
+    if (resultado.agregadoIgnorado) break;
     resultado.estatisticas.linhasLidas += 1;
     const cols = mapa!;
 

@@ -141,6 +141,14 @@ async function importar(
       ...(opcoes.encoding ? { encoding: opcoes.encoding } : {}),
     });
 
+    if (extracao.agregadoIgnorado) {
+      console.log(
+        '[extrair] arquivo de totais agregados (sem prestadora nem municipio) — ignorado.',
+      );
+      concluirExecucao(db, execucaoId, 'SUCESSO', extracao.estatisticas, 'agregado ignorado');
+      return;
+    }
+
     if (extracao.mapaColunas) {
       console.log(
         '[extrair] colunas resolvidas: ' +

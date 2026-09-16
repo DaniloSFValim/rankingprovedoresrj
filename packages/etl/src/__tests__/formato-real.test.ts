@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import {
   arquivoDentroDaJanela,
   ehArquivoIgnorado,
+  ehCabecalhoAgregado,
   faixaDeAnos,
   mapearCabecalho,
 } from '../sources/anatel.js';
@@ -178,5 +179,46 @@ describe('recorte por faixa de anos do nome do arquivo', () => {
   it('processa arquivo sem faixa identificavel — pular perderia dado em silencio', () => {
     expect(faixaDeAnos('acessos_banda_larga_fixa.csv')).toBeNull();
     expect(arquivoDentroDaJanela('acessos_banda_larga_fixa.csv', 2025)).toBe(true);
+  });
+});
+
+describe('arquivo de totais agregados', () => {
+  // Cabecalho real do Acessos_Banda_Larga_Fixa_Total.csv, que derrubou uma
+  // importacao de 21 milhoes de linhas ja bem-sucedida.
+  const CABECALHO_TOTAL = ['Ano', 'Mês', 'Acessos'];
+
+  it('reconhece o agregado pelo nome do arquivo', () => {
+    expect(ehArquivoIgnorado('Acessos_Banda_Larga_Fixa_Total.csv')).toBe(true);
+  });
+
+  it('reconhece o agregado pelo cabecalho, mesmo com outro nome', () => {
+    expect(ehCabecalhoAgregado(CABECALHO_TOTAL)).toBe(true);
+  });
+
+  it('nao confunde arquivo granular com agregado', () => {
+    expect(ehCabecalhoAgregado(CABECALHO_REAL.split(';'))).toBe(false);
+  });
+
+  it('basta um identificador de territorio para nao ser agregado', () => {
+    expect(ehCabecalhoAgregado(['Ano', 'Mês', 'UF', 'Acessos'])).toBe(false);
+  });
+
+  it('basta um identificador de prestadora para nao ser agregado', () => {
+    expect(ehCabecalhoAgregado(['Ano', 'Mês', 'Empresa', 'Acessos'])).toBe(false);
+  });
+
+  it('ignora o agregado sem abortar a importacao', async () => {
+    const r = await extrairRjDeTexto(
+      [CABECALHO_TOTAL.join(';'), '2026;8;45000000'].join('\n'),
+    );
+    expect(r.agregadoIgnorado).toBe(true);
+    expect(r.registros).toHaveLength(0);
+  });
+
+  it('cabecalho desconhecido COM identificador continua abortando', async () => {
+    // Uma safra com colunas renomeadas deve falhar alto, nao ser ignorada.
+    await expect(
+      extrairRjDeTexto(['UF;Empresa;Municipio', 'RJ;X;Niterói'].join('\n')),
+    ).rejects.toThrow(/Cabecalho da Anatel incompativel/);
   });
 });

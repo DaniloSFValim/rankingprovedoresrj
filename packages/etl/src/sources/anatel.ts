@@ -46,7 +46,41 @@ export const URL_ACESSOS_BANDA_LARGA_FIXA =
 export function ehArquivoIgnorado(caminho: string): boolean {
   const nome = caminho.split(/[\\/]/).pop() ?? caminho;
   return /_colunas\.csv$/i.test(nome)
+    // "_Total" e o agregado nacional (Ano, Mes, Acessos), sem UF nem empresa.
+    // Nao sustenta nenhuma analise deste produto e nao deve ser importado.
+    || /_total\.csv$/i.test(nome)
     || /dicionario|leia[- ]?me|readme/i.test(nome);
+}
+
+/**
+ * Colunas que identificam QUEM presta o servico ou ONDE ele e prestado.
+ *
+ * Um arquivo sem nenhuma delas nao e uma safra com colunas renomeadas: e um
+ * agregado. A distincao importa porque as duas situacoes pedem respostas
+ * opostas — cabecalho desconhecido deve abortar a importacao, agregado deve
+ * ser pulado.
+ */
+const CAMPOS_IDENTIFICADORES: readonly CampoAnatel[] = [
+  'uf', 'municipio', 'codigoIbge', 'empresa', 'cnpj', 'grupoEconomico',
+];
+
+/**
+ * Detecta arquivo de totais agregados pelo proprio cabecalho.
+ *
+ * Complementa a regra por nome de arquivo: a Anatel pode publicar outro
+ * agregado com nome diferente, e depender so do nome deixaria a importacao
+ * abortar por um arquivo que deveria ser simplesmente ignorado.
+ *
+ * O criterio e conservador: so considera agregado quando NENHUM identificador
+ * de prestadora ou de territorio existe. Um arquivo granular sempre traz ao
+ * menos um deles, mesmo que com outra grafia.
+ */
+export function ehCabecalhoAgregado(cabecalho: readonly string[]): boolean {
+  const canonicas = new Set(cabecalho.map(canonizarTexto));
+  const temIdentificador = CAMPOS_IDENTIFICADORES.some((campo) =>
+    SINONIMOS[campo].some((sinonimo) => canonicas.has(sinonimo)),
+  );
+  return !temIdentificador;
 }
 
 /**
