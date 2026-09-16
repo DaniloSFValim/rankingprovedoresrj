@@ -12,9 +12,12 @@ import { corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal, 
 export function TabelaRanking({
   linhas,
   limite,
+  ocultarMunicipios = false,
 }: {
   linhas: LinhaRankingEstadual[];
   limite?: number;
+  /** Dentro de um município, a contagem de municípios atendidos é sempre 1. */
+  ocultarMunicipios?: boolean;
 }) {
   const exibidas = limite ? linhas.slice(0, limite) : linhas;
   const maiorShare = exibidas[0]?.marketShare ?? 1;
@@ -30,7 +33,9 @@ export function TabelaRanking({
             <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Participação</th>
             <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Var. mensal</th>
             <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Var. 12 meses</th>
-            <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Municípios</th>
+            {!ocultarMunicipios && (
+              <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Municípios</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -86,9 +91,11 @@ export function TabelaRanking({
                   {percentualComSinal(linha.variacao12Percentual)}
                 </div>
               </td>
-              <td className="numerico px-3 py-2.5 text-right text-grafite-300">
-                {inteiro(linha.municipiosAtendidos)}
-              </td>
+              {!ocultarMunicipios && (
+                <td className="numerico px-3 py-2.5 text-right text-grafite-300">
+                  {inteiro(linha.municipiosAtendidos)}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

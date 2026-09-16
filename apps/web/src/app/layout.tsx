@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Navegacao } from '@/componentes/Navegacao';
 import { FaixaDemonstrativo, RodapeProcedencia } from '@/componentes/Procedencia';
-import { artefatosDisponiveis, lerMeta } from '@/lib/dados';
+import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
 export const metadata: Metadata = {
@@ -52,11 +52,18 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
   }
 
   const meta = lerMeta();
+  const cidades = lerIndiceMunicipios().map((m) => ({
+    slug: m.slug,
+    nome: m.nome,
+    totalAcessos: m.totalAcessos,
+    numeroProvedores: m.numeroProvedores,
+  }));
+
   return (
     <html lang="pt-BR" className="dark">
       <body className="min-h-screen">
         <FaixaDemonstrativo meta={meta} />
-        <Navegacao meta={meta} />
+        <Navegacao meta={meta} cidades={cidades} />
         <div className="mx-auto max-w-7xl px-4 py-6">{children}</div>
         <RodapeProcedencia meta={meta} />
       </body>

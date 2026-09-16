@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
+import { SeletorCidade, type CidadeOpcao } from '@/componentes/SeletorCidade';
 import type { Meta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
@@ -13,7 +14,7 @@ const ITENS = [
   { href: '/metodologia/', rotulo: 'Metodologia' },
 ] as const;
 
-export function Navegacao({ meta }: { meta: Meta }) {
+export function Navegacao({ meta, cidades }: { meta: Meta; cidades: CidadeOpcao[] }) {
   return (
     <header className="sticky top-0 z-30 border-b border-grafite-800 bg-grafite-950/85 backdrop-blur">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
@@ -39,10 +40,13 @@ export function Navegacao({ meta }: { meta: Meta }) {
           </ul>
         </nav>
 
-        <div className="ml-auto text-right">
-          <div className="rotulo">Competência</div>
-          <div className="numerico text-sm font-semibold text-marca-300">
-            {rotularCompetencia(meta.competenciaAtual)}
+        <div className="ml-auto flex items-center gap-4">
+          <SeletorCidade cidades={cidades} />
+          <div className="hidden text-right sm:block">
+            <div className="rotulo">Competência</div>
+            <div className="numerico text-sm font-semibold text-marca-300">
+              {rotularCompetencia(meta.competenciaAtual)}
+            </div>
           </div>
         </div>
       </div>

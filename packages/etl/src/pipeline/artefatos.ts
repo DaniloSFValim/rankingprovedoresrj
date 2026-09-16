@@ -129,6 +129,8 @@ interface Contexto {
   municipalPorCompetencia: Map<Competencia, Map<string, Map<string, number>>>;
   /** competencia -> tecnologia -> acessos. */
   tecnologiaPorCompetencia: Map<Competencia, Map<Tecnologia, number>>;
+  /** competencia -> codigoIbge -> tecnologia -> acessos. */
+  tecnologiaMunicipal: Map<Competencia, Map<string, Map<Tecnologia, number>>>;
 }
 
 function carregarContexto(db: Banco): Contexto {
@@ -166,6 +168,7 @@ function carregarContexto(db: Banco): Contexto {
   const estadoPorCompetencia = new Map<Competencia, Map<string, number>>();
   const municipalPorCompetencia = new Map<Competencia, Map<string, Map<string, number>>>();
   const tecnologiaPorCompetencia = new Map<Competencia, Map<Tecnologia, number>>();
+  const tecnologiaMunicipal = new Map<Competencia, Map<string, Map<Tecnologia, number>>>();
 
   const fatos = db
     .prepare(
@@ -198,6 +201,12 @@ function carregarContexto(db: Banco): Contexto {
     let tec = tecnologiaPorCompetencia.get(f.competencia);
     if (!tec) tecnologiaPorCompetencia.set(f.competencia, (tec = new Map()));
     tec.set(f.tecnologia, (tec.get(f.tecnologia) ?? 0) + f.acessos);
+
+    let tecMun = tecnologiaMunicipal.get(f.competencia);
+    if (!tecMun) tecnologiaMunicipal.set(f.competencia, (tecMun = new Map()));
+    let tecDoMunicipio = tecMun.get(f.codigo_ibge);
+    if (!tecDoMunicipio) tecMun.set(f.codigo_ibge, (tecDoMunicipio = new Map()));
+    tecDoMunicipio.set(f.tecnologia, (tecDoMunicipio.get(f.tecnologia) ?? 0) + f.acessos);
   }
 
   return {
@@ -207,6 +216,7 @@ function carregarContexto(db: Banco): Contexto {
     estadoPorCompetencia,
     municipalPorCompetencia,
     tecnologiaPorCompetencia,
+    tecnologiaMunicipal,
   };
 }
 
@@ -399,6 +409,16 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   const indiceMunicipios: MunicipioIndice[] = [];
   const municipiosAtual = ctx.municipalPorCompetencia.get(atual) ?? new Map();
 
+  // Posicao de cada municipio no ranking estadual por acessos. Calculada antes
+  // dos perfis para que cada pagina municipal possa dar escala ao proprio
+  // numero — "8o maior mercado do Estado" informa mais que um total isolado.
+  const posicaoEstadual = new Map<string, number>(
+    [...municipiosAtual.entries()]
+      .map(([codigo, empresas]) => [codigo, somar(empresas)] as const)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([codigo], indice) => [codigo, indice + 1]),
+  );
+
   for (const [codigoIbge, empresasDoMunicipio] of municipiosAtual) {
     const resumo = ctx.municipios.get(codigoIbge);
     const p = participantes(empresasDoMunicipio);
@@ -449,17 +469,61 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       anteriorMes ? construirRanking(participantes(anteriorMes)) : [],
     );
 
+    // Comparacao de 12 meses no municipio, para o painel da cidade.
+    const ranking12Municipal = new Map(
+      compararRankings(
+        rankingLocal,
+        antes ? construirRanking(participantes(antes)) : [],
+      ).map((l) => [l.empresaId, l]),
+    );
+
+    // Entrantes e saidas: quem apareceu e quem sumiu na ultima competencia.
+    const idsAtuais = new Set(rankingLocal.map((l) => l.empresaId));
+    const rankingAnteriorMes = anteriorMes
+      ? construirRanking(participantes(anteriorMes))
+      : [];
+    const saidas = rankingAnteriorMes
+      .filter((l) => !idsAtuais.has(l.empresaId))
+      .map((l) => ({
+        empresaId: l.empresaId,
+        slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
+        nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
+        acessosAnteriores: l.acessos,
+      }))
+      .sort((a, b) => b.acessosAnteriores - a.acessosAnteriores);
+
     salvar(`municipios/${resumo?.slug ?? codigoIbge}.json`, {
       codigoIbge,
       nome: resumo?.nome ?? codigoIbge,
       competencia: atual,
       concentracao: conc,
+      variacao12Meses:
+        totalAntes === null
+          ? null
+          : {
+              absoluta: crescimentoAbsoluto(totalAtual, totalAntes),
+              percentual: crescimentoPercentual(totalAtual, totalAntes),
+            },
       ranking: rankingComparado.map((l) => ({
         ...l,
         slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
         nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
+        grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
+        variacao12Absoluta: ranking12Municipal.get(l.empresaId)?.variacaoAbsoluta ?? null,
+        variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
       })),
       serie: serieMunicipio,
+      // Distribuicao por tecnologia ao longo do tempo, no municipio.
+      tecnologia: ctx.competencias.map((c) => ({
+        competencia: c,
+        distribuicao: Object.fromEntries(
+          ctx.tecnologiaMunicipal.get(c)?.get(codigoIbge) ?? [],
+        ),
+      })),
+      saidas,
+      // Posicao no ranking estadual de municipios por acessos.
+      posicaoNoEstado: posicaoEstadual.get(codigoIbge) ?? null,
+      totalMunicipios: municipiosAtual.size,
     });
   }
 

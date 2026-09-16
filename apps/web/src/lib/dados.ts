@@ -112,22 +112,33 @@ export interface PerfilMunicipio {
   nome: string;
   competencia: Competencia;
   concentracao: IndicadoresConcentracao | null;
+  variacao12Meses: { absoluta: number; percentual: number | null } | null;
+  posicaoNoEstado: number | null;
+  totalMunicipios: number;
   ranking: Array<{
     posicao: number;
     empresaId: string;
     slug: string;
     nome: string;
+    grupoEconomico: string | null;
     acessos: number;
     marketShare: number;
+    posicaoAnterior: number | null;
     variacaoPosicao: number | null;
     variacaoAbsoluta: number | null;
     variacaoPercentual: number | null;
+    variacao12Absoluta: number | null;
+    variacao12Percentual: number | null;
   }>;
   serie: Array<{
     competencia: Competencia;
     totalAcessos: number;
     numeroProvedores: number;
     hhi: number | null;
+  }>;
+  tecnologia: Array<{ competencia: Competencia; distribuicao: Record<string, number> }>;
+  saidas: Array<{
+    empresaId: string; slug: string; nome: string; acessosAnteriores: number;
   }>;
 }
 
@@ -223,8 +234,44 @@ export const lerRankingEstadual = (): LinhaRankingEstadual[] =>
 export const lerIndiceMunicipios = (): MunicipioIndice[] =>
   ler<{ municipios: MunicipioIndice[] }>('municipios/index.json').municipios;
 
-export const lerPerfilMunicipio = (slug: string): PerfilMunicipio | null =>
-  lerOpcional<PerfilMunicipio>(`municipios/${slug}.json`);
+/**
+ * Perfil municipal, normalizado contra artefatos de versoes anteriores.
+ *
+ * Dados e codigo sao publicados em momentos diferentes: o ETL roda no GitHub
+ * Actions e commita artefatos, enquanto mudancas de interface chegam por outro
+ * caminho. Entre uma coisa e outra, a aplicacao precisa ler artefatos gerados
+ * por uma versao mais antiga do construtor sem quebrar o build.
+ *
+ * Campo novo ausente vira valor vazio ou null — nunca `undefined` solto, que
+ * estouraria ao ser acessado. E ausencia continua sendo exibida como "n/d",
+ * jamais como zero.
+ */
+export const lerPerfilMunicipio = (slug: string): PerfilMunicipio | null => {
+  const bruto = lerOpcional<Partial<PerfilMunicipio> & { codigoIbge: string }>(
+    `municipios/${slug}.json`,
+  );
+  if (!bruto) return null;
+
+  return {
+    codigoIbge: bruto.codigoIbge,
+    nome: bruto.nome ?? bruto.codigoIbge,
+    competencia: bruto.competencia ?? '',
+    concentracao: bruto.concentracao ?? null,
+    variacao12Meses: bruto.variacao12Meses ?? null,
+    posicaoNoEstado: bruto.posicaoNoEstado ?? null,
+    totalMunicipios: bruto.totalMunicipios ?? 0,
+    ranking: (bruto.ranking ?? []).map((l) => ({
+      ...l,
+      grupoEconomico: l.grupoEconomico ?? null,
+      posicaoAnterior: l.posicaoAnterior ?? null,
+      variacao12Absoluta: l.variacao12Absoluta ?? null,
+      variacao12Percentual: l.variacao12Percentual ?? null,
+    })),
+    serie: bruto.serie ?? [],
+    tecnologia: bruto.tecnologia ?? [],
+    saidas: bruto.saidas ?? [],
+  };
+};
 
 export const lerPerfilProvedor = (slug: string): PerfilProvedor | null =>
   lerOpcional<PerfilProvedor>(`provedores/${slug}.json`);

@@ -3,12 +3,13 @@ import { notFound } from 'next/navigation';
 import { rotularCompetencia } from '@netrank/core';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
+import { SeletorCidade } from '@/componentes/SeletorCidade';
+import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
 import { lerIndiceMunicipios, lerPerfilMunicipio } from '@/lib/dados';
-import {
-  corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal, setaVariacao,
-} from '@/lib/formato';
+import type { PerfilMunicipio } from '@/lib/dados';
+import { compacto, corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
 
 /**
@@ -34,11 +35,55 @@ export async function generateMetadata({ params }: Props) {
   const perfil = lerPerfilMunicipio(slug);
   if (!perfil) return { title: 'Município não encontrado' };
   return {
-    title: `Maiores provedores de internet de ${perfil.nome} — ${MARCA.ufSigla}`,
+    title: `Provedores de internet em ${perfil.nome} — ${MARCA.ufSigla}`,
     description:
-      `Ranking dos provedores de banda larga fixa em ${perfil.nome} (${MARCA.ufSigla}): ` +
-      `líder de mercado, participação, número de provedores e concentração, segundo a Anatel.`,
+      `Ranking completo dos provedores de banda larga fixa em ${perfil.nome} ` +
+      `(${MARCA.ufSigla}): quem lidera, participação de mercado, crescimento, ` +
+      `concentração e evolução mensal, segundo dados da Anatel.`,
   };
+}
+
+/** Distribuição por tecnologia na competência mais recente do município. */
+function Tecnologias({ perfil }: { perfil: PerfilMunicipio }) {
+  const ultima = perfil.tecnologia[perfil.tecnologia.length - 1];
+  const distribuicao = ultima?.distribuicao ?? {};
+  const total = Object.values(distribuicao).reduce((s, v) => s + v, 0);
+
+  if (total === 0) {
+    return <p className="cartao p-5 text-sm text-grafite-400">Sem dados de tecnologia.</p>;
+  }
+
+  const rotulos: Record<string, string> = {
+    FIBRA: 'Fibra óptica', CABO: 'Cabo (HFC)', RADIO: 'Rádio',
+    SATELITE: 'Satélite', XDSL: 'xDSL (cobre)', OUTRAS: 'Outras',
+  };
+
+  const linhas = Object.entries(distribuicao)
+    .sort(([, a], [, b]) => b - a)
+    .map(([chave, acessos]) => ({
+      nome: rotulos[chave] ?? chave,
+      acessos,
+      share: (acessos / total) * 100,
+    }));
+
+  return (
+    <div className="cartao divide-y divide-grafite-800">
+      {linhas.map((l) => (
+        <div key={l.nome} className="px-4 py-3">
+          <div className="flex items-baseline justify-between gap-3 text-sm">
+            <span className="text-grafite-200">{l.nome}</span>
+            <span className="numerico text-grafite-300">
+              {inteiro(l.acessos)}{' '}
+              <span className="text-xs text-grafite-500">({percentual(l.share, 1)})</span>
+            </span>
+          </div>
+          <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-grafite-800">
+            <div className="h-full rounded-full bg-marca-500" style={{ width: `${l.share}%` }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default async function PaginaMunicipio({ params }: Props) {
@@ -46,44 +91,85 @@ export default async function PaginaMunicipio({ params }: Props) {
   const perfil = lerPerfilMunicipio(slug);
   if (!perfil) notFound();
 
+  const municipios = lerIndiceMunicipios();
+  const cidades = municipios.map((m) => ({
+    slug: m.slug, nome: m.nome,
+    totalAcessos: m.totalAcessos, numeroProvedores: m.numeroProvedores,
+  }));
+
   const c = perfil.concentracao;
   const lider = perfil.ranking[0];
 
+  // Crescimento e retração locais, derivados do próprio ranking municipal.
+  const comparaveis = perfil.ranking.filter((l) => l.variacaoAbsoluta !== null);
+  const cresceram = [...comparaveis]
+    .sort((a, b) => (b.variacaoAbsoluta ?? 0) - (a.variacaoAbsoluta ?? 0))
+    .filter((l) => (l.variacaoAbsoluta ?? 0) > 0)
+    .slice(0, 5);
+  const recuaram = [...comparaveis]
+    .sort((a, b) => (a.variacaoAbsoluta ?? 0) - (b.variacaoAbsoluta ?? 0))
+    .filter((l) => (l.variacaoAbsoluta ?? 0) < 0)
+    .slice(0, 5);
+  const entrantes = perfil.ranking.filter((l) => l.posicaoAnterior === null);
+
   return (
     <main className="space-y-8">
-      <div>
-        <Link href="/municipios/" className="text-sm text-marca-400 underline-offset-2 hover:underline">
-          ← Municípios
-        </Link>
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
-          {perfil.nome} — {MARCA.ufSigla}
-        </h1>
-        <p className="mt-1 text-sm text-grafite-400">
-          Código IBGE {perfil.codigoIbge} · Competência {rotularCompetencia(perfil.competencia)}
-        </p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <Link href="/municipios/" className="text-sm text-marca-400 underline-offset-2 hover:underline">
+            ← Todos os municípios
+          </Link>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
+            {perfil.nome}
+          </h1>
+          <p className="mt-1 text-sm text-grafite-400">
+            {perfil.posicaoNoEstado !== null && (
+              <>
+                {perfil.posicaoNoEstado}º maior mercado do {MARCA.ufSigla} de{' '}
+                {inteiro(perfil.totalMunicipios)} municípios ·{' '}
+              </>
+            )}
+            Competência {rotularCompetencia(perfil.competencia)} · Código IBGE{' '}
+            {perfil.codigoIbge}
+          </p>
+        </div>
+
+        {/* Trocar de cidade sem voltar para a lista. */}
+        <SeletorCidade cidades={cidades} slugAtual={slug} />
       </div>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi rotulo="Total de acessos" valor={inteiro(c?.totalAcessos)} />
-        <Kpi rotulo="Provedores" valor={inteiro(c?.numeroProvedores)} />
         <Kpi
-          rotulo="Líder"
+          rotulo="Total de acessos"
+          valor={compacto(c?.totalAcessos)}
+          detalhe={`${inteiro(c?.totalAcessos)} acessos`}
+          variacao={perfil.variacao12Meses?.percentual ?? null}
+          variacaoTexto={`${percentualComSinal(perfil.variacao12Meses?.percentual)} em 12 meses`}
+        />
+        <Kpi
+          rotulo="Provedores"
+          valor={inteiro(c?.numeroProvedores)}
+          detalhe="com acessos no município"
+        />
+        <Kpi
+          rotulo="Líder local"
           valor={percentual(lider?.marketShare, 1)}
           detalhe={lider?.nome ?? '—'}
+          ajuda="Provedor com maior número de acessos no município."
         />
         <Kpi
           rotulo="HHI municipal"
           valor={inteiro(c?.hhi ? Math.round(c.hhi) : null)}
           detalhe="escala 0–10.000"
-          ajuda="Indicador estatístico de concentração do mercado local."
+          ajuda="Indicador estatístico de concentração do mercado local. Não constitui conclusão regulatória."
         />
       </div>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi rotulo="CR1" valor={percentual(c?.cr1, 1)} />
-        <Kpi rotulo="CR3" valor={percentual(c?.cr3, 1)} />
-        <Kpi rotulo="CR5" valor={percentual(c?.cr5, 1)} />
-        <Kpi rotulo="CR10" valor={percentual(c?.cr10, 1)} />
+        <Kpi rotulo="CR1" valor={percentual(c?.cr1, 1)} detalhe="maior provedor" />
+        <Kpi rotulo="CR3" valor={percentual(c?.cr3, 1)} detalhe="três maiores" />
+        <Kpi rotulo="CR5" valor={percentual(c?.cr5, 1)} detalhe="cinco maiores" />
+        <Kpi rotulo="CR10" valor={percentual(c?.cr10, 1)} detalhe="dez maiores" />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -110,46 +196,119 @@ export default async function PaginaMunicipio({ params }: Props) {
         </Secao>
       </div>
 
-      <Secao titulo="Ranking local" descricao={`${perfil.ranking.length} provedores com acessos no município`}>
-        <div className="cartao overflow-x-auto">
-          <table className="w-full min-w-[640px] text-sm">
-            <thead>
-              <tr className="border-b border-grafite-800 text-left">
-                <th className="w-12 px-3 py-2.5 text-right font-medium text-grafite-400">#</th>
-                <th className="px-3 py-2.5 font-medium text-grafite-400">Provedor</th>
-                <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Acessos</th>
-                <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Participação</th>
-                <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Var. mensal</th>
-              </tr>
-            </thead>
-            <tbody>
-              {perfil.ranking.map((l) => (
-                <tr key={l.empresaId} className="border-b border-grafite-800/60 last:border-0 hover:bg-grafite-800/40">
-                  <td className="numerico px-3 py-2.5 text-right font-semibold text-grafite-300">
-                    {l.posicao}
-                    {l.variacaoPosicao !== null && l.variacaoPosicao !== 0 && (
-                      <span className={`ml-1 text-[10px] ${corVariacao(l.variacaoPosicao)}`}>
-                        {setaVariacao(l.variacaoPosicao)}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-3 py-2.5">
-                    <Link href={`/provedores/${l.slug}/`} className="font-medium text-white underline-offset-2 hover:underline">
-                      {l.nome}
-                    </Link>
-                  </td>
-                  <td className="numerico px-3 py-2.5 text-right text-white">{inteiro(l.acessos)}</td>
-                  <td className="numerico px-3 py-2.5 text-right text-grafite-200">{percentual(l.marketShare, 2)}</td>
-                  <td className={`numerico px-3 py-2.5 text-right ${corVariacao(l.variacaoAbsoluta)}`}>
+      <div className="grid gap-6 lg:grid-cols-3">
+        <Secao titulo="Quem mais cresceu" descricao="Acessos ganhos no último mês">
+          {cresceram.length > 0 ? (
+            <ol className="cartao divide-y divide-grafite-800">
+              {cresceram.map((l) => (
+                <li key={l.empresaId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
+                  <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                    {l.nome}
+                  </Link>
+                  <span className="numerico shrink-0 font-medium text-alta">
                     {inteiroComSinal(l.variacaoAbsoluta)}
-                    <div className="text-[11px] opacity-70">{percentualComSinal(l.variacaoPercentual)}</div>
-                  </td>
-                </tr>
+                  </span>
+                </li>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </Secao>
+            </ol>
+          ) : (
+            <p className="cartao p-5 text-sm text-grafite-400">Nenhum provedor cresceu no mês.</p>
+          )}
+        </Secao>
+
+        <Secao titulo="Quem mais perdeu" descricao="Acessos perdidos no último mês">
+          {recuaram.length > 0 ? (
+            <ol className="cartao divide-y divide-grafite-800">
+              {recuaram.map((l) => (
+                <li key={l.empresaId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
+                  <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                    {l.nome}
+                  </Link>
+                  <span className="numerico shrink-0 font-medium text-baixa">
+                    {inteiroComSinal(l.variacaoAbsoluta)}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="cartao p-5 text-sm text-grafite-400">Nenhum provedor recuou no mês.</p>
+          )}
+        </Secao>
+
+        <Secao titulo="Entradas e saídas" descricao="Movimentação de provedores no mês">
+          <div className="cartao divide-y divide-grafite-800">
+            {entrantes.length === 0 && perfil.saidas.length === 0 && (
+              <p className="p-5 text-sm text-grafite-400">Nenhuma entrada ou saída no mês.</p>
+            )}
+            {entrantes.slice(0, 5).map((l) => (
+              <div key={l.empresaId} className="flex items-center gap-2 px-4 py-2.5 text-sm">
+                <span className="shrink-0 rounded bg-alta/20 px-1.5 py-0.5 text-[10px] font-medium text-alta">
+                  ENTROU
+                </span>
+                <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                  {l.nome}
+                </Link>
+                <span className="numerico shrink-0 text-xs text-grafite-400">
+                  {inteiro(l.acessos)}
+                </span>
+              </div>
+            ))}
+            {perfil.saidas.slice(0, 5).map((s) => (
+              <div key={s.empresaId} className="flex items-center gap-2 px-4 py-2.5 text-sm">
+                <span className="shrink-0 rounded bg-baixa/20 px-1.5 py-0.5 text-[10px] font-medium text-baixa">
+                  SAIU
+                </span>
+                <Link href={`/provedores/${s.slug}/`} className="flex-1 truncate text-grafite-300 underline-offset-2 hover:underline">
+                  {s.nome}
+                </Link>
+                <span className="numerico shrink-0 text-xs text-grafite-500">
+                  tinha {inteiro(s.acessosAnteriores)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Secao>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <Secao titulo="Tecnologia" descricao="Distribuição dos acessos no município" className="lg:col-span-1">
+          <Tecnologias perfil={perfil} />
+        </Secao>
+
+        <Secao
+          titulo="Ranking local completo"
+          descricao={`${inteiro(perfil.ranking.length)} provedores com acessos em ${perfil.nome}`}
+          className="lg:col-span-2"
+        >
+          <TabelaRanking
+            linhas={perfil.ranking.map((l) => ({
+              posicao: l.posicao,
+              empresaId: l.empresaId,
+              slug: l.slug,
+              nome: l.nome,
+              grupoEconomico: l.grupoEconomico,
+              acessos: l.acessos,
+              marketShare: l.marketShare,
+              posicaoAnterior: l.posicaoAnterior,
+              variacaoPosicao: l.variacaoPosicao,
+              variacaoAbsoluta: l.variacaoAbsoluta,
+              variacaoPercentual: l.variacaoPercentual,
+              variacao12Absoluta: l.variacao12Absoluta,
+              variacao12Percentual: l.variacao12Percentual,
+              // A coluna de municípios não faz sentido dentro de um município.
+              municipiosAtendidos: 0,
+            }))}
+            ocultarMunicipios
+          />
+        </Secao>
+      </div>
+
+      <p className="text-xs text-grafite-500">
+        Todos os indicadores desta página são calculados{' '}
+        <strong>exclusivamente sobre os acessos registrados em {perfil.nome}</strong>.
+        Participação, concentração e ranking referem-se ao mercado local, não ao
+        estadual — um provedor pode liderar aqui e ser pequeno no {MARCA.ufSigla}.
+      </p>
     </main>
   );
 }

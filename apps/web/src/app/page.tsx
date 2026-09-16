@@ -4,6 +4,7 @@ import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { Destaques, TrocasLideranca } from '@/componentes/Destaques';
+import { SeletorCidade, UltimaCidade } from '@/componentes/SeletorCidade';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
 import {
@@ -46,6 +47,37 @@ export default function Home() {
           histórica de {meta.competencias.length} meses · Fonte: Anatel
         </p>
       </div>
+
+      {/* A pergunta mais comum de quem chega é sobre a própria cidade.
+          Por isso a escolha vem antes dos números do Estado, e não escondida
+          numa aba interna. */}
+      <section className="cartao flex flex-col gap-4 border-marca-900 bg-gradient-to-br from-marca-950/60 to-grafite-900/60 p-6 md:flex-row md:items-center md:justify-between">
+        <div className="max-w-md">
+          <h2 className="text-lg font-semibold text-white">
+            Quer ver só uma cidade?
+          </h2>
+          <p className="mt-1 text-sm text-grafite-300">
+            Escolha um dos {inteiro(municipios.length)} municípios e veja o mercado
+            inteiro sob a ótica dele: ranking local, quem lidera, quem cresce,
+            concentração e evolução.
+          </p>
+          <div className="mt-2">
+            <UltimaCidade
+              cidades={municipios.map((m) => ({
+                slug: m.slug, nome: m.nome,
+                totalAcessos: m.totalAcessos, numeroProvedores: m.numeroProvedores,
+              }))}
+            />
+          </div>
+        </div>
+        <SeletorCidade
+          variante="destaque"
+          cidades={municipios.map((m) => ({
+            slug: m.slug, nome: m.nome,
+            totalAcessos: m.totalAcessos, numeroProvedores: m.numeroProvedores,
+          }))}
+        />
+      </section>
 
       {/* KPIs do §28 */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
