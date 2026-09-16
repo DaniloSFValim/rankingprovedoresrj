@@ -49,53 +49,176 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
 /** Rodapé de rastreabilidade exigido pelo §5, presente em todas as páginas. */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;
+  const a = p.academicos;
+
   return (
     <footer className="mt-12 border-t border-grafite-800 bg-grafite-900/40">
-      <div className="mx-auto max-w-7xl px-4 py-8 text-xs text-grafite-400">
-        <dl className="grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <dt className="rotulo">Fonte</dt>
-            <dd className="mt-0.5 text-grafite-300">{p.fonte}</dd>
-            <dd>
-              <a
-                href={p.url}
-                className="text-marca-400 underline-offset-2 hover:underline"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                {p.url}
-              </a>
-            </dd>
+      <div className="mx-auto max-w-7xl px-4 py-8">
+        {/* Seção 1: Citação Acadêmica */}
+        {a && (
+          <section className="mb-8 pb-8 border-b border-grafite-800">
+            <div className="text-xs font-bold uppercase tracking-wide text-marca-400 mb-3">
+              Como citar este dataset
+            </div>
+            <div className="text-xs text-grafite-300 font-mono bg-grafite-950 p-3 rounded border border-grafite-800 overflow-x-auto">
+              {a.autores.map((au) => au.nome).join(', ')} ({new Date(p.processadoEm).getFullYear()}).
+              {' '}
+              <span className="text-grafite-200">{MARCA.nome}</span>. Version {a.versaoDataset}.
+              {a.doi && (
+                <>
+                  {' '}
+                  DOI:{' '}
+                  <a href={`https://doi.org/${a.doi}`} className="text-marca-400 hover:underline">
+                    {a.doi}
+                  </a>
+                </>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* Seção 2: Autoria e Afiliação */}
+        {a && (
+          <section className="mb-8 pb-8 border-b border-grafite-800">
+            <div className="grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div>
+                <dt className="rotulo">Autor(es)</dt>
+                {a.autores.map((au) => (
+                  <dd key={au.email || au.nome} className="mt-1 text-xs text-grafite-300">
+                    {au.nome}
+                    {au.orcid && (
+                      <>
+                        <br />
+                        <a
+                          href={`https://orcid.org/${au.orcid}`}
+                          className="text-marca-400 underline-offset-2 hover:underline"
+                          rel="noreferrer noopener"
+                          target="_blank"
+                        >
+                          ORCID: {au.orcid}
+                        </a>
+                      </>
+                    )}
+                  </dd>
+                ))}
+              </div>
+              {a.afiliacao && (
+                <div>
+                  <dt className="rotulo">Afiliação</dt>
+                  <dd className="mt-0.5 text-xs text-grafite-300">{a.afiliacao}</dd>
+                </div>
+              )}
+              <div>
+                <dt className="rotulo">Licença</dt>
+                <dd className="mt-0.5 text-xs text-grafite-300">
+                  <a
+                    href="https://creativecommons.org/licenses/by/4.0/"
+                    className="text-marca-400 underline-offset-2 hover:underline"
+                    rel="noreferrer noopener"
+                    target="_blank"
+                  >
+                    {a.licenca}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="rotulo">Versão</dt>
+                <dd className="mt-0.5 text-xs text-grafite-300">{a.versaoDataset}</dd>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Seção 3: Procedência de Dados */}
+        <section className="mb-8 pb-8 border-b border-grafite-800">
+          <div className="text-xs font-bold uppercase tracking-wide text-marca-400 mb-3">
+            Procedência dos Dados
           </div>
-          <div>
-            <dt className="rotulo">UF analisada</dt>
-            <dd className="mt-0.5 text-grafite-300">{MARCA.uf} ({MARCA.ufSigla})</dd>
-            <dt className="rotulo mt-2">Arquivo</dt>
-            <dd className="mt-0.5 break-all text-grafite-300">{p.arquivo}</dd>
-          </div>
-          <div>
-            <dt className="rotulo">Período coberto</dt>
-            <dd className="mt-0.5 text-grafite-300">
-              {rotularCompetencia(p.competenciaInicial)} a {rotularCompetencia(p.competenciaFinal)}
-            </dd>
-            <dt className="rotulo mt-2">Coleta</dt>
-            <dd className="mt-0.5 text-grafite-300">
-              {new Date(p.coletadoEm).toLocaleString('pt-BR')}
-            </dd>
-          </div>
-          <div>
-            <dt className="rotulo">Última atualização</dt>
-            <dd className="mt-0.5 text-grafite-300">
-              {new Date(p.processadoEm).toLocaleString('pt-BR')}
-            </dd>
-            <dt className="rotulo mt-2">Processamento</dt>
-            <dd className="mt-0.5 text-grafite-300">{MARCA.nome}</dd>
-          </div>
-        </dl>
-        <p className="mt-6 border-t border-grafite-800 pt-4 leading-relaxed text-grafite-500">
-          {MARCA.nome} é uma camada independente de análise sobre dados públicos da
-          Anatel. Não possui vínculo com a Agência. Os indicadores de concentração
-          são estatísticos e não constituem conclusão jurídica ou regulatória.{' '}
+          <dl className="grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4 text-xs">
+            <div>
+              <dt className="rotulo">Fonte</dt>
+              <dd className="mt-0.5 text-grafite-300">{p.fonte}</dd>
+              <dd className="mt-1">
+                <a
+                  href={p.url}
+                  className="text-marca-400 underline-offset-2 hover:underline break-all text-xs"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  {p.url}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="rotulo">UF analisada</dt>
+              <dd className="mt-0.5 text-grafite-300">
+                {MARCA.uf} ({MARCA.ufSigla})
+              </dd>
+              <dt className="rotulo mt-2">Arquivo</dt>
+              <dd className="mt-0.5 break-all text-grafite-300">{p.arquivo}</dd>
+            </div>
+            <div>
+              <dt className="rotulo">Período coberto</dt>
+              <dd className="mt-0.5 text-grafite-300">
+                {rotularCompetencia(p.competenciaInicial)} a{' '}
+                {rotularCompetencia(p.competenciaFinal)}
+              </dd>
+              <dt className="rotulo mt-2">Coleta</dt>
+              <dd className="mt-0.5 text-grafite-300">
+                {new Date(p.coletadoEm).toLocaleString('pt-BR')}
+              </dd>
+            </div>
+            <div>
+              <dt className="rotulo">Última atualização</dt>
+              <dd className="mt-0.5 text-grafite-300">
+                {new Date(p.processadoEm).toLocaleString('pt-BR')}
+              </dd>
+              <dt className="rotulo mt-2">Processamento</dt>
+              <dd className="mt-0.5 text-grafite-300">{MARCA.nome}</dd>
+            </div>
+          </dl>
+        </section>
+
+        {/* Seção 4: Rastreabilidade Técnica */}
+        {a && (
+          <section className="mb-6 pb-6 border-b border-grafite-800">
+            <div className="text-xs font-bold uppercase tracking-wide text-marca-400 mb-3">
+              Rastreabilidade Técnica
+            </div>
+            <div className="text-xs text-grafite-400 space-y-1">
+              <div>
+                Repositório:{' '}
+                <a
+                  href={a.urlRepositorio}
+                  className="text-marca-400 underline-offset-2 hover:underline"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  {a.urlRepositorio}
+                </a>
+              </div>
+              <div>
+                Commit:{' '}
+                <code className="text-grafite-300 font-mono">
+                  <a
+                    href={`${a.urlRepositorio}/commit/${a.commitHash}`}
+                    className="text-marca-400 underline-offset-2 hover:underline"
+                    rel="noreferrer noopener"
+                    target="_blank"
+                  >
+                    {a.commitHash}
+                  </a>
+                </code>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Disclaimer */}
+        <p className="leading-relaxed text-grafite-500 text-xs">
+          {MARCA.nome} é uma camada independente de análise sobre dados públicos da Anatel.
+          Não possui vínculo com a Agência. Os indicadores de concentração são estatísticos
+          e não constituem conclusão jurídica ou regulatória.{' '}
           <a href="/metodologia/" className="text-marca-400 underline-offset-2 hover:underline">
             Ver metodologia completa
           </a>
