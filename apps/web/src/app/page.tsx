@@ -51,32 +51,11 @@ export default function Home() {
           Banda larga fixa — {MARCA.uf}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          Estado completo · Série histórica de {meta.competencias.length} meses · Fonte: Anatel
+          Série histórica de {meta.competencias.length} meses · Fonte: Anatel
         </p>
       </div>
 
       <AvisoLacunas meta={meta} />
-
-      {/* Seletor de cidade — entrada principal */}
-      <section className="cartao border-marca-900 bg-gradient-to-br from-marca-950/60 to-grafite-900/60 p-6">
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold text-white">Ver dados de uma cidade</h2>
-          <p className="mt-1 text-sm text-grafite-300">
-            Escolha um município para ver ranking local, concentração e crescimento
-          </p>
-        </div>
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:gap-4">
-          <div className="flex-1">
-            <SeletorCidade variante="destaque" cidades={cidades} />
-          </div>
-          <div className="text-xs text-grafite-500">
-            {inteiro(municipios.length)} municípios disponíveis
-          </div>
-        </div>
-        <div className="mt-4">
-          <UltimaCidade cidades={cidades} />
-        </div>
-      </section>
 
       {/* KPIs agrupados logicamente — estado geral */}
       <div className="space-y-4">
