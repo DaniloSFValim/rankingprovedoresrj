@@ -46,6 +46,7 @@ import {
 import { baixarRecurso, prepararCsvs } from './pipeline/baixar.js';
 import { anoDoRecurso, descobrirRecursos } from './sources/descoberta.js';
 import { descobrirESelecionar } from './pipeline/sincronizar.js';
+import { existe, sondarCandidatos } from './sources/sondagem.js';
 import {
   baixarInventario,
   filtrarBandaLargaFixa,
@@ -410,6 +411,39 @@ async function principal(): Promise<void> {
         break;
       }
 
+      case 'sondar': {
+        // Deduzir uma URL e chute; perguntar ao servidor se ela responde e
+        // evidencia. So enderecos confirmados entram no pipeline.
+        const extras = resto.filter((r) => /^https?:\/\//i.test(r));
+        console.log('[sondar] testando enderecos candidatos da Anatel...\n');
+
+        const resultados = await sondarCandidatos(extras);
+        const encontrados = resultados.filter(existe);
+
+        for (const r of resultados) {
+          const marca = existe(r) ? 'OK ' : '   ';
+          const detalhe = existe(r)
+            ? `${((r.bytes ?? 0) / 1e6).toFixed(0)} MB, ${r.tipo ?? 'tipo n/d'}`
+            : r.erro ?? `HTTP ${r.status}`;
+          console.log(`${marca} ${r.url}\n      ${detalhe}`);
+        }
+
+        console.log(`\n${encontrados.length} endereco(s) confirmado(s) de ${resultados.length} testados.`);
+        if (encontrados.length > 0) {
+          console.log('\nPara importar:');
+          for (const r of encontrados) {
+            console.log(`  npm run etl -- atualizar ${r.url}`);
+          }
+        } else {
+          console.log(
+            '\nNenhum candidato respondeu. O endereco precisa vir do portal:\n' +
+              '  botao direito no botao de download -> copiar endereco do link',
+          );
+          process.exitCode = 1;
+        }
+        break;
+      }
+
       case 'inventario': {
         // Diagnostico: imprime o layout real do inventario da Anatel, para que
         // a leitura tolerante possa ser apertada quando o formato for conhecido.
@@ -639,6 +673,7 @@ async function principal(): Promise<void> {
             '  atualizar <url> [--forcar]  baixa, importa e reconstroi os artefatos\n' +
             '  importar <csv> [--latin1]   importa um arquivo ja baixado\n' +
             '  demo                     gera fixture sintetica e roda o pipeline\n' +
+            '  sondar [url...]          testa enderecos candidatos da Anatel\n' +
             '  inventario               imprime o inventario de bases da Anatel (diagnostico)\n' +
             '  bdd-inspecionar          descreve o schema da Base dos Dados (BigQuery)\n' +
             '  bdd-importar [--anos N]  importa os dados do RJ via BigQuery\n' +

@@ -100,6 +100,14 @@ jobs:
         run: npm run etl -- bdd-importar --anos "${{ inputs.anos || '2' }}"
 
       # --------------------------------------------------- Anatel (alternativa)
+      # Sondagem antes de tudo: testa por HEAD os enderecos candidatos e relata
+      # quais existem de fato. Deduzir URL e chute; confirmar com o servidor e
+      # evidencia.
+      - name: Sondar enderecos de arquivo da Anatel
+        if: inputs.fonte == 'anatel'
+        continue-on-error: true
+        run: npm run etl -- sondar ${{ inputs.url }}
+
       - name: Inventario de bases da Anatel (diagnostico)
         if: inputs.fonte == 'anatel'
         continue-on-error: true
