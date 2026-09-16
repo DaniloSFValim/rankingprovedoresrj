@@ -22,7 +22,7 @@ on:
       anos:
         description: 'Quantos anos mais recentes importar (safras anteriores sao puladas)'
         required: false
-        default: '3'
+        default: '5'
       url:
         description: 'URL de um recurso especifico (ignora a descoberta automatica)'
         required: false
@@ -52,7 +52,7 @@ jobs:
   ingerir:
     runs-on: ubuntu-latest
     # Baixar e processar arquivos anuais da Anatel leva tempo.
-    timeout-minutes: 60
+    timeout-minutes: 120
 
     steps:
       # Os arquivos anuais da Anatel passam de 1 GB e, descompactados, chegam

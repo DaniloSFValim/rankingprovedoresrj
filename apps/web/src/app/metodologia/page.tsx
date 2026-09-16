@@ -90,12 +90,23 @@ export default function PaginaMetodologia() {
         </dl>
       </Bloco>
 
-      <Bloco titulo="Periodicidade">
+      <Bloco titulo="Periodicidade e janela de análise">
         <p>
           A Anatel publica os acessos em base <strong>mensal</strong>. Cada mês é uma
-          &ldquo;competência&rdquo;, identificada no formato AAAA-MM. Toda a série histórica
-          importada é preservada: reimportar um mês substitui apenas aquele mês, nunca
-          apaga os anteriores.
+          &ldquo;competência&rdquo;, identificada no formato AAAA-MM. Reimportar um mês
+          substitui apenas aquele mês, nunca apaga os anteriores.
+        </p>
+        <p>
+          A plataforma analisa uma <strong>janela móvel dos últimos 5 anos</strong>.
+          Competências anteriores são descartadas da base local — não por limitação
+          técnica, mas porque o mercado de banda larga fixa mudou de estrutura o
+          bastante para que comparações com uma década atrás informem pouco sobre a
+          concorrência atual.
+        </p>
+        <p>
+          O histórico completo não se perde: ele permanece integralmente na fonte da
+          Anatel, que publica desde 2007, e pode ser reincorporado a qualquer momento
+          ampliando a janela de importação.
         </p>
       </Bloco>
 

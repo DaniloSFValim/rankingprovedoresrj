@@ -229,6 +229,49 @@ export function purgarDadosDemonstrativos(db: Banco): number {
   return removidos;
 }
 
+/**
+ * Aplica a janela de retencao, removendo competencias anteriores a ela.
+ *
+ * TENSAO DELIBERADA COM O PRINCIPIO DE HISTORICO
+ * ----------------------------------------------
+ * O pipeline nunca trunca a serie ao reimportar — reimportar um mes substitui
+ * apenas aquele mes. Esta funcao e diferente: e uma decisao consciente de
+ * produto, de analisar uma janela movel em vez de todo o historico desde 2007.
+ *
+ * O historico nao se perde: ele continua integralmente na fonte, e basta
+ * aumentar `--anos` para traze-lo de volta. O que se descarta e a copia local,
+ * nao o dado.
+ *
+ * Retorna quantos fatos foram removidos, para que a operacao apareca no log.
+ */
+export function aplicarRetencao(db: Banco, anoMinimo: number): number {
+  const limite = `${anoMinimo}-01`;
+  const transacao = db.transaction(() => {
+    const removidos = db
+      .prepare('DELETE FROM fato_acessos WHERE competencia < ?')
+      .run(limite).changes;
+    db.prepare('DELETE FROM alertas_qualidade WHERE competencia < ?').run(limite);
+    return removidos;
+  });
+  const removidos = transacao();
+
+  if (removidos > 0) {
+    // Empresas que so existiam fora da janela deixam de ter fatos.
+    const limpar = db.transaction(() => {
+      db.prepare(
+        `DELETE FROM empresas_aliases
+          WHERE empresa_id NOT IN (SELECT DISTINCT empresa_id FROM fato_acessos)`,
+      ).run();
+      db.prepare(
+        `DELETE FROM empresas
+          WHERE id NOT IN (SELECT DISTINCT empresa_id FROM fato_acessos)`,
+      ).run();
+    });
+    limpar();
+  }
+  return removidos;
+}
+
 /** Competencias presentes no warehouse, em ordem cronologica. */
 export function competenciasArmazenadas(db: Banco): Competencia[] {
   return (

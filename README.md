@@ -54,7 +54,7 @@ sem nunca ser materializado em memória.
 npm install
 
 # Automático: descobre, baixa e importa os anos mais recentes
-npm run etl -- sincronizar --anos 2
+npm run etl -- sincronizar --anos 5
 
 # Ou passo a passo, para inspecionar antes
 npm run etl -- descobrir
@@ -276,7 +276,7 @@ trabalho num runner do GitHub, que tem rede liberada e compila normalmente.
 | Parâmetro | Padrão | O que faz |
 |---|---|---|
 | `fonte` | `anatel` | `anatel` (endereço confirmado) ou `basedosdados` (BigQuery) |
-| `anos` | `2` | Quantos anos mais recentes importar |
+| `anos` | `5` | Quantos anos mais recentes importar |
 | `url` | vazio | URL de um recurso específico; ignora a descoberta automática |
 | `malhas` | marcado | Baixa também a malha municipal do IBGE |
 
@@ -293,7 +293,7 @@ fora do ar, o mapa continua como treemap e o resto da atualização não se perd
 ### Ciclo de atualização mensal
 
 ```bash
-npm run etl -- sincronizar --anos 2   # descobre, baixa e importa sozinho
+npm run etl -- sincronizar --anos 5   # descobre, baixa e importa sozinho
 npm run etl -- malhas                 # malha municipal do IBGE
 # ou, com o GeoJSON já baixado:
 npm run etl -- malhas --arquivo caminho/rj-municipios.json

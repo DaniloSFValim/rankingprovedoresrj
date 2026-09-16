@@ -21,6 +21,7 @@ import { CAMINHOS, RAIZ_REPO } from './config.js';
 import { escreverCsvDemo } from './fixtures/gerar-demo.js';
 import { construirArtefatos } from './pipeline/artefatos.js';
 import {
+  aplicarRetencao,
   carregar,
   competenciasArmazenadas,
   purgarDadosDemonstrativos,
@@ -488,6 +489,16 @@ async function principal(): Promise<void> {
         }
 
         console.log(`\n[sincronizar] ${importados} arquivo(s) importado(s) com sucesso.`);
+
+        // Uma safra pode conter competencias anteriores a janela pedida.
+        const forade = aplicarRetencao(db, anoMinimo);
+        if (forade > 0) {
+          console.log(
+            `[retencao] ${forade.toLocaleString('pt-BR')} fatos anteriores a ` +
+              `${anoMinimo} removidos (janela de ${anos} anos).`,
+          );
+        }
+
         build(db);
         break;
       }

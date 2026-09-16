@@ -14,6 +14,7 @@ import {
 import { extrairRjDeTexto } from '../pipeline/extrair.js';
 import { abrirBancoMemoria } from '../warehouse/db.js';
 import {
+  aplicarRetencao,
   carregar,
   competenciasArmazenadas,
   concluirExecucao,
@@ -233,5 +234,54 @@ describe('outros conjuntos de dados no mesmo pacote', () => {
     expect(ehArquivoIgnorado('Acessos_Banda_Larga_Fixa_Total.csv')).toBe(true);
     expect(ehArquivoIgnorado('Densidade_Banda_Larga_Fixa.csv')).toBe(true);
     expect(ehArquivoIgnorado('Acessos_Banda_Larga_Fixa_2026.csv')).toBe(false);
+  });
+});
+
+describe('janela de retencao', () => {
+  const extracao = (competencia: string) => ({
+    registros: [{
+      competencia, codigoIbge: '3303302', empresaId: 'nome:X',
+      tecnologia: 'FIBRA' as const, acessos: 100,
+    }],
+    empresas: new Map([['nome:X', {
+      empresaId: 'nome:X', chaveNome: 'X', nomeOriginalAnatel: 'X',
+      cnpj: null, grupoEconomico: null, origem: 'NOME_CANONICO' as const,
+    }]]),
+    municipios: new Map([['3303302', { codigoIbge: '3303302', nome: 'Niterói' }]]),
+    competencias: new Set([competencia]),
+    tecnologiasNaoMapeadas: new Map(),
+    estatisticas: { linhasLidas: 1, linhasRj: 1, linhasRejeitadas: 0, motivosRejeicao: {} },
+  });
+
+  const preparar = (competencias: string[]) => {
+    const db = abrirBancoMemoria();
+    const fonteId = registrarFonte(db, {
+      nome: 'Anatel', url: 'x', arquivo: 'a', hashSha256: null, bytes: null,
+      coletadoEm: '2026-01-01T00:00:00Z', dadosDemonstrativos: false,
+    });
+    const execucaoId = iniciarExecucao(db, fonteId);
+    for (const c of competencias) carregar(db, extracao(c), execucaoId);
+    return db;
+  };
+
+  it('remove competencias anteriores a janela', () => {
+    const db = preparar(['2021-12', '2022-01', '2026-07']);
+    expect(aplicarRetencao(db, 2022)).toBe(1);
+    expect(competenciasArmazenadas(db)).toEqual(['2022-01', '2026-07']);
+    db.close();
+  });
+
+  it('mantem janeiro do primeiro ano da janela', () => {
+    const db = preparar(['2022-01']);
+    expect(aplicarRetencao(db, 2022)).toBe(0);
+    expect(competenciasArmazenadas(db)).toEqual(['2022-01']);
+    db.close();
+  });
+
+  it('e inofensiva quando tudo esta dentro da janela', () => {
+    const db = preparar(['2025-06', '2026-07']);
+    expect(aplicarRetencao(db, 2022)).toBe(0);
+    expect(competenciasArmazenadas(db)).toHaveLength(2);
+    db.close();
   });
 });
