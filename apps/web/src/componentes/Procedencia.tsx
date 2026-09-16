@@ -46,10 +46,27 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
   );
 }
 
+/** Gerar citação em formato BibTeX */
+function gerarBibtex(a: any, p: any): string {
+  const ano = new Date(p.processadoEm).getFullYear();
+  const autores = a.autores.map((au: any) => au.nome).join(' and ');
+  const doi = a.doi || '10.zenodo.XXXXXXX'; // placeholder
+  return `@dataset{${MARCA.nome.toLowerCase().replace(/\\s+/g, '_')}_${ano},
+  author = {${autores}},
+  title = {${MARCA.nome}: ${MARCA.subtitulo}},
+  year = {${ano}},
+  version = {${a.versaoDataset}},
+  publisher = {Zenodo},
+  doi = {${doi}},
+  url = {https://doi.org/${doi}}
+}`;
+}
+
 /** Rodapé de rastreabilidade exigido pelo §5, presente em todas as páginas. */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;
   const a = p.academicos;
+  const bibtex = a ? gerarBibtex(a, p) : '';
 
   return (
     <footer className="mt-12 border-t border-grafite-800 bg-grafite-900/40">
@@ -74,6 +91,15 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
                 </>
               )}
             </div>
+            {/* BibTeX collapsível */}
+            <details className="mt-3">
+              <summary className="cursor-pointer text-xs text-marca-300 hover:text-marca-200">
+                📋 Copiar como BibTeX
+              </summary>
+              <pre className="mt-2 text-xs bg-grafite-950 p-3 rounded border border-grafite-800 overflow-x-auto text-grafite-300">
+                {bibtex}
+              </pre>
+            </details>
           </section>
         )}
 

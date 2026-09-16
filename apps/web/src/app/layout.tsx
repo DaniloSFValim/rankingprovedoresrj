@@ -59,8 +59,30 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
     numeroProvedores: m.numeroProvedores,
   }));
 
+  const schemaDataset = {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: `${MARCA.nome}: ${MARCA.subtitulo}`,
+    description: MARCA.descricaoCurta,
+    url: 'https://rankingprovedoresrj.pages.dev',
+    version: meta.procedencia.academicos?.versaoDataset,
+    creator: meta.procedencia.academicos?.autores.map((a) => ({
+      '@type': 'Person',
+      name: a.nome,
+      identifier: a.orcid,
+    })),
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    datePublished: meta.procedencia.processadoEm,
+  };
+
   return (
     <html lang="pt-BR" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaDataset) }}
+        />
+      </head>
       <body className="min-h-screen">
         <FaixaDemonstrativo meta={meta} />
         <Navegacao meta={meta} cidades={cidades} />
