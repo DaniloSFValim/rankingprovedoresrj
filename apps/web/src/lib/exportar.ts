@@ -7,6 +7,7 @@ export interface DadosExportacao {
   descricao: string;
   formato: 'csv' | 'json' | 'geojson';
   arquivo: string;
+  caminho: string;
   tamanhoEstimado: string;
 }
 
@@ -44,20 +45,23 @@ export function obterDatasetsDisponiveis(): DadosExportacao[] {
       descricao: 'Indicadores-chave de banda larga no estado (últimas 12 competências)',
       formato: 'json',
       arquivo: 'kpis-estaduais.json',
+      caminho: '/data/estado/kpis.json',
       tamanhoEstimado: '5 KB',
     },
     {
       nome: 'Ranking Estadual',
       descricao: 'Todos os provedores com dados estaduais agregados',
-      formato: 'csv',
-      arquivo: 'ranking-estadual.csv',
-      tamanhoEstimado: '250 KB',
+      formato: 'json',
+      arquivo: 'ranking-estadual.json',
+      caminho: '/data/estado/ranking.json',
+      tamanhoEstimado: '300 KB',
     },
     {
       nome: 'Série Histórica Estadual',
       descricao: 'Evolução de indicadores estaduais mês a mês',
       formato: 'json',
       arquivo: 'serie-historica-estado.json',
+      caminho: '/data/estado/serie.json',
       tamanhoEstimado: '30 KB',
     },
     {
@@ -65,6 +69,7 @@ export function obterDatasetsDisponiveis(): DadosExportacao[] {
       descricao: 'Evolução de acessos para cada provedor',
       formato: 'json',
       arquivo: 'series-empresas.json',
+      caminho: '/data/estado/series-empresas.json',
       tamanhoEstimado: '350 KB',
     },
 
@@ -74,20 +79,15 @@ export function obterDatasetsDisponiveis(): DadosExportacao[] {
       descricao: 'KPIs e ranking de provedores para cada município',
       formato: 'json',
       arquivo: 'municipios-ranking.json',
+      caminho: '/data/municipios/index.json',
       tamanhoEstimado: '500 KB',
-    },
-    {
-      nome: 'Municípios (CSV)',
-      descricao: 'Dados municipais consolidados em formato tabular',
-      formato: 'csv',
-      arquivo: 'municipios.csv',
-      tamanhoEstimado: '150 KB',
     },
     {
       nome: 'Malha Geográfica RJ',
       descricao: 'Limites municipais em formato GeoJSON para mapas interativos',
       formato: 'geojson',
       arquivo: 'malhas-rj-municipios.geojson',
+      caminho: '/data/malhas/rj-municipios.json',
       tamanhoEstimado: '450 KB',
     },
 
@@ -97,6 +97,7 @@ export function obterDatasetsDisponiveis(): DadosExportacao[] {
       descricao: 'Dados consolidados de todos os provedores com cobertura estadual',
       formato: 'json',
       arquivo: 'provedores-perfis.json',
+      caminho: '/data/provedores/index.json',
       tamanhoEstimado: '300 KB',
     },
     {
@@ -104,6 +105,7 @@ export function obterDatasetsDisponiveis(): DadosExportacao[] {
       descricao: 'Análise de entradas, saídas e mudanças de posição de provedores',
       formato: 'json',
       arquivo: 'movimentacoes.json',
+      caminho: '/data/movimentacoes.json',
       tamanhoEstimado: '100 KB',
     },
   ];

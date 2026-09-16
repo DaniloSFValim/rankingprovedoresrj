@@ -92,7 +92,7 @@ export default function CentroDados() {
           {porCategoria.estado.map((dataset) => (
             <a
               key={dataset.arquivo}
-              href={`/data/${dataset.arquivo.includes('ranking') ? 'estado/ranking' : 'estado/' + dataset.arquivo.split('-').slice(1).join('-').replace(/\.(csv|json)$/, '')}.json`}
+              href={dataset.caminho}
               download={dataset.arquivo}
               className="cartao p-4 hover:bg-grafite-800/60 transition flex items-start justify-between"
             >
@@ -123,7 +123,7 @@ export default function CentroDados() {
           {porCategoria.municipios.map((dataset) => (
             <a
               key={dataset.arquivo}
-              href={`/data/${dataset.arquivo.includes('malha') ? 'malhas/rj-municipios' : 'municipios/index'}.json`}
+              href={dataset.caminho}
               download={dataset.arquivo}
               className="cartao p-4 hover:bg-grafite-800/60 transition flex items-start justify-between"
             >
@@ -154,7 +154,7 @@ export default function CentroDados() {
           {porCategoria.provedores.map((dataset) => (
             <a
               key={dataset.arquivo}
-              href={`/data/${dataset.arquivo.includes('movimentacoes') ? 'movimentacoes' : 'provedores/index'}.json`}
+              href={dataset.caminho}
               download={dataset.arquivo}
               className="cartao p-4 hover:bg-grafite-800/60 transition flex items-start justify-between"
             >
