@@ -27,13 +27,13 @@ export function Navegacao({ meta, cidades }: { meta: Meta; cidades: CidadeOpcao[
 
         {/* A rolagem horizontal existe para caber no celular. No desktop ela
             criava uma barra de rolagem visivel logo apos o ultimo item. */}
-        <nav className="-mx-1 order-3 w-full overflow-x-auto md:order-none md:mx-0 md:w-auto md:overflow-visible">
+        <nav className="-mx-1 order-3 w-full overflow-x-auto md:order-none md:mx-0 md:w-auto md:overflow-visible" aria-label="Navegação principal">
           <ul className="flex gap-1 whitespace-nowrap">
             {ITENS.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-md px-2.5 py-1.5 text-sm text-grafite-300 transition hover:bg-grafite-800 hover:text-white"
+                  className="rounded-md px-3 py-2 text-sm text-grafite-300 transition hover:bg-grafite-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-marca-400 min-h-10 inline-flex items-center"
                 >
                   {item.rotulo}
                 </Link>

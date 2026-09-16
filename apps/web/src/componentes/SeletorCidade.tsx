@@ -157,12 +157,12 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Pro
               </li>
             )}
             {filtradas.map((cidade, indice) => (
-              <li key={cidade.slug}>
+              <li key={cidade.slug} role="option" aria-selected={atual?.slug === cidade.slug}>
                 <button
                   type="button"
                   onMouseEnter={() => setIndiceFoco(indice)}
                   onClick={() => escolher(cidade)}
-                  className={`flex w-full items-baseline justify-between gap-3 px-4 py-3 text-left text-sm transition ${
+                  className={`flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm transition min-h-11 focus-visible:outline-2 focus-visible:outline-offset-(-1) focus-visible:outline-marca-400 ${
                     indice === indiceFoco ? 'bg-marca-900/40 text-white' : 'text-grafite-200 hover:bg-grafite-800/50'
                   } ${
                     atual?.slug === cidade.slug ? 'border-l-2 border-marca-500 bg-grafite-800/30' : ''
