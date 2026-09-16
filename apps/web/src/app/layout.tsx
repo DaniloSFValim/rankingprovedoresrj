@@ -61,10 +61,15 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="pt-BR" className="dark">
-      <body className="min-h-screen">
+      <body className="min-h-screen bg-grafite-950">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-marca-600 focus:px-4 focus:py-2 focus:rounded-md focus:text-white focus:font-semibold">
+          Ir para conteúdo principal
+        </a>
         <FaixaDemonstrativo meta={meta} />
         <Navegacao meta={meta} cidades={cidades} />
-        <div className="mx-auto max-w-7xl px-4 py-6">{children}</div>
+        <main id="main-content" className="mx-auto max-w-7xl px-4 py-6 focus:outline-none">
+          {children}
+        </main>
         <RodapeProcedencia meta={meta} />
       </body>
     </html>
