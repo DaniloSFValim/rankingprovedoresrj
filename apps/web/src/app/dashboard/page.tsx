@@ -174,6 +174,36 @@ export default function Dashboard() {
             </div>
           </Link>
 
+          <Link href="/compara/municipios">
+            <div className="cartao p-4 hover:bg-grafite-800/60 transition">
+              <h3 className="font-semibold text-white">Comparador de Cidades</h3>
+              <p className="mt-1 text-xs text-grafite-400">
+                Compare a situação de banda larga entre 2 ou mais municípios.
+              </p>
+              <p className="mt-2 text-xs text-marca-400">→ Comparar →</p>
+            </div>
+          </Link>
+
+          <Link href="/compara/prestadoras">
+            <div className="cartao p-4 hover:bg-grafite-800/60 transition">
+              <h3 className="font-semibold text-white">Comparador de Provedores</h3>
+              <p className="mt-1 text-xs text-grafite-400">
+                Compare prestadoras lado a lado por acessos, market share e cobertura.
+              </p>
+              <p className="mt-2 text-xs text-marca-400">→ Comparar →</p>
+            </div>
+          </Link>
+
+          <Link href="/dados">
+            <div className="cartao p-4 hover:bg-grafite-800/60 transition">
+              <h3 className="font-semibold text-white">Download de Dados</h3>
+              <p className="mt-1 text-xs text-grafite-400">
+                Exporte datasets em JSON, CSV e GeoJSON para análise e integração.
+              </p>
+              <p className="mt-2 text-xs text-marca-400">→ Acessar →</p>
+            </div>
+          </Link>
+
           <Link href="/transparencia">
             <div className="cartao p-4 hover:bg-grafite-800/60 transition">
               <h3 className="font-semibold text-white">Metodologia</h3>
