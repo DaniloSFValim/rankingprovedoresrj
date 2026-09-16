@@ -48,6 +48,8 @@ export interface MunicipioDescoberto {
 }
 
 export interface ResultadoExtracao {
+  /** Coluna real do arquivo ligada a cada campo do dominio (diagnostico). */
+  mapaColunas?: MapaColunas;
   registros: RegistroAgregado[];
   empresas: Map<string, EmpresaDescoberta>;
   municipios: Map<string, MunicipioDescoberto>;
@@ -164,6 +166,7 @@ export async function extrairRj(
         columns: (cabecalho: string[]) => {
           // Lanca CabecalhoIncompativelError se faltar campo obrigatorio.
           mapa = mapearCabecalho(cabecalho);
+          resultado.mapaColunas = mapa;
           return cabecalho;
         },
         skip_empty_lines: true,

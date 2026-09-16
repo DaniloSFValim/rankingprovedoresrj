@@ -165,6 +165,70 @@ export function carregar(
   transacao();
 }
 
+/**
+ * Remove todo vestigio de dados demonstrativos do warehouse (§48).
+ *
+ * Chamado antes de qualquer importacao real. Sem isso, competencias que a
+ * fixture sintetica cobria e o arquivo real nao cobre permaneceriam no banco,
+ * e o produto publicaria uma serie historica que mistura numero inventado com
+ * numero oficial — exatamente o que o principio de rastreabilidade proibe.
+ *
+ * Retorna quantos fatos foram removidos, para que a operacao apareca no log
+ * em vez de acontecer em silencio.
+ */
+export function purgarDadosDemonstrativos(db: Banco): number {
+  const execucoesDemo = (
+    db
+      .prepare(
+        `SELECT e.id FROM execucoes_importacao e
+           JOIN fontes_dados f ON f.id = e.fonte_id
+          WHERE f.dados_demonstrativos = 1`,
+      )
+      .all() as Array<{ id: number }>
+  ).map((r) => r.id);
+
+  if (execucoesDemo.length === 0) return 0;
+
+  const marcadores = execucoesDemo.map(() => '?').join(', ');
+  const transacao = db.transaction(() => {
+    const removidos = db
+      .prepare(`DELETE FROM fato_acessos WHERE execucao_id IN (${marcadores})`)
+      .run(...execucoesDemo).changes;
+    db.prepare(`DELETE FROM alertas_qualidade WHERE execucao_id IN (${marcadores})`)
+      .run(...execucoesDemo);
+    db.prepare(`DELETE FROM execucoes_importacao WHERE id IN (${marcadores})`)
+      .run(...execucoesDemo);
+    db.prepare('DELETE FROM fontes_dados WHERE dados_demonstrativos = 1').run();
+    return removidos;
+  });
+
+  const removidos = transacao();
+
+  // Limpeza de orfaos, das folhas para a raiz: os apelidos referenciam as
+  // empresas, e as empresas referenciam os grupos. Apagar na ordem inversa
+  // viola a integridade referencial.
+  const limparOrfaos = db.transaction(() => {
+    db.prepare(
+      `DELETE FROM empresas_aliases
+        WHERE empresa_id NOT IN (SELECT DISTINCT empresa_id FROM fato_acessos)`,
+    ).run();
+    db.prepare(
+      `DELETE FROM empresas
+        WHERE id NOT IN (SELECT DISTINCT empresa_id FROM fato_acessos)`,
+    ).run();
+    db.prepare(
+      `DELETE FROM grupos_economicos
+        WHERE id NOT IN (SELECT DISTINCT grupo_economico_id FROM empresas
+                          WHERE grupo_economico_id IS NOT NULL)`,
+    ).run();
+    // Municipios sobrevivem de proposito: os nomes vem do IBGE, nao da fixture,
+    // e reimporta-los a cada limpeza seria trabalho perdido.
+  });
+  limparOrfaos();
+
+  return removidos;
+}
+
 /** Competencias presentes no warehouse, em ordem cronologica. */
 export function competenciasArmazenadas(db: Banco): Competencia[] {
   return (

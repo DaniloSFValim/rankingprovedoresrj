@@ -18,6 +18,7 @@ import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import yauzl from 'yauzl';
 import { CAMINHOS } from '../config.js';
+import { ehArquivoIgnorado } from '../sources/anatel.js';
 
 export interface ArquivoBaixado {
   caminho: string;
@@ -138,7 +139,10 @@ export function extrairZip(caminhoZip: string): Promise<string[]> {
 
       zip.on('entry', (entrada) => {
         const ehDados = /\.(csv|txt)$/i.test(entrada.fileName);
-        if (entrada.fileName.endsWith('/') || !ehDados) {
+        // Descompactar um arquivo que sera ignorado desperdica disco e tempo
+        // num pacote de 1 GB.
+        if (entrada.fileName.endsWith('/') || !ehDados
+            || ehArquivoIgnorado(entrada.fileName)) {
           zip.readEntry();
           return;
         }

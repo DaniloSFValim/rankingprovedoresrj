@@ -31,6 +31,24 @@ import { canonizarTexto } from '@netrank/core';
 export const URL_ACESSOS_BANDA_LARGA_FIXA =
   'https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/acessos_banda_larga_fixa.zip';
 
+/**
+ * Arquivos do pacote da Anatel que NAO devem ser importados.
+ *
+ * O ZIP traz, para cada faixa de periodo, duas versoes do mesmo dado:
+ *   Acessos_Banda_Larga_Fixa_2007-2010.csv          formato longo
+ *   Acessos_Banda_Larga_Fixa_2007-2010_Colunas.csv  formato largo
+ *
+ * No formato largo cada competencia e uma COLUNA ("2007-03", "2007-06", ...),
+ * e a mesma informacao ja esta no formato longo. Importar os dois duplicaria
+ * integralmente os acessos — e um ranking com o dobro dos numeros reais nao
+ * parece errado a olho nu, o que torna esse erro especialmente perigoso.
+ */
+export function ehArquivoIgnorado(caminho: string): boolean {
+  const nome = caminho.split(/[\\/]/).pop() ?? caminho;
+  return /_colunas\.csv$/i.test(nome)
+    || /dicionario|leia[- ]?me|readme/i.test(nome);
+}
+
 export const FONTE_ANATEL = {
   nome: 'Anatel — Agência Nacional de Telecomunicações',
   painel: 'https://informacoes.anatel.gov.br/paineis/acessos/banda-larga-fixa',
@@ -60,12 +78,17 @@ const SINONIMOS: Record<CampoAnatel, readonly string[]> = {
   ano: ['ANO'],
   mes: ['MES', 'MES REFERENCIA', 'MES DE REFERENCIA'],
   uf: ['UF', 'SIGLA UF', 'UNIDADE DA FEDERACAO'],
-  municipio: ['MUNICIPIO', 'NOME MUNICIPIO', 'NO MUNICIPIO'],
+  municipio: ['MUNICIPIO', 'NOME MUNICIPIO', 'NO MUNICIPIO', 'NOME DO MUNICIPIO'],
   codigoIbge: [
-    'CODIGO IBGE', 'COD IBGE', 'CODIGO DO IBGE', 'CO MUNICIPIO',
-    'CODIGO MUNICIPIO', 'ID MUNICIPIO',
+    // "Codigo IBGE Municipio" e a grafia observada no arquivo real da Anatel.
+    // A ausencia dela fazia 100% das linhas do RJ serem rejeitadas.
+    'CODIGO IBGE MUNICIPIO', 'CODIGO IBGE', 'COD IBGE', 'CODIGO DO IBGE',
+    'CO MUNICIPIO', 'CODIGO MUNICIPIO', 'ID MUNICIPIO', 'CODIGO DO MUNICIPIO',
+    'COD MUNICIPIO IBGE', 'CODIGO IBGE DO MUNICIPIO',
   ],
-  empresa: ['EMPRESA', 'PRESTADORA', 'NOME PRESTADORA', 'RAZAO SOCIAL', 'NO ENTIDADE'],
+  empresa: [
+    'EMPRESA', 'PRESTADORA', 'NOME PRESTADORA', 'RAZAO SOCIAL', 'NO ENTIDADE',
+  ],
   cnpj: ['CNPJ', 'CNPJ PRESTADORA', 'CNPJ ENTIDADE'],
   grupoEconomico: ['GRUPO ECONOMICO', 'GRUPO'],
   tecnologia: ['TECNOLOGIA', 'TIPO TECNOLOGIA', 'MEIO DE ACESSO', 'TECNOLOGIA ACESSO'],

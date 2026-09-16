@@ -23,6 +23,7 @@ import { construirArtefatos } from './pipeline/artefatos.js';
 import {
   carregar,
   competenciasArmazenadas,
+  purgarDadosDemonstrativos,
   concluirExecucao,
   iniciarExecucao,
   registrarFonte,
@@ -109,6 +110,17 @@ async function importar(
     throw new Error(`Arquivo nao encontrado: ${caminhoCsv}`);
   }
 
+  // Dado real e dado demonstrativo jamais coexistem no warehouse (§48).
+  if (!opcoes.dadosDemonstrativos) {
+    const removidos = purgarDadosDemonstrativos(db);
+    if (removidos > 0) {
+      console.log(
+        `[limpeza] ${removidos.toLocaleString('pt-BR')} fatos demonstrativos removidos ` +
+          `antes da importacao real.`,
+      );
+    }
+  }
+
   const estatisticasArquivo = fs.statSync(caminhoCsv);
   const fonteId = registrarFonte(db, {
     nome: FONTE_ANATEL.nome,
@@ -122,11 +134,20 @@ async function importar(
   const execucaoId = iniciarExecucao(db, fonteId);
 
   try {
-    console.log(`[extrair] lendo ${caminhoCsv}`);
+    console.log(`[extrair] lendo ${path.basename(caminhoCsv)}`);
     const extracao = await extrairRj(caminhoCsv, {
       overrides: carregarOverrides(),
       ...(opcoes.encoding ? { encoding: opcoes.encoding } : {}),
     });
+
+    if (extracao.mapaColunas) {
+      console.log(
+        '[extrair] colunas resolvidas: ' +
+          Object.entries(extracao.mapaColunas)
+            .map(([campo, coluna]) => `${campo}="${coluna}"`)
+            .join(', '),
+      );
+    }
 
     const { estatisticas } = extracao;
     console.log(
