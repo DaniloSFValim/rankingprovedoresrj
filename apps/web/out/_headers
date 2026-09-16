@@ -1,0 +1,7 @@
+# Cabecalhos para Cloudflare Pages.
+# Artefatos de dados: cache curto no navegador, longo na CDN.
+/data/*
+  Cache-Control: public, max-age=300, s-maxage=86400
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
