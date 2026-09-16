@@ -6,6 +6,8 @@ import { rotularCompetencia } from '@netrank/core';
 import { Secao } from '@/componentes/Secao';
 import { MapaCoropletaCobertura } from '@/componentes/MapaCoropletaCobertura';
 import { percentual } from '@/lib/formato';
+import { ErrorBoundary } from '@/componentes/ErrorBoundary';
+import { SkeletonCard } from '@/componentes/Skeleton';
 
 interface Provedor {
   id: string;
@@ -34,12 +36,20 @@ export default function MapaCobertura() {
   const [provedorSelecionado, setProvedorSelecionado] = useState<Provedor | null>(null);
   const [detalheProvedor, setDetalheProvedor] = useState<DetalheProvedor | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [coberturaLoading, setCoberturaLoading] = useState(false);
   const [competencia, setCompetencia] = useState<string>('');
 
   useEffect(() => {
     const loadData = async () => {
       try {
+        setError(null);
         const res = await fetch('/data/municipios/index.json');
+
+        if (!res.ok) {
+          throw new Error('Erro ao buscar dados do servidor');
+        }
+
         const data = await res.json();
 
         setCompetencia(data.competencia);
@@ -58,6 +68,8 @@ export default function MapaCobertura() {
           setProvedorSelecionado(provedoresList[0]);
         }
       } catch (err) {
+        const message = err instanceof Error ? err.message : 'Erro desconhecido';
+        setError(message);
         console.error('Erro ao carregar dados:', err);
       } finally {
         setLoading(false);
@@ -72,6 +84,7 @@ export default function MapaCobertura() {
 
     const loadCoverageData = async () => {
       try {
+        setCoberturaLoading(true);
         const slug = provedorSelecionado.nome
           .toLowerCase()
           .normalize('NFD')
@@ -122,6 +135,8 @@ export default function MapaCobertura() {
         }
       } catch (err) {
         console.error('Erro ao carregar dados de cobertura:', err);
+      } finally {
+        setCoberturaLoading(false);
       }
     };
 
@@ -130,14 +145,44 @@ export default function MapaCobertura() {
 
   if (loading) {
     return (
+      <ErrorBoundary>
+        <main className="space-y-8">
+          <div>
+            <div className="h-8 bg-grafite-700 rounded w-1/3 animate-pulse mb-2" />
+            <div className="h-4 bg-grafite-700 rounded w-1/2 animate-pulse" />
+          </div>
+          <Secao titulo="Carregando..." descricao="">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          </Secao>
+        </main>
+      </ErrorBoundary>
+    );
+  }
+
+  if (error) {
+    return (
       <main className="space-y-8">
-        <div className="text-grafite-400">Carregando mapa...</div>
+        <div className="cartao p-8 border-l-4 border-red-500 space-y-4">
+          <h2 className="font-semibold text-white text-lg">⚠️ Erro ao carregar mapa</h2>
+          <p className="text-sm text-grafite-400">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm transition"
+          >
+            ↻ Recarregar página
+          </button>
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="space-y-8">
+    <ErrorBoundary>
+      <main className="space-y-8">
       {/* Cabeçalho */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-white">Cobertura de Provedores</h1>
@@ -267,5 +312,6 @@ export default function MapaCobertura() {
         </Link>
       </div>
     </main>
+    </ErrorBoundary>
   );
 }

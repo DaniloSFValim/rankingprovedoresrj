@@ -6,6 +6,8 @@ import { useCallback, useState, useEffect } from 'react';
 import { Secao } from '@/componentes/Secao';
 import { compacto, inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
+import { ErrorBoundary } from '@/componentes/ErrorBoundary';
+import { SkeletonCard } from '@/componentes/Skeleton';
 
 interface Provedor {
   id: string;
@@ -51,15 +53,23 @@ export default function ComparadorPrestadoras() {
   const [provedores, setProvedores] = useState<PerfilProvedor[]>([]);
   const [selecionados, setSelecionados] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [profilesLoading, setProfilesLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [profilesError, setProfilesError] = useState<string | null>(null);
   const [kpisData, setKpisData] = useState<any>(null);
 
   useEffect(() => {
     // Load indices at build time
     const loadData = async () => {
       try {
+        setError(null);
         // Load provider index and current KPIs
         const indiceRes = await fetch('/data/provedores/index.json');
         const kpisRes = await fetch('/data/estado/kpis.json');
+
+        if (!indiceRes.ok || !kpisRes.ok) {
+          throw new Error('Erro ao buscar dados do servidor');
+        }
 
         const indiceData = await indiceRes.json();
         const kpisData = await kpisRes.json();
@@ -67,6 +77,8 @@ export default function ComparadorPrestadoras() {
         setIndice(indiceData.provedores || []);
         setKpisData(kpisData);
       } catch (err) {
+        const message = err instanceof Error ? err.message : 'Erro desconhecido';
+        setError(message);
         console.error('Erro ao carregar dados:', err);
       } finally {
         setLoading(false);
@@ -79,25 +91,44 @@ export default function ComparadorPrestadoras() {
   // Load profiles when selections change
   useEffect(() => {
     const loadProfiles = async () => {
-      const profiles: PerfilProvedor[] = [];
-      for (const slug of selecionados) {
-        try {
-          const res = await fetch(`/data/provedores/${slug}.json`);
-          if (res.ok) {
-            profiles.push(await res.json());
-          }
-        } catch (err) {
-          console.error(`Erro ao carregar ${slug}:`, err);
-        }
+      if (selecionados.length === 0) {
+        setProvedores([]);
+        setProfilesError(null);
+        return;
       }
-      setProvedores(profiles);
+
+      setProfilesLoading(true);
+      setProfilesError(null);
+      const profiles: PerfilProvedor[] = [];
+
+      try {
+        for (const slug of selecionados) {
+          try {
+            const res = await fetch(`/data/provedores/${slug}.json`);
+            if (res.ok) {
+              profiles.push(await res.json());
+            } else {
+              throw new Error(`Falha ao carregar ${slug}`);
+            }
+          } catch (err) {
+            console.error(`Erro ao carregar ${slug}:`, err);
+          }
+        }
+
+        if (profiles.length === 0 && selecionados.length > 0) {
+          throw new Error('Nenhum perfil de provedor foi carregado');
+        }
+
+        setProvedores(profiles);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Erro ao carregar perfis';
+        setProfilesError(message);
+      } finally {
+        setProfilesLoading(false);
+      }
     };
 
-    if (selecionados.length > 0) {
-      loadProfiles();
-    } else {
-      setProvedores([]);
-    }
+    loadProfiles();
   }, [selecionados]);
 
   const adicionarProvedor = useCallback(
@@ -118,8 +149,37 @@ export default function ComparadorPrestadoras() {
 
   if (loading) {
     return (
+      <ErrorBoundary>
+        <main className="space-y-8">
+          <div>
+            <div className="h-8 bg-grafite-700 rounded w-1/3 animate-pulse mb-2" />
+            <div className="h-4 bg-grafite-700 rounded w-1/2 animate-pulse" />
+          </div>
+          <Secao titulo="Carregando..." descricao="">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          </Secao>
+        </main>
+      </ErrorBoundary>
+    );
+  }
+
+  if (error) {
+    return (
       <main className="space-y-8">
-        <div className="text-white">Carregando dados...</div>
+        <div className="cartao p-8 border-l-4 border-red-500 space-y-4">
+          <h2 className="font-semibold text-white text-lg">⚠️ Erro ao carregar dados</h2>
+          <p className="text-sm text-grafite-400">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm transition"
+          >
+            ↻ Recarregar página
+          </button>
+        </div>
       </main>
     );
   }
@@ -181,45 +241,72 @@ export default function ComparadorPrestadoras() {
   }
 
   return (
-    <main className="space-y-8">
-      {/* Cabeçalho */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-white">
-          Comparador de Provedores
-        </h1>
-        <p className="mt-2 text-sm text-grafite-400">
-          Comparação lado a lado de {provedores.length} prestadoras
-        </p>
-        {kpisData && (
-          <p className="mt-1 text-xs text-grafite-500">
-            Dados de competência {rotularCompetencia(kpisData.competencia)}
+    <ErrorBoundary>
+      <main className="space-y-8">
+        {/* Cabeçalho */}
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-white">
+            Comparador de Provedores
+          </h1>
+          <p className="mt-2 text-sm text-grafite-400">
+            Comparação lado a lado de {provedores.length} prestadoras
           </p>
-        )}
-      </div>
+          {kpisData && (
+            <p className="mt-1 text-xs text-grafite-500">
+              Dados de competência {rotularCompetencia(kpisData.competencia)}
+            </p>
+          )}
+        </div>
 
-      {/* Provedores Selecionados */}
-      <div className="flex flex-wrap gap-2">
-        {selecionados.map((slug) => {
-          const p = indice.find((x) => x.slug === slug);
-          return (
+        {/* Provedores Selecionados */}
+        <div className="flex flex-wrap gap-2">
+          {selecionados.map((slug) => {
+            const p = indice.find((x) => x.slug === slug);
+            return (
+              <button
+                key={slug}
+                onClick={() => removerProvedor(slug)}
+                className="px-3 py-1 rounded bg-marca-500 text-white text-sm hover:bg-marca-600 transition"
+              >
+                {p?.nome} ✕
+              </button>
+            );
+          })}
+          <button
+            onClick={() => setSelecionados([])}
+            className="px-3 py-1 rounded bg-grafite-700 text-grafite-300 text-sm hover:bg-grafite-600 transition"
+          >
+            Limpar
+          </button>
+        </div>
+
+        {/* Erro ao carregar perfis */}
+        {profilesError && (
+          <div className="cartao p-4 border-l-4 border-red-500 space-y-3">
+            <p className="text-sm text-red-400">⚠️ {profilesError}</p>
             <button
-              key={slug}
-              onClick={() => removerProvedor(slug)}
-              className="px-3 py-1 rounded bg-marca-500 text-white text-sm hover:bg-marca-600 transition"
+              onClick={() => setSelecionados([...selecionados])}
+              className="px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-xs transition"
             >
-              {p?.nome} ✕
+              ↻ Tentar novamente
             </button>
-          );
-        })}
-        <button
-          onClick={() => setSelecionados([])}
-          className="px-3 py-1 rounded bg-grafite-700 text-grafite-300 text-sm hover:bg-grafite-600 transition"
-        >
-          Limpar
-        </button>
-      </div>
+          </div>
+        )}
 
-      {/* Comparação de Métricas Principais */}
+        {/* Loading dos perfis */}
+        {profilesLoading && (
+          <Secao titulo="Carregando comparação..." descricao="">
+            <div className="space-y-4">
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          </Secao>
+        )}
+
+        {/* Comparação - mostrar apenas quando carregado */}
+        {!profilesLoading && !profilesError && provedores.length >= 2 && (
+          <>
+            {/* Comparação de Métricas Principais */}
       <Secao
         titulo="Indicadores Principais"
         descricao="Métricas estaduais de cada prestadora"
@@ -362,14 +449,17 @@ export default function ComparadorPrestadoras() {
         </Secao>
       )}
 
-      {/* Ações */}
-      <div className="flex gap-3">
-        <Link href="/provedores">
-          <button className="px-4 py-2 rounded bg-grafite-800 hover:bg-grafite-700 text-white text-sm transition">
-            ← Voltar a Provedores
-          </button>
-        </Link>
-      </div>
-    </main>
+            {/* Ações */}
+            <div className="flex gap-3">
+              <Link href="/provedores">
+                <button className="px-4 py-2 rounded bg-grafite-800 hover:bg-grafite-700 text-white text-sm transition">
+                  ← Voltar a Provedores
+                </button>
+              </Link>
+            </div>
+          </>
+        )}
+      </main>
+    </ErrorBoundary>
   );
 }
