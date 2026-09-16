@@ -108,7 +108,7 @@ export function validarSomaMarketShare(
 
   const somaMarketShare = empresas
     .map((e) => marketShare(e.acessos, total))
-    .reduce((s, ms) => s + ms, 0);
+    .reduce((s: number, ms: number | null) => s + (ms ?? 0), 0);
 
   const passou = somaMarketShare >= 99.5 && somaMarketShare <= 100.5;
 
@@ -159,11 +159,11 @@ export function validarHierarquiaConcentracao(
     };
   }
 
-  const valoresOrdenados = [
-    { nome: 'CR1', valor: conc.cr1 },
-    { nome: 'CR3', valor: conc.cr3 },
-    { nome: 'CR5', valor: conc.cr5 },
-    { nome: 'CR10', valor: conc.cr10 },
+  const valoresOrdenados: Array<{ nome: string; valor: number }> = [
+    { nome: 'CR1', valor: conc.cr1 ?? 0 },
+    { nome: 'CR3', valor: conc.cr3 ?? 0 },
+    { nome: 'CR5', valor: conc.cr5 ?? 0 },
+    { nome: 'CR10', valor: conc.cr10 ?? 0 },
     { nome: '100%', valor: 100 },
   ];
 
@@ -171,8 +171,8 @@ export function validarHierarquiaConcentracao(
   const violacoes: string[] = [];
 
   for (let i = 0; i < valoresOrdenados.length - 1; i++) {
-    const atual = valoresOrdenados[i];
-    const proximo = valoresOrdenados[i + 1];
+    const atual = valoresOrdenados[i]!;
+    const proximo = valoresOrdenados[i + 1]!;
     if (atual.valor > proximo.valor) {
       passou = false;
       violacoes.push(

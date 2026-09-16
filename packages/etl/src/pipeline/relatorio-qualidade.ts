@@ -199,13 +199,24 @@ export function gerarRelatorioQualidade(
     },
 
     validacoes: {
-      matematicas: validacoesMath.map((v) => ({
-        tipo: v.tipo,
-        passou: v.passou,
-        severidade: v.severidade,
-        mensagem: v.mensagem,
-        detalhes: v.detalhes,
-      })),
+      matematicas: validacoesMath.map((v) => {
+        const resultado: {
+          tipo: string;
+          passou: boolean;
+          severidade: string;
+          mensagem: string;
+          detalhes?: Record<string, unknown>;
+        } = {
+          tipo: v.tipo,
+          passou: v.passou,
+          severidade: v.severidade,
+          mensagem: v.mensagem,
+        };
+        if (v.detalhes !== undefined) {
+          resultado.detalhes = v.detalhes;
+        }
+        return resultado;
+      }),
     },
 
     alertas: {

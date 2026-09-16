@@ -91,15 +91,18 @@ export function criarMetadadosArtefato(
   procedencia: ProcedenciaDados,
   descricao?: string,
 ): MetadadosArtefato {
-  return {
+  const meta: MetadadosArtefato = {
     versao: '1.0.0',
     competencia,
     geradoEm: new Date().toISOString(),
     commitHash: obterCommitHash(),
     branch: obterBranch(),
     procedencia,
-    descricao,
   };
+  if (descricao !== undefined) {
+    meta.descricao = descricao;
+  }
+  return meta;
 }
 
 /**
@@ -215,11 +218,22 @@ export function gerarRelatorioRastreabilidade(
     // Não é JSON ou não tem metadados
   }
 
-  return {
+  const result: {
+    arquivo: string;
+    existe: boolean;
+    tamanhoBytes?: number;
+    sha256?: string;
+    metadadados?: MetadadosArtefato;
+  } = {
     arquivo: caminhoArquivo,
     existe: true,
     tamanhoBytes: stats.size,
     sha256,
-    metadadados,
   };
+
+  if (metadadados !== undefined) {
+    result.metadadados = metadadados;
+  }
+
+  return result;
 }
