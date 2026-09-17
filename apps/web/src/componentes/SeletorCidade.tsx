@@ -225,13 +225,20 @@ export function UltimaCidade({ cidades }: { cidades: CidadeOpcao[] }) {
  * onde a escolha da cidade é o bloco de destaque, e a própria página de
  * município, onde ele fica ao lado do nome da cidade.
  *
+ * Também some em páginas de conteúdo genérico estadual (Metodologia, Provedores)
+ * onde um filtro de cidade não faz sentido.
+ *
  * A regra é uma só: **um seletor por tela**. Dois controles idênticos na mesma
  * página não dão mais poder ao usuário, dão dúvida sobre qual deles vale.
  */
 export function SeletorCidadeNav({ cidades }: { cidades: CidadeOpcao[] }) {
   const caminho = usePathname();
   const temSeletorProprio =
-    caminho === '/' || caminho === '' || /^\/municipios\/[^/]+\/?$/.test(caminho ?? '');
+    caminho === '/' ||
+    caminho === '' ||
+    /^\/municipios\/[^/]+\/?$/.test(caminho ?? '') ||
+    /^\/metodologia\/?$/.test(caminho ?? '') ||
+    /^\/provedores\/?$/.test(caminho ?? '');
 
   if (temSeletorProprio) return null;
   return <SeletorCidade cidades={cidades} />;
