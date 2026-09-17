@@ -7,7 +7,6 @@ import { Destaques, TrocasLideranca } from '@/componentes/Destaques';
 import { AvisoLacunas } from '@/componentes/Procedencia';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
-import { MapaCoberturaProvedores } from '@/componentes/MapaCoberturaProvedores';
 import { SeletorCidadeHome } from '@/componentes/SeletorCidadeHome';
 import {
   lerIndiceMunicipios,
@@ -46,16 +45,6 @@ export default function Home() {
 
   return (
     <main className="space-y-10">
-      {/* Mapa de cobertura no topo */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
-          <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Cobertura de Provedores</div>
-          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
-        </div>
-        <MapaCoberturaProvedores municipios={municipios} />
-      </div>
-
       {/* Seletor de cidade */}
       <SeletorCidadeHome cidades={cidades} />
 
