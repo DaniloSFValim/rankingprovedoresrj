@@ -12,6 +12,7 @@ const ITENS = [
   { href: '/municipios/', rotulo: 'Municípios' },
   { href: '/provedores/', rotulo: 'Provedores' },
   { href: '/metodologia/', rotulo: 'Metodologia' },
+  { href: '/sobre/', rotulo: 'Sobre' },
 ] as const;
 
 export function Navegacao({ meta, cidades, itensBusca = [] }: { meta: Meta; cidades: CidadeOpcao[]; itensBusca?: ItemBusca[] }) {
