@@ -8,7 +8,6 @@ import { MARCA } from '@/lib/marca';
 const ITENS = [
   { href: '/', rotulo: 'Visão geral' },
   { href: '/ranking/', rotulo: 'Ranking' },
-  { href: '/corrida/', rotulo: 'Corrida' },
   { href: '/crescimento/', rotulo: 'Crescimento' },
   { href: '/municipios/', rotulo: 'Municípios' },
   { href: '/provedores/', rotulo: 'Provedores' },

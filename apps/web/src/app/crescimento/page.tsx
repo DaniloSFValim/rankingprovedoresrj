@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
 import { Secao } from '@/componentes/Secao';
-import { RadarProvedores } from '@/componentes/graficos/Radar';
+import { TreemapCrescimento } from '@/componentes/graficos/TreemapCrescimento';
 import { lerMovimentacoes, lerRankingEstadual } from '@/lib/dados';
 import type { DestaqueEmpresa } from '@/lib/dados';
 import { corVariacao, inteiroComSinal, percentualComSinal } from '@/lib/formato';
@@ -95,12 +95,12 @@ export default function PaginaCrescimento() {
       </div>
 
       <Secao
-        titulo="Visualização: Tamanho × Crescimento × Market Share"
-        descricao="Evolução dos provedores em 12 meses — bolhas maiores = mais acessos, cores = performance"
+        titulo="Crescimento dos provedores"
+        descricao="Tamanho = número de acessos, cores = crescimento (verde = crescimento, vermelho = queda)"
       >
         <div className="cartao p-3">
           {pontosRadar.length > 0 ? (
-            <RadarProvedores pontos={pontosRadar} />
+            <TreemapCrescimento pontos={pontosRadar} />
           ) : (
             <p className="p-6 text-sm text-grafite-400">
               Sem 12 meses de histórico carregados para comparar.

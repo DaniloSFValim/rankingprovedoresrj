@@ -79,7 +79,6 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
       texto: p.nome,
     })),
     { id: 'pagina-ranking', titulo: 'Ranking', categoria: 'pagina' as const, href: '/ranking/', texto: 'Ranking' },
-    { id: 'pagina-corrida', titulo: 'Corrida', categoria: 'pagina' as const, href: '/corrida/', texto: 'Corrida' },
     { id: 'pagina-crescimento', titulo: 'Crescimento', categoria: 'pagina' as const, href: '/crescimento/', texto: 'Crescimento' },
     { id: 'pagina-municipios', titulo: 'Municípios', categoria: 'pagina' as const, href: '/municipios/', texto: 'Municípios' },
     { id: 'pagina-provedores', titulo: 'Provedores', categoria: 'pagina' as const, href: '/provedores/', texto: 'Provedores' },
