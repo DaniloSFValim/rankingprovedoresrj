@@ -55,28 +55,33 @@ export function CorridaRanking({ corrida }: { corrida: Corrida }) {
     const rotulos = corrida.competencias.map((c) => rotularCompetencia(c.competencia));
     const nomePorId = new Map(corrida.empresas.map((e) => [e.id, e.nome]));
 
-    const series = visiveis.map((empresaId, ordem) => ({
-      name: nomePorId.get(empresaId) ?? empresaId,
-      type: 'line' as const,
-      smooth: 0.3,
-      symbol: 'circle',
-      symbolSize: 6,
-      lineStyle: { width: 2.5 },
-      emphasis: { focus: 'series' as const, lineStyle: { width: 4 } },
-      endLabel: {
-        show: true,
-        // '{a}' e o marcador do ECharts para o nome da serie.
-        formatter: '{a}',
-        color: PALETA_SERIES[ordem % PALETA_SERIES.length],
-        fontSize: 11,
-        distance: 6,
-      },
-      // Revela apenas até a competência corrente da animação.
-      data: corrida.competencias.slice(0, indice + 1).map((c) => {
-        const encontrada = c.posicoes.find((p) => p.empresaId === empresaId);
-        return encontrada ? encontrada.posicao : null;
-      }),
-    }));
+    const series = visiveis.map((empresaId, ordem) => {
+      // Primeiros provedores têm linhas mais grossas para melhor distinção visual
+      const larguralinha = ordem < 3 ? 3.5 : ordem < 7 ? 3 : 2.5;
+      const tamanhoSimbolo = ordem < 3 ? 8 : ordem < 7 ? 7 : 6;
+      return {
+        name: nomePorId.get(empresaId) ?? empresaId,
+        type: 'line' as const,
+        smooth: 0.3,
+        symbol: 'circle',
+        symbolSize: tamanhoSimbolo,
+        lineStyle: { width: larguralinha },
+        emphasis: { focus: 'series' as const, lineStyle: { width: larguralinha + 1.5 } },
+        endLabel: {
+          show: true,
+          // '{a}' e o marcador do ECharts para o nome da serie.
+          formatter: '{a}',
+          color: PALETA_SERIES[ordem % PALETA_SERIES.length],
+          fontSize: ordem < 3 ? 12 : 11,
+          distance: 6,
+        },
+        // Revela apenas até a competência corrente da animação.
+        data: corrida.competencias.slice(0, indice + 1).map((c) => {
+          const encontrada = c.posicoes.find((p) => p.empresaId === empresaId);
+          return encontrada ? encontrada.posicao : null;
+        }),
+      };
+    });
 
     return {
       tooltip: {

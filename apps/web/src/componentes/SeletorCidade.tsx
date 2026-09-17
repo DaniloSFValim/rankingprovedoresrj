@@ -238,7 +238,8 @@ export function SeletorCidadeNav({ cidades }: { cidades: CidadeOpcao[] }) {
     caminho === '' ||
     /^\/municipios\/[^/]+\/?$/.test(caminho ?? '') ||
     /^\/metodologia\/?$/.test(caminho ?? '') ||
-    /^\/provedores\/?$/.test(caminho ?? '');
+    /^\/provedores\/?$/.test(caminho ?? '') ||
+    /^\/corrida\/?$/.test(caminho ?? '');
 
   if (temSeletorProprio) return null;
   return <SeletorCidade cidades={cidades} />;
