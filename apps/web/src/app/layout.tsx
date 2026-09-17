@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Navegacao } from '@/componentes/Navegacao';
 import { FaixaDemonstrativo, RodapeProcedencia } from '@/componentes/Procedencia';
+import { CidadeSelecionadaProvider } from '@/contextos/CidadeSelecionada';
 import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
@@ -84,10 +85,12 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen">
-        <FaixaDemonstrativo meta={meta} />
-        <Navegacao meta={meta} cidades={cidades} />
-        <div className="mx-auto max-w-7xl px-4 py-6">{children}</div>
-        <RodapeProcedencia meta={meta} />
+        <CidadeSelecionadaProvider>
+          <FaixaDemonstrativo meta={meta} />
+          <Navegacao meta={meta} cidades={cidades} />
+          <div className="mx-auto max-w-7xl px-4 py-6">{children}</div>
+          <RodapeProcedencia meta={meta} />
+        </CidadeSelecionadaProvider>
       </body>
     </html>
   );

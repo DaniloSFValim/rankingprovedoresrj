@@ -30,11 +30,13 @@ interface Props {
   slugAtual?: string;
   /** `destaque` usa a versão grande da home; `compacto`, a da navegação. */
   variante?: 'destaque' | 'compacto';
+  /** Se fornecido, chamado em vez de fazer navegação por rota. */
+  onSelecionar?: (cidade: CidadeOpcao) => void;
 }
 
 const CHAVE_ULTIMA_CIDADE = 'netrank:ultima-cidade';
 
-export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Props) {
+export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSelecionar }: Props) {
   const router = useRouter();
   const [aberto, setAberto] = useState(false);
   const [busca, setBusca] = useState('');
@@ -83,7 +85,11 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Pro
     }
     setAberto(false);
     setBusca('');
-    router.push(`/municipios/${cidade.slug}/`);
+    if (onSelecionar) {
+      onSelecionar(cidade);
+    } else {
+      router.push(`/municipios/${cidade.slug}/`);
+    }
   }
 
   function aoTeclar(evento: React.KeyboardEvent<HTMLInputElement>) {
