@@ -121,6 +121,7 @@ export function formatarTamanho(bytes: number): string {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
 }
+<<<<<<< HEAD
 
 /**
  * Obter tamanho real de arquivo a partir do caminho
@@ -129,3 +130,5 @@ export function formatarTamanho(bytes: number): string {
 export function obterTamanhoArquivo(tamanhoEstimado: string): string {
   return tamanhoEstimado;
 }
+=======
+>>>>>>> origin/main

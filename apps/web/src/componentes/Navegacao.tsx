@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
 import { SeletorCidadeNav, type CidadeOpcao } from '@/componentes/SeletorCidade';
+import { BuscaAvancada, type ItemBusca } from '@/componentes/BuscaAvancada';
 import type { Meta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
@@ -14,7 +15,7 @@ const ITENS = [
   { href: '/metodologia/', rotulo: 'Metodologia' },
 ] as const;
 
-export function Navegacao({ meta, cidades }: { meta: Meta; cidades: CidadeOpcao[] }) {
+export function Navegacao({ meta, cidades, itensBusca = [] }: { meta: Meta; cidades: CidadeOpcao[]; itensBusca?: ItemBusca[] }) {
   return (
     <header className="sticky top-0 z-30 border-b border-grafite-800 bg-grafite-950/85 backdrop-blur">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
@@ -27,13 +28,13 @@ export function Navegacao({ meta, cidades }: { meta: Meta; cidades: CidadeOpcao[
 
         {/* A rolagem horizontal existe para caber no celular. No desktop ela
             criava uma barra de rolagem visivel logo apos o ultimo item. */}
-        <nav className="-mx-1 order-3 w-full overflow-x-auto md:order-none md:mx-0 md:w-auto md:overflow-visible">
+        <nav className="-mx-1 order-3 w-full overflow-x-auto md:order-none md:mx-0 md:w-auto md:overflow-visible" aria-label="Navegação principal">
           <ul className="flex gap-1 whitespace-nowrap">
             {ITENS.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-md px-2.5 py-1.5 text-sm text-grafite-300 transition hover:bg-grafite-800 hover:text-white"
+                  className="rounded-md px-3 py-2 text-sm text-grafite-300 transition hover:bg-grafite-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-marca-400 min-h-10 inline-flex items-center"
                 >
                   {item.rotulo}
                 </Link>
@@ -42,7 +43,12 @@ export function Navegacao({ meta, cidades }: { meta: Meta; cidades: CidadeOpcao[
           </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-4">
+        <div className="ml-auto flex w-full flex-col items-end gap-4 md:w-auto md:flex-row">
+          {itensBusca.length > 0 && (
+            <div className="w-full md:w-80">
+              <BuscaAvancada itens={itensBusca} placeholder="Buscar..." />
+            </div>
+          )}
           <SeletorCidadeNav cidades={cidades} />
           <div className="hidden text-right sm:block">
             <div className="rotulo">Competência</div>
