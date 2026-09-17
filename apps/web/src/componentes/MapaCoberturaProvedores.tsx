@@ -42,15 +42,11 @@ export function MapaCoberturaProvedores({ municipios }: MapaCoberturaProps) {
       });
     }
 
-    // Preparar dados para o mapa
-    const serieData = geoJsonMap.features.map((feature: any) => {
-      const codigo = feature.properties?.adm2_id;
-      const dados = dadosPorIbge.get(codigo);
-      return {
-        name: feature.properties?.adm2_name || feature.properties?.name,
-        value: dados?.numeroProvedores ?? 0,
-      };
-    });
+    // Preparar dados para o mapa usando codigoIbge como identificador
+    const serieData = Array.from(dadosPorIbge, ([codigo, dados]) => ({
+      name: codigo,
+      value: dados.numeroProvedores,
+    }));
 
     return {
       tooltip: {
@@ -73,6 +69,7 @@ export function MapaCoberturaProvedores({ municipios }: MapaCoberturaProps) {
           name: 'Provedores',
           type: 'map',
           map: 'RJ',
+          nameProperty: 'name',
           data: serieData,
           roam: false,
           label: {
