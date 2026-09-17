@@ -46,27 +46,27 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
   );
 }
 
-/** Rodapé simplificado com informações essenciais. Conteúdo detalhado está em /sobre/. */
+/** Rodapé institucional com informações essenciais. Conteúdo detalhado está em /sobre/. */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;
   const a = p.academicos;
 
   return (
-    <footer className="mt-12 border-t border-grafite-800 bg-grafite-900/40">
+    <footer className="mt-12 border-t border-grafite-700 bg-grafite-950/80">
       <div className="mx-auto max-w-7xl px-4 py-8 space-y-6">
         {/* Institutional Context */}
         <section className="text-xs leading-relaxed text-grafite-300">
-          <p className="font-semibold text-marca-300 mb-2">Iniciativa Institucional</p>
+          <p className="font-semibold text-marca-300 mb-2">Propósito e Origem</p>
           <p>
-            {MARCA.nome} é uma plataforma independente de monitoramento de mercado desenvolvida para subsidiar
+            {MARCA.nome} é uma plataforma de monitoramento de mercado desenvolvida independentemente para subsidiar
             as atividades de fiscalização da{' '}
             <strong>Secretaria Municipal de Conservação e Serviços Públicos (Seconser)</strong>,
             especificamente do Setor de Fiscalização de Serviços Concedidos da Prefeitura Municipal de Niterói.
-            A plataforma não possui vínculo com órgãos reguladores e funciona como ferramenta de análise de dados públicos.
+            Utiliza dados públicos da Anatel para análise estatística do mercado de banda larga no Estado do Rio de Janeiro.
           </p>
         </section>
 
-        {/* Data Source, Authors and Update */}
+        {/* Key Information Grid */}
         <section className="border-t border-grafite-800 pt-6 text-xs text-grafite-400">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
@@ -75,34 +75,34 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
                 Anatel
               </dd>
               <dd className="mt-1 text-grafite-500 text-[10px]">
-                Dados públicos processados de forma independente
+                Dados públicos da Agência Nacional de Telecomunicações
               </dd>
             </div>
             <div>
               <dt className="text-marca-400 font-semibold mb-1">Última Atualização</dt>
-              <dd className="text-grafite-300">
+              <dd className="text-grafite-300 text-[11px]">
                 {new Date(p.processadoEm).toLocaleString('pt-BR')}
               </dd>
             </div>
-            {a && (
-              <div>
-                <dt className="text-marca-400 font-semibold mb-1">Autoria</dt>
-                <dd className="text-grafite-300 space-y-0.5">
-                  {a.autores.slice(0, 2).map((au) => (
-                    <div key={au.email || au.nome} className="text-[11px]">
-                      {au.nome}
-                    </div>
-                  ))}
-                  {a.autores.length > 2 && (
-                    <div className="text-[10px] text-grafite-500">
-                      +{a.autores.length - 2} {a.autores.length - 2 === 1 ? 'outro' : 'outros'}
-                    </div>
-                  )}
-                </dd>
-              </div>
-            )}
             <div>
-              <dt className="text-marca-400 font-semibold mb-1">Referências</dt>
+              <dt className="text-marca-400 font-semibold mb-1">Desenvolvimento</dt>
+              <dd className="text-grafite-300 space-y-1">
+                {a && (
+                  <div className="text-[11px]">
+                    {a.autores.slice(0, 1).map((au) => (
+                      <div key={au.email || au.nome}>
+                        {au.nome}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className="text-[10px] text-grafite-500">
+                  Desenvolvimento independente
+                </div>
+              </dd>
+            </div>
+            <div>
+              <dt className="text-marca-400 font-semibold mb-1">Mais Informações</dt>
               <dd className="space-y-1">
                 <div>
                   <a href="/sobre/" className="text-marca-400 hover:underline text-[11px]">

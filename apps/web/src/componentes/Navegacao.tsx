@@ -17,12 +17,21 @@ const ITENS = [
 
 export function Navegacao({ meta, cidades, itensBusca = [] }: { meta: Meta; cidades: CidadeOpcao[]; itensBusca?: ItemBusca[] }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-grafite-800 bg-grafite-950/85 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-        <Link href="/" className="flex items-baseline gap-2">
-          <span className="text-lg font-bold tracking-tight text-white">{MARCA.nome}</span>
-          <span className="hidden text-[11px] text-grafite-500 lg:inline">
-            {MARCA.subtitulo}
+    <header className="sticky top-0 z-30 border-b border-grafite-700 bg-grafite-950/95 backdrop-blur">
+      {/* Institutional bar */}
+      <div className="border-b border-grafite-800/50 bg-grafite-950/60 px-4 py-2 text-xs text-grafite-400">
+        <div className="mx-auto max-w-7xl">
+          <span className="font-semibold text-grafite-300">Prefeitura de Niterói</span>
+          {' — '}
+          <span>Secretaria Municipal de Conservação e Serviços Públicos (Seconser)</span>
+        </div>
+      </div>
+
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-4">
+        <Link href="/" className="flex flex-col gap-0.5">
+          <span className="text-xl font-bold tracking-tight text-white">{MARCA.nome}</span>
+          <span className="hidden text-[10px] text-grafite-500 lg:inline">
+            Plataforma de Monitoramento de Mercado
           </span>
         </Link>
 

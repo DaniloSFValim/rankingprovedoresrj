@@ -6,7 +6,7 @@ export const MARCA = {
   nome: 'NETRANK RJ',
   subtitulo: 'Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro',
   descricaoCurta:
-    'Análise do mercado de banda larga fixa do Estado do Rio de Janeiro a partir dos dados oficiais da Anatel.',
+    'Plataforma de monitoramento de mercado de banda larga fixa do Estado do Rio de Janeiro para apoiar atividades de fiscalização de serviços concedidos.',
   uf: 'Rio de Janeiro',
   ufSigla: 'RJ',
 } as const;
