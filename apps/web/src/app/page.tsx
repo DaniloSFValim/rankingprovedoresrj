@@ -5,9 +5,9 @@ import { Secao } from '@/componentes/Secao';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { Destaques, TrocasLideranca } from '@/componentes/Destaques';
 import { AvisoLacunas } from '@/componentes/Procedencia';
-import { SeletorCidade, UltimaCidade } from '@/componentes/SeletorCidade';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
+import { SeletorCidadeHome } from '@/componentes/SeletorCidadeHome';
 import {
   lerIndiceMunicipios,
   lerKpis,
@@ -45,6 +45,9 @@ export default function Home() {
 
   return (
     <main className="space-y-10">
+      {/* Seletor de cidade */}
+      <SeletorCidadeHome cidades={cidades} />
+
       {/* Cabeçalho com contexto claro */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">

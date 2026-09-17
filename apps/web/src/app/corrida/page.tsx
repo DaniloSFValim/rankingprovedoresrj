@@ -1,7 +1,8 @@
 import { rotularCompetencia } from '@netrank/core';
 import { Secao } from '@/componentes/Secao';
 import { CorridaRanking } from '@/componentes/graficos/CorridaRanking';
-import { lerCorrida, lerMeta } from '@/lib/dados';
+import { lerCorrida, lerMeta, lerIndiceMunicipios, lerPerfilMunicipio } from '@/lib/dados';
+import type { CidadeOpcao } from '@/componentes/SeletorCidade';
 import { MARCA } from '@/lib/marca';
 
 export const metadata = {
@@ -14,6 +15,35 @@ export const metadata = {
 export default function PaginaCorrida() {
   const corrida = lerCorrida();
   const meta = lerMeta();
+
+  // Mapear quais empresas atuam em quais municípios
+  const municipios = lerIndiceMunicipios();
+  const cidades: CidadeOpcao[] = municipios.map((m) => ({
+    slug: m.slug,
+    nome: m.nome,
+    totalAcessos: m.totalAcessos,
+    numeroProvedores: m.numeroProvedores,
+  }));
+
+  const empresasPorMunicipio = new Map<string, Set<string>>();
+
+  for (const municipio of municipios) {
+    const perfil = lerPerfilMunicipio(municipio.slug);
+    if (perfil && perfil.ranking) {
+      if (!empresasPorMunicipio.has(municipio.slug)) {
+        empresasPorMunicipio.set(municipio.slug, new Set());
+      }
+      for (const linha of perfil.ranking) {
+        empresasPorMunicipio.get(municipio.slug)!.add(linha.empresaId);
+      }
+    }
+  }
+
+  // Converter para formato serializável (Set não é)
+  const mapaMunicipioEmpresas: Record<string, string[]> = {};
+  for (const [slug, empresas] of empresasPorMunicipio) {
+    mapaMunicipioEmpresas[slug] = Array.from(empresas);
+  }
 
   return (
     <main className="space-y-6">
@@ -31,7 +61,11 @@ export default function PaginaCorrida() {
       <div className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Posição no Ranking ao Longo do Tempo</div>
         <div className="cartao p-4">
-          <CorridaRanking corrida={corrida} />
+          <CorridaRanking
+            corrida={corrida}
+            mapaMunicipioEmpresas={mapaMunicipioEmpresas}
+            cidades={cidades}
+          />
         </div>
       </div>
 

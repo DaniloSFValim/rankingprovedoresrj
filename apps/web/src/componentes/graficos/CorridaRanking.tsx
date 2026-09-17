@@ -4,7 +4,10 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { EChartsOption } from 'echarts';
 import { rotularCompetencia } from '@netrank/core';
 import { Grafico, PALETA_SERIES } from '@/componentes/Grafico';
+import { SeletorCidade } from '@/componentes/SeletorCidade';
+import { useCidadeSelecionada } from '@/contextos/CidadeSelecionada';
 import type { Corrida } from '@/lib/dados';
+import type { CidadeOpcao } from '@/componentes/SeletorCidade';
 
 /**
  * A Corrida do Ranking (§13).
@@ -15,22 +18,47 @@ import type { Corrida } from '@/lib/dados';
  *
  * A animação revela a série mês a mês em vez de trocar de quadro: o objetivo
  * é mostrar a trajetória, não piscar estados isolados.
+ *
+ * Filtro por município: quando um município é selecionado, mostra apenas
+ * os provedores que atuam naquela cidade.
  */
-export function CorridaRanking({ corrida }: { corrida: Corrida }) {
+export function CorridaRanking({
+  corrida,
+  mapaMunicipioEmpresas,
+  cidades,
+}: {
+  corrida: Corrida;
+  mapaMunicipioEmpresas: Record<string, string[]>;
+  cidades?: CidadeOpcao[];
+}) {
+  const { slugCidade } = useCidadeSelecionada();
   const [topN, setTopN] = useState(10);
   const [indice, setIndice] = useState(corrida.competencias.length - 1);
   const [tocando, setTocando] = useState(false);
+  const [montado, setMontado] = useState(false);
   const temporizador = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const total = corrida.competencias.length;
+
+  useEffect(() => {
+    setMontado(true);
+  }, []);
 
   // Elegíveis: as N melhores posições na última competência.
   const visiveis = useMemo(() => {
     const ultima = corrida.competencias[total - 1];
     if (!ultima) return [];
-    const ordenadas = [...ultima.posicoes].sort((a, b) => a.posicao - b.posicao);
+
+    // Se há município selecionado, filtrar apenas empresas que atuam lá
+    const empresasValidas = slugCidade
+      ? new Set(mapaMunicipioEmpresas[slugCidade] ?? [])
+      : null;
+
+    const ordenadas = [...ultima.posicoes]
+      .filter((p) => !empresasValidas || empresasValidas.has(p.empresaId))
+      .sort((a, b) => a.posicao - b.posicao);
     return ordenadas.slice(0, topN).map((p) => p.empresaId);
-  }, [corrida, topN, total]);
+  }, [corrida, topN, total, slugCidade, mapaMunicipioEmpresas]);
 
   useEffect(() => {
     if (!tocando) {
@@ -55,28 +83,33 @@ export function CorridaRanking({ corrida }: { corrida: Corrida }) {
     const rotulos = corrida.competencias.map((c) => rotularCompetencia(c.competencia));
     const nomePorId = new Map(corrida.empresas.map((e) => [e.id, e.nome]));
 
-    const series = visiveis.map((empresaId, ordem) => ({
-      name: nomePorId.get(empresaId) ?? empresaId,
-      type: 'line' as const,
-      smooth: 0.3,
-      symbol: 'circle',
-      symbolSize: 6,
-      lineStyle: { width: 2.5 },
-      emphasis: { focus: 'series' as const, lineStyle: { width: 4 } },
-      endLabel: {
-        show: true,
-        // '{a}' e o marcador do ECharts para o nome da serie.
-        formatter: '{a}',
-        color: PALETA_SERIES[ordem % PALETA_SERIES.length],
-        fontSize: 11,
-        distance: 6,
-      },
-      // Revela apenas até a competência corrente da animação.
-      data: corrida.competencias.slice(0, indice + 1).map((c) => {
-        const encontrada = c.posicoes.find((p) => p.empresaId === empresaId);
-        return encontrada ? encontrada.posicao : null;
-      }),
-    }));
+    const series = visiveis.map((empresaId, ordem) => {
+      // Primeiros provedores têm linhas mais grossas para melhor distinção visual
+      const larguralinha = ordem < 3 ? 3.5 : ordem < 7 ? 3 : 2.5;
+      const tamanhoSimbolo = ordem < 3 ? 8 : ordem < 7 ? 7 : 6;
+      return {
+        name: nomePorId.get(empresaId) ?? empresaId,
+        type: 'line' as const,
+        smooth: 0.3,
+        symbol: 'circle',
+        symbolSize: tamanhoSimbolo,
+        lineStyle: { width: larguralinha },
+        emphasis: { focus: 'series' as const, lineStyle: { width: larguralinha + 1.5 } },
+        endLabel: {
+          show: true,
+          // '{a}' e o marcador do ECharts para o nome da serie.
+          formatter: '{a}',
+          color: PALETA_SERIES[ordem % PALETA_SERIES.length],
+          fontSize: ordem < 3 ? 12 : 11,
+          distance: 6,
+        },
+        // Revela apenas até a competência corrente da animação.
+        data: corrida.competencias.slice(0, indice + 1).map((c) => {
+          const encontrada = c.posicoes.find((p) => p.empresaId === empresaId);
+          return encontrada ? encontrada.posicao : null;
+        }),
+      };
+    });
 
     return {
       tooltip: {
@@ -116,6 +149,10 @@ export function CorridaRanking({ corrida }: { corrida: Corrida }) {
 
   return (
     <div className="space-y-3">
+      {cidades && cidades.length > 0 && montado && (
+        <FiltroMunicipio cidades={cidades} />
+      )}
+
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"
@@ -169,6 +206,32 @@ export function CorridaRanking({ corrida }: { corrida: Corrida }) {
         altura={Math.max(360, topN * 28 + 80)}
         descricao={`Evolução da posição dos ${topN} maiores provedores de banda larga fixa do Rio de Janeiro ao longo dos meses.`}
       />
+    </div>
+  );
+}
+
+function FiltroMunicipio({ cidades }: { cidades: CidadeOpcao[] }) {
+  const { slugCidade, selecionarCidade, limparSelecao } = useCidadeSelecionada();
+  const cidadeSelecionada = cidades.find((c) => c.slug === slugCidade);
+
+  return (
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="text-sm text-grafite-400">Filtrar por cidade:</div>
+      <SeletorCidade
+        cidades={cidades}
+        slugAtual={slugCidade ?? undefined}
+        variante="compacto"
+        onSelecionar={(cidade) => selecionarCidade(cidade.slug)}
+      />
+      {cidadeSelecionada && (
+        <button
+          type="button"
+          onClick={limparSelecao}
+          className="text-xs text-marca-400 hover:text-marca-300"
+        >
+          ✕ Mostrar todas as cidades
+        </button>
+      )}
     </div>
   );
 }

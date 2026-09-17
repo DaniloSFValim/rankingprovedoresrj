@@ -30,11 +30,13 @@ interface Props {
   slugAtual?: string;
   /** `destaque` usa a versão grande da home; `compacto`, a da navegação. */
   variante?: 'destaque' | 'compacto';
+  /** Se fornecido, chamado em vez de fazer navegação por rota. */
+  onSelecionar?: (cidade: CidadeOpcao) => void;
 }
 
 const CHAVE_ULTIMA_CIDADE = 'netrank:ultima-cidade';
 
-export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Props) {
+export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSelecionar }: Props) {
   const router = useRouter();
   const [aberto, setAberto] = useState(false);
   const [busca, setBusca] = useState('');
@@ -83,7 +85,11 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto' }: Pro
     }
     setAberto(false);
     setBusca('');
-    router.push(`/municipios/${cidade.slug}/`);
+    if (onSelecionar) {
+      onSelecionar(cidade);
+    } else {
+      router.push(`/municipios/${cidade.slug}/`);
+    }
   }
 
   function aoTeclar(evento: React.KeyboardEvent<HTMLInputElement>) {
@@ -225,13 +231,21 @@ export function UltimaCidade({ cidades }: { cidades: CidadeOpcao[] }) {
  * onde a escolha da cidade é o bloco de destaque, e a própria página de
  * município, onde ele fica ao lado do nome da cidade.
  *
+ * Também some em páginas de conteúdo genérico estadual (Metodologia, Provedores)
+ * onde um filtro de cidade não faz sentido.
+ *
  * A regra é uma só: **um seletor por tela**. Dois controles idênticos na mesma
  * página não dão mais poder ao usuário, dão dúvida sobre qual deles vale.
  */
 export function SeletorCidadeNav({ cidades }: { cidades: CidadeOpcao[] }) {
   const caminho = usePathname();
   const temSeletorProprio =
-    caminho === '/' || caminho === '' || /^\/municipios\/[^/]+\/?$/.test(caminho ?? '');
+    caminho === '/' ||
+    caminho === '' ||
+    /^\/municipios\/[^/]+\/?$/.test(caminho ?? '') ||
+    /^\/metodologia\/?$/.test(caminho ?? '') ||
+    /^\/provedores\/?$/.test(caminho ?? '') ||
+    /^\/corrida\/?$/.test(caminho ?? '');
 
   if (temSeletorProprio) return null;
   return <SeletorCidade cidades={cidades} />;

@@ -1,0 +1,116 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro",
+  "description": "Plataforma de análise do mercado de banda larga fixa do Estado do Rio de Janeiro, construída sobre os dados abertos da Anatel. Fornece indicadores de concentração de mercado, ranking de provedores e análise histórica mensal de acessos (jan/2022 - jul/2026).",
+  "url": "https://rankingprovedoresrj.pages.dev",
+  "version": "2026.09.16",
+  "creator": {
+    "@type": "Person",
+    "name": "Danilo S. F. Valim",
+    "identifier": "0009-0009-7250-6151",
+    "url": "https://orcid.org/0009-0009-7250-6151",
+    "email": "danilosfvalim@gmail.com",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "Universidade Federal Rural do Rio de Janeiro (UFRRJ)",
+      "url": "https://ufrrj.br"
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Danilo S. F. Valim"
+  },
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isBasedOn": {
+    "@type": "Dataset",
+    "name": "Anatel — Acessos Banda Larga Fixa",
+    "url": "https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/acessos_banda_larga_fixa.zip",
+    "creator": {
+      "@type": "Organization",
+      "name": "Anatel — Agência Nacional de Telecomunicações",
+      "url": "https://www.anatel.gov.br"
+    }
+  },
+  "datePublished": "2026-09-16",
+  "dateModified": "2026-09-16",
+  "temporalCoverage": "2022-01/2026-07",
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "Rio de Janeiro",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "-22.75 -44.05 -20.75 -41.05"
+    }
+  },
+  "keywords": [
+    "banda larga",
+    "telecomunicações",
+    "Rio de Janeiro",
+    "Anatel",
+    "análise de dados",
+    "políticas públicas",
+    "concentração de mercado",
+    "dados abertos",
+    "provedores de internet"
+  ],
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "KPIs Estaduais (JSON)",
+      "url": "https://rankingprovedoresrj.pages.dev/data/estado/kpis.json",
+      "fileFormat": "JSON",
+      "contentSize": "521 B"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Ranking Estadual (JSON)",
+      "url": "https://rankingprovedoresrj.pages.dev/data/estado/ranking.json",
+      "fileFormat": "JSON",
+      "contentSize": "300 KB"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Série Histórica (JSON)",
+      "url": "https://rankingprovedoresrj.pages.dev/data/estado/serie.json",
+      "fileFormat": "JSON",
+      "contentSize": "30 KB"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Séries por Provedor (JSON)",
+      "url": "https://rankingprovedoresrj.pages.dev/data/estado/series-empresas.json",
+      "fileFormat": "JSON",
+      "contentSize": "350 KB"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Dados Municipais (JSON)",
+      "url": "https://rankingprovedoresrj.pages.dev/data/municipios/index.json",
+      "fileFormat": "JSON",
+      "contentSize": "30 KB"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Malha Geográfica RJ (GeoJSON)",
+      "url": "https://rankingprovedoresrj.pages.dev/data/malhas/rj-municipios.json",
+      "fileFormat": "GeoJSON",
+      "contentSize": "450 KB"
+    }
+  ],
+  "citation": {
+    "@type": "CreativeWork",
+    "text": "Valim, D. S. F. (2026). NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro. Version 2026.09.16. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX"
+  },
+  "identifier": "10.5281/zenodo.XXXXXXX",
+  "funding": {
+    "@type": "MonetaryGrant",
+    "name": "Pós-Graduação em Análise de Dados Aplicadas a Políticas Públicas",
+    "funder": {
+      "@type": "Organization",
+      "name": "Universidade Federal Rural do Rio de Janeiro (UFRRJ)"
+    }
+  },
+  "acknowledgment": "Dados originários da Anatel — Agência Nacional de Telecomunicações. NETRANK RJ é uma camada independente de análise e não possui vínculo com a Agência.",
+  "disclaimer": "Os indicadores de concentração são estatísticos e não constituem conclusão jurídica ou regulatória."
+}
