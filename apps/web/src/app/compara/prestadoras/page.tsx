@@ -6,11 +6,8 @@ import { useCallback, useState, useEffect } from 'react';
 import { Secao } from '@/componentes/Secao';
 import { compacto, inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
-<<<<<<< HEAD
-=======
 import { ErrorBoundary } from '@/componentes/ErrorBoundary';
 import { SkeletonCard } from '@/componentes/Skeleton';
->>>>>>> origin/main
 
 interface Provedor {
   id: string;
@@ -56,44 +53,32 @@ export default function ComparadorPrestadoras() {
   const [provedores, setProvedores] = useState<PerfilProvedor[]>([]);
   const [selecionados, setSelecionados] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-<<<<<<< HEAD
-=======
   const [profilesLoading, setProfilesLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [profilesError, setProfilesError] = useState<string | null>(null);
->>>>>>> origin/main
   const [kpisData, setKpisData] = useState<any>(null);
 
   useEffect(() => {
     // Load indices at build time
     const loadData = async () => {
       try {
-<<<<<<< HEAD
-=======
         setError(null);
->>>>>>> origin/main
         // Load provider index and current KPIs
         const indiceRes = await fetch('/data/provedores/index.json');
         const kpisRes = await fetch('/data/estado/kpis.json');
 
-<<<<<<< HEAD
-=======
         if (!indiceRes.ok || !kpisRes.ok) {
           throw new Error('Erro ao buscar dados do servidor');
         }
 
->>>>>>> origin/main
         const indiceData = await indiceRes.json();
         const kpisData = await kpisRes.json();
 
         setIndice(indiceData.provedores || []);
         setKpisData(kpisData);
       } catch (err) {
-<<<<<<< HEAD
-=======
         const message = err instanceof Error ? err.message : 'Erro desconhecido';
         setError(message);
->>>>>>> origin/main
         console.error('Erro ao carregar dados:', err);
       } finally {
         setLoading(false);
@@ -106,27 +91,6 @@ export default function ComparadorPrestadoras() {
   // Load profiles when selections change
   useEffect(() => {
     const loadProfiles = async () => {
-<<<<<<< HEAD
-      const profiles: PerfilProvedor[] = [];
-      for (const slug of selecionados) {
-        try {
-          const res = await fetch(`/data/provedores/${slug}.json`);
-          if (res.ok) {
-            profiles.push(await res.json());
-          }
-        } catch (err) {
-          console.error(`Erro ao carregar ${slug}:`, err);
-        }
-      }
-      setProvedores(profiles);
-    };
-
-    if (selecionados.length > 0) {
-      loadProfiles();
-    } else {
-      setProvedores([]);
-    }
-=======
       if (selecionados.length === 0) {
         setProvedores([]);
         setProfilesError(null);
@@ -165,7 +129,6 @@ export default function ComparadorPrestadoras() {
     };
 
     loadProfiles();
->>>>>>> origin/main
   }, [selecionados]);
 
   const adicionarProvedor = useCallback(
@@ -186,10 +149,6 @@ export default function ComparadorPrestadoras() {
 
   if (loading) {
     return (
-<<<<<<< HEAD
-      <main className="space-y-8">
-        <div className="text-white">Carregando dados...</div>
-=======
       <ErrorBoundary>
         <main className="space-y-8">
           <div>
@@ -221,7 +180,6 @@ export default function ComparadorPrestadoras() {
             ↻ Recarregar página
           </button>
         </div>
->>>>>>> origin/main
       </main>
     );
   }
@@ -283,47 +241,6 @@ export default function ComparadorPrestadoras() {
   }
 
   return (
-<<<<<<< HEAD
-    <main className="space-y-8">
-      {/* Cabeçalho */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-white">
-          Comparador de Provedores
-        </h1>
-        <p className="mt-2 text-sm text-grafite-400">
-          Comparação lado a lado de {provedores.length} prestadoras
-        </p>
-        {kpisData && (
-          <p className="mt-1 text-xs text-grafite-500">
-            Dados de competência {rotularCompetencia(kpisData.competencia)}
-          </p>
-        )}
-      </div>
-
-      {/* Provedores Selecionados */}
-      <div className="flex flex-wrap gap-2">
-        {selecionados.map((slug) => {
-          const p = indice.find((x) => x.slug === slug);
-          return (
-            <button
-              key={slug}
-              onClick={() => removerProvedor(slug)}
-              className="px-3 py-1 rounded bg-marca-500 text-white text-sm hover:bg-marca-600 transition"
-            >
-              {p?.nome} ✕
-            </button>
-          );
-        })}
-        <button
-          onClick={() => setSelecionados([])}
-          className="px-3 py-1 rounded bg-grafite-700 text-grafite-300 text-sm hover:bg-grafite-600 transition"
-        >
-          Limpar
-        </button>
-      </div>
-
-      {/* Comparação de Métricas Principais */}
-=======
     <ErrorBoundary>
       <main className="space-y-8">
         {/* Cabeçalho */}
@@ -390,7 +307,6 @@ export default function ComparadorPrestadoras() {
         {!profilesLoading && !profilesError && provedores.length >= 2 && (
           <>
             {/* Comparação de Métricas Principais */}
->>>>>>> origin/main
       <Secao
         titulo="Indicadores Principais"
         descricao="Métricas estaduais de cada prestadora"
@@ -533,17 +449,6 @@ export default function ComparadorPrestadoras() {
         </Secao>
       )}
 
-<<<<<<< HEAD
-      {/* Ações */}
-      <div className="flex gap-3">
-        <Link href="/provedores">
-          <button className="px-4 py-2 rounded bg-grafite-800 hover:bg-grafite-700 text-white text-sm transition">
-            ← Voltar a Provedores
-          </button>
-        </Link>
-      </div>
-    </main>
-=======
             {/* Ações */}
             <div className="flex gap-3">
               <Link href="/provedores">
@@ -556,6 +461,5 @@ export default function ComparadorPrestadoras() {
         )}
       </main>
     </ErrorBoundary>
->>>>>>> origin/main
   );
 }
