@@ -58,11 +58,7 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
         <section className="text-xs leading-relaxed text-grafite-300">
           <p className="font-semibold text-marca-300 mb-2">Propósito e Origem</p>
           <p>
-            {MARCA.nome} é uma plataforma de monitoramento de mercado desenvolvida independentemente para subsidiar
-            as atividades de fiscalização da{' '}
-            <strong>Secretaria Municipal de Conservação e Serviços Públicos (Seconser)</strong>,
-            especificamente do Setor de Fiscalização de Serviços Concedidos da Prefeitura Municipal de Niterói.
-            Utiliza dados públicos da Anatel para análise estatística do mercado de banda larga no Estado do Rio de Janeiro.
+            Plataforma independente de monitoramento de mercado de banda larga desenvolvida para apoiar a fiscalização de serviços concedidos da Prefeitura de Niterói. Utiliza dados públicos da Anatel.
           </p>
         </section>
 
