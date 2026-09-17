@@ -68,29 +68,25 @@ export function MapaCoberturaProvedores({ municipios }: MapaCoberturaProps) {
           color: '#cbd5e1',
         },
       },
-      geo: {
-        map: 'RJ',
-        roam: false,
-        itemStyle: {
-          normal: {
-            areaColor: '#1e293b',
-            borderColor: '#334155',
-            borderWidth: 1,
-          },
-          emphasis: {
-            areaColor: '#0e7490',
-          },
-        },
-      },
       series: [
         {
           name: 'Provedores',
           type: 'map',
-          geoIndex: 0,
+          map: 'RJ',
           data: serieData,
           roam: false,
           label: {
             show: false,
+          },
+          itemStyle: {
+            borderColor: '#334155',
+            borderWidth: 1,
+            areaColor: '#1e293b',
+          },
+          emphasis: {
+            itemStyle: {
+              areaColor: '#0e7490',
+            },
           },
         },
       ],
