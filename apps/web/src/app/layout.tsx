@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Navegacao } from '@/componentes/Navegacao';
+import type { ItemBusca } from '@/componentes/BuscaAvancada';
 import { FaixaDemonstrativo, RodapeProcedencia } from '@/componentes/Procedencia';
 import { CidadeSelecionadaProvider } from '@/contextos/CidadeSelecionada';
-import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta } from '@/lib/dados';
+import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta, lerIndiceProvedores } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
 export const metadata: Metadata = {
@@ -76,6 +77,30 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
     datePublished: meta.procedencia.processadoEm,
   };
 
+  const itensBusca: ItemBusca[] = [
+    ...cidades.map((c) => ({
+      id: `municipio-${c.slug}`,
+      titulo: c.nome,
+      descricao: `${c.numeroProvedores} provedores`,
+      categoria: 'municipio' as const,
+      href: `/municipios/${c.slug}/`,
+      texto: c.nome,
+    })),
+    ...lerIndiceProvedores().map((p) => ({
+      id: `provedor-${p.slug}`,
+      titulo: p.nome,
+      descricao: `${p.municipiosAtendidos || 0} municípios`,
+      categoria: 'provedor' as const,
+      href: `/provedores/${p.slug}/`,
+      texto: p.nome,
+    })),
+    { id: 'pagina-ranking', titulo: 'Ranking', categoria: 'pagina' as const, href: '/ranking/', texto: 'Ranking' },
+    { id: 'pagina-corrida', titulo: 'Corrida', categoria: 'pagina' as const, href: '/corrida/', texto: 'Corrida' },
+    { id: 'pagina-crescimento', titulo: 'Crescimento', categoria: 'pagina' as const, href: '/crescimento/', texto: 'Crescimento' },
+    { id: 'pagina-municipios', titulo: 'Municípios', categoria: 'pagina' as const, href: '/municipios/', texto: 'Municípios' },
+    { id: 'pagina-provedores', titulo: 'Provedores', categoria: 'pagina' as const, href: '/provedores/', texto: 'Provedores' },
+  ];
+
   return (
     <html lang="pt-BR" className="dark">
       <head>
@@ -84,11 +109,16 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaDataset) }}
         />
       </head>
-      <body className="min-h-screen">
+      <body className="min-h-screen bg-grafite-950">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-marca-600 focus:px-4 focus:py-2 focus:rounded-md focus:text-white focus:font-semibold">
+          Ir para conteúdo principal
+        </a>
         <CidadeSelecionadaProvider>
           <FaixaDemonstrativo meta={meta} />
-          <Navegacao meta={meta} cidades={cidades} />
-          <div className="mx-auto max-w-7xl px-4 py-6">{children}</div>
+          <Navegacao meta={meta} cidades={cidades} itensBusca={itensBusca} />
+          <main id="main-content" className="mx-auto max-w-7xl px-4 py-6 focus:outline-none">
+            {children}
+          </main>
           <RodapeProcedencia meta={meta} />
         </CidadeSelecionadaProvider>
       </body>
