@@ -3,7 +3,6 @@ import './globals.css';
 import { Navegacao } from '@/componentes/Navegacao';
 import type { ItemBusca } from '@/componentes/BuscaAvancada';
 import { FaixaDemonstrativo, RodapeProcedencia } from '@/componentes/Procedencia';
-import { CidadeSelecionadaProvider } from '@/contextos/CidadeSelecionada';
 import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta, lerIndiceProvedores } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
@@ -61,22 +60,6 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
     numeroProvedores: m.numeroProvedores,
   }));
 
-  const schemaDataset = {
-    '@context': 'https://schema.org',
-    '@type': 'Dataset',
-    name: `${MARCA.nome}: ${MARCA.subtitulo}`,
-    description: MARCA.descricaoCurta,
-    url: 'https://rankingprovedoresrj.pages.dev',
-    version: meta.procedencia.academicos?.versaoDataset,
-    creator: meta.procedencia.academicos?.autores.map((a) => ({
-      '@type': 'Person',
-      name: a.nome,
-      identifier: a.orcid,
-    })),
-    license: 'https://creativecommons.org/licenses/by/4.0/',
-    datePublished: meta.procedencia.processadoEm,
-  };
-
   const itensBusca: ItemBusca[] = [
     ...cidades.map((c) => ({
       id: `municipio-${c.slug}`,
@@ -103,24 +86,16 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="pt-BR" className="dark">
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaDataset) }}
-        />
-      </head>
       <body className="min-h-screen bg-grafite-950">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-marca-600 focus:px-4 focus:py-2 focus:rounded-md focus:text-white focus:font-semibold">
           Ir para conteúdo principal
         </a>
-        <CidadeSelecionadaProvider>
-          <FaixaDemonstrativo meta={meta} />
-          <Navegacao meta={meta} cidades={cidades} itensBusca={itensBusca} />
-          <main id="main-content" className="mx-auto max-w-7xl px-4 py-6 focus:outline-none">
-            {children}
-          </main>
-          <RodapeProcedencia meta={meta} />
-        </CidadeSelecionadaProvider>
+        <FaixaDemonstrativo meta={meta} />
+        <Navegacao meta={meta} cidades={cidades} itensBusca={itensBusca} />
+        <main id="main-content" className="mx-auto max-w-7xl px-4 py-6 focus:outline-none">
+          {children}
+        </main>
+        <RodapeProcedencia meta={meta} />
       </body>
     </html>
   );
