@@ -49,37 +49,33 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
 /** Rodapé simplificado com informações essenciais. Conteúdo detalhado está em /sobre/. */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;
+  const a = p.academicos;
 
   return (
     <footer className="mt-12 border-t border-grafite-800 bg-grafite-900/40">
       <div className="mx-auto max-w-7xl px-4 py-8 space-y-6">
-        {/* Seconser Attribution */}
+        {/* Institutional Context */}
         <section className="text-xs leading-relaxed text-grafite-300">
-          <p className="font-semibold text-marca-300 mb-2">Desenvolvimento e Monitoramento</p>
+          <p className="font-semibold text-marca-300 mb-2">Iniciativa Institucional</p>
           <p>
-            Plataforma independente de análise desenvolvida para monitoramento da{' '}
+            {MARCA.nome} é uma plataforma independente de monitoramento de mercado desenvolvida para subsidiar
+            as atividades de fiscalização da{' '}
             <strong>Secretaria Municipal de Conservação e Serviços Públicos (Seconser)</strong>,
-            do Setor de Fiscalização de Serviços Concedidos, Prefeitura Municipal de Niterói.
+            especificamente do Setor de Fiscalização de Serviços Concedidos da Prefeitura Municipal de Niterói.
+            A plataforma não possui vínculo com órgãos reguladores e funciona como ferramenta de análise de dados públicos.
           </p>
         </section>
 
-        {/* Data Source and Update */}
+        {/* Data Source, Authors and Update */}
         <section className="border-t border-grafite-800 pt-6 text-xs text-grafite-400">
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <dt className="text-marca-400 font-semibold mb-1">Fonte de Dados</dt>
-              <dd className="text-grafite-300">
-                {p.fonte}
+              <dd className="text-grafite-300 font-medium">
+                Anatel
               </dd>
-              <dd className="mt-1">
-                <a
-                  href={p.url}
-                  className="text-marca-400 hover:underline break-all"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  {p.url}
-                </a>
+              <dd className="mt-1 text-grafite-500 text-[10px]">
+                Dados públicos processados de forma independente
               </dd>
             </div>
             <div>
@@ -88,16 +84,33 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
                 {new Date(p.processadoEm).toLocaleString('pt-BR')}
               </dd>
             </div>
+            {a && (
+              <div>
+                <dt className="text-marca-400 font-semibold mb-1">Autoria</dt>
+                <dd className="text-grafite-300 space-y-0.5">
+                  {a.autores.slice(0, 2).map((au) => (
+                    <div key={au.email || au.nome} className="text-[11px]">
+                      {au.nome}
+                    </div>
+                  ))}
+                  {a.autores.length > 2 && (
+                    <div className="text-[10px] text-grafite-500">
+                      +{a.autores.length - 2} {a.autores.length - 2 === 1 ? 'outro' : 'outros'}
+                    </div>
+                  )}
+                </dd>
+              </div>
+            )}
             <div>
               <dt className="text-marca-400 font-semibold mb-1">Referências</dt>
               <dd className="space-y-1">
                 <div>
-                  <a href="/sobre/" className="text-marca-400 hover:underline">
+                  <a href="/sobre/" className="text-marca-400 hover:underline text-[11px]">
                     → Sobre o projeto
                   </a>
                 </div>
                 <div>
-                  <a href="/metodologia/" className="text-marca-400 hover:underline">
+                  <a href="/metodologia/" className="text-marca-400 hover:underline text-[11px]">
                     → Metodologia
                   </a>
                 </div>
@@ -109,9 +122,8 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
         {/* Disclaimer */}
         <section className="border-t border-grafite-800 pt-6 text-xs leading-relaxed text-grafite-500">
           <p>
-            {MARCA.nome} é uma camada independente de análise sobre dados públicos da Anatel.
-            Não possui vínculo com a Agência. Os indicadores de concentração são estatísticos
-            e não constituem conclusão jurídica ou regulatória.
+            {MARCA.nome} é uma análise independente sobre dados públicos da Anatel. Os indicadores de concentração
+            são estatísticos e não constituem conclusão jurídica ou regulatória.
           </p>
         </section>
       </div>
