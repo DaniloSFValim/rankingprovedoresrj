@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
 import { Kpi } from '@/componentes/Kpi';
@@ -7,11 +5,10 @@ import { Secao } from '@/componentes/Secao';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { Destaques, TrocasLideranca } from '@/componentes/Destaques';
 import { AvisoLacunas } from '@/componentes/Procedencia';
-import { SeletorCidade, UltimaCidade } from '@/componentes/SeletorCidade';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
 import { MapaCoberturaProvedores } from '@/componentes/MapaCoberturaProvedores';
-import { useNavigarCidade } from '@/hooks/useNavigarCidade';
+import { SeletorCidadeHome } from '@/componentes/SeletorCidadeHome';
 import {
   lerIndiceMunicipios,
   lerKpis,
@@ -38,7 +35,6 @@ export default function Home() {
   const serie = lerSerieEstado();
   const movimentacoes = lerMovimentacoes();
   const municipios = lerIndiceMunicipios();
-  const navegarCidade = useNavigarCidade();
 
   const concentracao = kpis.concentracao;
   const cidades = municipios.map((m) => ({
@@ -61,11 +57,7 @@ export default function Home() {
       </div>
 
       {/* Seletor de cidade */}
-      <div className="space-y-4">
-        <div className="text-sm text-grafite-400">Selecione um município para explorar dados locais:</div>
-        <SeletorCidade cidades={cidades} variante="destaque" onSelecionar={navegarCidade} />
-        <UltimaCidade cidades={cidades} />
-      </div>
+      <SeletorCidadeHome cidades={cidades} />
 
       {/* Cabeçalho com contexto claro */}
       <div>
