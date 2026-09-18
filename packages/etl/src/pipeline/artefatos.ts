@@ -561,6 +561,16 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       }))
       .sort((a, b) => b.acessosAnteriores - a.acessosAnteriores);
 
+    const municipioRanking = rankingComparado.map((l) => ({
+        ...l,
+        slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
+        nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
+        grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
+        tipoAtuacao: ctx.empresas.get(l.empresaId)?.tipoAtuacao ?? 'INDEFINIDO',
+        variacao12Absoluta: ranking12Municipal.get(l.empresaId)?.variacaoAbsoluta ?? null,
+        variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
+      }));
+
     salvar(`municipios/${resumo?.slug ?? codigoIbge}.json`, {
       codigoIbge,
       nome: resumo?.nome ?? codigoIbge,
@@ -573,15 +583,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
               absoluta: crescimentoAbsoluto(totalAtual, totalAntes),
               percentual: crescimentoPercentual(totalAtual, totalAntes),
             },
-      ranking: rankingComparado.map((l) => ({
-        ...l,
-        slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
-        nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
-        grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
-        tipoAtuacao: ctx.empresas.get(l.empresaId)?.tipoAtuacao ?? 'INDEFINIDO',
-        variacao12Absoluta: ranking12Municipal.get(l.empresaId)?.variacaoAbsoluta ?? null,
-        variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
-      })),
+      ranking: municipioRanking,
       serie: serieMunicipio,
       // Distribuicao por tecnologia ao longo do tempo, no municipio.
       tecnologia: ctx.competencias.map((c) => ({
