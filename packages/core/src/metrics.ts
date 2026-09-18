@@ -15,7 +15,7 @@ import type {
   LinhaRanking,
   LinhaRankingComVariacao,
   ParticipanteMercado,
-} from './types.js';
+} from './types';
 
 /** Soma de acessos de um conjunto de participantes. */
 export function totalAcessos(participantes: readonly ParticipanteMercado[]): number {

@@ -12,7 +12,7 @@ test.describe('Acessibilidade - WCAG 2.1 Compliance', () => {
     await injectAxe(page);
 
     // Verificar conformidade WCAG 2.1 nível A
-    await checkA11y(page, null, {
+    await checkA11y(page, undefined, {
       detailedReport: true,
       detailedReportOptions: {
         html: true,
@@ -25,7 +25,7 @@ test.describe('Acessibilidade - WCAG 2.1 Compliance', () => {
     await page.waitForLoadState('networkidle');
     await injectAxe(page);
 
-    await checkA11y(page, null, {
+    await checkA11y(page, undefined, {
       detailedReport: true,
     });
 
@@ -43,7 +43,7 @@ test.describe('Acessibilidade - WCAG 2.1 Compliance', () => {
     await page.waitForLoadState('networkidle');
     await injectAxe(page);
 
-    await checkA11y(page, null, {
+    await checkA11y(page, undefined, {
       detailedReport: true,
     });
   });
@@ -53,7 +53,7 @@ test.describe('Acessibilidade - WCAG 2.1 Compliance', () => {
     await page.waitForLoadState('networkidle');
     await injectAxe(page);
 
-    await checkA11y(page, null, {
+    await checkA11y(page, undefined, {
       detailedReport: true,
     });
   });
@@ -84,10 +84,8 @@ test.describe('Acessibilidade - WCAG 2.1 Compliance', () => {
     await injectAxe(page);
 
     // axe verifica automaticamente contraste
-    await checkA11y(page, null, {
-      rules: {
-        'color-contrast': { enabled: true },
-      },
+    await checkA11y(page, undefined, {
+      detailedReport: true,
     });
   });
 
