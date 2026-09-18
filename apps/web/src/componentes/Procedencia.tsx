@@ -54,16 +54,13 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
   return (
     <footer className="mt-12 border-t border-grafite-700 bg-grafite-950/80">
       <div className="mx-auto max-w-7xl px-4 py-8 space-y-6">
-        {/* Institutional Context */}
-        <section className="text-xs leading-relaxed text-grafite-300">
-          <p className="font-semibold text-marca-300 mb-2">Propósito e Origem</p>
-          <p>
-            Plataforma independente de monitoramento de mercado de banda larga desenvolvida para apoiar a fiscalização de serviços concedidos da Prefeitura de Niterói. Utiliza dados públicos da Anatel.
-          </p>
-        </section>
+        {/* Context Line */}
+        <p className="text-xs text-grafite-400">
+          Desenvolvido para apoiar fiscalização de serviços de banda larga pela Prefeitura de Niterói.
+        </p>
 
         {/* Key Information Grid */}
-        <section className="border-t border-grafite-800 pt-6 text-xs text-grafite-400">
+        <section className="text-xs text-grafite-400">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <dt className="text-marca-400 font-semibold mb-1">Fonte de Dados</dt>
