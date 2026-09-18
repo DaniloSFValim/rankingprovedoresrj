@@ -65,6 +65,7 @@ export interface LinhaRankingEstadual {
   slug: string;
   nome: string;
   grupoEconomico: string | null;
+  tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
   acessos: number;
   marketShare: number;
   posicaoAnterior: number | null;
@@ -124,6 +125,7 @@ export interface PerfilMunicipio {
     slug: string;
     nome: string;
     grupoEconomico: string | null;
+    tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
     acessos: number;
     marketShare: number;
     posicaoAnterior: number | null;

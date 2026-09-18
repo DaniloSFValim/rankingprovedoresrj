@@ -37,6 +37,7 @@ export interface EmpresaResumo {
   slug: string;
   nome: string;
   grupoEconomico: string | null;
+  tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
 }
 
 export interface MunicipioResumo {
@@ -54,6 +55,24 @@ export interface KpisEstado {
   concentracao: IndicadoresConcentracao | null;
   variacao12Meses: { absoluta: number; percentual: number | null } | null;
   variacaoMensal: { absoluta: number; percentual: number | null } | null;
+}
+
+export interface LinhaRankingEstadualComTipo {
+  posicao: number;
+  empresaId: string;
+  slug: string;
+  nome: string;
+  grupoEconomico: string | null;
+  tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
+  acessos: number;
+  marketShare: number;
+  posicaoAnterior: number | null;
+  variacaoPosicao: number | null;
+  variacaoAbsoluta: number | null;
+  variacaoPercentual: number | null;
+  variacao12Absoluta: number | null;
+  variacao12Percentual: number | null;
+  municipiosAtendidos: number;
 }
 
 export interface PontoSerie {
@@ -144,15 +163,21 @@ function carregarContexto(db: Banco): Contexto {
 
   const empresasBrutas = db
     .prepare(
-      `SELECT e.id, e.nome_normalizado AS nome, g.nome AS grupo
+      `SELECT e.id, e.nome_normalizado AS nome, g.nome AS grupo, e.tipo_atuacao
          FROM empresas e LEFT JOIN grupos_economicos g ON g.id = e.grupo_economico_id`,
     )
-    .all() as Array<{ id: string; nome: string; grupo: string | null }>;
+    .all() as Array<{ id: string; nome: string; grupo: string | null; tipo_atuacao: string }>;
   const slugsEmpresa = atribuirSlugs(empresasBrutas);
   const empresas = new Map<string, EmpresaResumo>(
     empresasBrutas.map((e) => [
       e.id,
-      { id: e.id, slug: slugsEmpresa.get(e.id)!, nome: e.nome, grupoEconomico: e.grupo },
+      {
+        id: e.id,
+        slug: slugsEmpresa.get(e.id)!,
+        nome: e.nome,
+        grupoEconomico: e.grupo,
+        tipoAtuacao: (e.tipo_atuacao as any) || 'INDEFINIDO',
+      },
     ]),
   );
 
@@ -327,15 +352,19 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     participantes(ctx.estadoPorCompetencia.get(atual)),
   );
 
-  const linhasRanking = rankingAtual.map((l) => ({
-    ...l,
-    slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
-    nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
-    grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
-    municipiosAtendidos: contagemMunicipios.get(l.empresaId) ?? 0,
-    variacao12Absoluta: ranking12.get(l.empresaId)?.variacaoAbsoluta ?? null,
-    variacao12Percentual: ranking12.get(l.empresaId)?.variacaoPercentual ?? null,
-  }));
+  const linhasRanking = rankingAtual.map((l) => {
+    const empresa = ctx.empresas.get(l.empresaId);
+    return {
+      ...l,
+      slug: empresa?.slug ?? gerarSlug(l.empresaId),
+      nome: empresa?.nome ?? l.empresaId,
+      grupoEconomico: empresa?.grupoEconomico ?? null,
+      tipoAtuacao: empresa?.tipoAtuacao ?? 'INDEFINIDO',
+      municipiosAtendidos: contagemMunicipios.get(l.empresaId) ?? 0,
+      variacao12Absoluta: ranking12.get(l.empresaId)?.variacaoAbsoluta ?? null,
+      variacao12Percentual: ranking12.get(l.empresaId)?.variacaoPercentual ?? null,
+    };
+  });
 
   const lider = linhasRanking[0];
   const kpis: KpisEstado = {
@@ -549,6 +578,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
         slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
         nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
         grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
+        tipoAtuacao: ctx.empresas.get(l.empresaId)?.tipoAtuacao ?? 'INDEFINIDO',
         variacao12Absoluta: ranking12Municipal.get(l.empresaId)?.variacaoAbsoluta ?? null,
         variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
       })),
