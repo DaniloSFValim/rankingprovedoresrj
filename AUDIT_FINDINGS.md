@@ -20,7 +20,49 @@ Auditoria sistemática do NETRANK RJ identificou **16 problemas críticos** dist
 
 ## 1. DUPLICAÇÃO DE CÓDIGO
 
-### 1.1 Dois Módulos de Exportação de Dados
+### 1.1 Dois Módulos de Exportação de Dados ✅ CORRIGIDO
+
+**Status:** CONSOLIDADO - exportacao.ts absorveu exportar.ts
+
+---
+
+### 1.2 Comparadores de Municípios e Provedores (NOVO ACHADO)
+
+**Arquivos:**
+- `apps/web/src/app/compara/municipios/page.tsx` (437 LOC)
+- `apps/web/src/app/compara/prestadoras/page.tsx` (465 LOC)
+
+**Problema:**
+Estrutura idêntica em ambas as páginas:
+- Mesma arquitetura de estado (indice, selecionadas, loading, error)
+- Mesma lógica de carregamento dinâmico
+- Mesmos padrões de renderização
+- Apenas nomes de interfaces e campos diferem
+
+**Exemplo de Duplicação:**
+```typescript
+// compara/municipios/page.tsx
+interface Municipio {
+  codigoIbge: string; slug: string; nome: string;
+  totalAcessos: number; numeroProvedores: number;
+}
+
+// compara/prestadoras/page.tsx
+interface Provedor {
+  id: string; slug: string; nome: string;
+  acessos: number; marketShare: number; posicao: number;
+}
+```
+
+**Recomendação:** REFATORAR em componente genérico `<Comparador<T>>` com:
+- Props: `tipo: 'municipios' | 'provedores'`
+- Carregamento genérico via callbacks
+- Redução potencial: ~200 LOC
+
+**Severidade:** MÉDIA (impacta manutenção futura)  
+**Status:** PENDENTE (complexidade: refatoração estrutural)
+
+---
 
 **Arquivo:** `apps/web/src/lib/exportacao.ts` e `apps/web/src/lib/exportar.ts`
 
