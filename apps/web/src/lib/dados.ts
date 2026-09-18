@@ -213,22 +213,12 @@ export interface Movimentacoes {
   }>;
 }
 
-export interface Corrida {
-  empresas: Array<{ id: string; slug: string; nome: string }>;
-  competencias: Array<{
-    competencia: Competencia;
-    posicoes: Array<{
-      empresaId: string; posicao: number; acessos: number; marketShare: number;
-    }>;
-  }>;
-}
 
 // ------------------------------------------------------------------ leitura --
 
 export const lerMeta = (): Meta => ler<Meta>('meta.json');
 export const lerKpis = (): Kpis => ler<Kpis>('estado/kpis.json');
 export const lerSerieEstado = (): PontoSerie[] => ler<PontoSerie[]>('estado/serie.json');
-export const lerCorrida = (): Corrida => ler<Corrida>('estado/corrida.json');
 export const lerMovimentacoes = (): Movimentacoes => ler<Movimentacoes>('movimentacoes.json');
 
 export const lerRankingEstadual = (): LinhaRankingEstadual[] =>
@@ -286,8 +276,3 @@ export const lerIndiceProvedores = (): Array<{
   id: string; slug: string; nome: string; acessos: number;
   marketShare: number; posicao: number; municipiosAtendidos: number;
 }> }>('provedores/index.json').provedores;
-
-export const lerTecnologia = (): Array<{
-  competencia: Competencia;
-  distribuicao: Record<string, number>;
-}> => ler('estado/tecnologia.json');

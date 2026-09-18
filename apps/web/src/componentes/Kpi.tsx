@@ -25,7 +25,7 @@ export function Kpi({ rotulo, valor, unidade, detalhe, variacao, variacaoTexto, 
       <div className="rotulo">{rotulo}</div>
       <div className="mt-1 flex items-baseline gap-1.5">
         <span className="numerico text-2xl font-semibold text-white md:text-3xl" aria-label={`Valor: ${valor}${unidade ? ` ${unidade}` : ''}`}>{valor}</span>
-        {unidade && <span className="text-sm text-grafite-400" aria-hidden="false">{unidade}</span>}
+        {unidade && <span className="text-sm text-grafite-400">{unidade}</span>}
       </div>
       {detalhe && <div className="mt-1 truncate text-sm text-grafite-300">{detalhe}</div>}
       {variacaoTexto !== undefined && (
