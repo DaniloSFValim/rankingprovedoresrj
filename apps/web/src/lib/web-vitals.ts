@@ -3,14 +3,11 @@
  * Coleta: FCP, LCP, CLS, TTFB, INP
  */
 
-import { getCLS, getFCP, getFID, getLCP, getTTFB, Metric } from 'web-vitals';
+import { onCLS, onFCP, onINP, onLCP, onTTFB, type Metric } from 'web-vitals';
 
-interface VitalMetric extends Metric {
-  id: string;
-  value: number;
-  rating: string;
-  delta: number;
-}
+type VitalMetric = Metric & {
+  rating: 'good' | 'needs-improvement' | 'poor';
+};
 
 const VITALS_THRESHOLDS = {
   FCP: { good: 1800, needsImprovement: 3000 },
@@ -49,7 +46,7 @@ export function initWebVitals() {
   if (typeof window === 'undefined') return;
 
   // First Contentful Paint
-  getFCP((metric) => {
+  onFCP((metric) => {
     const vitals: VitalMetric = {
       ...metric,
       rating: getRating('FCP', metric.value),
@@ -58,7 +55,7 @@ export function initWebVitals() {
   });
 
   // Largest Contentful Paint
-  getLCP((metric) => {
+  onLCP((metric) => {
     const vitals: VitalMetric = {
       ...metric,
       rating: getRating('LCP', metric.value),
@@ -67,7 +64,7 @@ export function initWebVitals() {
   });
 
   // Cumulative Layout Shift
-  getCLS((metric) => {
+  onCLS((metric) => {
     const vitals: VitalMetric = {
       ...metric,
       rating: getRating('CLS', metric.value),
@@ -76,7 +73,7 @@ export function initWebVitals() {
   });
 
   // Time to First Byte
-  getTTFB((metric) => {
+  onTTFB((metric) => {
     const vitals: VitalMetric = {
       ...metric,
       rating: getRating('TTFB', metric.value),
@@ -84,8 +81,8 @@ export function initWebVitals() {
     sendMetric(vitals);
   });
 
-  // First Input Delay (deprecated, for compatibility)
-  getFID((metric) => {
+  // Interaction to Next Paint (replaces FID)
+  onINP((metric) => {
     const vitals: VitalMetric = {
       ...metric,
       rating: getRating('INP', metric.value),
