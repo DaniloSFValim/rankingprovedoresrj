@@ -54,6 +54,11 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
   return (
     <footer className="mt-12 border-t border-grafite-700 bg-grafite-950/80">
       <div className="mx-auto max-w-7xl px-4 py-8 space-y-6">
+        {/* Context Line */}
+        <p className="text-xs text-grafite-400">
+          Desenvolvido para apoiar fiscalização de serviços de banda larga pela Prefeitura de Niterói.
+        </p>
+
         {/* Key Information Grid */}
         <section className="text-xs text-grafite-400">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
