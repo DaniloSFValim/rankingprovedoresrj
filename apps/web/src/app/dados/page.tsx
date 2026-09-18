@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
 import { Secao } from '@/componentes/Secao';
 import { lerKpis } from '@/lib/dados';
-import { obterDatasetsDisponiveis, formatarTamanho } from '@/lib/exportar';
+import { obterDatasetsDisponiveis, formatarTamanho } from '@/lib/exportacao';
 import { MARCA } from '@/lib/marca';
 
 export const metadata = {

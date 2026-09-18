@@ -62,13 +62,13 @@ export function TabelaRanking({
                     {linha.nome}
                   </Link>
                   {linha.variacaoPosicao !== null && linha.variacaoPosicao !== 0 && (
-                    <span className={`ml-2 text-xs ${corVariacao(linha.variacaoPosicao)}`}>
+                    <span className={`ml-2 text-xs ${corVariacao(linha.variacaoPosicao)}`} aria-label={`Variação de posição: ${linha.variacaoPosicao > 0 ? 'subiu' : 'desceu'} ${Math.abs(linha.variacaoPosicao)} posição(ões)`}>
                       {setaVariacao(linha.variacaoPosicao)}
                       {Math.abs(linha.variacaoPosicao)}
                     </span>
                   )}
                   {linha.posicaoAnterior === null && (
-                    <span className="ml-2 rounded bg-marca-500/20 px-1.5 py-0.5 text-[10px] font-medium text-marca-300">
+                    <span className="ml-2 rounded bg-marca-500/20 px-1.5 py-0.5 text-[10px] font-medium text-marca-300" aria-label="Provedor novo nesta competência">
                       NOVO
                     </span>
                   )}
