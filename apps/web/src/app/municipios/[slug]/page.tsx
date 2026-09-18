@@ -6,6 +6,7 @@ import { SeletorCidade } from '@/componentes/SeletorCidade';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
+import { TipoAtuacaoPie } from '@/componentes/graficos/TipoAtuacaoPie';
 import { lerIndiceMunicipios, lerPerfilMunicipio } from '@/lib/dados';
 import type { PerfilMunicipio } from '@/lib/dados';
 import { compacto, corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal } from '@/lib/formato';
@@ -301,10 +302,16 @@ export default async function PaginaMunicipio({ params }: Props) {
           <Tecnologias perfil={perfil} />
         </Secao>
 
+        <Secao titulo="Tipo de Atuação" descricao="Distribuição de provedores por categoria" className="lg:col-span-1">
+          <div className="cartao p-3">
+            <TipoAtuacaoPie provedores={perfil.ranking} />
+          </div>
+        </Secao>
+
         <Secao
           titulo="Ranking local completo"
           descricao={`${inteiro(perfil.ranking.length)} provedores com acessos em ${perfil.nome}`}
-          className="lg:col-span-2"
+          className="lg:col-span-1"
         >
           <TabelaRanking
             linhas={perfil.ranking.map((l) => ({
@@ -313,6 +320,7 @@ export default async function PaginaMunicipio({ params }: Props) {
               slug: l.slug,
               nome: l.nome,
               grupoEconomico: l.grupoEconomico,
+              tipoAtuacao: l.tipoAtuacao,
               acessos: l.acessos,
               marketShare: l.marketShare,
               posicaoAnterior: l.posicaoAnterior,

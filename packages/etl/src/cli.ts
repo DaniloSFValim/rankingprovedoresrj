@@ -23,6 +23,7 @@ import { construirArtefatos } from './pipeline/artefatos.js';
 import {
   aplicarJanelaConsecutiva,
   carregar,
+  classificarEmpresas,
   competenciasArmazenadas,
   purgarDadosDemonstrativos,
   concluirExecucao,
@@ -172,6 +173,11 @@ async function importar(
 
     console.log(`[carregar] gravando ${extracao.competencias.size} competencia(s)`);
     carregar(db, extracao, execucaoId);
+
+    const { classificadas, indefinidas } = classificarEmpresas(db);
+    console.log(
+      `[classificar] ${classificadas} empresa(s) classificada(s), ${indefinidas} indefinida(s)`,
+    );
 
     const alertas: Alerta[] = [...auditarExtracao(extracao)];
     for (const competencia of [...extracao.competencias].sort()) {

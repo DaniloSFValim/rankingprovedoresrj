@@ -1,6 +1,7 @@
 import { Kpi } from '@/componentes/Kpi';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
+import { TipoAtuacaoPie } from '@/componentes/graficos/TipoAtuacaoPie';
 import { lerKpis, lerRankingEstadual } from '@/lib/dados';
 import { compacto, inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
@@ -72,6 +73,13 @@ export default function PaginaRanking() {
           <BarrasShare
             itens={ranking.slice(0, 15).map((l) => ({ nome: l.nome, marketShare: l.marketShare }))}
           />
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Distribuição por Tipo de Atuação</div>
+        <div className="cartao p-3">
+          <TipoAtuacaoPie provedores={ranking} />
         </div>
       </div>
 
