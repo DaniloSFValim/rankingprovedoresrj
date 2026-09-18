@@ -13,7 +13,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:a11y": "playwright test accessibility.spec.ts",
-    "test:security": "npm audit --audit-level=moderate"
+    "test:security": "npm audit --audit-level=moderate",
+    "analyze": "npm run build && node scripts/analyze-bundle.js"
   },
   "dependencies": {
     "@netrank/core": "*",
