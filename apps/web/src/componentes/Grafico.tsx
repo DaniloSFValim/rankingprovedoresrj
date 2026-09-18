@@ -52,22 +52,37 @@ function GraficoInterno({ opcao, altura = 320, descricao, aoCriar }: Props) {
     const el = elemento.current;
     if (!el) return;
 
+    let isMounted = true;
+    let observador: ResizeObserver | null = null;
+
     (async () => {
       const echartsModule = await import('echarts');
       const echarts = (echartsModule as any).init ? echartsModule : (echartsModule as any).default;
+
+      if (!isMounted) return;
+
       const grafico = echarts.init(el, undefined, { renderer: 'canvas' });
+      if (!isMounted) {
+        grafico.dispose();
+        return;
+      }
+
       instancia.current = grafico;
       grafico.setOption({ ...BASE, ...opcao });
       aoCriar?.(grafico);
 
-      const observador = new ResizeObserver(() => grafico.resize());
+      observador = new ResizeObserver(() => grafico.resize());
       observador.observe(el);
-      return () => {
-        observador.disconnect();
-        grafico.dispose();
-        instancia.current = null;
-      };
     })();
+
+    return () => {
+      isMounted = false;
+      if (observador) observador.disconnect();
+      if (instancia.current) {
+        instancia.current.dispose();
+        instancia.current = null;
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
