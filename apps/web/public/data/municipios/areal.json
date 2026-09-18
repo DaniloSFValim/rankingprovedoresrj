@@ -1,0 +1,458 @@
+{
+  "codigoIbge": "3300225",
+  "nome": "Areal",
+  "competencia": "2026-07",
+  "concentracao": {
+    "cr1": 48.817204301075265,
+    "cr3": 98.51612903225806,
+    "cr5": 99.41935483870967,
+    "cr10": 99.89247311827957,
+    "hhi": 4753.102555208694,
+    "numeroProvedores": 13,
+    "totalAcessos": 4650
+  },
+  "ranking": [
+    {
+      "posicao": 1,
+      "empresaId": "cnpj:01472702",
+      "acessos": 2270,
+      "marketShare": 48.817204301075265,
+      "posicaoAnterior": 1,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2270,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "c-comtelecom-servicos-eireli",
+      "nome": "C-COMTELECOM SERVICOS EIRELI",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 2,
+      "empresaId": "cnpj:37258923",
+      "acessos": 2263,
+      "marketShare": 48.66666666666667,
+      "posicaoAnterior": 2,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2229,
+      "variacaoAbsoluta": 34,
+      "variacaoPercentual": 1.525347689546882,
+      "slug": "imperial-telecom",
+      "nome": "IMPERIAL TELECOM",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 3,
+      "empresaId": "cnpj:40154884",
+      "acessos": 48,
+      "marketShare": 1.032258064516129,
+      "posicaoAnterior": 3,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 46,
+      "variacaoAbsoluta": 2,
+      "variacaoPercentual": 4.3478260869565215,
+      "slug": "starlink-brazil-servicos-de-internet-ltda",
+      "nome": "STARLINK BRAZIL SERVICOS DE INTERNET LTDA.",
+      "tipoAtuacao": "PROVEDOR"
+    },
+    {
+      "posicao": 4,
+      "empresaId": "cnpj:76535764",
+      "acessos": 22,
+      "marketShare": 0.4731182795698925,
+      "posicaoAnterior": 4,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 23,
+      "variacaoAbsoluta": -1,
+      "variacaoPercentual": -4.3478260869565215,
+      "slug": "oi-4",
+      "nome": "OI",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 5,
+      "empresaId": "cnpj:02838416",
+      "acessos": 20,
+      "marketShare": 0.43010752688172044,
+      "posicaoAnterior": 5,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 19,
+      "variacaoAbsoluta": 1,
+      "variacaoPercentual": 5.263157894736842,
+      "slug": "easyfibra",
+      "nome": "Easyfibra",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 6,
+      "empresaId": "cnpj:05206385",
+      "acessos": 8,
+      "marketShare": 0.17204301075268819,
+      "posicaoAnterior": 6,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 8,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "hughes",
+      "nome": "HUGHES",
+      "tipoAtuacao": "PROVEDOR"
+    },
+    {
+      "posicao": 7,
+      "empresaId": "cnpj:40432544",
+      "acessos": 7,
+      "marketShare": 0.15053763440860216,
+      "posicaoAnterior": 7,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 7,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "claro",
+      "nome": "CLARO",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 8,
+      "empresaId": "cnpj:21560002",
+      "acessos": 3,
+      "marketShare": 0.06451612903225806,
+      "posicaoAnterior": 8,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 5,
+      "variacaoAbsoluta": -2,
+      "variacaoPercentual": -40,
+      "slug": "opensat-solucoes-em-seguranca-ltda",
+      "nome": "Opensat Solucoes em Seguranca Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 9,
+      "empresaId": "cnpj:02044528",
+      "acessos": 2,
+      "marketShare": 0.043010752688172046,
+      "posicaoAnterior": 9,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "sapucaia-comercio-e-informatica-ltda-me",
+      "nome": "SAPUCAIA COMERCIO E INFORMATICA LTDA-ME",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 9,
+      "empresaId": "cnpj:02558157",
+      "acessos": 2,
+      "marketShare": 0.043010752688172046,
+      "posicaoAnterior": 9,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "vivo",
+      "nome": "VIVO",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 9,
+      "empresaId": "cnpj:17033554",
+      "acessos": 2,
+      "marketShare": 0.043010752688172046,
+      "posicaoAnterior": 9,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "gruponet",
+      "nome": "Gruponet",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 9,
+      "empresaId": "cnpj:74280256",
+      "acessos": 2,
+      "marketShare": 0.043010752688172046,
+      "posicaoAnterior": 9,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "sencinet-latam-bra-sil-ltda-em-recuperacao-judicial",
+      "nome": "SENCINET LATAM BRA SIL LTDA EM RECUPERACAO JUDICIAL",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 13,
+      "empresaId": "cnpj:07756651",
+      "acessos": 1,
+      "marketShare": 0.021505376344086023,
+      "posicaoAnterior": 14,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "brasil-tecpar-3",
+      "nome": "BRASIL TECPAR",
+      "tipoAtuacao": "INDEFINIDO"
+    }
+  ],
+  "serie": [
+    {
+      "competencia": "2022-01",
+      "totalAcessos": 1322,
+      "numeroProvedores": 9,
+      "hhi": 4388.24181030438
+    },
+    {
+      "competencia": "2022-02",
+      "totalAcessos": 1294,
+      "numeroProvedores": 9,
+      "hhi": 4455.24343719318
+    },
+    {
+      "competencia": "2022-03",
+      "totalAcessos": 2856,
+      "numeroProvedores": 9,
+      "hhi": 4177.482267416771
+    },
+    {
+      "competencia": "2022-04",
+      "totalAcessos": 3231,
+      "numeroProvedores": 9,
+      "hhi": 4763.710154290095
+    },
+    {
+      "competencia": "2022-05",
+      "totalAcessos": 2462,
+      "numeroProvedores": 9,
+      "hhi": 3895.60639346004
+    },
+    {
+      "competencia": "2022-06",
+      "totalAcessos": 3760,
+      "numeroProvedores": 10,
+      "hhi": 5262.241115889544
+    },
+    {
+      "competencia": "2022-07",
+      "totalAcessos": 1289,
+      "numeroProvedores": 11,
+      "hhi": 4675.685712067438
+    },
+    {
+      "competencia": "2022-08",
+      "totalAcessos": 2527,
+      "numeroProvedores": 11,
+      "hhi": 3862.5989295818854
+    },
+    {
+      "competencia": "2022-09",
+      "totalAcessos": 3141,
+      "numeroProvedores": 10,
+      "hhi": 4799.195327817151
+    },
+    {
+      "competencia": "2022-10",
+      "totalAcessos": 1492,
+      "numeroProvedores": 11,
+      "hhi": 5018.211515931258
+    },
+    {
+      "competencia": "2022-11",
+      "totalAcessos": 3887,
+      "numeroProvedores": 12,
+      "hhi": 5337.876964033272
+    },
+    {
+      "competencia": "2022-12",
+      "totalAcessos": 1311,
+      "numeroProvedores": 13,
+      "hhi": 4719.8061814570265
+    },
+    {
+      "competencia": "2024-01",
+      "totalAcessos": 11897,
+      "numeroProvedores": 11,
+      "hhi": 7476.405042245398
+    },
+    {
+      "competencia": "2024-02",
+      "totalAcessos": 12187,
+      "numeroProvedores": 10,
+      "hhi": 7507.587664773923
+    },
+    {
+      "competencia": "2024-03",
+      "totalAcessos": 12013,
+      "numeroProvedores": 10,
+      "hhi": 7456.3325979807
+    },
+    {
+      "competencia": "2024-04",
+      "totalAcessos": 12276,
+      "numeroProvedores": 10,
+      "hhi": 7412.883047993257
+    },
+    {
+      "competencia": "2024-05",
+      "totalAcessos": 12016,
+      "numeroProvedores": 10,
+      "hhi": 7329.691403472691
+    },
+    {
+      "competencia": "2024-06",
+      "totalAcessos": 218,
+      "numeroProvedores": 9,
+      "hhi": 5528.995875768032
+    },
+    {
+      "competencia": "2024-07",
+      "totalAcessos": 9982,
+      "numeroProvedores": 11,
+      "hhi": 9593.755034357377
+    },
+    {
+      "competencia": "2024-08",
+      "totalAcessos": 10150,
+      "numeroProvedores": 10,
+      "hhi": 9621.302142735809
+    },
+    {
+      "competencia": "2024-09",
+      "totalAcessos": 10419,
+      "numeroProvedores": 10,
+      "hhi": 9653.289249732676
+    },
+    {
+      "competencia": "2024-10",
+      "totalAcessos": 173058,
+      "numeroProvedores": 11,
+      "hhi": 9979.32862316579
+    },
+    {
+      "competencia": "2024-11",
+      "totalAcessos": 10311,
+      "numeroProvedores": 11,
+      "hhi": 9670.348561634062
+    },
+    {
+      "competencia": "2024-12",
+      "totalAcessos": 10763,
+      "numeroProvedores": 11,
+      "hhi": 9684.01541238407
+    },
+    {
+      "competencia": "2025-01",
+      "totalAcessos": 11069,
+      "numeroProvedores": 11,
+      "hhi": 9692.63262031779
+    },
+    {
+      "competencia": "2025-02",
+      "totalAcessos": 11321,
+      "numeroProvedores": 11,
+      "hhi": 9730.515749610695
+    },
+    {
+      "competencia": "2025-03",
+      "totalAcessos": 242,
+      "numeroProvedores": 12,
+      "hhi": 2827.6757052113926
+    },
+    {
+      "competencia": "2025-04",
+      "totalAcessos": 2056,
+      "numeroProvedores": 13,
+      "hhi": 6557.8396342109645
+    },
+    {
+      "competencia": "2025-05",
+      "totalAcessos": 2008,
+      "numeroProvedores": 13,
+      "hhi": 7151.905326899572
+    },
+    {
+      "competencia": "2025-06",
+      "totalAcessos": 1976,
+      "numeroProvedores": 13,
+      "hhi": 7710.373674375913
+    },
+    {
+      "competencia": "2025-07",
+      "totalAcessos": 2016,
+      "numeroProvedores": 13,
+      "hhi": 7901.692216238346
+    },
+    {
+      "competencia": "2025-08",
+      "totalAcessos": 2119,
+      "numeroProvedores": 13,
+      "hhi": 7641.674764000667
+    },
+    {
+      "competencia": "2025-09",
+      "totalAcessos": 2205,
+      "numeroProvedores": 13,
+      "hhi": 7391.716414456939
+    },
+    {
+      "competencia": "2025-10",
+      "totalAcessos": 2139,
+      "numeroProvedores": 14,
+      "hhi": 8444.069825920413
+    },
+    {
+      "competencia": "2025-11",
+      "totalAcessos": 2307,
+      "numeroProvedores": 13,
+      "hhi": 8238.241014277986
+    },
+    {
+      "competencia": "2025-12",
+      "totalAcessos": 2232,
+      "numeroProvedores": 11,
+      "hhi": 8860.702425457024
+    },
+    {
+      "competencia": "2026-01",
+      "totalAcessos": 2255,
+      "numeroProvedores": 12,
+      "hhi": 8862.094089999558
+    },
+    {
+      "competencia": "2026-02",
+      "totalAcessos": 2256,
+      "numeroProvedores": 11,
+      "hhi": 8987.416534631055
+    },
+    {
+      "competencia": "2026-03",
+      "totalAcessos": 2297,
+      "numeroProvedores": 12,
+      "hhi": 8988.485861723828
+    },
+    {
+      "competencia": "2026-04",
+      "totalAcessos": 4583,
+      "numeroProvedores": 13,
+      "hhi": 4712.905786161792
+    },
+    {
+      "competencia": "2026-05",
+      "totalAcessos": 4586,
+      "numeroProvedores": 13,
+      "hhi": 4754.535552466418
+    },
+    {
+      "competencia": "2026-06",
+      "totalAcessos": 4618,
+      "numeroProvedores": 14,
+      "hhi": 4747.511057434135
+    },
+    {
+      "competencia": "2026-07",
+      "totalAcessos": 4650,
+      "numeroProvedores": 13,
+      "hhi": 4753.102555208694
+    }
+  ]
+}

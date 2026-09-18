@@ -1,0 +1,738 @@
+{
+  "codigoIbge": "3304524",
+  "nome": "Rio das Ostras",
+  "competencia": "2026-07",
+  "concentracao": {
+    "cr1": 42.97929019506746,
+    "cr3": 75.10813210735871,
+    "cr5": 84.72544470224285,
+    "cr10": 98.46180287015554,
+    "hhi": 2465.587280687211,
+    "numeroProvedores": 33,
+    "totalAcessos": 69822
+  },
+  "ranking": [
+    {
+      "posicao": 1,
+      "empresaId": "cnpj:07714104",
+      "acessos": 30009,
+      "marketShare": 42.97929019506746,
+      "posicaoAnterior": 1,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 30101,
+      "variacaoAbsoluta": -92,
+      "variacaoPercentual": -0.30563768645559947,
+      "slug": "giga-mais-fibra",
+      "nome": "GIGA MAIS FIBRA",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 2,
+      "empresaId": "cnpj:66970229",
+      "acessos": 12675,
+      "marketShare": 18.153304116181147,
+      "posicaoAnterior": 2,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 12596,
+      "variacaoAbsoluta": 79,
+      "variacaoPercentual": 0.6271832327723086,
+      "slug": "claro-2",
+      "nome": "CLARO",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 3,
+      "empresaId": "cnpj:02558157",
+      "acessos": 9758,
+      "marketShare": 13.975537796110107,
+      "posicaoAnterior": 3,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 9624,
+      "variacaoAbsoluta": 134,
+      "variacaoPercentual": 1.3923524522028263,
+      "slug": "vivo",
+      "nome": "VIVO",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 4,
+      "empresaId": "cnpj:12881491",
+      "acessos": 3776,
+      "marketShare": 5.408037581278107,
+      "posicaoAnterior": 4,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 3726,
+      "variacaoAbsoluta": 50,
+      "variacaoPercentual": 1.3419216317767042,
+      "slug": "portal-entre",
+      "nome": "PORTAL ENTRE",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 5,
+      "empresaId": "cnpj:05416917",
+      "acessos": 2939,
+      "marketShare": 4.209275013606026,
+      "posicaoAnterior": 6,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 2702,
+      "variacaoAbsoluta": 237,
+      "variacaoPercentual": 8.771280532938563,
+      "slug": "amo-telecom",
+      "nome": "Amo Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 6,
+      "empresaId": "cnpj:06923091",
+      "acessos": 2807,
+      "marketShare": 4.020222852396093,
+      "posicaoAnterior": 5,
+      "variacaoPosicao": -1,
+      "acessosAnterior": 2834,
+      "variacaoAbsoluta": -27,
+      "variacaoPercentual": -0.9527170077628794,
+      "slug": "t-teles-leite-telecomunicacoes-ltda-me",
+      "nome": "T. TELES LEITE TELECOMUNICACOES LTDA - ME",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 7,
+      "empresaId": "cnpj:06236865",
+      "acessos": 2504,
+      "marketShare": 3.586262209618745,
+      "posicaoAnterior": 7,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2517,
+      "variacaoAbsoluta": -13,
+      "variacaoPercentual": -0.5164878823996821,
+      "slug": "gigalink-de-nova-friburgo-solucoes-em-rede-multimidia-ltda",
+      "nome": "GIGALINK DE NOVA FRIBURGO SOLUÇÕES EM REDE MULTIMÍDIA LTDA",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 8,
+      "empresaId": "cnpj:05373396",
+      "acessos": 2473,
+      "marketShare": 3.54186359600126,
+      "posicaoAnterior": 8,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2473,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "alta-rede-fiber",
+      "nome": "ALTA REDE FIBER",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 9,
+      "empresaId": "cnpj:43444121",
+      "acessos": 1462,
+      "marketShare": 2.093895906734267,
+      "posicaoAnterior": 9,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 1363,
+      "variacaoAbsoluta": 99,
+      "variacaoPercentual": 7.263389581804843,
+      "slug": "buznet-provedor-de-internet-ltda",
+      "nome": "Buznet Provedor de Internet Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 10,
+      "empresaId": "cnpj:42054902",
+      "acessos": 345,
+      "marketShare": 0.49411360316232705,
+      "posicaoAnterior": 11,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 324,
+      "variacaoAbsoluta": 21,
+      "variacaoPercentual": 6.481481481481481,
+      "slug": "total-net",
+      "nome": "Total Net",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 11,
+      "empresaId": "cnpj:40154884",
+      "acessos": 319,
+      "marketShare": 0.45687605625734007,
+      "posicaoAnterior": 12,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 308,
+      "variacaoAbsoluta": 11,
+      "variacaoPercentual": 3.571428571428571,
+      "slug": "starlink-brazil-servicos-de-internet-ltda",
+      "nome": "STARLINK BRAZIL SERVICOS DE INTERNET LTDA.",
+      "tipoAtuacao": "PROVEDOR"
+    },
+    {
+      "posicao": 12,
+      "empresaId": "cnpj:44754974",
+      "acessos": 148,
+      "marketShare": 0.21196757468992583,
+      "posicaoAnterior": 14,
+      "variacaoPosicao": 2,
+      "acessosAnterior": 154,
+      "variacaoAbsoluta": -6,
+      "variacaoPercentual": -3.896103896103896,
+      "slug": "jhs-internet",
+      "nome": "Jhs Internet",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 13,
+      "empresaId": "cnpj:10235526",
+      "acessos": 114,
+      "marketShare": 0.16327232104494285,
+      "posicaoAnterior": 15,
+      "variacaoPosicao": 2,
+      "acessosAnterior": 114,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "publicom-cable",
+      "nome": "PUBLICOM CABLE",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 14,
+      "empresaId": "cnpj:40432544",
+      "acessos": 111,
+      "marketShare": 0.15897568101744436,
+      "posicaoAnterior": 16,
+      "variacaoPosicao": 2,
+      "acessosAnterior": 112,
+      "variacaoAbsoluta": -1,
+      "variacaoPercentual": -0.8928571428571428,
+      "slug": "claro",
+      "nome": "CLARO",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 15,
+      "empresaId": "cnpj:76535764",
+      "acessos": 93,
+      "marketShare": 0.1331958408524534,
+      "posicaoAnterior": 17,
+      "variacaoPosicao": 2,
+      "acessosAnterior": 93,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "oi-4",
+      "nome": "OI",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 16,
+      "empresaId": "cnpj:02314207",
+      "acessos": 69,
+      "marketShare": 0.09882272063246542,
+      "posicaoAnterior": 13,
+      "variacaoPosicao": -3,
+      "acessosAnterior": 187,
+      "variacaoAbsoluta": -118,
+      "variacaoPercentual": -63.101604278074866,
+      "slug": "flix-fibra",
+      "nome": "Flix Fibra",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 17,
+      "empresaId": "cnpj:13253990",
+      "acessos": 56,
+      "marketShare": 0.08020394717997192,
+      "posicaoAnterior": 30,
+      "variacaoPosicao": 13,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 55,
+      "variacaoPercentual": 5500,
+      "slug": "new-net-telecon",
+      "nome": "NEW NET TELECON",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 18,
+      "empresaId": "cnpj:41644220",
+      "acessos": 38,
+      "marketShare": 0.05442410701498096,
+      "posicaoAnterior": 18,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 39,
+      "variacaoAbsoluta": -1,
+      "variacaoPercentual": -2.564102564102564,
+      "slug": "giga-mais-fibra-3",
+      "nome": "GIGA MAIS FIBRA",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 19,
+      "empresaId": "cnpj:07426946",
+      "acessos": 36,
+      "marketShare": 0.051559680329981955,
+      "posicaoAnterior": 19,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 36,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "avanca-k2-telecom",
+      "nome": "Avanca - K2 Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 20,
+      "empresaId": "cnpj:28216331",
+      "acessos": 29,
+      "marketShare": 0.041534186932485465,
+      "posicaoAnterior": 20,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 29,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "print-internet",
+      "nome": "Print Internet",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 21,
+      "empresaId": "cnpj:05206385",
+      "acessos": 20,
+      "marketShare": 0.028644266849989972,
+      "posicaoAnterior": 21,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 18,
+      "variacaoAbsoluta": 2,
+      "variacaoPercentual": 11.11111111111111,
+      "slug": "hughes",
+      "nome": "HUGHES",
+      "tipoAtuacao": "PROVEDOR"
+    },
+    {
+      "posicao": 22,
+      "empresaId": "cnpj:05872814",
+      "acessos": 8,
+      "marketShare": 0.01145770673999599,
+      "posicaoAnterior": 22,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 8,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "algar-ctbc-telecom-2",
+      "nome": "ALGAR (CTBC TELECOM)",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 23,
+      "empresaId": "cnpj:11620561",
+      "acessos": 6,
+      "marketShare": 0.008593280054996991,
+      "posicaoAnterior": 23,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 6,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "megatelecom-4",
+      "nome": "MEGATELECOM",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 24,
+      "empresaId": "cnpj:03287268",
+      "acessos": 5,
+      "marketShare": 0.007161066712497493,
+      "posicaoAnterior": 24,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 5,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "alta-rede-corporate",
+      "nome": "ALTA REDE CORPORATE",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 25,
+      "empresaId": "cnpj:02421421",
+      "acessos": 4,
+      "marketShare": 0.005728853369997995,
+      "posicaoAnterior": 25,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 4,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "tim",
+      "nome": "TIM",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 25,
+      "empresaId": "cnpj:07349982",
+      "acessos": 4,
+      "marketShare": 0.005728853369997995,
+      "posicaoAnterior": 25,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 4,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "yipi-cloud-servicos-ltda",
+      "nome": "YIPI CLOUD SERVIÇOS LTDA",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 25,
+      "empresaId": "cnpj:08293614",
+      "acessos": 4,
+      "marketShare": 0.005728853369997995,
+      "posicaoAnterior": 25,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 4,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "access-telecomunicacoes-ltda",
+      "nome": "Access Telecomunicacoes Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 25,
+      "empresaId": "cnpj:66624776",
+      "acessos": 4,
+      "marketShare": 0.005728853369997995,
+      "posicaoAnterior": 25,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 4,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "orange-business-services",
+      "nome": "ORANGE BUSINESS SERVICES",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 29,
+      "empresaId": "cnpj:00336701",
+      "acessos": 2,
+      "marketShare": 0.0028644266849989974,
+      "posicaoAnterior": 29,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "telebras",
+      "nome": "TELEBRAS",
+      "tipoAtuacao": "OPERADORA"
+    },
+    {
+      "posicao": 30,
+      "empresaId": "cnpj:18182577",
+      "acessos": 1,
+      "marketShare": 0.0014322133424994987,
+      "posicaoAnterior": null,
+      "variacaoPosicao": null,
+      "acessosAnterior": null,
+      "variacaoAbsoluta": null,
+      "variacaoPercentual": null,
+      "slug": "tecintel-telecom",
+      "nome": "Tecintel Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 30,
+      "empresaId": "cnpj:28808843",
+      "acessos": 1,
+      "marketShare": 0.0014322133424994987,
+      "posicaoAnterior": 30,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "nni-brasil-multimidia-ltda",
+      "nome": "NNI BRASIL MULTIMIDIA LTDA",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 30,
+      "empresaId": "cnpj:53107768",
+      "acessos": 1,
+      "marketShare": 0.0014322133424994987,
+      "posicaoAnterior": 30,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "venn",
+      "nome": "Venn",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 30,
+      "empresaId": "cnpj:66323327",
+      "acessos": 1,
+      "marketShare": 0.0014322133424994987,
+      "posicaoAnterior": 30,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "autotrac-connection-ltda",
+      "nome": "Autotrac Connection Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    }
+  ],
+  "serie": [
+    {
+      "competencia": "2022-01",
+      "totalAcessos": 51673,
+      "numeroProvedores": 29,
+      "hhi": 4365.503541236021
+    },
+    {
+      "competencia": "2022-02",
+      "totalAcessos": 52279,
+      "numeroProvedores": 30,
+      "hhi": 4333.833384098574
+    },
+    {
+      "competencia": "2022-03",
+      "totalAcessos": 53153,
+      "numeroProvedores": 31,
+      "hhi": 4259.683845657524
+    },
+    {
+      "competencia": "2022-04",
+      "totalAcessos": 53349,
+      "numeroProvedores": 27,
+      "hhi": 4247.947327284453
+    },
+    {
+      "competencia": "2022-05",
+      "totalAcessos": 53149,
+      "numeroProvedores": 28,
+      "hhi": 4282.928788682631
+    },
+    {
+      "competencia": "2022-06",
+      "totalAcessos": 53432,
+      "numeroProvedores": 30,
+      "hhi": 4225.46271225602
+    },
+    {
+      "competencia": "2022-07",
+      "totalAcessos": 53778,
+      "numeroProvedores": 32,
+      "hhi": 4210.59019747855
+    },
+    {
+      "competencia": "2022-08",
+      "totalAcessos": 57495,
+      "numeroProvedores": 34,
+      "hhi": 3774.1437968482705
+    },
+    {
+      "competencia": "2022-09",
+      "totalAcessos": 57569,
+      "numeroProvedores": 32,
+      "hhi": 3766.320099375867
+    },
+    {
+      "competencia": "2022-10",
+      "totalAcessos": 57947,
+      "numeroProvedores": 34,
+      "hhi": 3708.0204113137397
+    },
+    {
+      "competencia": "2022-11",
+      "totalAcessos": 58001,
+      "numeroProvedores": 34,
+      "hhi": 3718.860487058455
+    },
+    {
+      "competencia": "2022-12",
+      "totalAcessos": 58494,
+      "numeroProvedores": 34,
+      "hhi": 3700.5318606609794
+    },
+    {
+      "competencia": "2024-01",
+      "totalAcessos": 57934,
+      "numeroProvedores": 34,
+      "hhi": 4349.643502856947
+    },
+    {
+      "competencia": "2024-02",
+      "totalAcessos": 61074,
+      "numeroProvedores": 35,
+      "hhi": 3946.9508718157153
+    },
+    {
+      "competencia": "2024-03",
+      "totalAcessos": 62310,
+      "numeroProvedores": 35,
+      "hhi": 3807.0080275621913
+    },
+    {
+      "competencia": "2024-04",
+      "totalAcessos": 62368,
+      "numeroProvedores": 34,
+      "hhi": 3773.7692977296115
+    },
+    {
+      "competencia": "2024-05",
+      "totalAcessos": 63213,
+      "numeroProvedores": 36,
+      "hhi": 3691.1054723028897
+    },
+    {
+      "competencia": "2024-06",
+      "totalAcessos": 64066,
+      "numeroProvedores": 36,
+      "hhi": 3612.3955631560975
+    },
+    {
+      "competencia": "2024-07",
+      "totalAcessos": 64089,
+      "numeroProvedores": 37,
+      "hhi": 3630.906339008034
+    },
+    {
+      "competencia": "2024-08",
+      "totalAcessos": 67398,
+      "numeroProvedores": 38,
+      "hhi": 3315.7281535998586
+    },
+    {
+      "competencia": "2024-09",
+      "totalAcessos": 67913,
+      "numeroProvedores": 38,
+      "hhi": 3254.689260074001
+    },
+    {
+      "competencia": "2024-10",
+      "totalAcessos": 67952,
+      "numeroProvedores": 38,
+      "hhi": 3224.943382381193
+    },
+    {
+      "competencia": "2024-11",
+      "totalAcessos": 68544,
+      "numeroProvedores": 38,
+      "hhi": 3175.1474376174765
+    },
+    {
+      "competencia": "2024-12",
+      "totalAcessos": 70480,
+      "numeroProvedores": 39,
+      "hhi": 3000.9152538906233
+    },
+    {
+      "competencia": "2025-01",
+      "totalAcessos": 66105,
+      "numeroProvedores": 37,
+      "hhi": 3378.9805066386357
+    },
+    {
+      "competencia": "2025-02",
+      "totalAcessos": 66183,
+      "numeroProvedores": 37,
+      "hhi": 3357.5741521989657
+    },
+    {
+      "competencia": "2025-03",
+      "totalAcessos": 66147,
+      "numeroProvedores": 34,
+      "hhi": 3336.9062886060383
+    },
+    {
+      "competencia": "2025-04",
+      "totalAcessos": 66280,
+      "numeroProvedores": 35,
+      "hhi": 3292.973778694946
+    },
+    {
+      "competencia": "2025-05",
+      "totalAcessos": 66561,
+      "numeroProvedores": 34,
+      "hhi": 3243.881013704464
+    },
+    {
+      "competencia": "2025-06",
+      "totalAcessos": 66657,
+      "numeroProvedores": 37,
+      "hhi": 3213.013978750218
+    },
+    {
+      "competencia": "2025-07",
+      "totalAcessos": 66660,
+      "numeroProvedores": 34,
+      "hhi": 3169.2120022083213
+    },
+    {
+      "competencia": "2025-08",
+      "totalAcessos": 66343,
+      "numeroProvedores": 37,
+      "hhi": 3105.752772898593
+    },
+    {
+      "competencia": "2025-09",
+      "totalAcessos": 65980,
+      "numeroProvedores": 38,
+      "hhi": 3063.6683560589195
+    },
+    {
+      "competencia": "2025-10",
+      "totalAcessos": 65462,
+      "numeroProvedores": 36,
+      "hhi": 3026.557037604997
+    },
+    {
+      "competencia": "2025-11",
+      "totalAcessos": 64943,
+      "numeroProvedores": 31,
+      "hhi": 2993.5097209749915
+    },
+    {
+      "competencia": "2025-12",
+      "totalAcessos": 64728,
+      "numeroProvedores": 32,
+      "hhi": 2970.750095956909
+    },
+    {
+      "competencia": "2026-01",
+      "totalAcessos": 68708,
+      "numeroProvedores": 32,
+      "hhi": 2628.4240083799677
+    },
+    {
+      "competencia": "2026-02",
+      "totalAcessos": 68673,
+      "numeroProvedores": 32,
+      "hhi": 2605.9179023452757
+    },
+    {
+      "competencia": "2026-03",
+      "totalAcessos": 67678,
+      "numeroProvedores": 29,
+      "hhi": 2656.983314587899
+    },
+    {
+      "competencia": "2026-04",
+      "totalAcessos": 67912,
+      "numeroProvedores": 30,
+      "hhi": 2623.3320334543946
+    },
+    {
+      "competencia": "2026-05",
+      "totalAcessos": 70016,
+      "numeroProvedores": 32,
+      "hhi": 2465.154286391631
+    },
+    {
+      "competencia": "2026-06",
+      "totalAcessos": 70093,
+      "numeroProvedores": 33,
+      "hhi": 2445.8736124907145
+    },
+    {
+      "competencia": "2026-07",
+      "totalAcessos": 69822,
+      "numeroProvedores": 33,
+      "hhi": 2465.587280687211
+    }
+  ]
+}
