@@ -2,7 +2,7 @@
  *  NETRANK e indexada por estes valores; a aritmetica fica centralizada aqui
  *  para evitar erros de fuso horario ao usar `Date`. */
 
-import type { Competencia } from './types.js';
+import type { Competencia } from './types';
 
 const PADRAO = /^(\d{4})-(0[1-9]|1[0-2])$/;
 

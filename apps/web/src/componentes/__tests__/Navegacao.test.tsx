@@ -18,15 +18,28 @@ vi.mock('next/link', () => ({
 
 const mockMeta: Meta = {
   competenciaAtual: '2025-01',
-  ultimaAtualizacao: '2025-01-15T10:00:00Z',
+  competencias: ['2024-12', '2025-01'],
+  numeroEmpresas: 500,
+  numeroMunicipios: 92,
+  geradoEm: '2025-01-15T11:30:00Z',
+  procedencia: {
+    fonte: 'Teste',
+    url: 'http://test',
+    arquivo: 'test.csv',
+    competenciaInicial: '2024-12',
+    competenciaFinal: '2025-01',
+    coletadoEm: '2025-01-15T10:00:00Z',
+    processadoEm: '2025-01-15T11:00:00Z',
+    dadosDemonstrativos: false,
+  },
 };
 
 const mockCidades: CidadeOpcao[] = [
   {
-    codigoIbge: '3304557',
     nome: 'Niterói',
     slug: 'niteroi',
-    mesorregiao: 'Metropolitana do Rio de Janeiro',
+    totalAcessos: 1500,
+    numeroProvedores: 12,
   },
 ];
 
@@ -65,7 +78,7 @@ describe('Navegacao', () => {
         meta={mockMeta}
         cidades={mockCidades}
         itensBusca={[
-          { tipo: 'municipio', nome: 'Rio de Janeiro', slug: 'rio' },
+          { id: '1', titulo: 'Rio de Janeiro', texto: 'Rio de Janeiro', categoria: 'municipio', href: '/municipios/rio-de-janeiro' },
         ]}
       />
     );

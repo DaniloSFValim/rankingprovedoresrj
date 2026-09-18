@@ -9,8 +9,8 @@ import {
   hhi,
   marketShare,
   razaoConcentracao,
-} from '../metrics.js';
-import type { ParticipanteMercado } from '../types.js';
+} from '../metrics';
+import type { ParticipanteMercado } from '../types';
 
 const mercado = (pares: Array<[string, number]>): ParticipanteMercado[] =>
   pares.map(([empresaId, acessos]) => ({ empresaId, acessos }));
