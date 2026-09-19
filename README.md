@@ -145,19 +145,24 @@ Este projeto está registrado no **Zenodo** para garantir persistência e rastre
 
 ### Como citar este trabalho
 
+**DOI Zenodo:** [![DOI](https://zenodo.org/badge/1372218032.svg)](https://doi.org/10.5281/zenodo.22839933)
+
 **BibTeX:**
 ```bibtex
 @dataset{valim2026netrank,
   author = {Valim, Danilo S. F.},
   title = {NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro},
   year = {2026},
-  url = {https://github.com/DaniloSFValim/rankingprovedoresrj},
+  doi = {10.5281/zenodo.22839933},
+  url = {https://zenodo.org/records/22839933},
   note = {Anatel Official Data, IBGE Geospatial Data}
 }
 ```
 
 **APA:**
-> Valim, D. S. F. (2026). NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro. Retrieved from https://github.com/DaniloSFValim/rankingprovedoresrj
+> Valim, D. S. F. (2026). NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro. https://doi.org/10.5281/zenodo.22839933
+
+**Zenodo Record:** https://zenodo.org/records/22839933
 
 Ver [CITATION.cff](CITATION.cff) para formatos adicionais (Chicago, Harvard, ISO690).
 
