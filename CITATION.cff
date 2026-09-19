@@ -16,6 +16,11 @@ authors:
 repository-code: "https://github.com/DaniloSFValim/rankingprovedoresrj"
 repository: "https://github.com/DaniloSFValim/rankingprovedoresrj"
 url: "https://rankingprovedoresrj.pages.dev"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22839933"
+  - type: url
+    value: "https://zenodo.org/records/22839933"
 license: CC-BY-4.0
 keywords:
   - "banda larga"
