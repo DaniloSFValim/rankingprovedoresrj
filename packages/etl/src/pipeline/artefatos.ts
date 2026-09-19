@@ -36,6 +36,7 @@ export interface EmpresaResumo {
   id: string;
   slug: string;
   nome: string;
+  cnpj: string | null;
   grupoEconomico: string | null;
   tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
 }
@@ -63,6 +64,7 @@ export interface LinhaRankingEstadualComTipo {
   empresaId: string;
   slug: string;
   nome: string;
+  cnpj: string | null;
   grupoEconomico: string | null;
   tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
   acessos: number;
@@ -164,10 +166,10 @@ function carregarContexto(db: Banco): Contexto {
 
   const empresasBrutas = db
     .prepare(
-      `SELECT e.id, e.nome_normalizado AS nome, g.nome AS grupo, e.tipo_atuacao
+      `SELECT e.id, e.nome_normalizado AS nome, e.cnpj, g.nome AS grupo, e.tipo_atuacao
          FROM empresas e LEFT JOIN grupos_economicos g ON g.id = e.grupo_economico_id`,
     )
-    .all() as Array<{ id: string; nome: string; grupo: string | null; tipo_atuacao: string }>;
+    .all() as Array<{ id: string; nome: string; cnpj: string | null; grupo: string | null; tipo_atuacao: string }>;
   const slugsEmpresa = atribuirSlugs(empresasBrutas);
   const empresas = new Map<string, EmpresaResumo>(
     empresasBrutas.map((e) => [
@@ -176,6 +178,7 @@ function carregarContexto(db: Banco): Contexto {
         id: e.id,
         slug: slugsEmpresa.get(e.id)!,
         nome: e.nome,
+        cnpj: e.cnpj ?? null,
         grupoEconomico: e.grupo,
         tipoAtuacao: (e.tipo_atuacao as any) || 'INDEFINIDO',
       },
@@ -373,6 +376,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       ...l,
       slug: empresa?.slug ?? gerarSlug(l.empresaId),
       nome: empresa?.nome ?? l.empresaId,
+      cnpj: empresa?.cnpj ?? null,
       grupoEconomico: empresa?.grupoEconomico ?? null,
       tipoAtuacao: empresa?.tipoAtuacao ?? 'INDEFINIDO',
       municipiosAtendidos: contagemMunicipios.get(l.empresaId) ?? 0,
@@ -584,6 +588,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
         ...l,
         slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
         nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
+        cnpj: ctx.empresas.get(l.empresaId)?.cnpj ?? null,
         grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
         tipoAtuacao: ctx.empresas.get(l.empresaId)?.tipoAtuacao ?? 'INDEFINIDO',
         variacao12Absoluta: ranking12Municipal.get(l.empresaId)?.variacaoAbsoluta ?? null,
@@ -688,6 +693,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       id: empresaId,
       slug: linha.slug,
       nome: linha.nome,
+      cnpj: linha.cnpj,
       grupoEconomico: linha.grupoEconomico,
       competencia: atual,
       posicao: linha.posicao,

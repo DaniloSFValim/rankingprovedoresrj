@@ -64,6 +64,7 @@ export interface LinhaRankingEstadual {
   empresaId: string;
   slug: string;
   nome: string;
+  cnpj: string | null;
   grupoEconomico: string | null;
   tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
   acessos: number;
@@ -125,6 +126,7 @@ export interface PerfilMunicipio {
     empresaId: string;
     slug: string;
     nome: string;
+    cnpj: string | null;
     grupoEconomico: string | null;
     tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
     acessos: number;
@@ -152,6 +154,7 @@ export interface PerfilProvedor {
   id: string;
   slug: string;
   nome: string;
+  cnpj: string | null;
   grupoEconomico: string | null;
   competencia: Competencia;
   posicao: number;
@@ -258,6 +261,7 @@ export const lerPerfilMunicipio = (slug: string): PerfilMunicipio | null => {
     totalMunicipios: bruto.totalMunicipios ?? 0,
     ranking: (bruto.ranking ?? []).map((l) => ({
       ...l,
+      cnpj: l.cnpj ?? null,
       grupoEconomico: l.grupoEconomico ?? null,
       posicaoAnterior: l.posicaoAnterior ?? null,
       variacao12Absoluta: l.variacao12Absoluta ?? null,
