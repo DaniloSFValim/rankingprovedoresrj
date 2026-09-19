@@ -54,10 +54,23 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
   return (
     <footer className="mt-12 border-t border-grafite-700 bg-grafite-950/80">
       <div className="mx-auto max-w-7xl px-4 py-8 space-y-6">
-        {/* Context Line */}
-        <p className="text-xs text-grafite-400">
-          Desenvolvido para apoiar fiscalização de serviços de banda larga pela Prefeitura de Niterói.
-        </p>
+        {/* Authorship and Registry */}
+        <div className="text-xs text-grafite-400 space-y-1">
+          <p>
+            <span className="font-medium text-grafite-300">Danilo Valim</span> — Secretaria Municipal de Conservação e Serviços Públicos
+          </p>
+          <p>
+            DOI:{' '}
+            <a
+              href="https://doi.org/10.5281/zenodo.22839933"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-marca-400 hover:underline"
+            >
+              10.5281/zenodo.22839933
+            </a>
+          </p>
+        </div>
 
         {/* Key Information Grid */}
         <section className="text-xs text-grafite-400">
