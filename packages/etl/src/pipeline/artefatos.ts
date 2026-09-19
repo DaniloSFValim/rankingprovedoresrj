@@ -49,6 +49,7 @@ export interface MunicipioResumo {
 export interface KpisEstado {
   competencia: Competencia;
   totalAcessos: number;
+  densidadeEstado: number | null;
   numeroProvedores: number;
   numeroMunicipios: number;
   lider: { empresaId: string; nome: string; acessos: number; marketShare: number } | null;
@@ -321,6 +322,20 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     arquivos += 1;
   };
 
+  // Carrega domicílios para cálculo de densidade (acessos / domicílios * 100)
+  let totalDomicilios = 0;
+  try {
+    const domiciliosPath = path.join(process.cwd(), 'data', 'domicilios-rj-ibge.json');
+    if (fs.existsSync(domiciliosPath)) {
+      const domicilios = JSON.parse(fs.readFileSync(domiciliosPath, 'utf8')) as {
+        municipios: Record<string, number>;
+      };
+      totalDomicilios = Object.values(domicilios.municipios).reduce((s, v) => s + v, 0);
+    }
+  } catch (e) {
+    console.warn('Aviso: domicílios não carregados, densidade não será calculada');
+  }
+
   // ---------------------------------------------------------------- meta ----
   // Competencias ausentes no meio da serie. Expostas para que a interface
   // possa avisar em vez de desenhar uma reta atravessando o buraco.
@@ -367,9 +382,13 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   });
 
   const lider = linhasRanking[0];
+  const totalAcessosEstado = somar(ctx.estadoPorCompetencia.get(atual));
+  const densidadeEstado = totalDomicilios > 0 ? (totalAcessosEstado * 100) / totalDomicilios : null;
+
   const kpis: KpisEstado = {
     competencia: atual,
-    totalAcessos: somar(ctx.estadoPorCompetencia.get(atual)),
+    totalAcessos: totalAcessosEstado,
+    densidadeEstado,
     numeroProvedores: linhasRanking.length,
     numeroMunicipios: ctx.municipalPorCompetencia.get(atual)?.size ?? 0,
     lider: lider
