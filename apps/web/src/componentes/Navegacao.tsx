@@ -28,11 +28,16 @@ export function Navegacao({ meta, cidades, itensBusca = [] }: { meta: Meta; cida
       </div>
 
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-4">
-        <Link href="/" className="flex flex-col gap-0.5">
-          <span className="text-xl font-bold tracking-tight text-white">{MARCA.nome}</span>
-          <span className="hidden text-[10px] text-grafite-500 lg:inline">
-            Plataforma de Monitoramento de Mercado
-          </span>
+        <Link href="/" className="flex items-center gap-2">
+          <svg className="w-6 h-6 text-marca-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8Z" />
+          </svg>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-xl font-bold tracking-tight text-white">{MARCA.nome}</span>
+            <span className="hidden text-[10px] text-grafite-500 lg:inline">
+              Plataforma de Acompanhamento de Provedores de Internet do Estado do Rio de Janeiro
+            </span>
+          </div>
         </Link>
 
         {/* A rolagem horizontal existe para caber no celular. No desktop ela

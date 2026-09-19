@@ -59,29 +59,16 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
           <p>
             <span className="font-medium text-grafite-300">Danilo Valim</span> — Secretaria Municipal de Conservação e Serviços Públicos
           </p>
-          <p className="space-x-3">
-            <span>
-              DOI:{' '}
-              <a
-                href="https://doi.org/10.5281/zenodo.22839933"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-marca-400 hover:underline"
-              >
-                10.5281/zenodo.22839933
-              </a>
-            </span>
-            <span>
-              ORCID:{' '}
-              <a
-                href="https://orcid.org/0009-0009-7250-6151"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-marca-400 hover:underline"
-              >
-                0009-0009-7250-6151
-              </a>
-            </span>
+          <p>
+            DOI:{' '}
+            <a
+              href="https://doi.org/10.5281/zenodo.22839933"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-marca-400 hover:underline"
+            >
+              10.5281/zenodo.22839933
+            </a>
           </p>
         </div>
 
