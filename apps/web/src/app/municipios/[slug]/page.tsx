@@ -319,6 +319,7 @@ export default async function PaginaMunicipio({ params }: Props) {
               empresaId: l.empresaId,
               slug: l.slug,
               nome: l.nome,
+              cnpj: l.cnpj,
               grupoEconomico: l.grupoEconomico,
               tipoAtuacao: l.tipoAtuacao,
               acessos: l.acessos,
