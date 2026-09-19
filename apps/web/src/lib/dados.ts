@@ -80,6 +80,7 @@ export interface LinhaRankingEstadual {
 export interface Kpis {
   competencia: Competencia;
   totalAcessos: number;
+  densidadeEstado: number | null;
   numeroProvedores: number;
   numeroMunicipios: number;
   lider: { empresaId: string; nome: string; acessos: number; marketShare: number } | null;
