@@ -54,11 +54,18 @@ export default async function PaginaProvedor({ params }: Props) {
         <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
           {perfil.nome}
         </h1>
-        <p className="mt-1 text-sm text-grafite-400">
-          {perfil.grupoEconomico
-            ? `Grupo econômico: ${perfil.grupoEconomico}`
-            : 'Grupo econômico não informado na fonte'}
-        </p>
+        <div className="mt-1 space-y-0.5 text-sm text-grafite-400">
+          <p>
+            {perfil.grupoEconomico
+              ? `Grupo econômico: ${perfil.grupoEconomico}`
+              : 'Grupo econômico não informado na fonte'}
+          </p>
+          {perfil.cnpj && (
+            <p>
+              CNPJ: <span className="font-mono text-grafite-300">{perfil.cnpj}</span>
+            </p>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

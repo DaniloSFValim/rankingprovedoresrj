@@ -49,11 +49,6 @@ describe('Navegacao', () => {
     expect(screen.getByText(/NETRANK/i)).toBeInTheDocument();
   });
 
-  it('renders institutional bar', () => {
-    render(<Navegacao meta={mockMeta} cidades={mockCidades} />);
-    expect(screen.getByText('Prefeitura de Niterói')).toBeInTheDocument();
-  });
-
   it('renders main navigation items', () => {
     render(<Navegacao meta={mockMeta} cidades={mockCidades} />);
     expect(screen.getByText('Visão geral')).toBeInTheDocument();

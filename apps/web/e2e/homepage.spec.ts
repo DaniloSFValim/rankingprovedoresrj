@@ -47,15 +47,8 @@ test.describe('Homepage and Navigation', () => {
     const footer = page.locator('footer, [role="contentinfo"]').first();
     await expect(footer).toBeVisible();
 
-    // Verify institutional attribution
-    await expect(footer.locator('text=/Prefeitura|Niterói/i')).toBeVisible();
-  });
-
-  test('institutional bar displays in header', async ({ page }) => {
-    await page.goto('/');
-
-    const institutionalBar = page.locator('text=Prefeitura de Niterói');
-    await expect(institutionalBar).toBeVisible();
+    // Verify author attribution and DOI
+    await expect(footer.locator('text=/Danilo Valim|zenodo/i')).toBeVisible();
   });
 
   test('accessibility: page has proper heading hierarchy', async ({ page }) => {
