@@ -35,7 +35,7 @@ export function Navegacao({ meta, cidades, itensBusca = [] }: { meta: Meta; cida
           <div className="flex flex-col gap-0.5">
             <span className="text-xl font-bold tracking-tight text-white">{MARCA.nome}</span>
             <span className="hidden text-[10px] text-grafite-500 lg:inline">
-              Plataforma de Monitoramento de Mercado
+              Plataforma de Acompanhamento de Provedores de Internet do Estado do Rio de Janeiro
             </span>
           </div>
         </Link>
