@@ -7,6 +7,7 @@
 [![License: CC-BY-4.0](https://img.shields.io/badge/License-CC%20BY%204.0-blue.svg)](LICENSE)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0009--7250--6151-a6ce39.svg)](https://orcid.org/0009-0009-7250-6151)
 [![Citation](https://img.shields.io/badge/Citation-CFF%20%2F%20BibTeX-informational.svg)](CITATION.cff)
+[![Release](https://img.shields.io/badge/Release-v1.0.1-2ea44f.svg)](https://github.com/DaniloSFValim/rankingprovedoresrj/releases/tag/v1.0.1)
 [![CI Status](https://github.com/DaniloSFValim/rankingprovedoresrj/actions/workflows/dados-reais.yml/badge.svg?branch=main)](https://github.com/DaniloSFValim/rankingprovedoresrj/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6.svg)](https://www.typescriptlang.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-16+-000000.svg)](https://nextjs.org/)
@@ -132,6 +133,15 @@ Testes cobrem: indicadores (market share, CR-n, HHI), ranking com empates, cresc
 - 🎓 Pós-graduação em Análise de Dados Aplicadas a Políticas Públicas — UFRRJ
 - 🔗 [ORCID: 0009-0009-7250-6151](https://orcid.org/0009-0009-7250-6151)
 - 📧 [danilosfvalim@gmail.com](mailto:danilosfvalim@gmail.com)
+
+### Identificador persistente (DOI via Zenodo)
+
+Este projeto está registrado no **Zenodo** para garantir persistência e rastreabilidade acadêmica:
+
+- 🔍 Descoberta acadêmica via Google Scholar, ORCID e Zenodo
+- 🏛️ DOI permanente para citação em trabalhos acadêmicos
+- 📚 Versionamento de releases com rastreamento histórico
+- ♻️ Conformidade com FAIR Data Principles
 
 ### Como citar este trabalho
 
