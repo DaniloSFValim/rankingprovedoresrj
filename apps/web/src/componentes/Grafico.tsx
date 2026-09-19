@@ -118,6 +118,5 @@ export const Grafico = dynamic(
   () => Promise.resolve(GraficoInterno),
   {
     loading: GraficoSkeleton,
-    ssr: false
   }
 );
