@@ -10,8 +10,8 @@
  * possa ser estendida conscientemente.
  */
 
-import { canonizarTexto } from './normalize.js';
-import type { Tecnologia } from './types.js';
+import { canonizarTexto } from './normalize';
+import type { Tecnologia } from './types';
 
 const REGRAS: ReadonlyArray<readonly [RegExp, Tecnologia]> = [
   [/\bFIBRA\b|\bFTT[HBCX]\b|\bGPON\b|\bOPTIC/, 'FIBRA'],

@@ -1,11 +1,8 @@
 import Link from 'next/link';
 import { rotularCompetencia } from '@netrank/core';
-import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
-import { Destaques, TrocasLideranca } from '@/componentes/Destaques';
-import { AvisoLacunas } from '@/componentes/Procedencia';
-import { SeletorCidade, UltimaCidade } from '@/componentes/SeletorCidade';
+import { Destaques } from '@/componentes/Destaques';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
 import {
@@ -27,6 +24,15 @@ export const metadata = {
     `dos dados oficiais da Anatel.`,
 };
 
+function Badge({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 rounded-full border border-grafite-700 bg-grafite-800/50 px-3 py-1 text-xs text-grafite-300">
+      <span className="font-medium text-grafite-400">{label}</span>
+      <span className="text-white">{value}</span>
+    </div>
+  );
+}
+
 export default function Home() {
   const meta = lerMeta();
   const kpis = lerKpis();
@@ -35,103 +41,82 @@ export default function Home() {
   const movimentacoes = lerMovimentacoes();
   const municipios = lerIndiceMunicipios();
 
-  const concentracao = kpis.concentracao;
-  const cidades = municipios.map((m) => ({
-    slug: m.slug,
-    nome: m.nome,
-    totalAcessos: m.totalAcessos,
-    numeroProvedores: m.numeroProvedores,
-  }));
-
   return (
-    <main className="space-y-10">
-      {/* Cabeçalho com contexto claro */}
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
-          Banda larga fixa — {MARCA.uf}
-        </h1>
-        <p className="mt-1 text-sm text-grafite-400">
-          Série histórica de {meta.competencias.length} meses · Fonte: Anatel
-        </p>
-      </div>
+    <main className="space-y-12">
+      {/* Cartão de portfólio */}
+      <div className="mx-auto max-w-3xl">
+        <div className="cartao space-y-6 border border-marca-500/20 bg-gradient-to-br from-grafite-900/50 to-grafite-900 p-8">
+          {/* Badges profissionais */}
+          <div className="flex flex-wrap gap-2">
+            <Badge label="Dados" value={rotularCompetencia(kpis.competencia)} />
+            <Badge label="Série" value={`${inteiro(meta.competencias.length)} meses`} />
+            <Badge label="Provedores" value={inteiro(kpis.numeroProvedores)} />
+            <Badge label="Municípios" value={inteiro(municipios.length)} />
+          </div>
 
-      <AvisoLacunas meta={meta} />
+          {/* Título e descrição */}
+          <div className="space-y-3">
+            <h1 className="text-4xl font-bold text-white">
+              Banda larga fixa no {MARCA.uf}
+            </h1>
+            <p className="text-lg text-grafite-300">
+              Análise do mercado de provedores de internet. Dados oficiais da Anatel com ranking,
+              market share, concentração de mercado e evolução histórica.
+            </p>
+          </div>
 
-      {/* KPIs agrupados logicamente — estado geral */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
-          <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Panorama do Estado</div>
-          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
-        </div>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Kpi
-            rotulo="Total de acessos"
-            valor={compacto(kpis.totalAcessos)}
-            detalhe={`${inteiro(kpis.totalAcessos)} acessos`}
-            variacao={kpis.variacaoMensal?.percentual ?? null}
-            variacaoTexto={`${percentualComSinal(kpis.variacaoMensal?.percentual)} no mês`}
-          />
-          <Kpi
-            rotulo="Provedores ativos"
-            valor={inteiro(kpis.numeroProvedores)}
-            detalhe={`em ${inteiro(kpis.numeroMunicipios)} municípios`}
-            ajuda="Provedores com pelo menos um acesso registrado no Estado na competência."
-          />
-          <Kpi
-            rotulo="Maior provedor"
-            valor={percentual(kpis.lider?.marketShare, 1)}
-            detalhe={kpis.lider?.nome ?? '—'}
-            ajuda="Participação do líder estadual — equivalente ao CR1."
-          />
-          <Kpi
-            rotulo="Crescimento 12 meses"
-            valor={percentualComSinal(kpis.variacao12Meses?.percentual)}
-            detalhe={`${compacto(kpis.variacao12Meses?.absoluta)} acessos`}
-            variacao={kpis.variacao12Meses?.percentual ?? null}
-            variacaoTexto={`${compacto(kpis.variacao12Meses?.absoluta)} acessos no período`}
-          />
-        </div>
-      </div>
+          {/* Métricas principais em destaque */}
+          <div className="grid grid-cols-3 gap-4 border-t border-grafite-700 pt-6">
+            <div>
+              <div className="text-2xl font-bold text-marca-400">
+                {compacto(kpis.totalAcessos)}
+              </div>
+              <div className="text-sm text-grafite-400">Total de acessos</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-marca-400">
+                {percentual(kpis.lider?.marketShare, 1)}
+              </div>
+              <div className="text-sm text-grafite-400">Maior provedor</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-marca-400">
+                {percentualComSinal(kpis.variacao12Meses?.percentual)}
+              </div>
+              <div className="text-sm text-grafite-400">Crescimento 12m</div>
+            </div>
+          </div>
 
-      {/* Concentração — grupo visual secundário */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500/60 to-transparent" />
-          <div className="text-xs font-bold uppercase tracking-wide text-marca-400/80">Concentração de Mercado</div>
-          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500/60 to-transparent" />
-        </div>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Kpi
-            rotulo="CR5"
-            valor={percentual(concentracao?.cr5, 1)}
-            detalhe="participação dos 5 maiores"
-            ajuda="Soma das participações dos cinco maiores provedores do Estado."
-          />
-          <Kpi
-            rotulo="HHI"
-            valor={inteiro(concentracao?.hhi ? Math.round(concentracao.hhi) : null)}
-            detalhe="escala 0–10.000"
-            ajuda="Índice Herfindahl-Hirschman: soma dos quadrados das participações de todos os provedores. Indicador estatístico de concentração."
-          />
-          <Kpi
-            rotulo="Municípios"
-            valor={inteiro(kpis.numeroMunicipios)}
-            detalhe="com acessos registrados"
-          />
-          <Kpi
-            rotulo="Dados de"
-            valor={rotularCompetencia(kpis.competencia)}
-            detalhe={`${inteiro(meta.competencias.length)} meses de série`}
-          />
+          {/* Links de navegação */}
+          <div className="flex flex-wrap gap-3 border-t border-grafite-700 pt-6">
+            <Link
+              href="/ranking/"
+              className="inline-flex items-center rounded-lg bg-marca-500 px-4 py-2 font-medium text-white transition-colors hover:bg-marca-600"
+            >
+              Ranking de provedores
+            </Link>
+            <Link
+              href="/crescimento/"
+              className="inline-flex items-center rounded-lg border border-grafite-600 px-4 py-2 font-medium text-grafite-200 transition-colors hover:bg-grafite-800"
+            >
+              Crescimento
+            </Link>
+            <Link
+              href="/municipios/"
+              className="inline-flex items-center rounded-lg border border-grafite-600 px-4 py-2 font-medium text-grafite-200 transition-colors hover:bg-grafite-800"
+            >
+              Municípios
+            </Link>
+          </div>
         </div>
       </div>
 
+      {/* Seções de análise */}
       <Secao
         titulo="O que mudou no Rio de Janeiro?"
         descricao={`Comparação entre ${rotularCompetencia(movimentacoes.competenciaComparada)} e ${rotularCompetencia(movimentacoes.competencia)}`}
         href="/crescimento/"
-        hrefRotulo="Ver crescimento e retração"
+        hrefRotulo="Ver detalhes"
       >
         <Destaques movimentacoes={movimentacoes} />
       </Secao>
@@ -161,7 +146,7 @@ export default function Home() {
 
       <Secao
         titulo="Maiores municípios"
-        descricao="Por número de acessos, com o líder local"
+        descricao="Cidades com mais acessos registrados"
         href="/municipios/"
         hrefRotulo="Todos os municípios"
       >
@@ -174,7 +159,6 @@ export default function Home() {
                 <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Provedores</th>
                 <th className="px-3 py-2.5 font-medium text-grafite-400">Líder</th>
                 <th className="px-3 py-2.5 text-right font-medium text-grafite-400">Part. líder</th>
-                <th className="px-3 py-2.5 text-right font-medium text-grafite-400">HHI</th>
               </tr>
             </thead>
             <tbody>
@@ -189,18 +173,11 @@ export default function Home() {
                   <td className="numerico px-3 py-2.5 text-right text-grafite-300">{inteiro(m.numeroProvedores)}</td>
                   <td className="px-3 py-2.5 text-grafite-200">{m.liderNome ?? '—'}</td>
                   <td className="numerico px-3 py-2.5 text-right text-grafite-200">{percentual(m.liderMarketShare, 1)}</td>
-                  <td className="numerico px-3 py-2.5 text-right text-grafite-300">
-                    {inteiro(m.hhi ? Math.round(m.hhi) : null)}
-                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </Secao>
-
-      <Secao titulo="Trocas de liderança municipal" descricao="Municípios que mudaram de líder na última competência">
-        <TrocasLideranca movimentacoes={movimentacoes} />
       </Secao>
     </main>
   );

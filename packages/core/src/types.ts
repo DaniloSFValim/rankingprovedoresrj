@@ -114,6 +114,23 @@ export interface IndicadoresConcentracao {
   totalAcessos: number;
 }
 
+/** Metadados de autoria e citabilidade acadêmica. */
+export interface AutorAcademico {
+  nome: string;
+  orcid?: string;
+  email?: string;
+}
+
+export interface MetadadosAcademicos {
+  autores: AutorAcademico[];
+  afiliacao?: string;
+  doi?: string;
+  versaoDataset: string;
+  licenca: 'CC-BY-4.0' | 'CC0' | 'MIT' | 'CC-BY-SA-4.0';
+  commitHash: string;
+  urlRepositorio: string;
+}
+
 /** Metadados de rastreabilidade exigidos pelo §5. */
 export interface ProcedenciaDados {
   fonte: string;
@@ -130,4 +147,6 @@ export interface ProcedenciaDados {
    * A interface DEVE exibir aviso ostensivo quando verdadeiro.
    */
   dadosDemonstrativos: boolean;
+  /** Metadados acadêmicos opcionais para repositórios formais. */
+  academicos?: MetadadosAcademicos;
 }

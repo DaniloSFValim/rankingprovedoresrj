@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+type: dataset
+title: "NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro"
+abstract: |
+  Plataforma de análise do mercado de banda larga fixa do Estado do Rio de Janeiro,
+  construída sobre os dados abertos da Anatel. Fornece indicadores de concentração de
+  mercado, ranking de provedores e análise histórica mensal de acessos (jan/2022 - jul/2026).
+authors:
+  - family-names: Valim
+    given-names: "Danilo S. F."
+    orcid: "https://orcid.org/0009-0009-7250-6151"
+    email: danilosfvalim@gmail.com
+    affiliation: |
+      Universidade Federal Rural do Rio de Janeiro (UFRRJ)
+      Pós-Graduação em Análise de Dados Aplicadas a Políticas Públicas
+repository-code: "https://github.com/DaniloSFValim/rankingprovedoresrj"
+repository: "https://github.com/DaniloSFValim/rankingprovedoresrj"
+url: "https://rankingprovedoresrj.pages.dev"
+license: CC-BY-4.0
+keywords:
+  - "banda larga"
+  - "telecomunicações"
+  - "Rio de Janeiro"
+  - "Anatel"
+  - "análise de dados"
+  - "políticas públicas"
+  - "concentração de mercado"
+  - "dados abertos"
+version: "2026.09.16"
+date-released: "2026-09-16"
+references:
+  - type: software
+    title: "Anatel — Dados Abertos"
+    url: "https://www.anatel.gov.br/dadosabertos/"
+    repository-code: "https://dados.gov.br/dados/conjuntos-dados/acessos---banda-larga-fixa"

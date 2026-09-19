@@ -1,6 +1,13 @@
 /**
- * Utilitários para exportação de dados em múltiplos formatos
+ * Exportação de dados em múltiplos formatos (CSV, JSON, GeoJSON).
+ *
+ * Consolida lógica de conversão e download de arquivos com metadados de datasets.
+ * Funciona apenas no navegador (usa API Download).
  */
+
+export interface ExportRecord {
+  [chave: string]: string | number | boolean | null | undefined;
+}
 
 export interface DadosExportacao {
   nome: string;
@@ -12,9 +19,13 @@ export interface DadosExportacao {
 }
 
 /**
- * Converte array de objetos em CSV
+ * Converte array de objetos para CSV.
+ * Trata null/undefined como células vazias.
  */
-export function converterParaCsv(dados: Array<Record<string, any>>, colunas?: string[]): string {
+export function converterParaCsv(
+  dados: ExportRecord[],
+  colunas?: string[],
+): string {
   if (dados.length === 0) return '';
 
   const chaves = colunas || Object.keys(dados[0]!);
@@ -35,7 +46,54 @@ export function converterParaCsv(dados: Array<Record<string, any>>, colunas?: st
 }
 
 /**
- * Lista de datasets disponíveis para exportação
+ * Download de CSV no navegador.
+ * Adiciona BOM para compatibilidade com Excel em Windows.
+ */
+export function exportarCSV(dados: ExportRecord[], nomeArquivo = 'dados'): void {
+  if (dados.length === 0) {
+    console.warn('Nenhum dado para exportar');
+    return;
+  }
+
+  const conteudo = converterParaCsv(dados);
+  downloadArquivo(conteudo, `${nomeArquivo}.csv`, 'text/csv;charset=utf-8;');
+}
+
+/**
+ * Download de JSON no navegador.
+ * Formato: JSON pretty-printed (2 espaços).
+ */
+export function exportarJSON(dados: ExportRecord[], nomeArquivo = 'dados'): void {
+  const conteudo = JSON.stringify(dados, null, 2);
+  downloadArquivo(conteudo, `${nomeArquivo}.json`, 'application/json;charset=utf-8;');
+}
+
+/**
+ * Trigger de download via blob.
+ * @internal
+ */
+function downloadArquivo(conteudo: string, nomeArquivo: string, tipo: string): void {
+  const BOM = '﻿';
+  const blob = new Blob([BOM + conteudo], { type: tipo });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+
+  link.setAttribute('href', url);
+  link.setAttribute('download', nomeArquivo);
+  link.style.visibility = 'hidden';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Lista de datasets disponíveis para download.
+ *
+ * Mantém metadados sobre tamanho, formato e localização de cada artefato
+ * para fins de descoberta e UI de seleção.
  */
 export function obterDatasetsDisponiveis(): DadosExportacao[] {
   return [
@@ -112,7 +170,7 @@ export function obterDatasetsDisponiveis(): DadosExportacao[] {
 }
 
 /**
- * Formata tamanho em bytes para legível
+ * Formata tamanho de bytes para formato legível (B, KB, MB, GB).
  */
 export function formatarTamanho(bytes: number): string {
   if (bytes === 0) return '0 B';
@@ -120,4 +178,14 @@ export function formatarTamanho(bytes: number): string {
   const sizes = ['B', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+}
+
+/**
+ * Formata valor para exportação (null → '', boolean → Sim/Não).
+ */
+export function formatarParaExportacao(valor: unknown): string | number {
+  if (valor === null || valor === undefined) return '';
+  if (typeof valor === 'number') return valor;
+  if (typeof valor === 'boolean') return valor ? 'Sim' : 'Não';
+  return String(valor);
 }

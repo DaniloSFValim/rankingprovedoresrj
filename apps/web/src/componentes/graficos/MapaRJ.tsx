@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';
 import { Grafico } from '@/componentes/Grafico';
 import { MapaMunicipios } from '@/componentes/graficos/MapaMunicipios';
@@ -91,7 +90,10 @@ export function MapaRJ({ municipios }: { municipios: MunicipioIndice[] }) {
         if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
         const malha = await resposta.json();
         if (cancelado) return;
-        echarts.registerMap(NOME_MAPA, malha);
+
+        const echartsModule = await import('echarts');
+        const echarts = (echartsModule as any).registerMap ? echartsModule : (echartsModule as any).default;
+        (echarts as any).registerMap(NOME_MAPA, malha);
         setEstado('pronto');
       } catch {
         if (!cancelado) setEstado('indisponivel');

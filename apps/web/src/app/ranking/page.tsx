@@ -1,6 +1,7 @@
 import { Kpi } from '@/componentes/Kpi';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
+import { TipoAtuacaoPie } from '@/componentes/graficos/TipoAtuacaoPie';
 import { lerKpis, lerRankingEstadual } from '@/lib/dados';
 import { compacto, inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
@@ -76,7 +77,21 @@ export default function PaginaRanking() {
       </div>
 
       <div className="space-y-4">
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Distribuição por Tipo de Atuação</div>
+        <div className="cartao p-3">
+          <TipoAtuacaoPie provedores={ranking} />
+        </div>
+      </div>
+
+      <div className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Ranking Completo</div>
+        <div className="cartao p-4 bg-grafite-900/50 border-b border-grafite-800">
+          <p className="text-xs text-grafite-400 mb-3">💡 Dica: Use a busca global no topo para encontrar um provedor específico</p>
+          <div className="grid gap-2 text-xs text-grafite-500">
+            <p>Total de registros: {inteiro(ranking.length)}</p>
+            <p>Fonte: Anatel, competência {kpis.competencia}</p>
+          </div>
+        </div>
         <TabelaRanking linhas={ranking} />
       </div>
 

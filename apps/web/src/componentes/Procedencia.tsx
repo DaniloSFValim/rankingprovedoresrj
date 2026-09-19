@@ -46,61 +46,79 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
   );
 }
 
-/** Rodapé de rastreabilidade exigido pelo §5, presente em todas as páginas. */
+/** Rodapé institucional com informações essenciais. Conteúdo detalhado está em /sobre/. */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;
+  const a = p.academicos;
+
   return (
-    <footer className="mt-12 border-t border-grafite-800 bg-grafite-900/40">
-      <div className="mx-auto max-w-7xl px-4 py-8 text-xs text-grafite-400">
-        <dl className="grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <dt className="rotulo">Fonte</dt>
-            <dd className="mt-0.5 text-grafite-300">{p.fonte}</dd>
-            <dd>
-              <a
-                href={p.url}
-                className="text-marca-400 underline-offset-2 hover:underline"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                {p.url}
-              </a>
-            </dd>
-          </div>
-          <div>
-            <dt className="rotulo">UF analisada</dt>
-            <dd className="mt-0.5 text-grafite-300">{MARCA.uf} ({MARCA.ufSigla})</dd>
-            <dt className="rotulo mt-2">Arquivo</dt>
-            <dd className="mt-0.5 break-all text-grafite-300">{p.arquivo}</dd>
-          </div>
-          <div>
-            <dt className="rotulo">Período coberto</dt>
-            <dd className="mt-0.5 text-grafite-300">
-              {rotularCompetencia(p.competenciaInicial)} a {rotularCompetencia(p.competenciaFinal)}
-            </dd>
-            <dt className="rotulo mt-2">Coleta</dt>
-            <dd className="mt-0.5 text-grafite-300">
-              {new Date(p.coletadoEm).toLocaleString('pt-BR')}
-            </dd>
-          </div>
-          <div>
-            <dt className="rotulo">Última atualização</dt>
-            <dd className="mt-0.5 text-grafite-300">
-              {new Date(p.processadoEm).toLocaleString('pt-BR')}
-            </dd>
-            <dt className="rotulo mt-2">Processamento</dt>
-            <dd className="mt-0.5 text-grafite-300">{MARCA.nome}</dd>
-          </div>
-        </dl>
-        <p className="mt-6 border-t border-grafite-800 pt-4 leading-relaxed text-grafite-500">
-          {MARCA.nome} é uma camada independente de análise sobre dados públicos da
-          Anatel. Não possui vínculo com a Agência. Os indicadores de concentração
-          são estatísticos e não constituem conclusão jurídica ou regulatória.{' '}
-          <a href="/metodologia/" className="text-marca-400 underline-offset-2 hover:underline">
-            Ver metodologia completa
-          </a>
-          .
+    <footer className="mt-12 border-t border-grafite-700 bg-grafite-950/80">
+      <div className="mx-auto max-w-7xl px-4 py-8 space-y-6">
+        {/* Context Line */}
+        <p className="text-xs text-grafite-400">
+          Desenvolvido para apoiar fiscalização de serviços de banda larga pela Prefeitura de Niterói.
         </p>
+
+        {/* Key Information Grid */}
+        <section className="text-xs text-grafite-400">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <dt className="text-marca-400 font-semibold mb-1">Fonte de Dados</dt>
+              <dd className="text-grafite-300 font-medium">
+                Anatel
+              </dd>
+              <dd className="mt-1 text-grafite-500 text-[10px]">
+                Dados públicos da Agência Nacional de Telecomunicações
+              </dd>
+            </div>
+            <div>
+              <dt className="text-marca-400 font-semibold mb-1">Última Atualização</dt>
+              <dd className="text-grafite-300 text-[11px]">
+                {new Date(p.processadoEm).toLocaleString('pt-BR')}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-marca-400 font-semibold mb-1">Desenvolvimento</dt>
+              <dd className="text-grafite-300 space-y-1">
+                {a && (
+                  <div className="text-[11px]">
+                    {a.autores.slice(0, 1).map((au) => (
+                      <div key={au.email || au.nome}>
+                        {au.nome}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className="text-[10px] text-grafite-500">
+                  Desenvolvimento independente
+                </div>
+              </dd>
+            </div>
+            <div>
+              <dt className="text-marca-400 font-semibold mb-1">Mais Informações</dt>
+              <dd className="space-y-1">
+                <div>
+                  <a href="/sobre/" className="text-marca-400 hover:underline text-[11px]">
+                    → Sobre o projeto
+                  </a>
+                </div>
+                <div>
+                  <a href="/metodologia/" className="text-marca-400 hover:underline text-[11px]">
+                    → Metodologia
+                  </a>
+                </div>
+              </dd>
+            </div>
+          </div>
+        </section>
+
+        {/* Disclaimer */}
+        <section className="border-t border-grafite-800 pt-6 text-xs leading-relaxed text-grafite-500">
+          <p>
+            {MARCA.nome} é uma análise independente sobre dados públicos da Anatel. Os indicadores de concentração
+            são estatísticos e não constituem conclusão jurídica ou regulatória.
+          </p>
+        </section>
       </div>
     </footer>
   );
