@@ -22,3 +22,7 @@ data/*.sqlite-*
 #
 # Versionar os dois faz o deploy funcionar tanto com Build command vazio
 # quanto com `npm run build`. Ver README, secao Deploy.
+
+# Test artifacts
+test-results/
+playwright-report/

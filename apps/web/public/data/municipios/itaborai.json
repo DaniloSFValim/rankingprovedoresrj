@@ -1,1 +1,878 @@
-{"codigoIbge":"3301900","nome":"Itaboraí","competencia":"2026-07","concentracao":{"cr1":19.90546618891515,"cr3":49.82846687504765,"cr5":65.73149348174125,"cr10":92.01036822444156,"hhi":1121.4158109006207,"numeroProvedores":43,"totalAcessos":13117},"variacao12Meses":{"absoluta":-8152,"percentual":-38.32808312567587},"ranking":[{"posicao":1,"empresaId":"cnpj:05980171","acessos":2611,"marketShare":19.90546618891515,"posicaoAnterior":2,"variacaoPosicao":1,"acessosAnterior":2545,"variacaoAbsoluta":66,"variacaoPercentual":2.593320235756385,"slug":"predialnet","nome":"Predialnet","grupoEconomico":"OUTROS","variacao12Absoluta":471,"variacao12Percentual":22.009345794392523},{"posicao":2,"empresaId":"cnpj:42057789","acessos":1987,"marketShare":15.148280856903254,"posicaoAnterior":3,"variacaoPosicao":1,"acessosAnterior":2136,"variacaoAbsoluta":-149,"variacaoPercentual":-6.975655430711611,"slug":"leste-telecom-4","nome":"Leste Telecom","grupoEconomico":"OUTROS","variacao12Absoluta":-31,"variacao12Percentual":-1.5361744301288405},{"posicao":3,"empresaId":"cnpj:17100640","acessos":1938,"marketShare":14.774719829229245,"posicaoAnterior":4,"variacaoPosicao":1,"acessosAnterior":1991,"variacaoAbsoluta":-53,"variacaoPercentual":-2.6619789050728278,"slug":"rede-turbo","nome":"REDE TURBO","grupoEconomico":"OUTROS","variacao12Absoluta":-351,"variacao12Percentual":-15.334207077326342},{"posicao":4,"empresaId":"cnpj:07737302","acessos":1165,"marketShare":8.881604025310667,"posicaoAnterior":5,"variacaoPosicao":1,"acessosAnterior":1209,"variacaoAbsoluta":-44,"variacaoPercentual":-3.6393713813068653,"slug":"gigaline-internet","nome":"GIGALINE INTERNET","grupoEconomico":"OUTROS","variacao12Absoluta":-259,"variacao12Percentual":-18.18820224719101},{"posicao":5,"empresaId":"cnpj:40154884","acessos":921,"marketShare":7.0214225813829385,"posicaoAnterior":6,"variacaoPosicao":1,"acessosAnterior":890,"variacaoAbsoluta":31,"variacaoPercentual":3.48314606741573,"slug":"starlink-brazil-servicos-de-internet-ltda","nome":"STARLINK BRAZIL SERVICOS DE INTERNET LTDA.","grupoEconomico":"OUTROS","variacao12Absoluta":683,"variacao12Percentual":286.97478991596637},{"posicao":6,"empresaId":"cnpj:05416917","acessos":832,"marketShare":6.342913776015857,"posicaoAnterior":7,"variacaoPosicao":1,"acessosAnterior":786,"variacaoAbsoluta":46,"variacaoPercentual":5.852417302798982,"slug":"amo-telecom","nome":"Amo Telecom","grupoEconomico":"OUTROS","variacao12Absoluta":-108,"variacao12Percentual":-11.48936170212766},{"posicao":7,"empresaId":"cnpj:46132657","acessos":732,"marketShare":5.580544331783182,"posicaoAnterior":8,"variacaoPosicao":1,"acessosAnterior":734,"variacaoAbsoluta":-2,"variacaoPercentual":-0.2724795640326975,"slug":"up7","nome":"Up7","grupoEconomico":"OUTROS","variacao12Absoluta":491,"variacao12Percentual":203.7344398340249},{"posicao":8,"empresaId":"cnpj:31461078","acessos":658,"marketShare":5.016390943051002,"posicaoAnterior":11,"variacaoPosicao":3,"acessosAnterior":375,"variacaoAbsoluta":283,"variacaoPercentual":75.46666666666667,"slug":"ingnet-provedor-de-internet-eireli","nome":"INGNET PROVEDOR DE INTERNET EIRELI","grupoEconomico":"OUTROS","variacao12Absoluta":521,"variacao12Percentual":380.2919708029197},{"posicao":9,"empresaId":"cnpj:35944348","acessos":639,"marketShare":4.871540748646795,"posicaoAnterior":9,"variacaoPosicao":0,"acessosAnterior":613,"variacaoAbsoluta":26,"variacaoPercentual":4.241435562805873,"slug":"realnet","nome":"Realnet","grupoEconomico":"OUTROS","variacao12Absoluta":197,"variacao12Percentual":44.57013574660634},{"posicao":10,"empresaId":"cnpj:54757677","acessos":586,"marketShare":4.467484943203477,"posicaoAnterior":13,"variacaoPosicao":3,"acessosAnterior":200,"variacaoAbsoluta":386,"variacaoPercentual":193,"slug":"brasil-telecom","nome":"Brasil Telecom","grupoEconomico":"OUTROS","variacao12Absoluta":null,"variacao12Percentual":null},{"posicao":11,"empresaId":"cnpj:53965808","acessos":262,"marketShare":1.9974079438896089,"posicaoAnterior":12,"variacaoPosicao":1,"acessosAnterior":293,"variacaoAbsoluta":-31,"variacaoPercentual":-10.580204778156997,"slug":"fibra-servicos-de-telecomunicacoes-ltda","nome":"Fibra + Servicos de Telecomunicacoes Ltda","grupoEconomico":"OUTROS","variacao12Absoluta":27,"variacao12Percentual":11.48936170212766},{"posicao":12,"empresaId":"cnpj:39814500","acessos":217,"marketShare":1.6543416939849052,"posicaoAnterior":13,"variacaoPosicao":1,"acessosAnterior":200,"variacaoAbsoluta":17,"variacaoPercentual":8.5,"slug":"real-net-work-servicos-multimidia-ltda","nome":"Real Net Work Servicos Multimidia Ltda","grupoEconomico":"OUTROS","variacao12Absoluta":null,"variacao12Percentual":null},{"posicao":13,"empresaId":"cnpj:40432544","acessos":108,"marketShare":0.8233589997712891,"posicaoAnterior":19,"variacaoPosicao":6,"acessosAnterior":106,"variacaoAbsoluta":2,"variacaoPercentual":1.8867924528301887,"slug":"claro","nome":"CLARO","grupoEconomico":"TELECOM AMERICAS","variacao12Absoluta":8,"variacao12Percentual":8},{"posicao":14,"empresaId":"cnpj:76535764","acessos":103,"marketShare":0.7852405275596555,"posicaoAnterior":18,"variacaoPosicao":4,"acessosAnterior":108,"variacaoAbsoluta":-5,"variacaoPercentual":-4.62962962962963,"slug":"oi-4","nome":"OI","grupoEconomico":"OI","variacao12Absoluta":-310,"variacao12Percentual":-75.06053268765133},{"posicao":15,"empresaId":"cnpj:17033554","acessos":83,"marketShare":0.6327666387131203,"posicaoAnterior":20,"variacaoPosicao":5,"acessosAnterior":89,"variacaoAbsoluta":-6,"variacaoPercentual":-6.741573033707865,"slug":"gruponet","nome":"Gruponet","grupoEconomico":"OUTROS","variacao12Absoluta":null,"variacao12Percentual":null},{"posicao":16,"empresaId":"cnpj:05206385","acessos":77,"marketShare":0.5870244720591599,"posicaoAnterior":21,"variacaoPosicao":5,"acessosAnterior":81,"variacaoAbsoluta":-4,"variacaoPercentual":-4.938271604938271,"slug":"hughes","nome":"HUGHES","grupoEconomico":"HUGHES","variacao12Absoluta":-3,"variacao12Percentual":-3.75},{"posicao":17,"empresaId":"cnpj:45289507","acessos":42,"marketShare":0.32019516657772357,"posicaoAnterior":22,"variacaoPosicao":5,"acessosAnterior":42,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"navegue","nome":"Navegue","grupoEconomico":"OUTROS","variacao12Absoluta":-18,"variacao12Percentual":-30},{"posicao":18,"empresaId":"cnpj:02558157","acessos":30,"marketShare":0.22871083326980254,"posicaoAnterior":24,"variacaoPosicao":6,"acessosAnterior":30,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"vivo","nome":"VIVO","grupoEconomico":"TELEFONICA","variacao12Absoluta":3,"variacao12Percentual":11.11111111111111},{"posicao":19,"empresaId":"cnpj:00336701","acessos":29,"marketShare":0.2210871388274758,"posicaoAnterior":25,"variacaoPosicao":6,"acessosAnterior":29,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"telebras","nome":"TELEBRAS","grupoEconomico":"TELEBRAS","variacao12Absoluta":16,"variacao12Percentual":123.07692307692308},{"posicao":20,"empresaId":"cnpj:07426946","acessos":14,"marketShare":0.10673172219257453,"posicaoAnterior":26,"variacaoPosicao":6,"acessosAnterior":14,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"avanca-k2-telecom","nome":"Avanca - K2 Telecom","grupoEconomico":"OUTROS","variacao12Absoluta":11,"variacao12Percentual":366.66666666666663},{"posicao":20,"empresaId":"cnpj:12520520","acessos":14,"marketShare":0.10673172219257453,"posicaoAnterior":26,"variacaoPosicao":6,"acessosAnterior":14,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"itanet","nome":"ITANET","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":22,"empresaId":"cnpj:05872814","acessos":10,"marketShare":0.0762369444232675,"posicaoAnterior":28,"variacaoPosicao":6,"acessosAnterior":8,"variacaoAbsoluta":2,"variacaoPercentual":25,"slug":"algar-ctbc-telecom-2","nome":"ALGAR (CTBC TELECOM)","grupoEconomico":"ALGAR (CTBC TELECOM)","variacao12Absoluta":2,"variacao12Percentual":25},{"posicao":23,"empresaId":"cnpj:48992693","acessos":8,"marketShare":0.060989555538614015,"posicaoAnterior":null,"variacaoPosicao":null,"acessosAnterior":null,"variacaoAbsoluta":null,"variacaoPercentual":null,"slug":"nova-rede-fibra","nome":"Nova Rede Fibra","grupoEconomico":"OUTROS","variacao12Absoluta":null,"variacao12Percentual":null},{"posicao":24,"empresaId":"cnpj:07756651","acessos":6,"marketShare":0.04574216665396051,"posicaoAnterior":30,"variacaoPosicao":6,"acessosAnterior":5,"variacaoAbsoluta":1,"variacaoPercentual":20,"slug":"brasil-tecpar-3","nome":"BRASIL TECPAR","grupoEconomico":"BRASIL TECPAR","variacao12Absoluta":null,"variacao12Percentual":null},{"posicao":24,"empresaId":"cnpj:27134115","acessos":6,"marketShare":0.04574216665396051,"posicaoAnterior":32,"variacaoPosicao":8,"acessosAnterior":4,"variacaoAbsoluta":2,"variacaoPercentual":50,"slug":"at-telecom-eireli-epp","nome":"AT TELECOM EIRELI - EPP","grupoEconomico":"OUTROS","variacao12Absoluta":null,"variacao12Percentual":null},{"posicao":26,"empresaId":"cnpj:07349982","acessos":5,"marketShare":0.03811847221163375,"posicaoAnterior":30,"variacaoPosicao":4,"acessosAnterior":5,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"yipi-cloud-servicos-ltda","nome":"YIPI CLOUD SERVIÇOS LTDA","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":27,"empresaId":"cnpj:11812715","acessos":4,"marketShare":0.030494777769307008,"posicaoAnterior":32,"variacaoPosicao":5,"acessosAnterior":4,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"top-net-brasil-servicos-de-telecomunicacoes-ltda","nome":"Top Net Brasil Servicos de Telecomunicacoes Ltda","grupoEconomico":"OUTROS","variacao12Absoluta":1,"variacao12Percentual":33.33333333333333},{"posicao":27,"empresaId":"cnpj:57085453","acessos":4,"marketShare":0.030494777769307008,"posicaoAnterior":32,"variacaoPosicao":5,"acessosAnterior":4,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"origem-datacenter","nome":"Origem Datacenter","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":29,"empresaId":"cnpj:02421421","acessos":3,"marketShare":0.022871083326980256,"posicaoAnterior":35,"variacaoPosicao":6,"acessosAnterior":3,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"tim","nome":"TIM","grupoEconomico":"TELECOM ITALIA","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":29,"empresaId":"cnpj:04842765","acessos":3,"marketShare":0.022871083326980256,"posicaoAnterior":35,"variacaoPosicao":6,"acessosAnterior":3,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"netway-telecom-ltda","nome":"Netway Telecom Ltda","grupoEconomico":"OUTROS","variacao12Absoluta":1,"variacao12Percentual":50},{"posicao":29,"empresaId":"cnpj:41644220","acessos":3,"marketShare":0.022871083326980256,"posicaoAnterior":35,"variacaoPosicao":6,"acessosAnterior":3,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"giga-mais-fibra-3","nome":"GIGA MAIS FIBRA","grupoEconomico":"GIGA MAIS FIBRA","variacao12Absoluta":2,"variacao12Percentual":200},{"posicao":32,"empresaId":"cnpj:01077556","acessos":2,"marketShare":0.015247388884653504,"posicaoAnterior":38,"variacaoPosicao":6,"acessosAnterior":2,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"all-net","nome":"All Net","grupoEconomico":"OUTROS","variacao12Absoluta":1,"variacao12Percentual":100},{"posicao":32,"empresaId":"cnpj:09520219","acessos":2,"marketShare":0.015247388884653504,"posicaoAnterior":38,"variacaoPosicao":6,"acessosAnterior":2,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"wireless-comm-services-ltda","nome":"WIRELESS COMM SERVICES LTDA","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":32,"empresaId":"cnpj:21229558","acessos":2,"marketShare":0.015247388884653504,"posicaoAnterior":38,"variacaoPosicao":6,"acessosAnterior":2,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"tixperts-informatica-ltda","nome":"TIXPERTS INFORMATICA LTDA","grupoEconomico":"OUTROS","variacao12Absoluta":-1,"variacao12Percentual":-33.33333333333333},{"posicao":32,"empresaId":"cnpj:23530399","acessos":2,"marketShare":0.015247388884653504,"posicaoAnterior":42,"variacaoPosicao":10,"acessosAnterior":1,"variacaoAbsoluta":1,"variacaoPercentual":100,"slug":"guaratibanet-telecom","nome":"Guaratibanet Telecom","grupoEconomico":"OUTROS","variacao12Absoluta":1,"variacao12Percentual":100},{"posicao":32,"empresaId":"cnpj:37544358","acessos":2,"marketShare":0.015247388884653504,"posicaoAnterior":38,"variacaoPosicao":6,"acessosAnterior":2,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"wipi","nome":"Wipi","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":37,"empresaId":"cnpj:02808705","acessos":1,"marketShare":0.007623694442326752,"posicaoAnterior":42,"variacaoPosicao":5,"acessosAnterior":1,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"compugraf-telecom-ltda","nome":"Compugraf Telecom Ltda","grupoEconomico":"OUTROS","variacao12Absoluta":-2,"variacao12Percentual":-66.66666666666666},{"posicao":37,"empresaId":"cnpj:03197023","acessos":1,"marketShare":0.007623694442326752,"posicaoAnterior":42,"variacaoPosicao":5,"acessosAnterior":1,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"universal-telecom-ltda","nome":"Universal Telecom Ltda","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":37,"empresaId":"cnpj:03287268","acessos":1,"marketShare":0.007623694442326752,"posicaoAnterior":42,"variacaoPosicao":5,"acessosAnterior":1,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"alta-rede-corporate","nome":"ALTA REDE CORPORATE","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":37,"empresaId":"cnpj:09610690","acessos":1,"marketShare":0.007623694442326752,"posicaoAnterior":null,"variacaoPosicao":null,"acessosAnterior":null,"variacaoAbsoluta":null,"variacaoPercentual":null,"slug":"westlink","nome":"WESTLINK","grupoEconomico":"OUTROS","variacao12Absoluta":null,"variacao12Percentual":null},{"posicao":37,"empresaId":"cnpj:11620561","acessos":1,"marketShare":0.007623694442326752,"posicaoAnterior":42,"variacaoPosicao":5,"acessosAnterior":1,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"megatelecom-4","nome":"MEGATELECOM","grupoEconomico":"MEGATELECOM","variacao12Absoluta":-1,"variacao12Percentual":-50},{"posicao":37,"empresaId":"cnpj:17888419","acessos":1,"marketShare":0.007623694442326752,"posicaoAnterior":42,"variacaoPosicao":5,"acessosAnterior":1,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"zamix-multiplay-telecomunicacoes-ltda","nome":"Zamix Multiplay Telecomunicacoes Ltda","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0},{"posicao":37,"empresaId":"cnpj:18342491","acessos":1,"marketShare":0.007623694442326752,"posicaoAnterior":42,"variacaoPosicao":5,"acessosAnterior":1,"variacaoAbsoluta":0,"variacaoPercentual":0,"slug":"omega-telecom","nome":"OMEGA TELECOM","grupoEconomico":"OUTROS","variacao12Absoluta":0,"variacao12Percentual":0}],"serie":[{"competencia":"2022-01","totalAcessos":19386,"numeroProvedores":36,"hhi":3457.0556782376075},{"competencia":"2022-02","totalAcessos":20016,"numeroProvedores":35,"hhi":3217.498243611346},{"competencia":"2022-03","totalAcessos":22796,"numeroProvedores":33,"hhi":2855.0500835919615},{"competencia":"2022-04","totalAcessos":28307,"numeroProvedores":35,"hhi":2713.7654149360046},{"competencia":"2022-05","totalAcessos":29118,"numeroProvedores":34,"hhi":2913.7568100383755},{"competencia":"2022-06","totalAcessos":30548,"numeroProvedores":37,"hhi":2977.605943984861},{"competencia":"2022-07","totalAcessos":17590,"numeroProvedores":38,"hhi":3587.1002730697755},{"competencia":"2022-08","totalAcessos":17509,"numeroProvedores":40,"hhi":3660.320237189703},{"competencia":"2022-09","totalAcessos":17395,"numeroProvedores":39,"hhi":3710.625333737736},{"competencia":"2022-10","totalAcessos":21017,"numeroProvedores":41,"hhi":3183.0036858961566},{"competencia":"2022-11","totalAcessos":23148,"numeroProvedores":41,"hhi":3629.2686270081704},{"competencia":"2022-12","totalAcessos":28211,"numeroProvedores":43,"hhi":2297.873008830903},{"competencia":"2024-01","totalAcessos":24373,"numeroProvedores":46,"hhi":2179.324339933574},{"competencia":"2024-02","totalAcessos":24060,"numeroProvedores":41,"hhi":2025.91139220389},{"competencia":"2024-03","totalAcessos":23913,"numeroProvedores":43,"hhi":2049.6118324660033},{"competencia":"2024-04","totalAcessos":17658,"numeroProvedores":42,"hhi":1153.8136384512466},{"competencia":"2024-05","totalAcessos":14748,"numeroProvedores":44,"hhi":1185.195710686114},{"competencia":"2024-06","totalAcessos":14552,"numeroProvedores":46,"hhi":1181.4494156574012},{"competencia":"2024-07","totalAcessos":14626,"numeroProvedores":45,"hhi":1204.7919287312975},{"competencia":"2024-08","totalAcessos":14360,"numeroProvedores":45,"hhi":1215.4641684965204},{"competencia":"2024-09","totalAcessos":15320,"numeroProvedores":48,"hhi":1230.3108958408604},{"competencia":"2024-10","totalAcessos":16485,"numeroProvedores":49,"hhi":1399.6022707567072},{"competencia":"2024-11","totalAcessos":16967,"numeroProvedores":48,"hhi":1480.0353560935437},{"competencia":"2024-12","totalAcessos":18019,"numeroProvedores":50,"hhi":1568.2973717357459},{"competencia":"2025-01","totalAcessos":19127,"numeroProvedores":51,"hhi":1804.853508273783},{"competencia":"2025-02","totalAcessos":20179,"numeroProvedores":49,"hhi":2005.7473323747997},{"competencia":"2025-03","totalAcessos":20313,"numeroProvedores":47,"hhi":2116.861105484236},{"competencia":"2025-04","totalAcessos":20412,"numeroProvedores":50,"hhi":2161.818056943293},{"competencia":"2025-05","totalAcessos":19799,"numeroProvedores":48,"hhi":2248.0430319763886},{"competencia":"2025-06","totalAcessos":20297,"numeroProvedores":51,"hhi":2026.2341407999272},{"competencia":"2025-07","totalAcessos":21269,"numeroProvedores":49,"hhi":2284.4583091508066},{"competencia":"2025-08","totalAcessos":21649,"numeroProvedores":52,"hhi":2017.7352610960008},{"competencia":"2025-09","totalAcessos":21851,"numeroProvedores":49,"hhi":2102.1839198205357},{"competencia":"2025-10","totalAcessos":23516,"numeroProvedores":45,"hhi":2029.2804375105482},{"competencia":"2025-11","totalAcessos":20513,"numeroProvedores":43,"hhi":2694.746115189793},{"competencia":"2025-12","totalAcessos":22905,"numeroProvedores":45,"hhi":2510.7003239036594},{"competencia":"2026-01","totalAcessos":24020,"numeroProvedores":45,"hhi":2385.811192587914},{"competencia":"2026-02","totalAcessos":23285,"numeroProvedores":43,"hhi":2195.6838382989326},{"competencia":"2026-03","totalAcessos":25370,"numeroProvedores":47,"hhi":2232.8255573911315},{"competencia":"2026-04","totalAcessos":22854,"numeroProvedores":48,"hhi":2392.668926999778},{"competencia":"2026-05","totalAcessos":24465,"numeroProvedores":50,"hhi":2590.16528197604},{"competencia":"2026-06","totalAcessos":24358,"numeroProvedores":51,"hhi":2297.6826411399848},{"competencia":"2026-07","totalAcessos":13117,"numeroProvedores":43,"hhi":1121.4158109006207}],"tecnologia":[{"competencia":"2022-01","distribuicao":{"OUTRAS":15695,"SATELITE":88,"FIBRA":3586,"XDSL":17}},{"competencia":"2022-02","distribuicao":{"OUTRAS":16362,"SATELITE":90,"FIBRA":3547,"XDSL":17}},{"competencia":"2022-03","distribuicao":{"OUTRAS":20335,"SATELITE":91,"FIBRA":2353,"XDSL":17}},{"competencia":"2022-04","distribuicao":{"OUTRAS":24636,"SATELITE":83,"FIBRA":3571,"XDSL":17}},{"competencia":"2022-05","distribuicao":{"OUTRAS":25568,"SATELITE":95,"FIBRA":3438,"XDSL":17}},{"competencia":"2022-06","distribuicao":{"OUTRAS":27021,"SATELITE":99,"FIBRA":3411,"XDSL":17}},{"competencia":"2022-07","distribuicao":{"OUTRAS":14107,"SATELITE":89,"FIBRA":3376,"XDSL":18}},{"competencia":"2022-08","distribuicao":{"OUTRAS":14100,"SATELITE":111,"FIBRA":3280,"XDSL":18}},{"competencia":"2022-09","distribuicao":{"SATELITE":88,"OUTRAS":13927,"FIBRA":3360,"XDSL":20}},{"competencia":"2022-10","distribuicao":{"OUTRAS":17626,"SATELITE":111,"FIBRA":3261,"XDSL":19}},{"competencia":"2022-11","distribuicao":{"OUTRAS":19762,"SATELITE":114,"FIBRA":3252,"XDSL":20}},{"competencia":"2022-12","distribuicao":{"OUTRAS":24849,"SATELITE":114,"FIBRA":3228,"XDSL":20}},{"competencia":"2024-01","distribuicao":{"OUTRAS":20429,"SATELITE":182,"FIBRA":3739,"XDSL":23}},{"competencia":"2024-02","distribuicao":{"OUTRAS":19681,"SATELITE":186,"FIBRA":4170,"XDSL":23}},{"competencia":"2024-03","distribuicao":{"OUTRAS":19406,"SATELITE":192,"FIBRA":4292,"XDSL":23}},{"competencia":"2024-04","distribuicao":{"OUTRAS":13128,"SATELITE":193,"FIBRA":4315,"XDSL":22}},{"competencia":"2024-05","distribuicao":{"OUTRAS":10187,"SATELITE":206,"FIBRA":4333,"XDSL":22}},{"competencia":"2024-06","distribuicao":{"OUTRAS":9754,"SATELITE":229,"FIBRA":4547,"XDSL":22}},{"competencia":"2024-07","distribuicao":{"OUTRAS":9918,"SATELITE":249,"FIBRA":4433,"XDSL":26}},{"competencia":"2024-08","distribuicao":{"OUTRAS":9772,"SATELITE":246,"FIBRA":4315,"XDSL":27}},{"competencia":"2024-09","distribuicao":{"OUTRAS":10647,"SATELITE":271,"FIBRA":4375,"XDSL":27}},{"competencia":"2024-10","distribuicao":{"OUTRAS":12013,"SATELITE":328,"FIBRA":4119,"XDSL":25}},{"competencia":"2024-11","distribuicao":{"OUTRAS":12389,"SATELITE":353,"FIBRA":4200,"XDSL":25}},{"competencia":"2024-12","distribuicao":{"OUTRAS":13219,"SATELITE":349,"FIBRA":4423,"XDSL":28}},{"competencia":"2025-01","distribuicao":{"OUTRAS":14318,"SATELITE":340,"FIBRA":4441,"XDSL":28}},{"competencia":"2025-02","distribuicao":{"OUTRAS":15405,"SATELITE":341,"FIBRA":4401,"XDSL":32}},{"competencia":"2025-03","distribuicao":{"OUTRAS":15442,"FIBRA":4512,"XDSL":32,"SATELITE":327}},{"competencia":"2025-04","distribuicao":{"OUTRAS":15390,"SATELITE":338,"FIBRA":4651,"XDSL":33}},{"competencia":"2025-05","distribuicao":{"OUTRAS":14986,"FIBRA":4449,"XDSL":34,"SATELITE":330}},{"competencia":"2025-06","distribuicao":{"OUTRAS":15102,"SATELITE":341,"FIBRA":4816,"XDSL":38}},{"competencia":"2025-07","distribuicao":{"OUTRAS":16019,"SATELITE":341,"FIBRA":4867,"XDSL":42}},{"competencia":"2025-08","distribuicao":{"OUTRAS":16471,"SATELITE":338,"FIBRA":4796,"XDSL":44}},{"competencia":"2025-09","distribuicao":{"OUTRAS":16514,"SATELITE":330,"FIBRA":4962,"XDSL":45}},{"competencia":"2025-10","distribuicao":{"OUTRAS":18455,"SATELITE":389,"FIBRA":4627,"XDSL":45}},{"competencia":"2025-11","distribuicao":{"OUTRAS":15648,"SATELITE":613,"FIBRA":4207,"XDSL":45}},{"competencia":"2025-12","distribuicao":{"OUTRAS":17466,"SATELITE":716,"FIBRA":4677,"XDSL":46}},{"competencia":"2026-01","distribuicao":{"OUTRAS":17790,"SATELITE":814,"FIBRA":5370,"XDSL":46}},{"competencia":"2026-02","distribuicao":{"OUTRAS":17194,"SATELITE":845,"FIBRA":5205,"XDSL":41}},{"competencia":"2026-03","distribuicao":{"OUTRAS":18550,"SATELITE":905,"FIBRA":5873,"XDSL":42}},{"competencia":"2026-04","distribuicao":{"OUTRAS":16262,"SATELITE":920,"FIBRA":5631,"XDSL":41}},{"competencia":"2026-05","distribuicao":{"OUTRAS":17735,"SATELITE":964,"FIBRA":5724,"XDSL":42}},{"competencia":"2026-06","distribuicao":{"OUTRAS":16908,"SATELITE":1004,"FIBRA":6404,"XDSL":42}},{"competencia":"2026-07","distribuicao":{"OUTRAS":5541,"SATELITE":1023,"XDSL":42,"FIBRA":6511}}],"saidas":[{"empresaId":"cnpj:52229482","slug":"fiber-vox","nome":"Fiber Vox","acessosAnteriores":10812},{"empresaId":"cnpj:02519876","slug":"c-j-alves-network-servicos-de-informatica-e-internet-ltda","nome":"C. J. Alves Network Servicos de Informatica e Internet Ltda","acessosAnteriores":441},{"empresaId":"cnpj:57016035","slug":"like-net-telecomunicacoes-ltda","nome":"Like.net Telecomunicacoes Ltda","acessosAnteriores":196},{"empresaId":"cnpj:39441087","slug":"nova-real-link-servicos-de-comunicacoes-multimidia-ltda","nome":"Nova Real Link Servicos de Comunicacoes Multimidia Ltda","acessosAnteriores":168},{"empresaId":"cnpj:21232074","slug":"telecom-conecta","nome":"Telecom Conecta","acessosAnteriores":158},{"empresaId":"cnpj:54615020","slug":"lc-c-telecom-ltda","nome":"Lc&c Telecom Ltda","acessosAnteriores":34},{"empresaId":"cnpj:27001440","slug":"viasat-brasil-servicos-de-comunicacoes-ltda","nome":"Viasat Brasil Servicos de Comunicacoes Ltda","acessosAnteriores":7},{"empresaId":"cnpj:10329181","slug":"rw-servicos-de-telecomunicacoes-l-t-d-a","nome":"RW SERVICOS DE TELECOMUNICACOES L T D A","acessosAnteriores":1},{"empresaId":"cnpj:31289818","slug":"vertical-net","nome":"VERTICAL NET","acessosAnteriores":1},{"empresaId":"cnpj:31748174","slug":"vero-2","nome":"VERO","acessosAnteriores":1}],"posicaoNoEstado":39,"totalMunicipios":92}
+{
+  "codigoIbge": "3301900",
+  "nome": "Itaboraí",
+  "competencia": "2026-07",
+  "concentracao": {
+    "cr1": 19.90546618891515,
+    "cr3": 49.82846687504765,
+    "cr5": 65.73149348174125,
+    "cr10": 92.01036822444156,
+    "hhi": 1121.4158109006207,
+    "numeroProvedores": 43,
+    "totalAcessos": 13117
+  },
+  "ranking": [
+    {
+      "posicao": 1,
+      "empresaId": "cnpj:05980171",
+      "acessos": 2611,
+      "marketShare": 19.90546618891515,
+      "posicaoAnterior": 2,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 2545,
+      "variacaoAbsoluta": 66,
+      "variacaoPercentual": 2.593320235756385,
+      "slug": "predialnet",
+      "nome": "Predialnet",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 2,
+      "empresaId": "cnpj:42057789",
+      "acessos": 1987,
+      "marketShare": 15.148280856903254,
+      "posicaoAnterior": 3,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 2136,
+      "variacaoAbsoluta": -149,
+      "variacaoPercentual": -6.975655430711611,
+      "slug": "leste-telecom-4",
+      "nome": "Leste Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 3,
+      "empresaId": "cnpj:17100640",
+      "acessos": 1938,
+      "marketShare": 14.774719829229245,
+      "posicaoAnterior": 4,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 1991,
+      "variacaoAbsoluta": -53,
+      "variacaoPercentual": -2.6619789050728278,
+      "slug": "rede-turbo",
+      "nome": "REDE TURBO",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 4,
+      "empresaId": "cnpj:07737302",
+      "acessos": 1165,
+      "marketShare": 8.881604025310667,
+      "posicaoAnterior": 5,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 1209,
+      "variacaoAbsoluta": -44,
+      "variacaoPercentual": -3.6393713813068653,
+      "slug": "gigaline-internet",
+      "nome": "GIGALINE INTERNET",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 5,
+      "empresaId": "cnpj:40154884",
+      "acessos": 921,
+      "marketShare": 7.0214225813829385,
+      "posicaoAnterior": 6,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 890,
+      "variacaoAbsoluta": 31,
+      "variacaoPercentual": 3.48314606741573,
+      "slug": "starlink-brazil-servicos-de-internet-ltda",
+      "nome": "STARLINK BRAZIL SERVICOS DE INTERNET LTDA.",
+      "tipoAtuacao": "PROVEDOR"
+    },
+    {
+      "posicao": 6,
+      "empresaId": "cnpj:05416917",
+      "acessos": 832,
+      "marketShare": 6.342913776015857,
+      "posicaoAnterior": 7,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 786,
+      "variacaoAbsoluta": 46,
+      "variacaoPercentual": 5.852417302798982,
+      "slug": "amo-telecom",
+      "nome": "Amo Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 7,
+      "empresaId": "cnpj:46132657",
+      "acessos": 732,
+      "marketShare": 5.580544331783182,
+      "posicaoAnterior": 8,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 734,
+      "variacaoAbsoluta": -2,
+      "variacaoPercentual": -0.2724795640326975,
+      "slug": "up7",
+      "nome": "Up7",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 8,
+      "empresaId": "cnpj:31461078",
+      "acessos": 658,
+      "marketShare": 5.016390943051002,
+      "posicaoAnterior": 11,
+      "variacaoPosicao": 3,
+      "acessosAnterior": 375,
+      "variacaoAbsoluta": 283,
+      "variacaoPercentual": 75.46666666666667,
+      "slug": "ingnet-provedor-de-internet-eireli",
+      "nome": "INGNET PROVEDOR DE INTERNET EIRELI",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 9,
+      "empresaId": "cnpj:35944348",
+      "acessos": 639,
+      "marketShare": 4.871540748646795,
+      "posicaoAnterior": 9,
+      "variacaoPosicao": 0,
+      "acessosAnterior": 613,
+      "variacaoAbsoluta": 26,
+      "variacaoPercentual": 4.241435562805873,
+      "slug": "realnet",
+      "nome": "Realnet",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 10,
+      "empresaId": "cnpj:54757677",
+      "acessos": 586,
+      "marketShare": 4.467484943203477,
+      "posicaoAnterior": 13,
+      "variacaoPosicao": 3,
+      "acessosAnterior": 200,
+      "variacaoAbsoluta": 386,
+      "variacaoPercentual": 193,
+      "slug": "brasil-telecom",
+      "nome": "Brasil Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 11,
+      "empresaId": "cnpj:53965808",
+      "acessos": 262,
+      "marketShare": 1.9974079438896089,
+      "posicaoAnterior": 12,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 293,
+      "variacaoAbsoluta": -31,
+      "variacaoPercentual": -10.580204778156997,
+      "slug": "fibra-servicos-de-telecomunicacoes-ltda",
+      "nome": "Fibra + Servicos de Telecomunicacoes Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 12,
+      "empresaId": "cnpj:39814500",
+      "acessos": 217,
+      "marketShare": 1.6543416939849052,
+      "posicaoAnterior": 13,
+      "variacaoPosicao": 1,
+      "acessosAnterior": 200,
+      "variacaoAbsoluta": 17,
+      "variacaoPercentual": 8.5,
+      "slug": "real-net-work-servicos-multimidia-ltda",
+      "nome": "Real Net Work Servicos Multimidia Ltda",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 13,
+      "empresaId": "cnpj:40432544",
+      "acessos": 108,
+      "marketShare": 0.8233589997712891,
+      "posicaoAnterior": 19,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 106,
+      "variacaoAbsoluta": 2,
+      "variacaoPercentual": 1.8867924528301887,
+      "slug": "claro",
+      "nome": "CLARO",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 14,
+      "empresaId": "cnpj:76535764",
+      "acessos": 103,
+      "marketShare": 0.7852405275596555,
+      "posicaoAnterior": 18,
+      "variacaoPosicao": 4,
+      "acessosAnterior": 108,
+      "variacaoAbsoluta": -5,
+      "variacaoPercentual": -4.62962962962963,
+      "slug": "oi-4",
+      "nome": "OI",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 15,
+      "empresaId": "cnpj:17033554",
+      "acessos": 83,
+      "marketShare": 0.6327666387131203,
+      "posicaoAnterior": 20,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 89,
+      "variacaoAbsoluta": -6,
+      "variacaoPercentual": -6.741573033707865,
+      "slug": "gruponet",
+      "nome": "Gruponet",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 16,
+      "empresaId": "cnpj:05206385",
+      "acessos": 77,
+      "marketShare": 0.5870244720591599,
+      "posicaoAnterior": 21,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 81,
+      "variacaoAbsoluta": -4,
+      "variacaoPercentual": -4.938271604938271,
+      "slug": "hughes",
+      "nome": "HUGHES",
+      "tipoAtuacao": "PROVEDOR"
+    },
+    {
+      "posicao": 17,
+      "empresaId": "cnpj:45289507",
+      "acessos": 42,
+      "marketShare": 0.32019516657772357,
+      "posicaoAnterior": 22,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 42,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "navegue",
+      "nome": "Navegue",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 18,
+      "empresaId": "cnpj:02558157",
+      "acessos": 30,
+      "marketShare": 0.22871083326980254,
+      "posicaoAnterior": 24,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 30,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "vivo",
+      "nome": "VIVO",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 19,
+      "empresaId": "cnpj:00336701",
+      "acessos": 29,
+      "marketShare": 0.2210871388274758,
+      "posicaoAnterior": 25,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 29,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "telebras",
+      "nome": "TELEBRAS",
+      "tipoAtuacao": "OPERADORA"
+    },
+    {
+      "posicao": 20,
+      "empresaId": "cnpj:07426946",
+      "acessos": 14,
+      "marketShare": 0.10673172219257453,
+      "posicaoAnterior": 26,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 14,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "avanca-k2-telecom",
+      "nome": "Avanca - K2 Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 20,
+      "empresaId": "cnpj:12520520",
+      "acessos": 14,
+      "marketShare": 0.10673172219257453,
+      "posicaoAnterior": 26,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 14,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "itanet",
+      "nome": "ITANET",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 22,
+      "empresaId": "cnpj:05872814",
+      "acessos": 10,
+      "marketShare": 0.0762369444232675,
+      "posicaoAnterior": 28,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 8,
+      "variacaoAbsoluta": 2,
+      "variacaoPercentual": 25,
+      "slug": "algar-ctbc-telecom-2",
+      "nome": "ALGAR (CTBC TELECOM)",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 23,
+      "empresaId": "cnpj:48992693",
+      "acessos": 8,
+      "marketShare": 0.060989555538614015,
+      "posicaoAnterior": null,
+      "variacaoPosicao": null,
+      "acessosAnterior": null,
+      "variacaoAbsoluta": null,
+      "variacaoPercentual": null,
+      "slug": "nova-rede-fibra",
+      "nome": "Nova Rede Fibra",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 24,
+      "empresaId": "cnpj:07756651",
+      "acessos": 6,
+      "marketShare": 0.04574216665396051,
+      "posicaoAnterior": 30,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 5,
+      "variacaoAbsoluta": 1,
+      "variacaoPercentual": 20,
+      "slug": "brasil-tecpar-3",
+      "nome": "BRASIL TECPAR",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 24,
+      "empresaId": "cnpj:27134115",
+      "acessos": 6,
+      "marketShare": 0.04574216665396051,
+      "posicaoAnterior": 32,
+      "variacaoPosicao": 8,
+      "acessosAnterior": 4,
+      "variacaoAbsoluta": 2,
+      "variacaoPercentual": 50,
+      "slug": "at-telecom-eireli-epp",
+      "nome": "AT TELECOM EIRELI - EPP",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 26,
+      "empresaId": "cnpj:07349982",
+      "acessos": 5,
+      "marketShare": 0.03811847221163375,
+      "posicaoAnterior": 30,
+      "variacaoPosicao": 4,
+      "acessosAnterior": 5,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "yipi-cloud-servicos-ltda",
+      "nome": "YIPI CLOUD SERVIÇOS LTDA",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 27,
+      "empresaId": "cnpj:11812715",
+      "acessos": 4,
+      "marketShare": 0.030494777769307008,
+      "posicaoAnterior": 32,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 4,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "top-net-brasil-servicos-de-telecomunicacoes-ltda",
+      "nome": "Top Net Brasil Servicos de Telecomunicacoes Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 27,
+      "empresaId": "cnpj:57085453",
+      "acessos": 4,
+      "marketShare": 0.030494777769307008,
+      "posicaoAnterior": 32,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 4,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "origem-datacenter",
+      "nome": "Origem Datacenter",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 29,
+      "empresaId": "cnpj:02421421",
+      "acessos": 3,
+      "marketShare": 0.022871083326980256,
+      "posicaoAnterior": 35,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 3,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "tim",
+      "nome": "TIM",
+      "tipoAtuacao": "AMBOS"
+    },
+    {
+      "posicao": 29,
+      "empresaId": "cnpj:04842765",
+      "acessos": 3,
+      "marketShare": 0.022871083326980256,
+      "posicaoAnterior": 35,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 3,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "netway-telecom-ltda",
+      "nome": "Netway Telecom Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 29,
+      "empresaId": "cnpj:41644220",
+      "acessos": 3,
+      "marketShare": 0.022871083326980256,
+      "posicaoAnterior": 35,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 3,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "giga-mais-fibra-3",
+      "nome": "GIGA MAIS FIBRA",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 32,
+      "empresaId": "cnpj:01077556",
+      "acessos": 2,
+      "marketShare": 0.015247388884653504,
+      "posicaoAnterior": 38,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "all-net",
+      "nome": "All Net",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 32,
+      "empresaId": "cnpj:09520219",
+      "acessos": 2,
+      "marketShare": 0.015247388884653504,
+      "posicaoAnterior": 38,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "wireless-comm-services-ltda",
+      "nome": "WIRELESS COMM SERVICES LTDA",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 32,
+      "empresaId": "cnpj:21229558",
+      "acessos": 2,
+      "marketShare": 0.015247388884653504,
+      "posicaoAnterior": 38,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "tixperts-informatica-ltda",
+      "nome": "TIXPERTS INFORMATICA LTDA",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 32,
+      "empresaId": "cnpj:23530399",
+      "acessos": 2,
+      "marketShare": 0.015247388884653504,
+      "posicaoAnterior": 42,
+      "variacaoPosicao": 10,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 1,
+      "variacaoPercentual": 100,
+      "slug": "guaratibanet-telecom",
+      "nome": "Guaratibanet Telecom",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 32,
+      "empresaId": "cnpj:37544358",
+      "acessos": 2,
+      "marketShare": 0.015247388884653504,
+      "posicaoAnterior": 38,
+      "variacaoPosicao": 6,
+      "acessosAnterior": 2,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "wipi",
+      "nome": "Wipi",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 37,
+      "empresaId": "cnpj:02808705",
+      "acessos": 1,
+      "marketShare": 0.007623694442326752,
+      "posicaoAnterior": 42,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "compugraf-telecom-ltda",
+      "nome": "Compugraf Telecom Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 37,
+      "empresaId": "cnpj:03197023",
+      "acessos": 1,
+      "marketShare": 0.007623694442326752,
+      "posicaoAnterior": 42,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "universal-telecom-ltda",
+      "nome": "Universal Telecom Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 37,
+      "empresaId": "cnpj:03287268",
+      "acessos": 1,
+      "marketShare": 0.007623694442326752,
+      "posicaoAnterior": 42,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "alta-rede-corporate",
+      "nome": "ALTA REDE CORPORATE",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 37,
+      "empresaId": "cnpj:09610690",
+      "acessos": 1,
+      "marketShare": 0.007623694442326752,
+      "posicaoAnterior": null,
+      "variacaoPosicao": null,
+      "acessosAnterior": null,
+      "variacaoAbsoluta": null,
+      "variacaoPercentual": null,
+      "slug": "westlink",
+      "nome": "WESTLINK",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 37,
+      "empresaId": "cnpj:11620561",
+      "acessos": 1,
+      "marketShare": 0.007623694442326752,
+      "posicaoAnterior": 42,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "megatelecom-4",
+      "nome": "MEGATELECOM",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 37,
+      "empresaId": "cnpj:17888419",
+      "acessos": 1,
+      "marketShare": 0.007623694442326752,
+      "posicaoAnterior": 42,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "zamix-multiplay-telecomunicacoes-ltda",
+      "nome": "Zamix Multiplay Telecomunicacoes Ltda",
+      "tipoAtuacao": "INDEFINIDO"
+    },
+    {
+      "posicao": 37,
+      "empresaId": "cnpj:18342491",
+      "acessos": 1,
+      "marketShare": 0.007623694442326752,
+      "posicaoAnterior": 42,
+      "variacaoPosicao": 5,
+      "acessosAnterior": 1,
+      "variacaoAbsoluta": 0,
+      "variacaoPercentual": 0,
+      "slug": "omega-telecom",
+      "nome": "OMEGA TELECOM",
+      "tipoAtuacao": "INDEFINIDO"
+    }
+  ],
+  "serie": [
+    {
+      "competencia": "2022-01",
+      "totalAcessos": 19386,
+      "numeroProvedores": 36,
+      "hhi": 3457.0556782376075
+    },
+    {
+      "competencia": "2022-02",
+      "totalAcessos": 20016,
+      "numeroProvedores": 35,
+      "hhi": 3217.498243611346
+    },
+    {
+      "competencia": "2022-03",
+      "totalAcessos": 22796,
+      "numeroProvedores": 33,
+      "hhi": 2855.0500835919615
+    },
+    {
+      "competencia": "2022-04",
+      "totalAcessos": 28307,
+      "numeroProvedores": 35,
+      "hhi": 2713.7654149360046
+    },
+    {
+      "competencia": "2022-05",
+      "totalAcessos": 29118,
+      "numeroProvedores": 34,
+      "hhi": 2913.7568100383755
+    },
+    {
+      "competencia": "2022-06",
+      "totalAcessos": 30548,
+      "numeroProvedores": 37,
+      "hhi": 2977.605943984861
+    },
+    {
+      "competencia": "2022-07",
+      "totalAcessos": 17590,
+      "numeroProvedores": 38,
+      "hhi": 3587.1002730697755
+    },
+    {
+      "competencia": "2022-08",
+      "totalAcessos": 17509,
+      "numeroProvedores": 40,
+      "hhi": 3660.320237189703
+    },
+    {
+      "competencia": "2022-09",
+      "totalAcessos": 17395,
+      "numeroProvedores": 39,
+      "hhi": 3710.625333737736
+    },
+    {
+      "competencia": "2022-10",
+      "totalAcessos": 21017,
+      "numeroProvedores": 41,
+      "hhi": 3183.0036858961566
+    },
+    {
+      "competencia": "2022-11",
+      "totalAcessos": 23148,
+      "numeroProvedores": 41,
+      "hhi": 3629.2686270081704
+    },
+    {
+      "competencia": "2022-12",
+      "totalAcessos": 28211,
+      "numeroProvedores": 43,
+      "hhi": 2297.873008830903
+    },
+    {
+      "competencia": "2024-01",
+      "totalAcessos": 24373,
+      "numeroProvedores": 46,
+      "hhi": 2179.324339933574
+    },
+    {
+      "competencia": "2024-02",
+      "totalAcessos": 24060,
+      "numeroProvedores": 41,
+      "hhi": 2025.91139220389
+    },
+    {
+      "competencia": "2024-03",
+      "totalAcessos": 23913,
+      "numeroProvedores": 43,
+      "hhi": 2049.6118324660033
+    },
+    {
+      "competencia": "2024-04",
+      "totalAcessos": 17658,
+      "numeroProvedores": 42,
+      "hhi": 1153.8136384512466
+    },
+    {
+      "competencia": "2024-05",
+      "totalAcessos": 14748,
+      "numeroProvedores": 44,
+      "hhi": 1185.195710686114
+    },
+    {
+      "competencia": "2024-06",
+      "totalAcessos": 14552,
+      "numeroProvedores": 46,
+      "hhi": 1181.4494156574012
+    },
+    {
+      "competencia": "2024-07",
+      "totalAcessos": 14626,
+      "numeroProvedores": 45,
+      "hhi": 1204.7919287312975
+    },
+    {
+      "competencia": "2024-08",
+      "totalAcessos": 14360,
+      "numeroProvedores": 45,
+      "hhi": 1215.4641684965204
+    },
+    {
+      "competencia": "2024-09",
+      "totalAcessos": 15320,
+      "numeroProvedores": 48,
+      "hhi": 1230.3108958408604
+    },
+    {
+      "competencia": "2024-10",
+      "totalAcessos": 16485,
+      "numeroProvedores": 49,
+      "hhi": 1399.6022707567072
+    },
+    {
+      "competencia": "2024-11",
+      "totalAcessos": 16967,
+      "numeroProvedores": 48,
+      "hhi": 1480.0353560935437
+    },
+    {
+      "competencia": "2024-12",
+      "totalAcessos": 18019,
+      "numeroProvedores": 50,
+      "hhi": 1568.2973717357459
+    },
+    {
+      "competencia": "2025-01",
+      "totalAcessos": 19127,
+      "numeroProvedores": 51,
+      "hhi": 1804.853508273783
+    },
+    {
+      "competencia": "2025-02",
+      "totalAcessos": 20179,
+      "numeroProvedores": 49,
+      "hhi": 2005.7473323747997
+    },
+    {
+      "competencia": "2025-03",
+      "totalAcessos": 20313,
+      "numeroProvedores": 47,
+      "hhi": 2116.861105484236
+    },
+    {
+      "competencia": "2025-04",
+      "totalAcessos": 20412,
+      "numeroProvedores": 50,
+      "hhi": 2161.818056943293
+    },
+    {
+      "competencia": "2025-05",
+      "totalAcessos": 19799,
+      "numeroProvedores": 48,
+      "hhi": 2248.0430319763886
+    },
+    {
+      "competencia": "2025-06",
+      "totalAcessos": 20297,
+      "numeroProvedores": 51,
+      "hhi": 2026.2341407999272
+    },
+    {
+      "competencia": "2025-07",
+      "totalAcessos": 21269,
+      "numeroProvedores": 49,
+      "hhi": 2284.4583091508066
+    },
+    {
+      "competencia": "2025-08",
+      "totalAcessos": 21649,
+      "numeroProvedores": 52,
+      "hhi": 2017.7352610960008
+    },
+    {
+      "competencia": "2025-09",
+      "totalAcessos": 21851,
+      "numeroProvedores": 49,
+      "hhi": 2102.1839198205357
+    },
+    {
+      "competencia": "2025-10",
+      "totalAcessos": 23516,
+      "numeroProvedores": 45,
+      "hhi": 2029.2804375105482
+    },
+    {
+      "competencia": "2025-11",
+      "totalAcessos": 20513,
+      "numeroProvedores": 43,
+      "hhi": 2694.746115189793
+    },
+    {
+      "competencia": "2025-12",
+      "totalAcessos": 22905,
+      "numeroProvedores": 45,
+      "hhi": 2510.7003239036594
+    },
+    {
+      "competencia": "2026-01",
+      "totalAcessos": 24020,
+      "numeroProvedores": 45,
+      "hhi": 2385.811192587914
+    },
+    {
+      "competencia": "2026-02",
+      "totalAcessos": 23285,
+      "numeroProvedores": 43,
+      "hhi": 2195.6838382989326
+    },
+    {
+      "competencia": "2026-03",
+      "totalAcessos": 25370,
+      "numeroProvedores": 47,
+      "hhi": 2232.8255573911315
+    },
+    {
+      "competencia": "2026-04",
+      "totalAcessos": 22854,
+      "numeroProvedores": 48,
+      "hhi": 2392.668926999778
+    },
+    {
+      "competencia": "2026-05",
+      "totalAcessos": 24465,
+      "numeroProvedores": 50,
+      "hhi": 2590.16528197604
+    },
+    {
+      "competencia": "2026-06",
+      "totalAcessos": 24358,
+      "numeroProvedores": 51,
+      "hhi": 2297.6826411399848
+    },
+    {
+      "competencia": "2026-07",
+      "totalAcessos": 13117,
+      "numeroProvedores": 43,
+      "hhi": 1121.4158109006207
+    }
+  ]
+}

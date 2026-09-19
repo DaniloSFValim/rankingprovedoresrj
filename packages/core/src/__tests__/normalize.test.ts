@@ -4,15 +4,15 @@ import {
   normalizarCnpj,
   raizCnpj,
   resolverIdentidadeEmpresa,
-} from '../normalize.js';
-import { classificarTecnologia } from '../tecnologia.js';
+} from '../normalize';
+import { classificarTecnologia } from '../tecnologia';
 import {
   asCompetencia,
   deslocarCompetencia,
   diferencaEmMeses,
   ehCompetenciaValida,
   intervaloCompetencias,
-} from '../competencia.js';
+} from '../competencia';
 
 describe('chaveNomeEmpresa', () => {
   it('unifica grafias da mesma prestadora', () => {

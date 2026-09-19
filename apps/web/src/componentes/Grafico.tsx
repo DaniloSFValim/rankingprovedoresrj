@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import * as echarts from 'echarts';
+import { useEffect, useRef, Suspense } from 'react';
+import dynamic from 'next/dynamic';
+import type { EChartsOption } from 'echarts';
 
 /**
  * Invólucro do ECharts com o tema do produto.
@@ -14,7 +15,7 @@ export const PALETA_SERIES = [
   '#60a5fa', '#fb923c', '#4ade80', '#e879f9', '#2dd4bf',
 ] as const;
 
-const BASE: echarts.EChartsOption = {
+const BASE: EChartsOption = {
   color: [...PALETA_SERIES],
   backgroundColor: 'transparent',
   textStyle: { fontFamily: 'var(--fonte-sans)', color: '#cbd5e1' },
@@ -32,42 +33,63 @@ const EIXO_ESCURO = {
   splitLine: { lineStyle: { color: '#1e293b' } },
 };
 
-/** Aplica o estilo de eixo do tema sem sobrescrever ajustes da chamada. */
 export function eixo(extra: Record<string, unknown> = {}): Record<string, unknown> {
   return { ...EIXO_ESCURO, ...extra };
 }
 
 interface Props {
-  opcao: echarts.EChartsOption;
+  opcao: EChartsOption;
   altura?: number;
-  /** Rótulo lido por leitores de tela, já que o canvas não é acessível. */
   descricao: string;
-  aoCriar?: (instancia: echarts.ECharts) => void;
+  aoCriar?: (instancia: any) => void;
 }
 
-export function Grafico({ opcao, altura = 320, descricao, aoCriar }: Props) {
+function GraficoInterno({ opcao, altura = 320, descricao, aoCriar }: Props) {
   const elemento = useRef<HTMLDivElement>(null);
-  const instancia = useRef<echarts.ECharts | null>(null);
+  const instancia = useRef<any>(null);
 
   useEffect(() => {
-    if (!elemento.current) return;
-    const grafico = echarts.init(elemento.current, undefined, { renderer: 'canvas' });
-    instancia.current = grafico;
-    grafico.setOption({ ...BASE, ...opcao });
-    aoCriar?.(grafico);
+    const el = elemento.current;
+    if (!el) return;
 
-    const observador = new ResizeObserver(() => grafico.resize());
-    observador.observe(elemento.current);
+    let isMounted = true;
+    let observador: ResizeObserver | null = null;
+
+    (async () => {
+      const echartsModule = await import('echarts');
+      const echarts = (echartsModule as any).init ? echartsModule : (echartsModule as any).default;
+
+      if (!isMounted) return;
+
+      const grafico = echarts.init(el, undefined, { renderer: 'canvas' });
+      if (!isMounted) {
+        grafico.dispose();
+        return;
+      }
+
+      instancia.current = grafico;
+      grafico.setOption({ ...BASE, ...opcao });
+      aoCriar?.(grafico);
+
+      observador = new ResizeObserver(() => grafico.resize());
+      observador.observe(el);
+    })();
+
     return () => {
-      observador.disconnect();
-      grafico.dispose();
-      instancia.current = null;
+      isMounted = false;
+      if (observador) observador.disconnect();
+      if (instancia.current) {
+        instancia.current.dispose();
+        instancia.current = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    instancia.current?.setOption({ ...BASE, ...opcao }, { replaceMerge: ['series'] });
+    if (instancia.current) {
+      instancia.current.setOption({ ...BASE, ...opcao }, { replaceMerge: ['series'] });
+    }
   }, [opcao]);
 
   return (
@@ -80,3 +102,21 @@ export function Grafico({ opcao, altura = 320, descricao, aoCriar }: Props) {
     />
   );
 }
+
+function GraficoSkeleton() {
+  return (
+    <div
+      className="w-full bg-grafite-800 animate-pulse"
+      style={{ height: 320 }}
+      role="status"
+      aria-label="Carregando gráfico"
+    />
+  );
+}
+
+export const Grafico = dynamic(
+  () => Promise.resolve(GraficoInterno),
+  {
+    loading: GraficoSkeleton,
+  }
+);

@@ -12,6 +12,7 @@ import {
   normalizarCnpj,
   type Competencia,
 } from '@netrank/core';
+import { classificarTipoAtuacao, type TipoAtuacao } from './classificar-tipo-atuacao.js';
 import type { Banco } from '../warehouse/db.js';
 import type { ResultadoExtracao } from './extrair.js';
 
@@ -325,4 +326,76 @@ export function competenciasArmazenadas(db: Banco): Competencia[] {
       .prepare('SELECT DISTINCT competencia FROM fato_acessos ORDER BY competencia')
       .all() as Array<{ competencia: Competencia }>
   ).map((r) => r.competencia);
+}
+
+/**
+ * Classifica todas as empresas pelo tipo de atuacao: Operadora, Provedor ou Ambos.
+ *
+ * Calcula metricas por empresa (municipios atendidos, acessos totais, tecnologias)
+ * e classifica usando heuristicas baseadas em grupo economico e cobertura.
+ *
+ * Chamado apos a carga de dados para enriquecer a tabela de empresas.
+ */
+export function classificarEmpresas(db: Banco): {
+  classificadas: number;
+  indefinidas: number;
+} {
+  interface DadosEmpresa {
+    id: string;
+    nome_normalizado: string;
+    grupo_economico_id: string | null;
+    nome_grupo: string | null;
+    municipios: number;
+    acessos_totais: number;
+  }
+
+  const empresas = (
+    db
+      .prepare(
+        `SELECT
+            e.id,
+            e.nome_normalizado,
+            e.grupo_economico_id,
+            g.nome as nome_grupo,
+            COUNT(DISTINCT fa.codigo_ibge) as municipios,
+            SUM(fa.acessos) as acessos_totais
+         FROM empresas e
+         LEFT JOIN grupos_economicos g ON g.id = e.grupo_economico_id
+         LEFT JOIN fato_acessos fa ON fa.empresa_id = e.id
+         GROUP BY e.id
+         ORDER BY e.id`,
+      )
+      .all() as DadosEmpresa[]
+  );
+
+  const atualizarTipo = db.prepare(
+    'UPDATE empresas SET tipo_atuacao = ? WHERE id = ?',
+  );
+
+  let classificadas = 0;
+  let indefinidas = 0;
+
+  const transacao = db.transaction(() => {
+    for (const empresa of empresas) {
+      const tipo = classificarTipoAtuacao({
+        nome: empresa.nome_normalizado,
+        grupoEconomico: empresa.nome_grupo,
+        municipiosAtendidos: empresa.municipios || 0,
+        acessosTotais: empresa.acessos_totais || 0,
+        tecnologiasPrincipais: [], // Poderia ser enriquecido depois se necessario
+      });
+
+      atualizarTipo.run(tipo, empresa.id);
+
+      if (tipo === 'INDEFINIDO') {
+        indefinidas += 1;
+      } else {
+        classificadas += 1;
+      }
+    }
+  });
+
+  transacao();
+
+  return { classificadas, indefinidas };
 }

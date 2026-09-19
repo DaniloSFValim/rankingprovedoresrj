@@ -37,6 +37,7 @@ export interface EmpresaResumo {
   slug: string;
   nome: string;
   grupoEconomico: string | null;
+  tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
 }
 
 export interface MunicipioResumo {
@@ -48,12 +49,31 @@ export interface MunicipioResumo {
 export interface KpisEstado {
   competencia: Competencia;
   totalAcessos: number;
+  densidadeEstado: number | null;
   numeroProvedores: number;
   numeroMunicipios: number;
   lider: { empresaId: string; nome: string; acessos: number; marketShare: number } | null;
   concentracao: IndicadoresConcentracao | null;
   variacao12Meses: { absoluta: number; percentual: number | null } | null;
   variacaoMensal: { absoluta: number; percentual: number | null } | null;
+}
+
+export interface LinhaRankingEstadualComTipo {
+  posicao: number;
+  empresaId: string;
+  slug: string;
+  nome: string;
+  grupoEconomico: string | null;
+  tipoAtuacao: 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
+  acessos: number;
+  marketShare: number;
+  posicaoAnterior: number | null;
+  variacaoPosicao: number | null;
+  variacaoAbsoluta: number | null;
+  variacaoPercentual: number | null;
+  variacao12Absoluta: number | null;
+  variacao12Percentual: number | null;
+  municipiosAtendidos: number;
 }
 
 export interface PontoSerie {
@@ -144,15 +164,21 @@ function carregarContexto(db: Banco): Contexto {
 
   const empresasBrutas = db
     .prepare(
-      `SELECT e.id, e.nome_normalizado AS nome, g.nome AS grupo
+      `SELECT e.id, e.nome_normalizado AS nome, g.nome AS grupo, e.tipo_atuacao
          FROM empresas e LEFT JOIN grupos_economicos g ON g.id = e.grupo_economico_id`,
     )
-    .all() as Array<{ id: string; nome: string; grupo: string | null }>;
+    .all() as Array<{ id: string; nome: string; grupo: string | null; tipo_atuacao: string }>;
   const slugsEmpresa = atribuirSlugs(empresasBrutas);
   const empresas = new Map<string, EmpresaResumo>(
     empresasBrutas.map((e) => [
       e.id,
-      { id: e.id, slug: slugsEmpresa.get(e.id)!, nome: e.nome, grupoEconomico: e.grupo },
+      {
+        id: e.id,
+        slug: slugsEmpresa.get(e.id)!,
+        nome: e.nome,
+        grupoEconomico: e.grupo,
+        tipoAtuacao: (e.tipo_atuacao as any) || 'INDEFINIDO',
+      },
     ]),
   );
 
@@ -296,6 +322,20 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     arquivos += 1;
   };
 
+  // Carrega domicílios para cálculo de densidade (acessos / domicílios * 100)
+  let totalDomicilios = 0;
+  try {
+    const domiciliosPath = path.join(process.cwd(), 'data', 'domicilios-rj-ibge.json');
+    if (fs.existsSync(domiciliosPath)) {
+      const domicilios = JSON.parse(fs.readFileSync(domiciliosPath, 'utf8')) as {
+        municipios: Record<string, number>;
+      };
+      totalDomicilios = Object.values(domicilios.municipios).reduce((s, v) => s + v, 0);
+    }
+  } catch (e) {
+    console.warn('Aviso: domicílios não carregados, densidade não será calculada');
+  }
+
   // ---------------------------------------------------------------- meta ----
   // Competencias ausentes no meio da serie. Expostas para que a interface
   // possa avisar em vez de desenhar uma reta atravessando o buraco.
@@ -327,20 +367,28 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     participantes(ctx.estadoPorCompetencia.get(atual)),
   );
 
-  const linhasRanking = rankingAtual.map((l) => ({
-    ...l,
-    slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
-    nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
-    grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
-    municipiosAtendidos: contagemMunicipios.get(l.empresaId) ?? 0,
-    variacao12Absoluta: ranking12.get(l.empresaId)?.variacaoAbsoluta ?? null,
-    variacao12Percentual: ranking12.get(l.empresaId)?.variacaoPercentual ?? null,
-  }));
+  const linhasRanking = rankingAtual.map((l) => {
+    const empresa = ctx.empresas.get(l.empresaId);
+    return {
+      ...l,
+      slug: empresa?.slug ?? gerarSlug(l.empresaId),
+      nome: empresa?.nome ?? l.empresaId,
+      grupoEconomico: empresa?.grupoEconomico ?? null,
+      tipoAtuacao: empresa?.tipoAtuacao ?? 'INDEFINIDO',
+      municipiosAtendidos: contagemMunicipios.get(l.empresaId) ?? 0,
+      variacao12Absoluta: ranking12.get(l.empresaId)?.variacaoAbsoluta ?? null,
+      variacao12Percentual: ranking12.get(l.empresaId)?.variacaoPercentual ?? null,
+    };
+  });
 
   const lider = linhasRanking[0];
+  const totalAcessosEstado = somar(ctx.estadoPorCompetencia.get(atual));
+  const densidadeEstado = totalDomicilios > 0 ? (totalAcessosEstado * 100) / totalDomicilios : null;
+
   const kpis: KpisEstado = {
     competencia: atual,
-    totalAcessos: somar(ctx.estadoPorCompetencia.get(atual)),
+    totalAcessos: totalAcessosEstado,
+    densidadeEstado,
     numeroProvedores: linhasRanking.length,
     numeroMunicipios: ctx.municipalPorCompetencia.get(atual)?.size ?? 0,
     lider: lider
@@ -532,6 +580,16 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       }))
       .sort((a, b) => b.acessosAnteriores - a.acessosAnteriores);
 
+    const municipioRanking = rankingComparado.map((l) => ({
+        ...l,
+        slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
+        nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
+        grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
+        tipoAtuacao: ctx.empresas.get(l.empresaId)?.tipoAtuacao ?? 'INDEFINIDO',
+        variacao12Absoluta: ranking12Municipal.get(l.empresaId)?.variacaoAbsoluta ?? null,
+        variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
+      }));
+
     salvar(`municipios/${resumo?.slug ?? codigoIbge}.json`, {
       codigoIbge,
       nome: resumo?.nome ?? codigoIbge,
@@ -544,14 +602,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
               absoluta: crescimentoAbsoluto(totalAtual, totalAntes),
               percentual: crescimentoPercentual(totalAtual, totalAntes),
             },
-      ranking: rankingComparado.map((l) => ({
-        ...l,
-        slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
-        nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
-        grupoEconomico: ctx.empresas.get(l.empresaId)?.grupoEconomico ?? null,
-        variacao12Absoluta: ranking12Municipal.get(l.empresaId)?.variacaoAbsoluta ?? null,
-        variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
-      })),
+      ranking: municipioRanking,
       serie: serieMunicipio,
       // Distribuicao por tecnologia ao longo do tempo, no municipio.
       tecnologia: ctx.competencias.map((c) => ({

@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS empresas (
   cnpj                 TEXT,
   grupo_economico_id   TEXT REFERENCES grupos_economicos(id),
   categoria            TEXT NOT NULL DEFAULT 'INDEFINIDA',
+  tipo_atuacao         TEXT NOT NULL DEFAULT 'INDEFINIDO',
   status               TEXT NOT NULL DEFAULT 'ATIVA',
   origem_identidade    TEXT NOT NULL
 );
@@ -88,6 +89,9 @@ CREATE INDEX IF NOT EXISTS ix_fato_competencia   ON fato_acessos (competencia);
 CREATE INDEX IF NOT EXISTS ix_fato_municipio     ON fato_acessos (codigo_ibge, competencia);
 CREATE INDEX IF NOT EXISTS ix_fato_empresa       ON fato_acessos (empresa_id, competencia);
 CREATE INDEX IF NOT EXISTS ix_fato_tecnologia    ON fato_acessos (tecnologia, competencia);
+
+-- Índice para filtrar por tipo de atuação (operadora, provedor, etc)
+CREATE INDEX IF NOT EXISTS ix_empresas_tipo_atuacao ON empresas (tipo_atuacao);
 
 -- ------------------------------------------------------------ alertas de QA
 CREATE TABLE IF NOT EXISTS alertas_qualidade (
