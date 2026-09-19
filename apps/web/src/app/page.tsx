@@ -22,6 +22,30 @@ export const metadata = {
     `Panorama do mercado de banda larga fixa do Estado do ${MARCA.uf}: maiores ` +
     `provedores, participação de mercado, crescimento e concentração, a partir ` +
     `dos dados oficiais da Anatel.`,
+  openGraph: {
+    title: `Ranking de Provedores de Banda Larga do ${MARCA.uf}`,
+    description: `Dados atualizados sobre provedores de internet. Veja quais empresas operam, número de clientes, market share e análise completa por município.`,
+    type: 'website',
+    url: `https://rankingprovedoresrj.vercel.app/`,
+    images: [
+      {
+        url: `https://rankingprovedoresrj.vercel.app/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: `Ranking de Provedores de Banda Larga do ${MARCA.uf}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Ranking de Provedores de Banda Larga do ${MARCA.uf}`,
+    description: `Dados atualizados sobre provedores de internet. Veja quais empresas operam, número de clientes e market share.`,
+    images: [`https://rankingprovedoresrj.vercel.app/og-image.png`],
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-icon.png',
+  },
 };
 
 function Badge({ label, value }: { label: string; value: string }) {
