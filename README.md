@@ -4,7 +4,9 @@
 
 **Inteligência de Mercado — Banda Larga Fixa no Rio de Janeiro**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: CC-BY-4.0](https://img.shields.io/badge/License-CC%20BY%204.0-blue.svg)](LICENSE)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0009--7250--6151-a6ce39.svg)](https://orcid.org/0009-0009-7250-6151)
+[![Citation](https://img.shields.io/badge/Citation-CFF%20%2F%20BibTeX-informational.svg)](CITATION.cff)
 [![CI Status](https://github.com/DaniloSFValim/rankingprovedoresrj/actions/workflows/dados-reais.yml/badge.svg?branch=main)](https://github.com/DaniloSFValim/rankingprovedoresrj/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6.svg)](https://www.typescriptlang.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-16+-000000.svg)](https://nextjs.org/)
@@ -124,12 +126,46 @@ Testes cobrem: indicadores (market share, CR-n, HHI), ranking com empates, cresc
 
 ---
 
-## 📄 Licença & Atribuição
+## 👤 Autor & Acadêmica
 
-MIT License. Dados: **Anatel — Agência Nacional de Telecomunicações**.
+**Danilo S. F. Valim**
+- 🎓 Pós-graduação em Análise de Dados Aplicadas a Políticas Públicas — UFRRJ
+- 🔗 [ORCID: 0009-0009-7250-6151](https://orcid.org/0009-0009-7250-6151)
+- 📧 [danilosfvalim@gmail.com](mailto:danilosfvalim@gmail.com)
+
+### Como citar este trabalho
+
+**BibTeX:**
+```bibtex
+@dataset{valim2026netrank,
+  author = {Valim, Danilo S. F.},
+  title = {NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro},
+  year = {2026},
+  url = {https://github.com/DaniloSFValim/rankingprovedoresrj},
+  note = {Anatel Official Data, IBGE Geospatial Data}
+}
+```
+
+**APA:**
+> Valim, D. S. F. (2026). NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro. Retrieved from https://github.com/DaniloSFValim/rankingprovedoresrj
+
+Ver [CITATION.cff](CITATION.cff) para formatos adicionais (Chicago, Harvard, ISO690).
+
+---
+
+## 📄 Licença
+
+**Creative Commons Attribution 4.0 International** (CC-BY-4.0)
+
+- ✅ Uso comercial permitido
+- ✅ Modificações permitidas  
+- ✅ Distribuição permitida
+- ⚠️ Requer atribuição ao autor
+
+**Dados:** Anatel — Agência Nacional de Telecomunicações (dados abertos)
 
 O NETRANK RJ é uma camada independente de análise. Indicadores de concentração são estatísticos e não constituem conclusão jurídica ou regulatória.
 
 ---
 
-<sub>Built with TypeScript, Next.js, SQLite e dados abertos. Atualizado automaticamente a cada 12º dia do mês.</sub>
+<sub>Built with TypeScript, Next.js, SQLite e dados abertos. Atualizado automaticamente a cada 12º dia do mês. | Made with 📊 by Danilo Valim</sub>
