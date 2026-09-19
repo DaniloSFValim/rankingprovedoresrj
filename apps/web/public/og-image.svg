@@ -9,23 +9,28 @@
   <rect width="1200" height="630" fill="url(#grad1)"/>
   
   <!-- Title -->
-  <text x="60" y="120" font-size="72" font-weight="bold" fill="#ffffff" font-family="Arial, sans-serif">
-    Ranking de Provedores
+  <text x="60" y="120" font-size="64" font-weight="bold" fill="#ffffff" font-family="Arial, sans-serif">
+    NetRank RJ
   </text>
   
   <!-- Subtitle -->
-  <text x="60" y="180" font-size="48" fill="#e2e8f0" font-family="Arial, sans-serif">
-    Banda Larga do Rio de Janeiro
+  <text x="60" y="200" font-size="36" fill="#e2e8f0" font-family="Arial, sans-serif">
+    Plataforma de monitoramento de operadoras
+  </text>
+  
+  <!-- Subtitle 2 -->
+  <text x="60" y="245" font-size="36" fill="#e2e8f0" font-family="Arial, sans-serif">
+    de internet no estado do Rio de Janeiro
   </text>
   
   <!-- Description -->
-  <text x="60" y="260" font-size="32" fill="#cbd5e1" font-family="Arial, sans-serif">
+  <text x="60" y="320" font-size="26" fill="#cbd5e1" font-family="Arial, sans-serif">
     Dados oficiais da Anatel • 92 Municípios
   </text>
   
   <!-- Features -->
-  <text x="60" y="340" font-size="24" fill="#94a3b8" font-family="Arial, sans-serif">
-    ✓ Ranking de Provedores  ✓ Market Share  ✓ Análise de Crescimento
+  <text x="60" y="390" font-size="22" fill="#94a3b8" font-family="Arial, sans-serif">
+    ✓ Ranking de Operadoras  ✓ Market Share  ✓ Análise de Crescimento
   </text>
   
   <!-- Footer -->
