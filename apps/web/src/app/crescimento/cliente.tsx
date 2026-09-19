@@ -80,7 +80,7 @@ export function PaginaCrescimentoCliente({
   meta,
   municipiosPerfis,
 }: PaginaCrescimentoProps) {
-  const { slugCidade, selecionarCidade } = useCidadeSelecionada();
+  const { slugCidade, selecionarCidade, limparSelecao } = useCidadeSelecionada();
 
   const perfil = slugCidade ? municipiosPerfis[slugCidade] : null;
 
@@ -103,10 +103,10 @@ export function PaginaCrescimentoCliente({
 
       // Preparar dados para treemap
       pontosRadar = perfil.ranking
-        .filter((l) => l.variacao12Percentual !== null && l.acessos > 0)
+        .filter((l) => l.variacaoPercentual !== null && l.acessos > 0)
         .map((l) => ({
           nome: l.nome,
-          crescimento: l.variacao12Percentual as number,
+          crescimento: l.variacaoPercentual as number,
           acessos: l.acessos,
           marketShare: l.marketShare,
         }));
@@ -207,12 +207,20 @@ export function PaginaCrescimentoCliente({
             {descricaoSubtitulo}
           </p>
         </div>
-        <div className="max-w-sm">
+        <div className="flex flex-col gap-4 max-w-sm">
           <SeletorCidade
             cidades={cidades}
             slugAtual={slugCidade || undefined}
             onSelecionar={(cidade) => selecionarCidade(cidade.slug)}
           />
+          {slugCidade && (
+            <button
+              onClick={limparSelecao}
+              className="self-start rounded-lg border border-grafite-600 px-4 py-2 text-sm font-medium text-grafite-200 transition-colors hover:bg-grafite-800 hover:border-grafite-500"
+            >
+              Ver dados do estado
+            </button>
+          )}
         </div>
       </div>
 

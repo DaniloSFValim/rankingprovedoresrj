@@ -13,6 +13,8 @@ const nextConfig = {
   },
   trailingSlash: true,
   transpilePackages: ['@netrank/core'],
+  // Turbopack em Next.js 16: migrar webpack config para turbopack
+  turbopack: {},
   // @netrank/core usa imports ESM com extensao .js apontando para fontes .ts
   // (verbatimModuleSyntax). O webpack precisa dessa equivalencia explicita.
   webpack: (config) => {
