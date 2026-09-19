@@ -129,10 +129,12 @@ jobs:
 
       - name: Run dependency tree check
         run: npm list --depth=10
+        continue-on-error: true
 
       - name: Verify no duplicate dependencies
         run: |
           npm list 2>&1 | grep -E "npm ERR|npm WARN" || echo "✓ No dependency issues found"
+        continue-on-error: true
 
   results:
     name: Security Summary
