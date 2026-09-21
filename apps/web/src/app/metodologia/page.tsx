@@ -3,10 +3,10 @@ import { lerMeta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
 export const metadata = {
-  title: 'Metodologia',
+  title: `Metodologia e Transparência — ${MARCA.nome}`,
   description:
-    `Como o ${MARCA.nome} coleta, trata e calcula os indicadores do mercado de ` +
-    `banda larga fixa do ${MARCA.uf} a partir dos dados abertos da Anatel.`,
+    `Documentação completa sobre fontes de dados, metodologia de cálculo, ` +
+    `rastreabilidade, processamento do pipeline ETL, e como interpretar os indicadores de banda larga fixa do ${MARCA.uf}.`,
 };
 
 function Bloco({ titulo, children }: { titulo: string; children: React.ReactNode }) {
@@ -33,9 +33,9 @@ export default function PaginaMetodologia() {
   return (
     <main className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">Metodologia</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">Metodologia e Transparência</h1>
         <p className="mt-1 text-sm text-grafite-400">
-          Como os números desta plataforma são produzidos — e o que eles não dizem.
+          Documentação completa sobre fontes, processamento e cálculos dos dados de banda larga fixa no {MARCA.uf}.
         </p>
       </div>
 
@@ -88,6 +88,60 @@ export default function PaginaMetodologia() {
             <dd>{new Date(p.processadoEm).toLocaleString('pt-BR')}</dd>
           </div>
         </dl>
+      </Bloco>
+
+      <Bloco titulo="Pipeline de Processamento">
+        <p>
+          Os dados Anatel passam por 3 camadas de transformação, cada uma versionada e auditável:
+        </p>
+        <div className="mt-4 space-y-3">
+          <div className="flex gap-3 rounded bg-grafite-900 p-3">
+            <div className="flex-shrink-0">
+              <span className="inline-flex items-center justify-center rounded-full bg-marca-600 px-3 py-1 text-xs font-bold text-white">
+                RAW
+              </span>
+            </div>
+            <div className="flex-1">
+              <h4 className="font-semibold text-grafite-200">Camada 1: Dados Brutos</h4>
+              <p className="mt-1 text-xs text-grafite-400">
+                Arquivo CSV original da Anatel, armazenado no git. Nunca modificado, apenas
+                versionado para rastreabilidade histórica completa.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-3 rounded bg-grafite-900 p-3">
+            <div className="flex-shrink-0">
+              <span className="inline-flex items-center justify-center rounded-full bg-marca-600 px-3 py-1 text-xs font-bold text-white">
+                PROCESSED
+              </span>
+            </div>
+            <div className="flex-1">
+              <h4 className="font-semibold text-grafite-200">Camada 2: Normalização</h4>
+              <p className="mt-1 text-xs text-grafite-400">
+                Extração, validação e carga em SQLite. Inclui normalização de nomes de
+                prestadoras, validação de CNPJs e identificação de entidades económicas.
+                Sem alterações semânticas, apenas limpeza estrutural.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-3 rounded bg-grafite-900 p-3">
+            <div className="flex-shrink-0">
+              <span className="inline-flex items-center justify-center rounded-full bg-marca-600 px-3 py-1 text-xs font-bold text-white">
+                DERIVED
+              </span>
+            </div>
+            <div className="flex-1">
+              <h4 className="font-semibold text-grafite-200">Camada 3: Indicadores Calculados</h4>
+              <p className="mt-1 text-xs text-grafite-400">
+                Artefatos JSON para BI: rankings, séries históricas, indicadores de
+                concentração (HHI, CR5), participação de mercado. Todos com rastreabilidade
+                de origem e versão.
+              </p>
+            </div>
+          </div>
+        </div>
       </Bloco>
 
       <Bloco titulo="Periodicidade e janela de análise">
@@ -221,6 +275,49 @@ escala: 0 (pulverizado) a 10.000 (monopólio)`}</Formula>
         </p>
       </Bloco>
 
+      <Bloco titulo="Rastreabilidade Completa">
+        <p>
+          Cada artefato de dados publicado contém metadados de rastreabilidade que permitem
+          verificar a origem, versão e integridade de cada indicador:
+        </p>
+        <ul className="mt-3 space-y-2 text-sm">
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 text-marca-400">✓</span>
+            <span>
+              <strong>Origem:</strong> Anatel (dados oficiais, 100% públicos)
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 text-marca-400">✓</span>
+            <span>
+              <strong>Data de Download:</strong> Quando foi baixado da Anatel
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 text-marca-400">✓</span>
+            <span>
+              <strong>Versão do Pipeline:</strong> Código do ETL que processou os dados
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 text-marca-400">✓</span>
+            <span>
+              <strong>Commit Git:</strong> Hash do código exato que gerou o resultado
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="flex-shrink-0 text-marca-400">✓</span>
+            <span>
+              <strong>Integridade (SHA-256):</strong> Hash criptográfico de cada arquivo
+            </span>
+          </li>
+        </ul>
+        <p className="mt-3 text-sm text-grafite-400">
+          Isto permite que qualquer pessoa audite: desde a descarga original da Anatel até o
+          indicador final mostrado na tela. Confiabilidade através da transparência.
+        </p>
+      </Bloco>
+
       <Bloco titulo="Ranking e empates">
         <p>
           Provedores são ordenados por número de acessos em ordem decrescente. Empates
@@ -252,40 +349,53 @@ escala: 0 (pulverizado) a 10.000 (monopólio)`}</Formula>
         </p>
       </Bloco>
 
-      <Bloco titulo="Limitações">
+      <Bloco titulo="Limitações Conhecidas">
         <ul className="ml-5 list-disc space-y-2">
           <li>
-            Os dados refletem o que as prestadoras declaram à Anatel. Erros, atrasos ou
+            <strong>Veracidade da Fonte:</strong> Os dados refletem o que as prestadoras declaram à Anatel. Erros, atrasos ou
             revisões na declaração se propagam para cá.
           </li>
           <li>
-            A Anatel pode revisar competências já publicadas. Números podem mudar entre
+            <strong>Revisões da Anatel:</strong> A Anatel pode revisar competências já publicadas. Números podem mudar entre
             atualizações desta plataforma.
           </li>
           <li>
-            Acessos não equivalem a domicílios nem a pessoas atendidas: um mesmo endereço
+            <strong>Acessos ≠ Domicílios:</strong> Acessos não equivalem a domicílios nem a pessoas atendidas: um mesmo endereço
             pode ter mais de um acesso, e um acesso pode servir várias pessoas.
           </li>
           <li>
-            O agrupamento por grupo econômico depende do que a fonte informa. Aquisições e
+            <strong>Agrupamento Econômico:</strong> O agrupamento por grupo econômico depende do que a fonte informa. Aquisições e
             fusões podem aparecer com defasagem.
           </li>
           <li>
-            Quando a fonte não traz CNPJ, a identidade do provedor depende de heurística
+            <strong>Identidade Sem CNPJ:</strong> Quando a fonte não traz CNPJ, a identidade do provedor depende de heurística
             de nome e está sujeita a revisão.
           </li>
           <li>
-            Quando os dados chegam pela Base dos Dados, há uma camada adicional de
+            <strong>Intermediários de Dados:</strong> Quando os dados chegam pela Base dos Dados, há uma camada adicional de
             tratamento entre a Anatel e esta plataforma, e a competência mais recente
             pode demorar mais a aparecer do que na fonte original.
           </li>
           <li>
-            Os nomes dos municípios vêm da malha territorial do IBGE, não da base de
+            <strong>Nomes de Municípios:</strong> Os nomes dos municípios vêm da malha territorial do IBGE, não da base de
             acessos. A junção entre as duas é feita pelo código IBGE.
           </li>
           <li>
-            Provedores com atuação muito pequena podem entrar e sair da base entre
+            <strong>Turnover de Pequenos Provedores:</strong> Provedores com atuação muito pequena podem entrar e sair da base entre
             competências sem que isso represente movimento real de mercado.
+          </li>
+          <li>
+            <strong>Lacunas Históricas:</strong> Alguns períodos podem não ter dados publicados pela Anatel. Gráficos mostram uma
+            linha tracejada nessas datas para indicar ausência, não interpolação.
+          </li>
+          <li>
+            <strong>Fragmentação de CNPJs:</strong> O registro Anatel usa CNPJ. Algumas prestadoras podem estar fragmentadas em
+            múltiplos CNPJs (subsidiárias, marcas comerciais diferentes). Exibimos o
+            "regulatory view" (individual) com alertas de possíveis consolidações.
+          </li>
+          <li>
+            <strong>Mudanças de Grafia:</strong> Nomes de prestadoras às vezes mudam no registro Anatel (grafia, abreviaturas).
+            Pipeline normaliza, mas possíveis variações podem aparecer no histórico bruto.
           </li>
         </ul>
       </Bloco>
@@ -297,6 +407,21 @@ escala: 0 (pulverizado) a 10.000 (monopólio)`}</Formula>
           Os dados são oficiais; o tratamento, os recortes e as visualizações são de
           responsabilidade desta plataforma.
         </p>
+      </Bloco>
+
+      <Bloco titulo="Contato e Feedback">
+        <p>
+          {MARCA.nome} é um projeto de software aberto. Encontrou um erro, ambiguidade ou sugestão
+          de melhoria?
+        </p>
+        <div className="mt-3 flex flex-col gap-2 text-sm">
+          <a href="https://github.com/DaniloSFValim/rankingprovedoresrj/issues" className="text-marca-400 underline hover:text-marca-300">
+            Abrir issue no GitHub
+          </a>
+          <a href="https://github.com/DaniloSFValim/rankingprovedoresrj" className="text-marca-400 underline hover:text-marca-300">
+            Repositório do projeto
+          </a>
+        </div>
       </Bloco>
     </main>
   );
