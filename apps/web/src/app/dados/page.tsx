@@ -185,11 +185,11 @@ export default function CentroDados() {
         descricao="Saiba como interpretar e usar os dados"
       >
         <div className="grid gap-3 md:grid-cols-2">
-          <Link href="/transparencia">
+          <Link href="/metodologia">
             <div className="cartao p-4 hover:bg-grafite-800/60 transition">
-              <h3 className="font-semibold text-white">📖 Metodologia</h3>
+              <h3 className="font-semibold text-white">📖 Metodologia e Transparência</h3>
               <p className="mt-1 text-xs text-grafite-400">
-                Explicação detalhada sobre fontes, validações, cálculos e indicadores.
+                Explicação detalhada sobre fontes, pipeline de processamento, cálculos e indicadores.
               </p>
               <p className="mt-2 text-xs text-marca-400">→ Consultar →</p>
             </div>
