@@ -48,14 +48,6 @@ export const metadata = {
   },
 };
 
-function Badge({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-grafite-700 bg-grafite-800/50 px-3 py-1 text-xs text-grafite-300">
-      <span className="font-medium text-grafite-400">{label}</span>
-      <span className="text-white">{value}</span>
-    </div>
-  );
-}
 
 export default function Home() {
   const meta = lerMeta();
@@ -69,23 +61,14 @@ export default function Home() {
     <main className="space-y-12">
       {/* Cartão de portfólio */}
       <div className="mx-auto max-w-3xl">
-        <div className="cartao space-y-6 border border-marca-500/20 bg-gradient-to-br from-grafite-900/50 to-grafite-900 p-8">
-          {/* Badges profissionais */}
-          <div className="flex flex-wrap gap-2">
-            <Badge label="Dados" value={rotularCompetencia(kpis.competencia)} />
-            <Badge label="Série" value={`${inteiro(meta.competencias.length)} meses`} />
-            <Badge label="Provedores" value={inteiro(kpis.numeroProvedores)} />
-            <Badge label="Municípios" value={inteiro(municipios.length)} />
-          </div>
-
+        <div className="cartao space-y-6 p-6">
           {/* Título e descrição */}
-          <div className="space-y-3">
-            <h1 className="text-4xl font-bold text-white">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold text-white">
               Banda larga fixa no {MARCA.uf}
             </h1>
-            <p className="text-lg text-grafite-300">
-              Análise do mercado de provedores de internet. Dados oficiais da Anatel com ranking,
-              market share, concentração de mercado e evolução histórica.
+            <p className="text-grafite-300">
+              Dados oficiais da Anatel: ranking de provedores, market share, concentração de mercado e evolução histórica.
             </p>
           </div>
 
@@ -95,7 +78,7 @@ export default function Home() {
               <div className="text-2xl font-bold text-marca-400">
                 {compacto(kpis.totalAcessos)}
               </div>
-              <div className="text-sm text-grafite-400">Total de acessos</div>
+              <div className="text-sm text-grafite-400">Acessos</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-marca-400">
@@ -112,7 +95,7 @@ export default function Home() {
           </div>
 
           {/* Links de navegação */}
-          <div className="flex flex-wrap gap-3 border-t border-grafite-700 pt-6">
+          <div className="flex flex-wrap gap-3 pt-4">
             <Link
               href="/ranking/"
               className="inline-flex items-center rounded-lg bg-marca-500 px-4 py-2 font-medium text-white transition-colors hover:bg-marca-600"
@@ -137,8 +120,8 @@ export default function Home() {
 
       {/* Seções de análise */}
       <Secao
-        titulo="O que mudou no Rio de Janeiro?"
-        descricao={`Comparação entre ${rotularCompetencia(movimentacoes.competenciaComparada)} e ${rotularCompetencia(movimentacoes.competencia)}`}
+        titulo="Movimentações"
+        descricao={`${rotularCompetencia(movimentacoes.competenciaComparada)} → ${rotularCompetencia(movimentacoes.competencia)}`}
         href="/crescimento/"
         hrefRotulo="Ver detalhes"
       >
