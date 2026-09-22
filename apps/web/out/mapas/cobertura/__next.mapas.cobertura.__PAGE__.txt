@@ -1,0 +1,24 @@
+1:"$Sreact.fragment"
+2:I[671,[],"ClientPageRoot"]
+3:I[1756,["825","static/chunks/825-c56ef468f97f379e.js","553","static/chunks/app/mapas/cobertura/page-9a5967818afe7825.js"],"default"]
+6:I[887,[],"OutletBoundary"]
+7:"$Sreact.suspense"
+b:I[887,[],"ViewportBoundary"]
+c:I[887,[],"MetadataBoundary"]
+e:I[9630,[],""]
+f:I[1380,[],""]
+a:X
+11:X
+11:C
+0:{"buildId":"iilmn0WyREO8AJG8t4_Bo","data":[{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],null,["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":"$@9","staleTime":"$a","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$Lb",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$Lc",null,{"children":["$","$7",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"NETRANK RJ — Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro"}],["$","meta","1",{"name":"description","content":"Plataforma de monitoramento de mercado de banda larga fixa do Estado do Rio de Janeiro para apoiar atividades de fiscalização de serviços concedidos."}],["$","meta","2",{"property":"og:title","content":"NETRANK RJ — Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro"}],["$","meta","3",{"property":"og:description","content":"Plataforma de monitoramento de mercado de banda larga fixa do Estado do Rio de Janeiro para apoiar atividades de fiscalização de serviços concedidos."}],["$","meta","4",{"property":"og:locale","content":"pt_BR"}],["$","meta","5",{"property":"og:type","content":"website"}],["$","meta","6",{"name":"twitter:card","content":"summary"}],["$","meta","7",{"name":"twitter:title","content":"NETRANK RJ — Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro"}],["$","meta","8",{"name":"twitter:description","content":"Plataforma de monitoramento de mercado de banda larga fixa do Estado do Rio de Janeiro para apoiar atividades de fiscalização de serviços concedidos."}]]}]}]}],null]}],"isPartial":"$@d","staleTime":"$a","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Le",null,{"parallelRouterKey":"children","template":["$","$Lf",null,{}]}]]}],"isPartial":"$@10","staleTime":"$a","varyParams":"$11"},{"rsc":["$","$1","c",{"children":[null,["$","$Le",null,{"parallelRouterKey":"children","template":["$","$Lf",null,{}]}]]}],"isPartial":"$@12","staleTime":"$a","varyParams":"$11"}],"isUpgradeableISRFallback":false,"a":"$@13","rootVaryParams":null,"needsRuntimeRequest":"$@14"}
+4:{}
+5:"$0:data:0:rsc:props:children:0:props:serverProvidedParams:params"
+8:null
+14:true
+a:300
+a:C
+13:0
+d:"$undefined"
+10:"$undefined"
+12:"$undefined"
+9:"$undefined"

@@ -1,0 +1,2 @@
+:HL["/_next/static/css/ce47b4940214e189.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"provedores","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"mundo-telecom","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"iilmn0WyREO8AJG8t4_Bo"}
