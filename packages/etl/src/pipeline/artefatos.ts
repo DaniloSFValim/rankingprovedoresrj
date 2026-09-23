@@ -320,6 +320,11 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   const topCorrida = opcoes.topCorrida ?? 20;
   const atual = ctx.competencias[ctx.competencias.length - 1]!;
   let arquivos = 0;
+  // Regerados por inteiro a cada build: sem a limpeza, arquivos de slugs que
+  // deixaram de existir (inclusive de dados demonstrativos) continuam publicados.
+  for (const pasta of ['provedores', 'municipios']) {
+    fs.rmSync(path.join(destino, pasta), { recursive: true, force: true });
+  }
   const salvar = (relativo: string, conteudo: unknown) => {
     escrever(path.join(destino, relativo), conteudo);
     arquivos += 1;
