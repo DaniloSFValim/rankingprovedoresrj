@@ -151,6 +151,12 @@ jobs:
       - name: Relatorio de qualidade
         run: npm run etl -- status
 
+      # Situacao cadastral, abertura e porte das prestadoras (BrasilAPI, dados
+      # abertos do CNPJ). Opcional: se a API falhar, o cadastro anterior fica.
+      - name: Cadastro das prestadoras na Receita Federal
+        continue-on-error: true
+        run: npm run etl -- receita
+
       # --------------------------------------------------------------- build
       - name: Reconstruir artefatos e site
         env:
@@ -171,7 +177,7 @@ jobs:
         run: |
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add apps/web/public/data
+          git add apps/web/public/data data/receita
           if git diff --staged --quiet; then
             echo "Nenhuma mudanca nos dados. Nada a publicar."
             exit 0
