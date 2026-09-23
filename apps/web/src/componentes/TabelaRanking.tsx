@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { LinhaRankingEstadual } from '@/lib/dados';
-import { corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal, setaVariacao } from '@/lib/formato';
+import { ehRepetido, nomesRepetidos } from '@/lib/homonimos';
+import { cnpjFormatado, corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal, setaVariacao } from '@/lib/formato';
 
 /**
  * Tabela do ranking estadual (§9).
@@ -21,6 +22,7 @@ export function TabelaRanking({
 }) {
   const exibidas = limite ? linhas.slice(0, limite) : linhas;
   const maiorShare = exibidas[0]?.marketShare ?? 1;
+  const repetidos = nomesRepetidos(linhas);
 
   return (
     <div className="cartao overflow-x-auto">
@@ -70,6 +72,11 @@ export function TabelaRanking({
                   {linha.posicaoAnterior === null && (
                     <span className="ml-2 rounded bg-marca-500/20 px-1.5 py-0.5 text-[10px] font-medium text-marca-300" aria-label="Provedor novo nesta competência">
                       NOVO
+                    </span>
+                  )}
+                  {linha.cnpj && ehRepetido(repetidos, linha.nome) && (
+                    <span className="block px-1 font-mono text-[11px] text-grafite-400">
+                      CNPJ {cnpjFormatado(linha.cnpj)}
                     </span>
                   )}
                 </div>

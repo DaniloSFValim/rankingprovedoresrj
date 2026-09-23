@@ -4,7 +4,9 @@ import { Navegacao } from '@/componentes/Navegacao';
 import type { ItemBusca } from '@/componentes/BuscaAvancada';
 import { FaixaDemonstrativo, RodapeProcedencia } from '@/componentes/Procedencia';
 import { CidadeSelecionadaProvider } from '@/contextos/CidadeSelecionada';
-import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta, lerIndiceProvedores } from '@/lib/dados';
+import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta, lerRankingEstadual } from '@/lib/dados';
+import { cnpjFormatado } from '@/lib/formato';
+import { ehRepetido, nomesRepetidos } from '@/lib/homonimos';
 import { MARCA } from '@/lib/marca';
 
 export const metadata: Metadata = {
@@ -61,6 +63,9 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
     numeroProvedores: m.numeroProvedores,
   }));
 
+  const provedores = lerRankingEstadual();
+  const repetidos = nomesRepetidos(provedores);
+
   const itensBusca: ItemBusca[] = [
     ...cidades.map((c) => ({
       id: `municipio-${c.slug}`,
@@ -70,14 +75,20 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
       href: `/municipios/${c.slug}/`,
       texto: c.nome,
     })),
-    ...lerIndiceProvedores().map((p) => ({
-      id: `provedor-${p.slug}`,
-      titulo: p.nome,
-      descricao: `${p.municipiosAtendidos || 0} municípios`,
-      categoria: 'provedor' as const,
-      href: `/provedores/${p.slug}/`,
-      texto: p.nome,
-    })),
+    ...provedores.map((p) => {
+      const municipios = `${p.municipiosAtendidos || 0} ${p.municipiosAtendidos === 1 ? 'município' : 'municípios'}`;
+      return {
+        id: `provedor-${p.slug}`,
+        titulo: p.nome,
+        descricao:
+          ehRepetido(repetidos, p.nome) && p.cnpj
+            ? `CNPJ ${cnpjFormatado(p.cnpj)}`
+            : municipios,
+        categoria: 'provedor' as const,
+        href: `/provedores/${p.slug}/`,
+        texto: p.cnpj ? `${p.nome} ${p.cnpj}` : p.nome,
+      };
+    }),
     { id: 'pagina-ranking', titulo: 'Ranking', categoria: 'pagina' as const, href: '/ranking/', texto: 'Ranking' },
     { id: 'pagina-crescimento', titulo: 'Crescimento', categoria: 'pagina' as const, href: '/crescimento/', texto: 'Crescimento' },
     { id: 'pagina-municipios', titulo: 'Municípios', categoria: 'pagina' as const, href: '/municipios/', texto: 'Municípios' },
