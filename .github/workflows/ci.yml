@@ -1,8 +1,8 @@
 name: CI
 
 # Garante que o motor de calculo e a exportacao estatica continuam integros.
-# Nao publica nada: o deploy e feito pelo Cloudflare Pages a partir de
-# apps/web/out/, versionado no repositorio.
+# Nao publica nada: o deploy e feito pelo workflow Deploy. O build usa os
+# artefatos reais versionados em apps/web/public/data.
 
 on:
   push:
@@ -28,11 +28,6 @@ jobs:
 
       - name: Verificacao de tipos do ETL
         run: npx tsc --noEmit -p packages/etl/tsconfig.json
-
-      # Gera a fixture sintetica para que o build tenha artefatos de dados.
-      # Os dados reais da Anatel nao sao baixados na CI.
-      - name: Gerar artefatos de desenvolvimento
-        run: npm run etl -- demo
 
       - name: Build da exportacao estatica
         run: npm run build
