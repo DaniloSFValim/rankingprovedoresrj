@@ -5,20 +5,22 @@ import {
   cnpjsParaConsultar,
   consultarCnpj,
   normalizarCnpj,
-  URL_BRASILAPI,
+  FONTES_CNPJ,
   type CacheReceita,
 } from '../sources/receita.js';
 import type { Banco } from '../warehouse/db.js';
 
+const DESCRICAO_FONTE = `Dados abertos do CNPJ (Receita Federal), via ${FONTES_CNPJ.map((f) => f.nome).join(' / ')}`;
+
 export function lerCacheReceita(caminho: string = CAMINHOS.receita): CacheReceita {
-  if (!fs.existsSync(caminho)) return { fonte: URL_BRASILAPI, empresas: {} };
+  if (!fs.existsSync(caminho)) return { fonte: DESCRICAO_FONTE, empresas: {} };
   return JSON.parse(fs.readFileSync(caminho, 'utf8')) as CacheReceita;
 }
 
 function gravarCache(cache: CacheReceita, caminho: string): void {
   fs.mkdirSync(path.dirname(caminho), { recursive: true });
   const ordenado: CacheReceita = {
-    fonte: cache.fonte,
+    fonte: DESCRICAO_FONTE,
     empresas: Object.fromEntries(Object.entries(cache.empresas).sort(([a], [b]) => a.localeCompare(b))),
   };
   fs.writeFileSync(caminho, JSON.stringify(ordenado, null, 1) + '\n', 'utf8');
@@ -90,4 +92,21 @@ export async function atualizarCadastroReceita(
   console.log(`[receita] ${consultados} atualizado(s), ${falhas} falha(s)`);
   console.log(`[receita] situacao cadastral: ${[...porSituacao].map(([s, n]) => `${s}=${n}`).join(', ')}`);
   return { consultados, falhas };
+}
+
+/** Diagnostico: consulta poucos CNPJs em cada fonte isoladamente e mostra o resultado. */
+export async function sondarFontesReceita(cnpjs: string[]): Promise<void> {
+  for (const fonte of FONTES_CNPJ) {
+    for (const cnpj of cnpjs) {
+      const r = await consultarCnpj(cnpj, { fontes: [fonte], tentativas: 1 });
+      const resumo =
+        r.tipo === 'ok'
+          ? `ok | ${r.cadastro.razaoSocial ?? 'razao social null'} | situacao=${r.cadastro.situacao} | porte=${r.cadastro.porte} | abertura=${r.cadastro.dataAbertura}`
+          : r.tipo === 'inexistente'
+            ? 'nao encontrado'
+            : r.motivo;
+      console.log(`[receita-sondar] ${fonte.nome} ${cnpj}: ${resumo}`);
+      await new Promise((ok) => setTimeout(ok, 1200));
+    }
+  }
 }

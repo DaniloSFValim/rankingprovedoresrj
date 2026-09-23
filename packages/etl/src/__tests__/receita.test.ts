@@ -80,7 +80,10 @@ describe('consultarCnpj', () => {
   });
   it('404 e cnpj inexistente, sem novas tentativas', async () => {
     let chamadas = 0;
-    const r = await consultarCnpj('1', { buscar: async () => (chamadas++, resposta(404)) });
+    const r = await consultarCnpj('1', {
+      buscar: async () => (chamadas++, resposta(404)),
+      fontes: [{ nome: 'A', url: (c) => c }],
+    });
     expect(r).toEqual({ tipo: 'inexistente' });
     expect(chamadas).toBe(1);
   });
@@ -97,8 +100,22 @@ describe('consultarCnpj', () => {
       buscar: async () => resposta(503),
       tentativas: 2,
       pausaBaseMs: 0,
+      fontes: [{ nome: 'A', url: (c) => `a/${c}` }],
     });
-    expect(r).toEqual({ tipo: 'falha', motivo: 'HTTP 503' });
+    expect(r).toEqual({ tipo: 'falha', motivo: 'A: HTTP 503' });
+  });
+  it('recorre a proxima fonte quando a primeira bloqueia', async () => {
+    const urls: string[] = [];
+    const r = await consultarCnpj('1', {
+      buscar: async (url) => (urls.push(url), url.startsWith('a/') ? resposta(403) : resposta(200, RESPOSTA)),
+      pausaBaseMs: 0,
+      fontes: [
+        { nome: 'A', url: (c) => `a/${c}` },
+        { nome: 'B', url: (c) => `b/${c}` },
+      ],
+    });
+    expect(r.tipo).toBe('ok');
+    expect(urls).toEqual(['a/1', 'b/1']);
   });
 });
 

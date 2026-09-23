@@ -66,7 +66,7 @@ import {
   type Alerta,
 } from './pipeline/qualidade.js';
 import { FONTE_ANATEL } from './sources/anatel.js';
-import { atualizarCadastroReceita, lerCacheReceita } from './pipeline/receita.js';
+import { atualizarCadastroReceita, lerCacheReceita, sondarFontesReceita } from './pipeline/receita.js';
 import { abrirBanco, type Banco } from './warehouse/db.js';
 
 /**
@@ -801,6 +801,12 @@ async function principal(): Promise<void> {
         break;
       case 'receita': {
         await atualizarCadastroReceita(db);
+        break;
+      }
+      case 'receita-sondar': {
+        await sondarFontesReceita(
+          resto.length > 0 ? resto : ['66970229000167', '40432544000147', '02558157000162'],
+        );
         break;
       }
       case 'status':
