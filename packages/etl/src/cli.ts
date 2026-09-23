@@ -317,6 +317,17 @@ async function principal(): Promise<void> {
   try {
     switch (comando) {
       case 'demo': {
+        // Dados demonstrativos ja sobrescreveram os reais em commits anteriores.
+        const metaAtual = path.join(CAMINHOS.artefatos, 'meta.json');
+        if (!resto.includes('--forcar') && fs.existsSync(metaAtual)) {
+          const meta = JSON.parse(fs.readFileSync(metaAtual, 'utf8'));
+          if (meta.procedencia?.dadosDemonstrativos === false) {
+            throw new Error(
+              `${metaAtual} contem dados reais da Anatel. ` +
+                'Use `npm run etl -- demo --forcar` para sobrescreve-los (nao commite o resultado).',
+            );
+          }
+        }
         const caminho = path.join(CAMINHOS.trabalho, 'anatel-DEMONSTRATIVO-rj.csv');
         escreverCsvDemo(caminho, { meses: 24 });
         console.log(`[demo] fixture sintetica gerada em ${caminho}`);

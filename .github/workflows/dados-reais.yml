@@ -5,7 +5,8 @@ name: Ingerir dados reais da Anatel
 # modulos nativos (better-sqlite3). O runner do GitHub tem as duas.
 #
 # Ele baixa os dados da Anatel, baixa a malha municipal do IBGE, reconstroi os
-# artefatos e o site, e commita o resultado. O push dispara o deploy.
+# artefatos e o site, e commita os artefatos. O workflow Deploy publica em
+# seguida (gatilho workflow_run).
 
 on:
   # Execucao manual, com os parametros expostos.
@@ -170,7 +171,7 @@ jobs:
         run: |
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add apps/web/public/data apps/web/out
+          git add apps/web/public/data
           if git diff --staged --quiet; then
             echo "Nenhuma mudanca nos dados. Nada a publicar."
             exit 0

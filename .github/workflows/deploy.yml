@@ -1,0 +1,59 @@
+name: Deploy
+
+# Unico caminho de publicacao: compila o site a partir de apps/web/public/data
+# (versionado) e publica no Worker `rankingprovedoresrj` via wrangler.toml.
+#
+# `workflow_run` e necessario porque o push feito pelo workflow de ingestao usa
+# GITHUB_TOKEN, e pushes com esse token nao disparam o gatilho `push`.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['Ingerir dados reais da Anatel']
+    types: [completed]
+
+concurrency:
+  group: deploy-producao
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Recusar dados demonstrativos
+        run: |
+          node -e "
+            const m = require('./apps/web/public/data/meta.json');
+            if (m.procedencia?.dadosDemonstrativos !== false) {
+              console.error('::error::meta.json nao esta marcado como dados reais. Deploy abortado.');
+              process.exit(1);
+            }
+            console.log('Dados reais, competencia', m.competenciaAtual);
+          "
+
+      - name: Build
+        run: npm run build
+
+      - name: Publicar no Cloudflare Workers
+        run: npx --yes wrangler@4 deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
