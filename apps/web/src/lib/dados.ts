@@ -150,11 +150,30 @@ export interface PerfilMunicipio {
   }>;
 }
 
+/** Cadastro na Receita Federal (dados abertos do CNPJ, via BrasilAPI). */
+export interface CadastroReceita {
+  cnpj: string;
+  razaoSocial: string | null;
+  nomeFantasia: string | null;
+  situacao: string | null;
+  dataSituacao: string | null;
+  dataAbertura: string | null;
+  porte: string | null;
+  naturezaJuridica: string | null;
+  cnaePrincipal: { codigo: string; descricao: string | null } | null;
+  municipio: string | null;
+  uf: string | null;
+  capitalSocial: number | null;
+  consultadoEm: string;
+}
+
 export interface PerfilProvedor {
   id: string;
   slug: string;
   nome: string;
   cnpj: string | null;
+  /** Ausente em artefatos gerados antes do cruzamento com a Receita. */
+  receita?: CadastroReceita | null;
   grupoEconomico: string | null;
   competencia: Competencia;
   posicao: number;

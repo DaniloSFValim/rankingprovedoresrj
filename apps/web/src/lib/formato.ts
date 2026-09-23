@@ -59,3 +59,16 @@ export function setaVariacao(valor: number | null | undefined): string {
 }
 
 export const ND = NAO_DISPONIVEL;
+
+export function cnpjFormatado(cnpj: string): string {
+  const d = cnpj.replace(/\D/g, '');
+  return d.length === 14
+    ? `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5, 8)}/${d.slice(8, 12)}-${d.slice(12)}`
+    : cnpj;
+}
+
+/** 'AAAA-MM-DD' ou ISO completo para 'DD/MM/AAAA', sem conversao de fuso. */
+export function dataBr(valor: string | null | undefined): string {
+  const m = valor ? /^(\d{4})-(\d{2})-(\d{2})/.exec(valor) : null;
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : ND;
+}

@@ -66,6 +66,7 @@ import {
   type Alerta,
 } from './pipeline/qualidade.js';
 import { FONTE_ANATEL } from './sources/anatel.js';
+import { atualizarCadastroReceita, lerCacheReceita } from './pipeline/receita.js';
 import { abrirBanco, type Banco } from './warehouse/db.js';
 
 /**
@@ -250,7 +251,11 @@ function build(db: Banco): void {
     dadosDemonstrativos: demonstrativos,
   };
 
-  const resultado = construirArtefatos(db, { destino: CAMINHOS.artefatos, procedencia });
+  const resultado = construirArtefatos(db, {
+    destino: CAMINHOS.artefatos,
+    procedencia,
+    receita: lerCacheReceita(),
+  });
   console.log(
     `[build] ${resultado.arquivosGerados} artefatos em ${CAMINHOS.artefatos} ` +
       `(competencia ${rotularCompetencia(resultado.competenciaAtual)})`,
@@ -794,6 +799,10 @@ async function principal(): Promise<void> {
       case 'build':
         build(db);
         break;
+      case 'receita': {
+        await atualizarCadastroReceita(db);
+        break;
+      }
       case 'status':
         status(db);
         break;

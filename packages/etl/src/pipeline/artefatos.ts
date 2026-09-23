@@ -11,6 +11,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { normalizarCnpj, type CacheReceita } from '../sources/receita.js';
 import {
   calcularConcentracao,
   intervaloCompetencias,
@@ -303,6 +304,13 @@ export interface OpcoesBuild {
   procedencia: ProcedenciaDados;
   /** Tamanho do top exportado para a corrida do ranking (§13). */
   topCorrida?: number;
+  /** Cadastro da Receita Federal por CNPJ, anexado ao perfil do provedor. */
+  receita?: CacheReceita;
+}
+
+function cadastroReceita(cache: CacheReceita | undefined, cnpj: string | null) {
+  const chave = normalizarCnpj(cnpj);
+  return (chave && cache?.empresas[chave]) || null;
 }
 
 export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
@@ -699,6 +707,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       slug: linha.slug,
       nome: linha.nome,
       cnpj: linha.cnpj,
+      receita: cadastroReceita(opcoes.receita, linha.cnpj),
       grupoEconomico: linha.grupoEconomico,
       competencia: atual,
       posicao: linha.posicao,

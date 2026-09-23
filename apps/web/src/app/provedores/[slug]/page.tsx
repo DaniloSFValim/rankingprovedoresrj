@@ -5,7 +5,16 @@ import { Secao } from '@/componentes/Secao';
 import { SerieProvedor, TerritorioProvedor } from '@/componentes/graficos/SerieProvedor';
 import { GrafikoPosicao } from '@/componentes/graficos/GrafikoPosicao';
 import { lerIndiceProvedores, lerPerfilProvedor } from '@/lib/dados';
-import { compacto, corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal } from '@/lib/formato';
+import {
+  cnpjFormatado,
+  compacto,
+  corVariacao,
+  dataBr,
+  inteiro,
+  inteiroComSinal,
+  percentual,
+  percentualComSinal,
+} from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
 
 /**
@@ -44,6 +53,7 @@ export default async function PaginaProvedor({ params }: Props) {
   if (!perfil) notFound();
 
   const liderados = perfil.presenca.filter((p) => p.lidera);
+  const receita = perfil.receita ?? null;
 
   return (
     <main className="space-y-8">
@@ -62,11 +72,19 @@ export default async function PaginaProvedor({ params }: Props) {
           </p>
           {perfil.cnpj && (
             <p>
-              CNPJ: <span className="font-mono text-grafite-300">{perfil.cnpj}</span>
+              CNPJ: <span className="font-mono text-grafite-300">{cnpjFormatado(perfil.cnpj)}</span>
             </p>
           )}
         </div>
       </div>
+
+      {receita?.situacao && receita.situacao !== 'ATIVA' && (
+        <div className="rounded-lg border border-baixa/40 bg-baixa/10 px-4 py-3 text-sm text-grafite-200">
+          <strong className="text-baixa">CNPJ com situação {receita.situacao} na Receita Federal</strong>
+          {receita.dataSituacao && ` desde ${dataBr(receita.dataSituacao)}`}. A Anatel registra{' '}
+          {inteiro(perfil.acessos)} acessos desta prestadora na competência mais recente.
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Kpi rotulo={`Posição no ${MARCA.ufSigla}`} valor={`${perfil.posicao}º`} />
@@ -188,6 +206,49 @@ export default async function PaginaProvedor({ params }: Props) {
           </table>
         </div>
       </Secao>
+
+      {receita && (
+        <Secao
+          titulo="Cadastro na Receita Federal"
+          descricao={`Dados abertos do CNPJ, consultados em ${dataBr(receita.consultadoEm)}`}
+        >
+          <dl className="cartao grid gap-x-6 gap-y-3 p-4 text-sm sm:grid-cols-2">
+            <Campo rotulo="Razão social" valor={receita.razaoSocial} />
+            <Campo rotulo="Nome fantasia" valor={receita.nomeFantasia} />
+            <Campo
+              rotulo="Situação cadastral"
+              valor={
+                receita.situacao &&
+                `${receita.situacao}${receita.dataSituacao ? ` desde ${dataBr(receita.dataSituacao)}` : ''}`
+              }
+              destaque={receita.situacao !== null && receita.situacao !== 'ATIVA'}
+            />
+            <Campo rotulo="Início de atividade" valor={receita.dataAbertura && dataBr(receita.dataAbertura)} />
+            <Campo rotulo="Porte" valor={receita.porte} />
+            <Campo rotulo="Natureza jurídica" valor={receita.naturezaJuridica} />
+            <Campo
+              rotulo="Atividade principal (CNAE)"
+              valor={
+                receita.cnaePrincipal &&
+                [receita.cnaePrincipal.codigo, receita.cnaePrincipal.descricao].filter(Boolean).join(' · ')
+              }
+            />
+            <Campo
+              rotulo="Sede"
+              valor={[receita.municipio, receita.uf].filter(Boolean).join(' / ') || null}
+            />
+          </dl>
+        </Secao>
+      )}
     </main>
+  );
+}
+
+function Campo({ rotulo, valor, destaque = false }: { rotulo: string; valor: string | null; destaque?: boolean }) {
+  return (
+    <div>
+      <dt className="text-xs text-grafite-500">{rotulo}</dt>
+      <dd className={destaque ? 'font-medium text-baixa' : 'text-grafite-200'}>{valor ?? 'n/d'}</dd>
+    </div>
   );
 }

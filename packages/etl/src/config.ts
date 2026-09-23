@@ -15,6 +15,8 @@ export const CAMINHOS = {
   artefatos: path.join(RAIZ_REPO, 'apps/web/public/data'),
   /** Overrides manuais de normalizacao de empresas (§8, §39). */
   overrides: path.join(RAIZ_REPO, 'data/overrides/empresas.json'),
+  /** Cadastro das prestadoras na Receita Federal, versionado como cache. */
+  receita: path.join(RAIZ_REPO, 'data/receita/cnpjs.json'),
 } as const;
 
 /** Escopo geografico do produto. O filtro e aplicado o mais cedo possivel (§37). */
