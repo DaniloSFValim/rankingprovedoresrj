@@ -82,4 +82,16 @@ describe('TabelaRanking', () => {
     );
     expect(hasMunicipiosHeader).toBe(false);
   });
+
+  it('mostra o CNPJ apenas quando o nome se repete', () => {
+    const homonimas: LinhaRankingEstadual[] = [
+      { ...mockLinhas[0]!, empresaId: 'a', slug: 'claro-2', nome: 'CLARO', cnpj: '66970229000167' },
+      { ...mockLinhas[0]!, empresaId: 'b', slug: 'claro', nome: 'Claro', cnpj: '40432544000147', posicao: 2 },
+      { ...mockLinhas[0]!, empresaId: 'c', slug: 'tim', nome: 'TIM', cnpj: '02421421000111', posicao: 3 },
+    ];
+    render(<TabelaRanking linhas={homonimas} />);
+    expect(screen.getByText('CNPJ 66.970.229/0001-67')).toBeInTheDocument();
+    expect(screen.getByText('CNPJ 40.432.544/0001-47')).toBeInTheDocument();
+    expect(screen.queryByText(/02\.421\.421/)).not.toBeInTheDocument();
+  });
 });

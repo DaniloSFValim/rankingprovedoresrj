@@ -1,7 +1,6 @@
 /**
- * Cadastro das prestadoras na Receita Federal, via BrasilAPI
- * (https://brasilapi.com.br/api/cnpj/v1/{cnpj}), que republica os dados
- * abertos do CNPJ.
+ * Cadastro das prestadoras na Receita Federal, a partir dos dados abertos do
+ * CNPJ republicados por APIs publicas com o mesmo formato de resposta.
  *
  * O quadro societario (QSA) e descartado de proposito: sao nomes de pessoas
  * fisicas, sem ganho analitico para o painel.
@@ -28,7 +27,22 @@ export interface CacheReceita {
   empresas: Record<string, CadastroReceita>;
 }
 
-export const URL_BRASILAPI = 'https://brasilapi.com.br/api/cnpj/v1/';
+export interface FonteCnpj {
+  nome: string;
+  url: (cnpj: string) => string;
+}
+
+// Em ordem de preferencia. A BrasilAPI respondeu 403 a runners do GitHub
+// Actions; a Minha Receita e a alternativa, com o mesmo formato de resposta.
+export const FONTES_CNPJ: readonly FonteCnpj[] = [
+  { nome: 'BrasilAPI', url: (c) => `https://brasilapi.com.br/api/cnpj/v1/${c}` },
+  { nome: 'Minha Receita', url: (c) => `https://minhareceita.org/${c}` },
+];
+
+const CABECALHOS = {
+  Accept: 'application/json',
+  'User-Agent': 'netrank-rj/1.0 (+https://github.com/DaniloSFValim/rankingprovedoresrj)',
+};
 
 export function normalizarCnpj(bruto: string | null | undefined): string | null {
   const digitos = (bruto ?? '').replace(/\D/g, '');
@@ -84,25 +98,26 @@ type Buscar = (url: string) => Promise<{ status: number; json: () => Promise<unk
 
 const esperar = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export async function consultarCnpj(
-  cnpj: string,
-  opcoes: { buscar?: Buscar; agora?: () => Date; tentativas?: number; pausaBaseMs?: number } = {},
-): Promise<ResultadoConsulta> {
-  const buscar: Buscar = opcoes.buscar ?? ((url) => fetch(url));
-  const tentativas = opcoes.tentativas ?? 4;
-  const pausaBase = opcoes.pausaBaseMs ?? 2000;
-  let motivo = 'sem tentativas';
+const buscarPadrao: Buscar = (url) => fetch(url, { headers: CABECALHOS });
 
+async function consultarNaFonte(
+  cnpj: string,
+  fonte: FonteCnpj,
+  buscar: Buscar,
+  agora: () => Date,
+  tentativas: number,
+  pausaBase: number,
+): Promise<ResultadoConsulta> {
+  let motivo = 'sem tentativas';
   for (let i = 0; i < tentativas; i++) {
     try {
-      const resposta = await buscar(URL_BRASILAPI + cnpj);
+      const resposta = await buscar(fonte.url(cnpj));
       if (resposta.status === 200) {
         const corpo = await resposta.json();
         if (typeof corpo !== 'object' || corpo === null) return { tipo: 'falha', motivo: 'corpo invalido' };
-        const agora = (opcoes.agora ?? (() => new Date()))().toISOString();
         return {
           tipo: 'ok',
-          cadastro: converterRespostaBrasilApi(cnpj, corpo as Record<string, unknown>, agora),
+          cadastro: converterRespostaBrasilApi(cnpj, corpo as Record<string, unknown>, agora().toISOString()),
         };
       }
       if (resposta.status === 404) return { tipo: 'inexistente' };
@@ -113,7 +128,34 @@ export async function consultarCnpj(
     }
     if (i < tentativas - 1) await esperar(pausaBase * 2 ** i);
   }
-  return { tipo: 'falha', motivo };
+  return { tipo: 'falha', motivo: `${fonte.nome}: ${motivo}` };
+}
+
+/** Tenta cada fonte em ordem; a primeira resposta conclusiva vence. */
+export async function consultarCnpj(
+  cnpj: string,
+  opcoes: {
+    buscar?: Buscar;
+    agora?: () => Date;
+    tentativas?: number;
+    pausaBaseMs?: number;
+    fontes?: readonly FonteCnpj[];
+  } = {},
+): Promise<ResultadoConsulta> {
+  const motivos: string[] = [];
+  for (const fonte of opcoes.fontes ?? FONTES_CNPJ) {
+    const r = await consultarNaFonte(
+      cnpj,
+      fonte,
+      opcoes.buscar ?? buscarPadrao,
+      opcoes.agora ?? (() => new Date()),
+      opcoes.tentativas ?? 4,
+      opcoes.pausaBaseMs ?? 2000,
+    );
+    if (r.tipo !== 'falha') return r;
+    motivos.push(r.motivo);
+  }
+  return { tipo: 'falha', motivo: motivos.join('; ') };
 }
 
 /** CNPJs sem cadastro ou consultados ha mais de `validadeDias`. */
