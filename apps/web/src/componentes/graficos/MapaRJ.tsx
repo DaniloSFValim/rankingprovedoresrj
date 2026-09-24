@@ -26,7 +26,7 @@ import { inteiro } from '@/lib/formato';
  * acentuação inconsistente), e casar por nome perderia municípios em silêncio.
  */
 
-type Metrica = 'acessos' | 'provedores' | 'concentracao' | 'lider' | 'crescimento';
+type Metrica = 'acessos' | 'densidade' | 'lentas' | 'provedores' | 'concentracao' | 'lider' | 'crescimento';
 
 const METRICAS: Record<
   Metrica,
@@ -44,6 +44,21 @@ const METRICAS: Record<
     sufixo: '',
     cores: ['#0c2d3a', '#0e7490', '#22d3ee', '#a5f3fc'],
     descricao: 'Total de acessos de banda larga fixa no município.',
+  },
+  densidade: {
+    rotulo: 'Densidade',
+    valor: (m) => m.densidade ?? null,
+    sufixo: '',
+    cores: ['#0c2d3a', '#0e7490', '#22d3ee', '#a5f3fc'],
+    descricao:
+      'Acessos residenciais (pessoa física) por 100 domicílios ocupados — IBGE, Censo 2022.',
+  },
+  lentas: {
+    rotulo: 'Conexões lentas',
+    valor: (m) => m.percentualAbaixo50 ?? null,
+    sufixo: '%',
+    cores: ['#0e7490', '#64748b', '#f43f5e'],
+    descricao: 'Parcela dos acessos com velocidade contratada abaixo de 50 Mbps.',
   },
   provedores: {
     rotulo: 'Nº de provedores',
@@ -96,6 +111,10 @@ export function MapaRJ({ municipios, destaque }: Props) {
   const [metrica, setMetrica] = useState<Metrica>('acessos');
   const [slugDestaque, setSlugDestaque] = useState<string | null>(destaque ?? null);
   const config = METRICAS[metrica];
+  // Métricas sem nenhum valor (artefatos anteriores ao dado) não viram aba vazia.
+  const metricasDisponiveis = (Object.keys(METRICAS) as Metrica[]).filter((k) =>
+    municipios.some((m) => METRICAS[k].valor(m) !== null),
+  );
   const destacado = municipios.find((m) => m.slug === slugDestaque) ?? null;
 
   useEffect(() => {
@@ -252,7 +271,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-1">
-        {(Object.keys(METRICAS) as Metrica[]).map((chave) => (
+        {metricasDisponiveis.map((chave) => (
           <button
             key={chave}
             type="button"

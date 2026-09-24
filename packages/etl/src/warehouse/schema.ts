@@ -84,6 +84,25 @@ CREATE TABLE IF NOT EXISTS fato_acessos (
   PRIMARY KEY (competencia, codigo_ibge, empresa_id, tecnologia)
 );
 
+-- Perfil dos acessos (safras 2021+): pessoa fisica e velocidade contratada,
+-- em faixas de Mbps. Mesma granularidade do fato, sem a tecnologia.
+CREATE TABLE IF NOT EXISTS fato_perfil (
+  competencia        TEXT NOT NULL,
+  codigo_ibge        TEXT NOT NULL,
+  empresa_id         TEXT NOT NULL REFERENCES empresas(id),
+  pessoa_fisica      INTEGER NOT NULL CHECK (pessoa_fisica >= 0),
+  vel_ate10          INTEGER NOT NULL,
+  vel_de10a50        INTEGER NOT NULL,
+  vel_de50a100       INTEGER NOT NULL,
+  vel_de100a300      INTEGER NOT NULL,
+  vel_de300a500      INTEGER NOT NULL,
+  vel_de500a1000     INTEGER NOT NULL,
+  vel_acima1000      INTEGER NOT NULL,
+  vel_nao_informada  INTEGER NOT NULL,
+  execucao_id        INTEGER REFERENCES execucoes_importacao(id),
+  PRIMARY KEY (competencia, codigo_ibge, empresa_id)
+);
+
 -- Indices alinhados aos quatro eixos de consulta do produto (§41).
 CREATE INDEX IF NOT EXISTS ix_fato_competencia   ON fato_acessos (competencia);
 CREATE INDEX IF NOT EXISTS ix_fato_municipio     ON fato_acessos (codigo_ibge, competencia);

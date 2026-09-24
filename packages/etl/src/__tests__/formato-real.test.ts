@@ -95,6 +95,7 @@ describe('purgarDadosDemonstrativos', () => {
     registros: [
       { competencia, codigoIbge: '3303302', empresaId: 'nome:X', tecnologia: 'FIBRA', acessos },
     ],
+    perfis: [],
     empresas: new Map([
       ['nome:X', {
         empresaId: 'nome:X', chaveNome: 'X', nomeOriginalAnatel: 'X',
@@ -244,6 +245,7 @@ describe('deteccao de lacunas na serie', () => {
       competencia, codigoIbge: '3303302', empresaId: 'nome:X',
       tecnologia: 'FIBRA' as const, acessos: 100,
     }],
+    perfis: [],
     empresas: new Map([['nome:X', {
       empresaId: 'nome:X', chaveNome: 'X', nomeOriginalAnatel: 'X',
       cnpj: null, grupoEconomico: null, origem: 'NOME_CANONICO' as const,
@@ -314,6 +316,7 @@ describe('janela de 50 meses consecutivos', () => {
           competencia: m, codigoIbge: '3303302', empresaId: 'nome:X',
           tecnologia: 'FIBRA' as const, acessos: 100,
         }],
+        perfis: [],
         empresas: new Map([['nome:X', {
           empresaId: 'nome:X', chaveNome: 'X', nomeOriginalAnatel: 'X',
           cnpj: null, grupoEconomico: null, origem: 'NOME_CANONICO' as const,

@@ -51,4 +51,43 @@ describe('construirArtefatos', () => {
     expect(fs.existsSync(path.join(destino, 'municipios/index.json'))).toBe(true);
     fs.rmSync(destino, { recursive: true, force: true });
   });
+
+  it('calcula densidade por domicilio e percentual de conexoes lentas', async () => {
+    const db = abrirBancoMemoria();
+    const fonteId = registrarFonte(db, {
+      nome: 'teste', url: 'x', arquivo: 'a.csv', hashSha256: 'x', bytes: 0,
+      coletadoEm: new Date().toISOString(), dadosDemonstrativos: false,
+    });
+    const cab =
+      'Ano;Mês;Grupo Econômico;Empresa;CNPJ;Porte da Prestadora;UF;Município;Código IBGE Município;' +
+      'Faixa de Velocidade;Velocidade;Tecnologia;Meio de Acesso;Tipo de Pessoa;Tipo de Produto;Acessos';
+    const csv = [
+      cab,
+      '2026;7;OUTROS;PROV A;11111111000111;Pequeno Porte;RJ;Niterói;3303302;> 34Mbps;500,000000;FTTH;Fibra;Pessoa Física;INTERNET;60',
+      '2026;7;OUTROS;PROV A;11111111000111;Pequeno Porte;RJ;Niterói;3303302;> 34Mbps;500,000000;FTTH;Fibra;Pessoa Jurídica;INTERNET;20',
+      '2026;7;OUTROS;PROV B;22222222000122;Pequeno Porte;RJ;Niterói;3303302;2Mbps a 12Mbps;10,000000;xDSL;Cabo Metálico;Pessoa Física;INTERNET;20',
+    ].join('\n');
+    carregar(db, await extrairRjDeTexto(csv), iniciarExecucao(db, fonteId));
+
+    const destino = fs.mkdtempSync(path.join(os.tmpdir(), 'artefatos-'));
+    construirArtefatos(db, {
+      destino,
+      domicilios: { '3303302': 200 },
+      procedencia: {
+        fonte: 'teste', url: 'x', arquivo: 'a.csv', competenciaInicial: '2026-07',
+        competenciaFinal: '2026-07', coletadoEm: '', processadoEm: '', dadosDemonstrativos: false,
+      },
+    });
+    const ler = (r: string) => JSON.parse(fs.readFileSync(path.join(destino, r), 'utf8'));
+    const indice = ler('municipios/index.json').municipios[0];
+    // 80 acessos de pessoa fisica / 200 domicilios
+    expect(indice.densidade).toBeCloseTo(40);
+    // 20 de 100 acessos abaixo de 50 Mbps
+    expect(indice.percentualAbaixo50).toBeCloseTo(20);
+    expect(ler('estado/kpis.json').densidadeEstado).toBeCloseTo(40);
+    const perfilMunicipio = ler(`municipios/${indice.slug}.json`);
+    expect(perfilMunicipio.domicilios).toBe(200);
+    expect(perfilMunicipio.perfilAcessos.acessosComVelocidade).toBe(100);
+    fs.rmSync(destino, { recursive: true, force: true });
+  });
 });

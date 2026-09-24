@@ -12,6 +12,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { normalizarCnpj, type CacheReceita } from '../sources/receita.js';
+import { consultarPerfis, densidade, type PerfilAcessos } from './perfil-acessos.js';
 import {
   calcularConcentracao,
   intervaloCompetencias,
@@ -51,7 +52,9 @@ export interface MunicipioResumo {
 export interface KpisEstado {
   competencia: Competencia;
   totalAcessos: number;
+  /** Acessos de pessoa fisica por 100 domicilios (Censo 2022). */
   densidadeEstado: number | null;
+  perfilAcessos: PerfilAcessos | null;
   numeroProvedores: number;
   numeroMunicipios: number;
   lider: { empresaId: string; nome: string; acessos: number; marketShare: number } | null;
@@ -100,6 +103,8 @@ export interface MunicipioIndice {
   cr3: number | null;
   hhi: number | null;
   variacao12Meses: { absoluta: number; percentual: number | null } | null;
+  densidade: number | null;
+  percentualAbaixo50: number | null;
 }
 
 export interface PresencaMunicipal {
@@ -306,6 +311,8 @@ export interface OpcoesBuild {
   topCorrida?: number;
   /** Cadastro da Receita Federal por CNPJ, anexado ao perfil do provedor. */
   receita?: CacheReceita;
+  /** Domicilios do Censo 2022 por codigo IBGE (denominador da densidade). */
+  domicilios?: Record<string, number>;
 }
 
 function cadastroReceita(cache: CacheReceita | undefined, cnpj: string | null) {
@@ -338,19 +345,11 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     arquivos += 1;
   };
 
-  // Carrega domicílios para cálculo de densidade (acessos / domicílios * 100)
-  let totalDomicilios = 0;
-  try {
-    const domiciliosPath = path.join(process.cwd(), 'data', 'domicilios-rj-ibge.json');
-    if (fs.existsSync(domiciliosPath)) {
-      const domicilios = JSON.parse(fs.readFileSync(domiciliosPath, 'utf8')) as {
-        municipios: Record<string, number>;
-      };
-      totalDomicilios = Object.values(domicilios.municipios).reduce((s, v) => s + v, 0);
-    }
-  } catch (e) {
-    console.warn('Aviso: domicílios não carregados, densidade não será calculada');
-  }
+  const perfisMunicipio = consultarPerfis(db, atual, 'codigo_ibge');
+  const perfisEmpresa = consultarPerfis(db, atual, 'empresa_id');
+  const perfilEstado = consultarPerfis(db, atual, null).get('estado') ?? null;
+  const domicilios = opcoes.domicilios ?? {};
+  const totalDomicilios = Object.values(domicilios).reduce((a, b) => a + b, 0);
 
   // ---------------------------------------------------------------- meta ----
   // Competencias ausentes no meio da serie. Expostas para que a interface
@@ -400,12 +399,13 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
 
   const lider = linhasRanking[0];
   const totalAcessosEstado = somar(ctx.estadoPorCompetencia.get(atual));
-  const densidadeEstado = totalDomicilios > 0 ? (totalAcessosEstado * 100) / totalDomicilios : null;
+  const densidadeEstado = perfilEstado ? densidade(perfilEstado.acessosPessoaFisica, totalDomicilios) : null;
 
   const kpis: KpisEstado = {
     competencia: atual,
     totalAcessos: totalAcessosEstado,
     densidadeEstado,
+    perfilAcessos: perfilEstado,
     numeroProvedores: linhasRanking.length,
     numeroMunicipios: ctx.municipalPorCompetencia.get(atual)?.size ?? 0,
     lider: lider
@@ -541,6 +541,8 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       liderMarketShare: liderLocal?.marketShare ?? null,
       cr3: conc?.cr3 ?? null,
       hhi: conc?.hhi ?? null,
+      densidade: densidade(perfisMunicipio.get(codigoIbge)?.acessosPessoaFisica ?? 0, perfisMunicipio.has(codigoIbge) ? domicilios[codigoIbge] : undefined),
+      percentualAbaixo50: perfisMunicipio.get(codigoIbge)?.percentualAbaixo50 ?? null,
       variacao12Meses:
         totalAntes === null
           ? null
@@ -630,6 +632,9 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
         ),
       })),
       saidas,
+      perfilAcessos: perfisMunicipio.get(codigoIbge) ?? null,
+      domicilios: domicilios[codigoIbge] ?? null,
+      densidade: densidade(perfisMunicipio.get(codigoIbge)?.acessosPessoaFisica ?? 0, perfisMunicipio.has(codigoIbge) ? domicilios[codigoIbge] : undefined),
       // Posicao no ranking estadual de municipios por acessos.
       posicaoNoEstado: posicaoEstadual.get(codigoIbge) ?? null,
       totalMunicipios: municipiosAtual.size,
@@ -708,6 +713,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       nome: linha.nome,
       cnpj: linha.cnpj,
       receita: cadastroReceita(opcoes.receita, linha.cnpj),
+      perfilAcessos: perfisEmpresa.get(empresaId) ?? null,
       grupoEconomico: linha.grupoEconomico,
       competencia: atual,
       posicao: linha.posicao,

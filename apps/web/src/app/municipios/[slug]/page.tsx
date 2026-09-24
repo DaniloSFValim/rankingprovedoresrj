@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { BarrasVelocidade } from '@/componentes/BarrasVelocidade';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { SeletorCidade } from '@/componentes/SeletorCidade';
@@ -99,6 +100,7 @@ export default async function PaginaMunicipio({ params }: Props) {
   }));
 
   const c = perfil.concentracao;
+  const pa = perfil.perfilAcessos;
   const lider = perfil.ranking[0];
 
   // Crescimento e retração locais, derivados do próprio ranking municipal.
@@ -199,6 +201,45 @@ export default async function PaginaMunicipio({ params }: Props) {
           />
         </div>
       </div>
+
+      {pa && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
+            <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Acesso e Velocidade</div>
+            <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
+          </div>
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <Kpi
+              rotulo="Densidade"
+              valor={perfil.densidade !== null ? perfil.densidade.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) : 'n/d'}
+              detalhe="acessos residenciais / 100 domicílios"
+              ajuda="Acessos de pessoa física por 100 domicílios particulares ocupados (IBGE, Censo 2022). Um domicílio pode ter mais de um acesso."
+            />
+            <Kpi
+              rotulo="Domicílios"
+              valor={compacto(perfil.domicilios)}
+              detalhe={`${inteiro(perfil.domicilios)} (Censo 2022)`}
+            />
+            <Kpi
+              rotulo="Acessos residenciais"
+              valor={percentual(c?.totalAcessos ? (pa.acessosPessoaFisica / c.totalAcessos) * 100 : null, 1)}
+              detalhe={`${inteiro(pa.acessosPessoaFisica)} de pessoa física`}
+            />
+            <Kpi
+              rotulo="Conexões lentas"
+              valor={percentual(pa.percentualAbaixo50, 1)}
+              detalhe="abaixo de 50 Mbps contratados"
+              ajuda="Parcela dos acessos com velocidade contratada abaixo de 50 Mbps."
+            />
+          </div>
+          <Secao titulo="Velocidade contratada" descricao="Distribuição dos acessos do município por faixa">
+            <div className="cartao p-4">
+              <BarrasVelocidade perfil={pa} />
+            </div>
+          </Secao>
+        </div>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Secao titulo="Participação de mercado" descricao="Top 10 provedores do município">

@@ -153,6 +153,12 @@ jobs:
 
       # Situacao cadastral, abertura e porte das prestadoras (BrasilAPI, dados
       # abertos do CNPJ). Opcional: se a API falhar, o cadastro anterior fica.
+      # Denominador da densidade. Dado censitario: se o IBGE falhar, o arquivo
+      # versionado continua valendo.
+      - name: Domicilios do Censo 2022 (IBGE)
+        continue-on-error: true
+        run: npm run etl -- domicilios
+
       - name: Cadastro das prestadoras na Receita Federal
         continue-on-error: true
         run: npm run etl -- receita
@@ -177,7 +183,7 @@ jobs:
         run: |
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add apps/web/public/data data/receita
+          git add apps/web/public/data data/receita data/ibge
           if git diff --staged --quiet; then
             echo "Nenhuma mudanca nos dados. Nada a publicar."
             exit 0

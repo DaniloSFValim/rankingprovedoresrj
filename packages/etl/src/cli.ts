@@ -66,6 +66,7 @@ import {
   type Alerta,
 } from './pipeline/qualidade.js';
 import { FONTE_ANATEL } from './sources/anatel.js';
+import { baixarDomicilios, lerDomicilios } from './pipeline/domicilios.js';
 import { atualizarCadastroReceita, lerCacheReceita, sondarFontesReceita } from './pipeline/receita.js';
 import { abrirBanco, type Banco } from './warehouse/db.js';
 
@@ -251,11 +252,14 @@ function build(db: Banco): void {
     dadosDemonstrativos: demonstrativos,
   };
 
+  const domicilios = lerDomicilios();
   const resultado = construirArtefatos(db, {
     destino: CAMINHOS.artefatos,
     procedencia,
     receita: lerCacheReceita(),
+    ...(domicilios ? { domicilios: domicilios.municipios } : {}),
   });
+  if (!domicilios) console.warn('[build] domicilios do Censo ausentes: densidade nao calculada. Rode `npm run etl -- domicilios`.');
   console.log(
     `[build] ${resultado.arquivosGerados} artefatos em ${CAMINHOS.artefatos} ` +
       `(competencia ${rotularCompetencia(resultado.competenciaAtual)})`,
@@ -801,6 +805,10 @@ async function principal(): Promise<void> {
         break;
       case 'receita': {
         await atualizarCadastroReceita(db);
+        break;
+      }
+      case 'domicilios': {
+        await baixarDomicilios();
         break;
       }
       case 'receita-sondar': {

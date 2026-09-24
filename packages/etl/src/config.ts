@@ -17,6 +17,8 @@ export const CAMINHOS = {
   overrides: path.join(RAIZ_REPO, 'data/overrides/empresas.json'),
   /** Cadastro das prestadoras na Receita Federal, versionado como cache. */
   receita: path.join(RAIZ_REPO, 'data/receita/cnpjs.json'),
+  /** Domicilios do Censo 2022 (IBGE), denominador da densidade. */
+  domicilios: path.join(RAIZ_REPO, 'data/ibge/domicilios-censo-2022.json'),
 } as const;
 
 /** Escopo geografico do produto. O filtro e aplicado o mais cedo possivel (§37). */

@@ -118,6 +118,14 @@ export function carregar(
        ON CONFLICT(codigo_ibge) DO UPDATE SET nome = excluded.nome`,
   );
   const apagarCompetencia = db.prepare('DELETE FROM fato_acessos WHERE competencia = ?');
+  const apagarPerfilCompetencia = db.prepare('DELETE FROM fato_perfil WHERE competencia = ?');
+  const inserirPerfil = db.prepare(
+    `INSERT INTO fato_perfil
+       (competencia, codigo_ibge, empresa_id, pessoa_fisica, vel_ate10, vel_de10a50,
+        vel_de50a100, vel_de100a300, vel_de300a500, vel_de500a1000, vel_acima1000,
+        vel_nao_informada, execucao_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+  );
   const inserirFato = db.prepare(
     `INSERT INTO fato_acessos
        (competencia, codigo_ibge, empresa_id, tecnologia, acessos, execucao_id)
@@ -154,6 +162,16 @@ export function carregar(
     // Substitui somente as competencias deste lote (§38).
     for (const competencia of extracao.competencias) {
       apagarCompetencia.run(competencia);
+      apagarPerfilCompetencia.run(competencia);
+    }
+
+    for (const p of extracao.perfis) {
+      const v = p.velocidade;
+      inserirPerfil.run(
+        p.competencia, p.codigoIbge, p.empresaId, p.pessoaFisica,
+        v.ate10, v.de10a50, v.de50a100, v.de100a300, v.de300a500, v.de500a1000, v.acima1000,
+        p.velocidadeNaoInformada, execucaoId,
+      );
     }
 
     for (const r of extracao.registros) {
@@ -197,6 +215,7 @@ export function purgarDadosDemonstrativos(db: Banco): number {
 
   const marcadores = execucoesDemo.map(() => '?').join(', ');
   const transacao = db.transaction(() => {
+    db.prepare(`DELETE FROM fato_perfil WHERE execucao_id IN (${marcadores})`).run(...execucoesDemo);
     const removidos = db
       .prepare(`DELETE FROM fato_acessos WHERE execucao_id IN (${marcadores})`)
       .run(...execucoesDemo).changes;
@@ -294,6 +313,7 @@ export function aplicarJanelaConsecutiva(
   }
 
   const transacao = db.transaction(() => {
+    db.prepare('DELETE FROM fato_perfil WHERE competencia < ?').run(inicio);
     const removidos = db
       .prepare('DELETE FROM fato_acessos WHERE competencia < ?')
       .run(inicio).changes;

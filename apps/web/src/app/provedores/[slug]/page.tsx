@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { BarrasVelocidade } from '@/componentes/BarrasVelocidade';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { SerieProvedor } from '@/componentes/graficos/SerieProvedor';
@@ -134,6 +135,17 @@ export default async function PaginaProvedor({ params }: Props) {
           <SerieProvedor serie={perfil.serie} />
         </div>
       </Secao>
+
+      {perfil.perfilAcessos && perfil.perfilAcessos.acessosComVelocidade > 0 && (
+        <Secao
+          titulo="Velocidade contratada"
+          descricao={`${percentual(perfil.perfilAcessos.percentualAbaixo50, 1)} dos acessos abaixo de 50 Mbps · ${percentual(perfil.acessos ? (perfil.perfilAcessos.acessosPessoaFisica / perfil.acessos) * 100 : null, 1)} de pessoa física`}
+        >
+          <div className="cartao p-4">
+            <BarrasVelocidade perfil={perfil.perfilAcessos} />
+          </div>
+        </Secao>
+      )}
 
       {liderados.length > 0 && (
         <Secao titulo="Municípios onde lidera" descricao={`${liderados.length} município(s)`}>
