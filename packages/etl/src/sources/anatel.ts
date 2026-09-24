@@ -138,7 +138,9 @@ export type CampoAnatel =
   | 'cnpj'
   | 'grupoEconomico'
   | 'tecnologia'
-  | 'acessos';
+  | 'acessos'
+  | 'velocidade'
+  | 'tipoPessoa';
 
 /**
  * Sinonimos aceitos por campo, ja canonizados (sem acento, caixa alta).
@@ -163,6 +165,11 @@ const SINONIMOS: Record<CampoAnatel, readonly string[]> = {
   grupoEconomico: ['GRUPO ECONOMICO', 'GRUPO'],
   tecnologia: ['TECNOLOGIA', 'TIPO TECNOLOGIA', 'MEIO DE ACESSO', 'TECNOLOGIA ACESSO'],
   acessos: ['ACESSOS', 'QTDE ACESSOS', 'QUANTIDADE DE ACESSOS', 'QUANTIDADE ACESSOS'],
+  // Velocidade contratada em Mbps (safras de 2021 em diante). A "Faixa de
+  // Velocidade" nao serve: a faixa mais alta e "> 34Mbps" e concentra 95% dos
+  // acessos do RJ.
+  velocidade: ['VELOCIDADE', 'VELOCIDADE CONTRATADA'],
+  tipoPessoa: ['TIPO DE PESSOA', 'TIPO PESSOA'],
 };
 
 /** Campos sem os quais nenhum indicador do produto pode ser calculado. */
@@ -245,4 +252,33 @@ export function interpretarMes(bruto: string | undefined): number | null {
   if (Number.isInteger(numerico) && numerico >= 1 && numerico <= 12) return numerico;
   const porExtenso = MESES_POR_EXTENSO[canonizarTexto(limpo)];
   return porExtenso ?? null;
+}
+
+/**
+ * Velocidade contratada em Mbps. A Anatel publica "100,000000"; campo vazio ou
+ * nao numerico retorna null (velocidade nao informada, nunca zero).
+ */
+export function interpretarVelocidade(bruto: string | undefined): number | null {
+  const texto = (bruto ?? '').trim();
+  if (texto === '') return null;
+  const normalizado = texto.includes(',') ? texto.replace(/\./g, '').replace(',', '.') : texto;
+  const valor = Number(normalizado);
+  return Number.isFinite(valor) && valor >= 0 ? valor : null;
+}
+
+/** Faixas de velocidade contratada usadas nos artefatos, em Mbps (limite superior exclusivo). */
+export const FAIXAS_VELOCIDADE = [
+  { id: 'ate10', rotulo: 'Até 10 Mbps', max: 10 },
+  { id: 'de10a50', rotulo: '10 a 50 Mbps', max: 50 },
+  { id: 'de50a100', rotulo: '50 a 100 Mbps', max: 100 },
+  { id: 'de100a300', rotulo: '100 a 300 Mbps', max: 300 },
+  { id: 'de300a500', rotulo: '300 a 500 Mbps', max: 500 },
+  { id: 'de500a1000', rotulo: '500 Mbps a 1 Gbps', max: 1000 },
+  { id: 'acima1000', rotulo: '1 Gbps ou mais', max: Number.POSITIVE_INFINITY },
+] as const;
+
+export type FaixaVelocidade = (typeof FAIXAS_VELOCIDADE)[number]['id'];
+
+export function classificarVelocidade(mbps: number): FaixaVelocidade {
+  return FAIXAS_VELOCIDADE.find((f) => mbps < f.max)!.id;
 }

@@ -23,6 +23,7 @@ export function converterParaExtracao(
 ): ResultadoExtracao {
   const resultado: ResultadoExtracao = {
     registros: [],
+    perfis: [],
     empresas: new Map(),
     municipios: new Map(),
     competencias: new Set(),

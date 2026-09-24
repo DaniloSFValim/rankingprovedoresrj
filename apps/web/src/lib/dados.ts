@@ -78,10 +78,20 @@ export interface LinhaRankingEstadual {
   municipiosAtendidos: number;
 }
 
+/** Perfil dos acessos: pessoa física e velocidade contratada (safras 2021+). */
+export interface PerfilAcessos {
+  acessosPessoaFisica: number;
+  acessosComVelocidade: number;
+  faixasVelocidade: Array<{ faixa: string; rotulo: string; acessos: number }>;
+  percentualAbaixo50: number | null;
+}
+
 export interface Kpis {
   competencia: Competencia;
   totalAcessos: number;
+  /** Acessos de pessoa física por 100 domicílios (Censo 2022). */
   densidadeEstado: number | null;
+  perfilAcessos?: PerfilAcessos | null;
   numeroProvedores: number;
   numeroMunicipios: number;
   lider: { empresaId: string; nome: string; acessos: number; marketShare: number } | null;
@@ -111,6 +121,9 @@ export interface MunicipioIndice {
   cr3: number | null;
   hhi: number | null;
   variacao12Meses: { absoluta: number; percentual: number | null } | null;
+  /** Ausentes em artefatos gerados antes do perfil de acessos. */
+  densidade?: number | null;
+  percentualAbaixo50?: number | null;
 }
 
 export interface PerfilMunicipio {
@@ -121,6 +134,9 @@ export interface PerfilMunicipio {
   variacao12Meses: { absoluta: number; percentual: number | null } | null;
   posicaoNoEstado: number | null;
   totalMunicipios: number;
+  perfilAcessos: PerfilAcessos | null;
+  domicilios: number | null;
+  densidade: number | null;
   ranking: Array<{
     posicao: number;
     empresaId: string;
@@ -174,6 +190,7 @@ export interface PerfilProvedor {
   cnpj: string | null;
   /** Ausente em artefatos gerados antes do cruzamento com a Receita. */
   receita?: CadastroReceita | null;
+  perfilAcessos?: PerfilAcessos | null;
   grupoEconomico: string | null;
   competencia: Competencia;
   posicao: number;
@@ -277,6 +294,9 @@ export const lerPerfilMunicipio = (slug: string): PerfilMunicipio | null => {
     concentracao: bruto.concentracao ?? null,
     variacao12Meses: bruto.variacao12Meses ?? null,
     posicaoNoEstado: bruto.posicaoNoEstado ?? null,
+    perfilAcessos: bruto.perfilAcessos ?? null,
+    domicilios: bruto.domicilios ?? null,
+    densidade: bruto.densidade ?? null,
     totalMunicipios: bruto.totalMunicipios ?? 0,
     ranking: (bruto.ranking ?? []).map((l) => ({
       ...l,

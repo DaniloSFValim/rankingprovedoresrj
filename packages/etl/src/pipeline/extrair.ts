@@ -11,6 +11,7 @@ import { parse } from 'csv-parse';
 import iconv from 'iconv-lite';
 import {
   asCompetencia,
+  canonizarTexto,
   classificarTecnologia,
   resolverIdentidadeEmpresa,
   type Competencia,
@@ -19,10 +20,13 @@ import {
 } from '@netrank/core';
 import { PREFIXO_IBGE_RJ, UF_ALVO } from '../config.js';
 import {
+  classificarVelocidade,
   ehCabecalhoDeOutroConjunto,
   interpretarAcessos,
   interpretarMes,
+  interpretarVelocidade,
   mapearCabecalho,
+  type FaixaVelocidade,
   type MapaColunas,
 } from '../sources/anatel.js';
 
@@ -33,6 +37,24 @@ export interface RegistroAgregado {
   tecnologia: Tecnologia;
   acessos: number;
 }
+
+/**
+ * Perfil dos acessos por competencia, municipio e prestadora: quantos sao de
+ * pessoa fisica e como se distribuem por velocidade contratada. So existe para
+ * safras que trazem as colunas "Tipo de Pessoa" e "Velocidade" (2021+).
+ */
+export interface RegistroPerfil {
+  competencia: Competencia;
+  codigoIbge: string;
+  empresaId: string;
+  pessoaFisica: number;
+  velocidade: Record<FaixaVelocidade, number>;
+  velocidadeNaoInformada: number;
+}
+
+export const faixasZeradas = (): Record<FaixaVelocidade, number> => ({
+  ate10: 0, de10a50: 0, de50a100: 0, de100a300: 0, de300a500: 0, de500a1000: 0, acima1000: 0,
+});
 
 export interface EmpresaDescoberta {
   empresaId: string;
@@ -57,6 +79,8 @@ export interface ResultadoExtracao {
    */
   outroConjuntoIgnorado?: boolean;
   registros: RegistroAgregado[];
+  /** Vazio quando o arquivo nao traz tipo de pessoa e velocidade. */
+  perfis: RegistroPerfil[];
   empresas: Map<string, EmpresaDescoberta>;
   municipios: Map<string, MunicipioDescoberto>;
   competencias: Set<Competencia>;
@@ -152,6 +176,7 @@ export async function extrairRj(
 
   const resultado: ResultadoExtracao = {
     registros: [],
+    perfis: [],
     empresas: new Map(),
     municipios: new Map(),
     competencias: new Set(),
@@ -161,6 +186,7 @@ export async function extrairRj(
 
   /** Agregador: chave composta -> acessos somados. */
   const acumulador = new Map<string, RegistroAgregado>();
+  const acumuladorPerfil = new Map<string, RegistroPerfil>();
   let mapa: MapaColunas | null = null;
 
   const leitor = fs
@@ -282,9 +308,30 @@ export async function extrairRj(
         acessos,
       });
     }
+
+    if (cols.velocidade && cols.tipoPessoa) {
+      const chavePerfil = `${competencia}|${codigoIbge}|${identidade.empresaId}`;
+      let perfil = acumuladorPerfil.get(chavePerfil);
+      if (!perfil) {
+        perfil = {
+          competencia,
+          codigoIbge,
+          empresaId: identidade.empresaId,
+          pessoaFisica: 0,
+          velocidade: faixasZeradas(),
+          velocidadeNaoInformada: 0,
+        };
+        acumuladorPerfil.set(chavePerfil, perfil);
+      }
+      if (canonizarTexto(linha[cols.tipoPessoa] ?? '') === 'PESSOA FISICA') perfil.pessoaFisica += acessos;
+      const mbps = interpretarVelocidade(linha[cols.velocidade]);
+      if (mbps === null) perfil.velocidadeNaoInformada += acessos;
+      else perfil.velocidade[classificarVelocidade(mbps)] += acessos;
+    }
   }
 
   resultado.registros = [...acumulador.values()];
+  resultado.perfis = [...acumuladorPerfil.values()];
   return resultado;
 }
 

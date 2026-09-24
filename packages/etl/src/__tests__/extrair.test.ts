@@ -128,3 +128,42 @@ describe('extrairRj', () => {
     expect(r.municipios.get('3304557')!.nome).toBe('Rio de Janeiro');
   });
 });
+
+describe('perfil de acessos (tipo de pessoa e velocidade)', () => {
+  const CABECALHO_2026 =
+    'Ano;Mês;Grupo Econômico;Empresa;CNPJ;Porte da Prestadora;UF;Município;Código IBGE Município;' +
+    'Faixa de Velocidade;Velocidade;Tecnologia;Meio de Acesso;Tipo de Pessoa;Tipo de Produto;Acessos';
+
+  it('soma pessoa fisica e distribui acessos por faixa de velocidade contratada', async () => {
+    const csv = [
+      CABECALHO_2026,
+      '2026;7;OUTROS;PROV A;11111111000111;Pequeno Porte;RJ;Niterói;3303302;> 34Mbps;500,000000;FTTH;Fibra;Pessoa Física;INTERNET;10',
+      '2026;7;OUTROS;PROV A;11111111000111;Pequeno Porte;RJ;Niterói;3303302;> 34Mbps;1048,000000;FTTH;Fibra;Pessoa Jurídica;INTERNET;2',
+      '2026;7;OUTROS;PROV A;11111111000111;Pequeno Porte;RJ;Niterói;3303302;2Mbps a 12Mbps;4,000000;xDSL;Cabo Metálico;Pessoa Física;INTERNET;3',
+      '2026;7;OUTROS;PROV A;11111111000111;Pequeno Porte;RJ;Niterói;3303302;2Mbps a 12Mbps;;xDSL;Cabo Metálico;Pessoa Física;INTERNET;1',
+      '2026;7;OUTROS;PROV A;11111111000111;Pequeno Porte;SP;Santos;3548500;> 34Mbps;500,000000;FTTH;Fibra;Pessoa Física;INTERNET;99',
+    ].join('\n');
+    const r = await extrairRjDeTexto(csv);
+    expect(r.perfis).toHaveLength(1);
+    const p = r.perfis[0]!;
+    expect(p.pessoaFisica).toBe(14);
+    expect(p.velocidade.de500a1000).toBe(10);
+    expect(p.velocidade.acima1000).toBe(2);
+    expect(p.velocidade.ate10).toBe(3);
+    expect(p.velocidadeNaoInformada).toBe(1);
+    const totalAcessos = r.registros.reduce((s, x) => s + x.acessos, 0);
+    const totalPerfil =
+      Object.values(p.velocidade).reduce((s, n) => s + n, 0) + p.velocidadeNaoInformada;
+    expect(totalPerfil).toBe(totalAcessos);
+  });
+
+  it('sem as colunas de velocidade e tipo de pessoa, nao gera perfil', async () => {
+    const csv = [
+      'Ano;Mês;Grupo Econômico;Empresa;CNPJ;Porte da Prestadora;UF;Município;Código IBGE Município;Faixa de Velocidade;Tecnologia;Meio de Acesso;Acessos',
+      '2020;12;OUTROS;PROV A;11111111000111;Pequeno Porte;RJ;Niterói;3303302;> 34Mbps;FTTH;Fibra;5',
+    ].join('\n');
+    const r = await extrairRjDeTexto(csv);
+    expect(r.registros).toHaveLength(1);
+    expect(r.perfis).toHaveLength(0);
+  });
+});
