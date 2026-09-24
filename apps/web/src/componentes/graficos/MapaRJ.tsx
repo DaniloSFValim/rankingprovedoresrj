@@ -101,6 +101,29 @@ function faixasPorQuantil(valores: number[], cores: string[]) {
 }
 
 const NOME_MAPA = 'rj-municipios';
+
+type Caixa = [number, number, number, number]; // minLon, minLat, maxLon, maxLat
+
+/** Retângulo envolvente de cada município da malha, pelo código IBGE. */
+function caixasDaMalha(malha: {
+  features: Array<{ properties: { name: string }; geometry: { coordinates: unknown } }>;
+}): Map<string, Caixa> {
+  const caixas = new Map<string, Caixa>();
+  for (const f of malha.features) {
+    const c: Caixa = [Infinity, Infinity, -Infinity, -Infinity];
+    const visitar = (v: unknown): void => {
+      if (!Array.isArray(v)) return;
+      if (typeof v[0] === 'number') {
+        const [x, y] = v as [number, number];
+        c[0] = Math.min(c[0], x); c[1] = Math.min(c[1], y);
+        c[2] = Math.max(c[2], x); c[3] = Math.max(c[3], y);
+      } else v.forEach(visitar);
+    };
+    visitar(f.geometry.coordinates);
+    caixas.set(String(f.properties.name), c);
+  }
+  return caixas;
+}
 type Estado = 'carregando' | 'pronto' | 'indisponivel';
 
 interface Props {
@@ -117,6 +140,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
   const router = useRouter();
   const [estado, setEstado] = useState<Estado>('carregando');
   const [metrica, setMetrica] = useState<Metrica>('densidade');
+  const [caixas, setCaixas] = useState<Map<string, Caixa> | null>(null);
   const [slugDestaque, setSlugDestaque] = useState<string | null>(destaque ?? null);
   const config = METRICAS[metrica];
   // Métricas sem nenhum valor (artefatos anteriores ao dado) não viram aba vazia.
@@ -166,6 +190,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
         const echartsModule = await import('echarts');
         const echarts = (echartsModule as any).registerMap ? echartsModule : (echartsModule as any).default;
         (echarts as any).registerMap(NOME_MAPA, malha);
+        setCaixas(caixasDaMalha(malha));
         setEstado('pronto');
       } catch {
         if (!cancelado) setEstado('indisponivel');
@@ -184,6 +209,19 @@ export function MapaRJ({ municipios, destaque }: Props) {
     const valores = comValor.map((m) => config.valor(m) as number);
     const fmt = (v: number) =>
       v.toLocaleString('pt-BR', { maximumFractionDigits: config.casas }) + config.sufixo;
+    // Zoom no município destacado, mantendo parte dos vizinhos à vista.
+    let enquadramento: { center?: [number, number]; zoom: number } = { zoom: 1 };
+    const caixa = destacado ? caixas?.get(destacado.codigoIbge) : undefined;
+    if (caixa && caixas) {
+      let e: Caixa = [Infinity, Infinity, -Infinity, -Infinity];
+      for (const c of caixas.values())
+        e = [Math.min(e[0], c[0]), Math.min(e[1], c[1]), Math.max(e[2], c[2]), Math.max(e[3], c[3])];
+      const razao = Math.min((e[2] - e[0]) / (caixa[2] - caixa[0]), (e[3] - e[1]) / (caixa[3] - caixa[1]));
+      enquadramento = {
+        center: [(caixa[0] + caixa[2]) / 2, (caixa[1] + caixa[3]) / 2],
+        zoom: Math.min(12, Math.max(1.5, razao * 0.45)),
+      };
+    }
     const faixas = valores.length > 0 ? faixasPorQuantil(valores, config.cores) : [];
 
     return {
@@ -216,6 +254,8 @@ export function MapaRJ({ municipios, destaque }: Props) {
       },
       visualMap: {
         type: 'piecewise',
+        backgroundColor: 'rgba(2, 6, 23, 0.85)',
+        padding: 8,
         left: 8,
         bottom: 8,
         itemWidth: 14,
@@ -231,6 +271,9 @@ export function MapaRJ({ municipios, destaque }: Props) {
           type: 'map',
           map: NOME_MAPA,
           roam: true,
+          ...enquadramento,
+          animationDurationUpdate: 700,
+          animationEasingUpdate: 'cubicInOut',
           // `nameProperty` garante a junção pelo código IBGE gravado em
           // properties.name durante o download da malha.
           nameProperty: 'name',
@@ -266,7 +309,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
         },
       ],
     };
-  }, [municipios, config, destacado]);
+  }, [municipios, config, destacado, caixas]);
 
   if (estado === 'indisponivel') {
     return (
@@ -308,7 +351,18 @@ export function MapaRJ({ municipios, destaque }: Props) {
         ))}
       </div>
 
-      <p className="text-xs text-grafite-500">{config.descricao}</p>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-grafite-500">{config.descricao}</p>
+        {destacado && !destaque && (
+          <button
+            type="button"
+            onClick={() => setSlugDestaque(null)}
+            className="rounded-md border border-grafite-700 px-2 py-1 text-xs text-grafite-300 hover:text-white"
+          >
+            Ver Estado inteiro
+          </button>
+        )}
+      </div>
 
       {destacado && (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-sm">
