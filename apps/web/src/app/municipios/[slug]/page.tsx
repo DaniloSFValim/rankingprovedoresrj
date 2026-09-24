@@ -5,6 +5,7 @@ import { Secao } from '@/componentes/Secao';
 import { SeletorCidade } from '@/componentes/SeletorCidade';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { BarrasShare } from '@/componentes/graficos/BarrasShare';
+import { MapaRJ } from '@/componentes/graficos/MapaRJ';
 import { SerieMercado } from '@/componentes/graficos/SerieMercado';
 import { TipoAtuacaoPie } from '@/componentes/graficos/TipoAtuacaoPie';
 import { lerIndiceMunicipios, lerPerfilMunicipio } from '@/lib/dados';
@@ -222,6 +223,15 @@ export default async function PaginaMunicipio({ params }: Props) {
           </div>
         </Secao>
       </div>
+
+      <Secao
+        titulo={`${perfil.nome} no Estado`}
+        descricao="Compare com os municípios vizinhos — escolha a métrica"
+      >
+        <div className="cartao p-4">
+          <MapaRJ municipios={municipios} destaque={slug} />
+        </div>
+      </Secao>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Secao titulo="Quem mais cresceu" descricao="Acessos ganhos no último mês">
