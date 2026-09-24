@@ -193,6 +193,15 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
   );
 }
 
+/** Última cidade escolhida no seletor, ou null (navegação anônima, primeira visita). */
+export function lerUltimaCidade(): string | null {
+  try {
+    return localStorage.getItem(CHAVE_ULTIMA_CIDADE);
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Atalho para a última cidade consultada.
  *
@@ -204,11 +213,7 @@ export function UltimaCidade({ cidades }: { cidades: CidadeOpcao[] }) {
   const [slug, setSlug] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      setSlug(localStorage.getItem(CHAVE_ULTIMA_CIDADE));
-    } catch {
-      setSlug(null);
-    }
+    setSlug(lerUltimaCidade());
   }, []);
 
   const cidade = cidades.find((c) => c.slug === slug);

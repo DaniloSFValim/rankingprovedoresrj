@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
-import { SerieProvedor, TerritorioProvedor } from '@/componentes/graficos/SerieProvedor';
-import { GrafikoPosicao } from '@/componentes/graficos/GrafikoPosicao';
+import { SerieProvedor } from '@/componentes/graficos/SerieProvedor';
 import { lerIndiceProvedores, lerPerfilProvedor } from '@/lib/dados';
 import {
   cnpjFormatado,
@@ -130,23 +129,9 @@ export default async function PaginaProvedor({ params }: Props) {
         />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Secao titulo="Evolução de acessos" descricao="Número de acessos ao longo do tempo">
-          <div className="cartao p-3">
-            <SerieProvedor serie={perfil.serie} />
-          </div>
-        </Secao>
-
-        <Secao titulo="Posição no ranking" descricao="Variação de posição no ranking estadual, mês a mês">
-          <div className="cartao p-3">
-            <GrafikoPosicao serie={perfil.serie} />
-          </div>
-        </Secao>
-      </div>
-
-      <Secao titulo="Expansão territorial" descricao="Municípios atendidos e liderados ao longo do tempo">
+      <Secao titulo="Evolução de acessos" descricao="Número de acessos ao longo do tempo">
         <div className="cartao p-3">
-          <TerritorioProvedor territorio={perfil.territorio} />
+          <SerieProvedor serie={perfil.serie} />
         </div>
       </Secao>
 

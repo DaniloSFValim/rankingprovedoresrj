@@ -1,10 +1,14 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import type { EChartsOption } from 'echarts';
 import { Grafico } from '@/componentes/Grafico';
+import { lerUltimaCidade } from '@/componentes/SeletorCidade';
 import { MapaMunicipios } from '@/componentes/graficos/MapaMunicipios';
 import type { MunicipioIndice } from '@/lib/dados';
+import { inteiro } from '@/lib/formato';
 
 /**
  * Mapa coroplético dos municípios do Rio de Janeiro (§18, §19, §32).
@@ -76,10 +80,39 @@ const METRICAS: Record<
 const NOME_MAPA = 'rj-municipios';
 type Estado = 'carregando' | 'pronto' | 'indisponivel';
 
-export function MapaRJ({ municipios }: { municipios: MunicipioIndice[] }) {
+interface Props {
+  municipios: MunicipioIndice[];
+  /**
+   * Município destacado (slug). Fixo na página do próprio município: um clique
+   * em outra cidade navega até ela. Sem `destaque`, o mapa segue a última
+   * cidade escolhida no seletor, e o clique troca o destaque.
+   */
+  destaque?: string;
+}
+
+export function MapaRJ({ municipios, destaque }: Props) {
+  const router = useRouter();
   const [estado, setEstado] = useState<Estado>('carregando');
   const [metrica, setMetrica] = useState<Metrica>('acessos');
+  const [slugDestaque, setSlugDestaque] = useState<string | null>(destaque ?? null);
   const config = METRICAS[metrica];
+  const destacado = municipios.find((m) => m.slug === slugDestaque) ?? null;
+
+  useEffect(() => {
+    if (!destaque) setSlugDestaque(lerUltimaCidade());
+  }, [destaque]);
+
+  // O ECharts registra o handler uma vez; a ref mantém o comportamento atual.
+  const aoClicar = useRef<(codigo: string) => void>(() => {});
+  aoClicar.current = (codigo) => {
+    const m = municipios.find((x) => x.codigoIbge === codigo);
+    if (!m) return;
+    if (destaque) {
+      if (m.slug !== destaque) router.push(`/municipios/${m.slug}/`);
+    } else {
+      setSlugDestaque((atual) => (atual === m.slug ? null : m.slug));
+    }
+  };
 
   useEffect(() => {
     let cancelado = false;
@@ -166,14 +199,34 @@ export function MapaRJ({ municipios }: { municipios: MunicipioIndice[] }) {
             itemStyle: { areaColor: '#67e8f9', borderColor: '#f8fafc' },
           },
           select: { disabled: true },
-          data: comValor.map((m) => ({
-            name: m.codigoIbge,
-            value: config.valor(m) as number,
-          })),
+          data: municipios.map((m) => {
+            const valor = config.valor(m);
+            const ehDestaque = destacado?.codigoIbge === m.codigoIbge;
+            return {
+              name: m.codigoIbge,
+              value: valor ?? undefined,
+              itemStyle: ehDestaque
+                ? { borderColor: '#fbbf24', borderWidth: 2.5, opacity: 1 }
+                : destacado
+                  ? { opacity: 0.35 }
+                  : undefined,
+              label: ehDestaque
+                ? {
+                    show: true,
+                    formatter: m.nome,
+                    color: '#f8fafc',
+                    fontWeight: 'bold',
+                    fontSize: 12,
+                    textBorderColor: '#020617',
+                    textBorderWidth: 3,
+                  }
+                : undefined,
+            };
+          }),
         },
       ],
     };
-  }, [municipios, config]);
+  }, [municipios, config, destacado]);
 
   if (estado === 'indisponivel') {
     return (
@@ -217,11 +270,48 @@ export function MapaRJ({ municipios }: { municipios: MunicipioIndice[] }) {
 
       <p className="text-xs text-grafite-500">{config.descricao}</p>
 
+      {destacado && (
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-sm">
+          <span className="font-semibold text-white">{destacado.nome}</span>
+          <span className="text-grafite-300">{inteiro(destacado.totalAcessos)} acessos</span>
+          <span className="text-grafite-300">{destacado.numeroProvedores} provedores</span>
+          {destacado.liderNome && (
+            <span className="text-grafite-300">
+              Líder: {destacado.liderNome}
+              {destacado.liderMarketShare !== null && ` (${destacado.liderMarketShare.toFixed(1)}%)`}
+            </span>
+          )}
+          {destacado.hhi !== null && <span className="text-grafite-300">HHI {inteiro(destacado.hhi)}</span>}
+          {!destaque && (
+            <span className="ml-auto flex gap-3">
+              <Link href={`/municipios/${destacado.slug}/`} className="text-marca-300 hover:underline">
+                Ver município →
+              </Link>
+              <button type="button" onClick={() => setSlugDestaque(null)} className="text-grafite-400 hover:text-white">
+                Limpar destaque
+              </button>
+            </span>
+          )}
+        </div>
+      )}
+
       <Grafico
         opcao={opcao}
         altura={520}
-        descricao={`Mapa dos municípios do Rio de Janeiro colorido por ${config.rotulo}.`}
+        descricao={
+          `Mapa dos municípios do Rio de Janeiro colorido por ${config.rotulo}` +
+          (destacado ? `, com ${destacado.nome} em destaque.` : '.')
+        }
+        aoCriar={(grafico) =>
+          grafico.on('click', (p: { name?: string }) => p.name && aoClicar.current(String(p.name)))
+        }
       />
+
+      <p className="text-xs text-grafite-500">
+        {destaque
+          ? 'Clique em outro município para abrir a página dele.'
+          : 'Clique em um município para destacá-lo. O destaque segue a última cidade escolhida no seletor.'}
+      </p>
 
       <p className="text-xs text-grafite-600">
         Malha municipal: IBGE. Municípios sem acessos registrados na competência
