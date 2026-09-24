@@ -5,53 +5,18 @@ jobs:
   sondar:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar pacote
-        run: curl -sSL -o /tmp/a.zip https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/acessos_banda_larga_fixa.zip && ls -la /tmp/a.zip && unzip -l /tmp/a.zip
-      - name: Densidade (RJ)
+      - name: SIDRA - domicilios Censo 2022 (tabela 4712)
         run: |
-          f=$(unzip -Z1 /tmp/a.zip | grep -i 'densidade.*\.csv$' | head -1)
-          echo "arquivo: $f"
-          unzip -p /tmp/a.zip "$f" | python3 -c "
-          import sys,csv,collections
-          r=csv.reader(sys.stdin,delimiter=';'); h=[c.lstrip('\ufeff') for c in next(r)]; print(h)
-          rows=[x for x in r]
-          print('linhas',len(rows))
-          iu=[i for i,c in enumerate(h) if c.strip().upper() in ('UF','SIGLA UF')]
-          rj=[x for x in rows if iu and x[iu[0]]=='RJ']
-          print('RJ',len(rj))
-          comp=collections.Counter((x[0],x[1]) for x in rj); print('competencias RJ', sorted(comp)[:3], sorted(comp)[-3:], len(comp))
-          ult=[x for x in rj if (x[0],x[1])==max(comp, key=lambda k:(int(k[0]),int(k[1])))]
-          print('ultima competencia RJ:', len(ult))
-          for x in sorted(ult, key=lambda x: -float(x[5].replace(',','.')))[:8]: print(x)
-          for x in sorted(ult, key=lambda x: float(x[5].replace(',','.')))[:5]: print(x)
-          for i,c in enumerate(h):
-            v=collections.Counter(x[i] for x in rj)
-            if len(v)<30: print(c, dict(v))
+          curl -sS "https://apisidra.ibge.gov.br/values/t/4712/n6/in%20n3%2033/v/all/p/all" -o /tmp/d.json; head -c 1500 /tmp/d.json; echo
+          python3 -c "
+          import json; d=json.load(open('/tmp/d.json')); h=d[0]; print(h)
+          vs={}
+          for x in d[1:]: vs.setdefault(x['D2N'],[]).append(x)
+          for k,v in vs.items(): print(k, len(v), [ (x['D1N'],x['V']) for x in v if x['D1N'].startswith(('Rio de Janeiro','Itaboraí','Niterói','Engenheiro'))])
           "
-      - name: Velocidade e outras colunas (2026, RJ)
+      - name: SIDRA - populacao Censo 2022 (tabela 4709)
         run: |
-          f=$(unzip -Z1 /tmp/a.zip | grep -i 2026 | head -1)
-          echo "arquivo: $f"
-          unzip -p /tmp/a.zip "$f" | python3 -c "
-          import sys,csv,collections
-          r=csv.reader(sys.stdin,delimiter=';'); h=[c.lstrip('﻿') for c in next(r)]; print(h)
-          uf=h.index('UF'); ac=h.index('Acessos')
-          cnt={c:collections.Counter() for c in h+['Velocidade jul']}
-          n=0
-          for x in r:
-            if x[uf]!='RJ': continue
-            n+=1
-            a=int(x[ac] or 0)
-            for i,c in enumerate(h):
-              if c in ('Faixa de Velocidade','Tipo de Pessoa','Tipo de Produto','Porte da Prestadora','Mês'):
-                cnt[c][x[i]]+=a
-            if x[h.index('Mês')]=='7':
-              v=x[h.index('Velocidade')]
-              try: mb=float(v.replace(',','.'))
-              except ValueError: mb=None
-              faixa='vazio' if mb is None else '<10' if mb<10 else '10-49' if mb<50 else '50-99' if mb<100 else '100-299' if mb<300 else '300-499' if mb<500 else '500-999' if mb<1000 else '>=1000'
-              cnt['Velocidade jul'][faixa]+=a
-          print('linhas RJ',n)
-          for c,v in cnt.items():
-            if v: print(c, len(v), v.most_common(25))
+          curl -sS "https://apisidra.ibge.gov.br/values/t/4709/n6/in%20n3%2033/v/93/p/all" -o /tmp/p.json; head -c 600 /tmp/p.json; echo
+          python3 -c "
+          import json; d=json.load(open('/tmp/p.json')); print(len(d)-1, [ (x['D1N'],x['V']) for x in d[1:] if x['D1N'].startswith(('Rio de Janeiro','Itaboraí'))])
           "
