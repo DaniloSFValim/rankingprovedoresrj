@@ -1,0 +1,51 @@
+name: Sondar colunas da Anatel (temporario)
+on:
+  pull_request:
+jobs:
+  sondar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar pacote
+        run: curl -sSL -o /tmp/a.zip https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/acessos_banda_larga_fixa.zip && ls -la /tmp/a.zip && unzip -l /tmp/a.zip
+      - name: Cabecalhos
+        run: |
+          for f in $(unzip -Z1 /tmp/a.zip | grep -i csv); do echo "=== $f"; unzip -p /tmp/a.zip "$f" | head -3; done
+      - name: Densidade (RJ)
+        run: |
+          f=$(unzip -Z1 /tmp/a.zip | grep -i densidade | head -1)
+          echo "arquivo: $f"
+          unzip -p /tmp/a.zip "$f" | python3 -c "
+          import sys,csv,collections
+          r=csv.reader(sys.stdin,delimiter=';'); h=next(r); print(h)
+          rows=[x for x in r]
+          print('linhas',len(rows))
+          iu=[i for i,c in enumerate(h) if c.strip().upper() in ('UF','SIGLA UF')]
+          rj=[x for x in rows if iu and x[iu[0]]=='RJ']
+          print('RJ',len(rj))
+          for x in rj[:5]: print(x)
+          for x in rj[-3:]: print(x)
+          for i,c in enumerate(h):
+            v=collections.Counter(x[i] for x in rj)
+            if len(v)<30: print(c, dict(v))
+          "
+      - name: Velocidade e outras colunas (2026, RJ)
+        run: |
+          f=$(unzip -Z1 /tmp/a.zip | grep -i 2026 | head -1)
+          echo "arquivo: $f"
+          unzip -p /tmp/a.zip "$f" | python3 -c "
+          import sys,csv,collections
+          r=csv.reader(sys.stdin,delimiter=';'); h=[c.lstrip('﻿') for c in next(r)]; print(h)
+          uf=h.index('UF'); ac=h.index('Acessos')
+          cnt={c:collections.Counter() for c in h}
+          n=0
+          for x in r:
+            if x[uf]!='RJ': continue
+            n+=1
+            a=int(x[ac] or 0)
+            for i,c in enumerate(h):
+              if c in ('Faixa de Velocidade','Velocidade','Tipo de Pessoa','Tipo de Produto','Porte da Prestadora','Meio de Acesso','Tecnologia','Mês','Ano'):
+                cnt[c][x[i]]+=a
+          print('linhas RJ',n)
+          for c,v in cnt.items():
+            if v: print(c, len(v), v.most_common(25))
+          "
