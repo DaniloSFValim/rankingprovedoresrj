@@ -238,7 +238,7 @@ export default async function PaginaMunicipio({ params }: Props) {
               {perfil.densidade > 100
                 ? 'Densidade acima de 100: comum em municípios com muitas casas de veraneio, que têm internet mas não entram na contagem de domicílios ocupados do Censo. Não indica mais de um acesso por casa.'
                 : 'Densidade muito baixa: pode indicar pouca cobertura, mas também acessos registrados pelas prestadoras em outro município. Trate como ponto de verificação, não como conclusão.'}{' '}
-              <Link href="/metodologia/" className="underline underline-offset-2">Metodologia</Link>
+              <Link href="/sobre/#indicadores" className="underline underline-offset-2">Como calculamos</Link>
             </p>
           )}
           <Secao titulo="Velocidade contratada" descricao="Distribuição dos acessos do município por faixa">

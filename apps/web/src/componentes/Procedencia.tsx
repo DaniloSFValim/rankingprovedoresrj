@@ -116,8 +116,8 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
                   </a>
                 </div>
                 <div>
-                  <a href="/metodologia/" className="text-marca-400 hover:underline text-[11px]">
-                    → Metodologia
+                  <a href="/sobre/#indicadores" className="text-marca-400 hover:underline text-[11px]">
+                    → Como os indicadores são calculados
                   </a>
                 </div>
               </dd>

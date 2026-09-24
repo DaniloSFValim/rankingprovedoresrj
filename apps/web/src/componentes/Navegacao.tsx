@@ -11,7 +11,6 @@ const ITENS = [
   { href: '/crescimento/', rotulo: 'Crescimento' },
   { href: '/municipios/', rotulo: 'Municípios' },
   { href: '/provedores/', rotulo: 'Provedores' },
-  { href: '/metodologia/', rotulo: 'Metodologia' },
   { href: '/sobre/', rotulo: 'Sobre' },
 ] as const;
 

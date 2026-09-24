@@ -4,7 +4,7 @@ import { MARCA } from '@/lib/marca';
 
 export const metadata = {
   title: `Sobre — ${MARCA.nome}`,
-  description: 'Informações sobre o projeto, autoria, dados e metodologia.',
+  description: 'Informações sobre o projeto, autoria, registro, dados e indicadores.',
 };
 
 /** Gerar citação em formato BibTeX */
@@ -163,6 +163,45 @@ export default function PaginaSobre() {
         </dl>
       </section>
 
+      {/* Indicadores */}
+      <section id="indicadores" className="scroll-mt-24">
+        <h2 className="text-xl font-bold text-white mb-4">Como os indicadores são calculados</h2>
+        <dl className="space-y-3 text-sm text-grafite-400">
+          <div>
+            <dt className="font-semibold text-grafite-200">Participação de mercado</dt>
+            <dd>Acessos da prestadora ÷ total de acessos do recorte (estado ou município), na competência mais recente.</dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-grafite-200">Concentração (HHI)</dt>
+            <dd>
+              Soma dos quadrados das participações de todas as prestadoras, de 0 (pulverizado) a 10.000
+              (monopólio). É um indicador estatístico de estrutura de mercado, não uma conclusão jurídica,
+              concorrencial ou regulatória.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-grafite-200">Densidade</dt>
+            <dd>
+              Acessos de pessoa física por 100 domicílios particulares ocupados (Censo 2022, IBGE). Casas de
+              veraneio e acessos registrados em outro município distorcem o valor; leia como ponto de verificação.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-grafite-200">Velocidade</dt>
+            <dd>
+              Velocidade <em>contratada</em> declarada pelas prestadoras à Anatel, não a velocidade entregue ou medida.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-grafite-200">Limite geral</dt>
+            <dd>
+              Os números refletem o que as prestadoras informam à Anatel; erros ou atrasos nessas declarações
+              aparecem aqui.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
       {/* Código e Rastreabilidade */}
       {a && (
         <section>
@@ -200,11 +239,6 @@ export default function PaginaSobre() {
       <section className="pt-8 border-t border-grafite-800">
         <h2 className="text-xl font-bold text-white mb-4">Referências</h2>
         <ul className="space-y-2 text-sm">
-          <li>
-            <Link href="/metodologia/" className="text-marca-400 hover:underline">
-              → Metodologia completa
-            </Link>
-          </li>
           <li>
             <a
               href="https://www.anatel.gov.br/dados"

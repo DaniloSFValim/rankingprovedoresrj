@@ -184,11 +184,11 @@ export default function Dashboard() {
             </div>
           </Link>
 
-          <Link href="/metodologia">
+          <Link href="/sobre/#indicadores">
             <div className="cartao p-4 hover:bg-grafite-800/60 transition">
-              <h3 className="font-semibold text-white">Metodologia e Transparência</h3>
+              <h3 className="font-semibold text-white">Sobre e indicadores</h3>
               <p className="mt-1 text-xs text-grafite-400">
-                Dados, fontes, pipeline ETL, validações e como interpretamos os indicadores.
+                Autoria, registro, fonte dos dados e como os indicadores são calculados.
               </p>
               <p className="mt-2 text-xs text-marca-400">→ Ler →</p>
             </div>
