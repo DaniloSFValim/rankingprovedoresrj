@@ -14,6 +14,8 @@ import type {
   ProcedenciaDados,
 } from '@netrank/core';
 
+import { AUTORIA } from './autoria';
+
 const DIRETORIO = path.join(process.cwd(), 'public', 'data');
 
 export class ArtefatosAusentesError extends Error {
@@ -258,7 +260,11 @@ export interface Movimentacoes {
 
 // ------------------------------------------------------------------ leitura --
 
-export const lerMeta = (): Meta => ler<Meta>('meta.json');
+export const lerMeta = (): Meta => {
+  const meta = ler<Meta>('meta.json');
+  // O ETL não grava autoria; ela vem do site, que é quem a exibe.
+  return { ...meta, procedencia: { ...meta.procedencia, academicos: meta.procedencia.academicos ?? AUTORIA } };
+};
 export const lerKpis = (): Kpis => ler<Kpis>('estado/kpis.json');
 export const lerSerieEstado = (): PontoSerie[] => ler<PontoSerie[]>('estado/serie.json');
 export const lerMovimentacoes = (): Movimentacoes => ler<Movimentacoes>('movimentacoes.json');

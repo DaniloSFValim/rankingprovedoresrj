@@ -1,40 +1,49 @@
 cff-version: 1.2.0
-type: dataset
-title: "NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro"
-abstract: |
-  Plataforma de análise do mercado de banda larga fixa do Estado do Rio de Janeiro,
-  construída sobre os dados abertos da Anatel. Fornece indicadores de concentração de
-  mercado, ranking de provedores e análise histórica mensal de acessos (jan/2022 - jul/2026).
+message: "Se usar este trabalho, cite-o conforme os metadados abaixo."
+type: software
+title: "NETRANK RJ: Painel do Mercado de Banda Larga Fixa no Estado do Rio de Janeiro"
+abstract: >-
+  Painel público e pipeline reprodutível de análise do mercado de banda larga
+  fixa nos 92 municípios do Estado do Rio de Janeiro, construído sobre os dados
+  abertos de acessos da Anatel, o cadastro de CNPJ da Receita Federal e os
+  domicílios do Censo 2022 (IBGE). Calcula participação de mercado, índices de
+  concentração (CR-n e HHI), densidade de acessos por domicílio e distribuição
+  por velocidade contratada, com atualização mensal automatizada. Desenvolvido
+  como instrumento de apoio ao monitoramento de serviços concedidos pela
+  Secretaria Municipal de Conservação e Serviços Públicos de Niterói (Seconser).
 authors:
   - family-names: Valim
     given-names: "Danilo S. F."
     orcid: "https://orcid.org/0009-0009-7250-6151"
-    email: danilosfvalim@gmail.com
-    affiliation: |
-      Universidade Federal Rural do Rio de Janeiro (UFRRJ)
-      Pós-Graduação em Análise de Dados Aplicadas a Políticas Públicas
+    affiliation: "Universidade Federal Rural do Rio de Janeiro (UFRRJ)"
 repository-code: "https://github.com/DaniloSFValim/rankingprovedoresrj"
-repository: "https://github.com/DaniloSFValim/rankingprovedoresrj"
-url: "https://rankingprovedoresrj.pages.dev"
-identifiers:
-  - type: doi
-    value: "10.5281/zenodo.22839933"
-  - type: url
-    value: "https://zenodo.org/records/22839933"
+url: "https://netranking-rj.labdados.org"
+doi: "10.5281/zenodo.22839933"
 license: CC-BY-4.0
+version: "1.1.0"
+date-released: "2026-09-24"
 keywords:
-  - "banda larga"
-  - "telecomunicações"
-  - "Rio de Janeiro"
-  - "Anatel"
-  - "análise de dados"
-  - "políticas públicas"
-  - "concentração de mercado"
-  - "dados abertos"
-version: "2026.09.16"
-date-released: "2026-09-16"
+  - banda larga fixa
+  - telecomunicações
+  - concentração de mercado
+  - índice Herfindahl-Hirschman
+  - políticas públicas
+  - dados abertos
+  - Anatel
+  - Rio de Janeiro
 references:
-  - type: software
-    title: "Anatel — Dados Abertos"
+  - type: data
+    title: "Acessos — Banda Larga Fixa"
+    authors:
+      - name: "Agência Nacional de Telecomunicações (Anatel)"
     url: "https://www.anatel.gov.br/dadosabertos/"
-    repository-code: "https://dados.gov.br/dados/conjuntos-dados/acessos---banda-larga-fixa"
+  - type: data
+    title: "Censo Demográfico 2022 — Tabela 4712 (domicílios particulares permanentes ocupados)"
+    authors:
+      - name: "Instituto Brasileiro de Geografia e Estatística (IBGE)"
+    url: "https://sidra.ibge.gov.br/tabela/4712"
+  - type: data
+    title: "Cadastro Nacional da Pessoa Jurídica — dados abertos"
+    authors:
+      - name: "Receita Federal do Brasil"
+    url: "https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj"
