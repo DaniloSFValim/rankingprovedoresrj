@@ -185,11 +185,11 @@ export default function CentroDados() {
         descricao="Saiba como interpretar e usar os dados"
       >
         <div className="grid gap-3 md:grid-cols-2">
-          <Link href="/metodologia">
+          <Link href="/sobre/#indicadores">
             <div className="cartao p-4 hover:bg-grafite-800/60 transition">
-              <h3 className="font-semibold text-white">📖 Metodologia e Transparência</h3>
+              <h3 className="font-semibold text-white">📖 Como os indicadores são calculados</h3>
               <p className="mt-1 text-xs text-grafite-400">
-                Explicação detalhada sobre fontes, pipeline de processamento, cálculos e indicadores.
+                Market share, HHI, densidade, velocidade e seus limites.
               </p>
               <p className="mt-2 text-xs text-marca-400">→ Consultar →</p>
             </div>

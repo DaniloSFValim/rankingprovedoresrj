@@ -249,7 +249,6 @@ export function SeletorCidadeNav({ cidades }: { cidades: CidadeOpcao[] }) {
     caminho === '' ||
     /^\/municipios\/[^/]+\/?$/.test(caminho ?? '') ||
     /^\/crescimento\/?$/.test(caminho ?? '') ||
-    /^\/metodologia\/?$/.test(caminho ?? '') ||
     /^\/provedores\/?$/.test(caminho ?? '') ||
     /^\/corrida\/?$/.test(caminho ?? '');
 
