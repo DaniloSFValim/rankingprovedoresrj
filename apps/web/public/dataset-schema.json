@@ -2,9 +2,9 @@
   "@context": "https://schema.org",
   "@type": "Dataset",
   "name": "NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro",
-  "description": "Plataforma de análise do mercado de banda larga fixa do Estado do Rio de Janeiro, construída sobre os dados abertos da Anatel. Fornece indicadores de concentração de mercado, ranking de provedores e análise histórica mensal de acessos (jan/2022 - jul/2026).",
-  "url": "https://rankingprovedoresrj.pages.dev",
-  "version": "2026.09.16",
+  "description": "Plataforma de análise do mercado de banda larga fixa do Estado do Rio de Janeiro, construída sobre os dados abertos da Anatel. Fornece indicadores de concentração de mercado, ranking de provedores e análise histórica mensal de acessos (jan/2024 – jul/2026).",
+  "url": "https://netranking-rj.labdados.org",
+  "version": "1.1.0",
   "creator": {
     "@type": "Person",
     "name": "Danilo S. F. Valim",
@@ -34,7 +34,7 @@
   },
   "datePublished": "2026-09-16",
   "dateModified": "2026-09-16",
-  "temporalCoverage": "2022-01/2026-07",
+  "temporalCoverage": "2024-01/2026-07",
   "spatialCoverage": {
     "@type": "Place",
     "name": "Rio de Janeiro",
@@ -58,42 +58,42 @@
     {
       "@type": "DataDownload",
       "name": "KPIs Estaduais (JSON)",
-      "url": "https://rankingprovedoresrj.pages.dev/data/estado/kpis.json",
+      "url": "https://netranking-rj.labdados.org/data/estado/kpis.json",
       "fileFormat": "JSON",
       "contentSize": "521 B"
     },
     {
       "@type": "DataDownload",
       "name": "Ranking Estadual (JSON)",
-      "url": "https://rankingprovedoresrj.pages.dev/data/estado/ranking.json",
+      "url": "https://netranking-rj.labdados.org/data/estado/ranking.json",
       "fileFormat": "JSON",
       "contentSize": "300 KB"
     },
     {
       "@type": "DataDownload",
       "name": "Série Histórica (JSON)",
-      "url": "https://rankingprovedoresrj.pages.dev/data/estado/serie.json",
+      "url": "https://netranking-rj.labdados.org/data/estado/serie.json",
       "fileFormat": "JSON",
       "contentSize": "30 KB"
     },
     {
       "@type": "DataDownload",
       "name": "Séries por Provedor (JSON)",
-      "url": "https://rankingprovedoresrj.pages.dev/data/estado/series-empresas.json",
+      "url": "https://netranking-rj.labdados.org/data/estado/series-empresas.json",
       "fileFormat": "JSON",
       "contentSize": "350 KB"
     },
     {
       "@type": "DataDownload",
       "name": "Dados Municipais (JSON)",
-      "url": "https://rankingprovedoresrj.pages.dev/data/municipios/index.json",
+      "url": "https://netranking-rj.labdados.org/data/municipios/index.json",
       "fileFormat": "JSON",
       "contentSize": "30 KB"
     },
     {
       "@type": "DataDownload",
       "name": "Malha Geográfica RJ (GeoJSON)",
-      "url": "https://rankingprovedoresrj.pages.dev/data/malhas/rj-municipios.json",
+      "url": "https://netranking-rj.labdados.org/data/malhas/rj-municipios.json",
       "fileFormat": "GeoJSON",
       "contentSize": "450 KB"
     }

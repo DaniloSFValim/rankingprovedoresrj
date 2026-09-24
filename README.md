@@ -1,186 +1,103 @@
-<div align="center">
-
 # NETRANK RJ
 
-**Inteligência de Mercado — Banda Larga Fixa no Rio de Janeiro**
+**Painel do mercado de banda larga fixa no Estado do Rio de Janeiro**
 
-[![License: CC-BY-4.0](https://img.shields.io/badge/License-CC%20BY%204.0-blue.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22839933.svg)](https://doi.org/10.5281/zenodo.22839933)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0009--7250--6151-a6ce39.svg)](https://orcid.org/0009-0009-7250-6151)
-[![Citation](https://img.shields.io/badge/Citation-CFF%20%2F%20BibTeX-informational.svg)](CITATION.cff)
-[![Release](https://img.shields.io/badge/Release-v1.0.1-2ea44f.svg)](https://github.com/DaniloSFValim/rankingprovedoresrj/releases/tag/v1.0.1)
-[![CI Status](https://github.com/DaniloSFValim/rankingprovedoresrj/actions/workflows/dados-reais.yml/badge.svg?branch=main)](https://github.com/DaniloSFValim/rankingprovedoresrj/actions)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6.svg)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-16+-000000.svg)](https://nextjs.org/)
+[![Licença: CC BY 4.0](https://img.shields.io/badge/Licen%C3%A7a-CC%20BY%204.0-lightgrey.svg)](LICENSE)
+[![CI](https://github.com/DaniloSFValim/rankingprovedoresrj/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/DaniloSFValim/rankingprovedoresrj/actions/workflows/ci.yml)
 
-[📊 Acessar plataforma](https://netrank-rj.pages.dev/) • [📖 Documentação técnica](./DEVELOPMENT_GUIDE.md) • [🔄 CI/CD](./CI_CD_RUNBOOK.md)
+**Painel:** [netranking-rj.labdados.org](https://netranking-rj.labdados.org)
 
-</div>
+## Propósito
 
----
+O NETRANK RJ organiza os dados públicos de acessos de banda larga fixa dos 92 municípios
+fluminenses em indicadores comparáveis de cobertura, qualidade contratada e concentração
+de mercado. Foi desenvolvido como instrumento de apoio ao monitoramento de serviços
+concedidos pela Secretaria Municipal de Conservação e Serviços Públicos de Niterói
+(Seconser), Setor de Fiscalização de Serviços Concedidos.
 
-## 📌 Sobre
+É um trabalho independente, sem vínculo com a Anatel. Os indicadores são estatísticos e
+não constituem conclusão jurídica, concorrencial ou regulatória.
 
-Análise do mercado de provedores de banda larga fixa no Estado do Rio de Janeiro, com dados oficiais da **Anatel**. A plataforma oferece:
-
-- **Ranking estadual e municipal** de provedores por número de acessos
-- **Indicadores de concentração** — CR1, CR3, CR5, CR10 e HHI
-- **Série histórica** — 31+ meses contínuos de evolução do mercado
-- **Análise territorial** — participação por município e densidade de acessos
-- **Site estático otimizado** — zero servidores, hospedagem em CDN (Cloudflare)
-
----
-
-## 🚀 Quick Start
-
-### Visualizar localmente
-
-```bash
-npm install
-npm run etl -- demo      # dados de demonstração
-npm run dev              # http://localhost:3000
-```
-
-### Usar dados reais
-
-```bash
-npm install
-npm run etl -- sincronizar --anos 5   # importar série histórica da Anatel
-npm run etl -- malhas                 # geometria dos municípios (IBGE)
-npm run build                         # gerar site estático
-npm run preview                       # visualizar saída de produção
-```
-
----
-
-## 🏗️ Arquitetura
-
-```
-packages/core/   → Motor de cálculo (Typescript puro, testado)
-packages/etl/    → Pipeline de ingestão e warehouse (SQLite)
-apps/web/        → Next.js com exportação estática
-data/            → Artifacts JSON, warehouse, dados brutos
-```
-
-**Por que estático?** O mercado agregado cabe em poucos megabytes. Sem servidor de aplicação ou banco em produção, é mais rápido, mais confiável e mais barato.
-
----
-
-## 📊 Fontes de dados
-
-### Anatel (padrão)
-
-Dados abertos publicados mensalmente no portal da Agência. Pipeline automatizado via GitHub Actions a cada 12º dia do mês.
-
-```bash
-npm run etl -- sincronizar              # descobre e importa automaticamente
-npm run etl -- sondar <url>             # valida um link antes de baixar
-```
-
-### Base dos Dados / BigQuery (alternativa)
-
-Microdados tratados da Anatel, consultáveis via SQL. Requer credenciais do Google Cloud.
-
-```bash
-npm run etl -- bdd-importar --anos 2    # importa do BigQuery
-```
-
----
-
-## ✅ Princípios
-
-1. **Nada é inventado** — ausência é `null` (exibido como `n/d`), nunca zero
-2. **Falha rápido** — cabeçalho desconhecido aborta a importação imediatamente
-3. **Qualidade é observação** — o QC alerta, não "conserta" dados
-4. **Histórico é preservado** — reimportar um mês substitui só aquele mês
-5. **Separação dados reais/demo** — fixture sintética nunca vai à produção
-
----
-
-## 🔧 Stack técnico
-
-| Camada | Tecnologia |
-|--------|-----------|
-| **Frontend** | Next.js 16, React 19, TypeScript, Tailwind CSS |
-| **Dados** | SQLite (warehouse), JSON (artefatos estáticos) |
-| **Visualizações** | ECharts, mapas coropléticos (IBGE) |
-| **ETL** | Node.js + native modules (`better-sqlite3`, `csv-parse`) |
-| **CI/CD** | GitHub Actions (coleta automática, testes, build) |
-| **Hospedagem** | Cloudflare Pages / Workers |
-
----
-
-## 📁 Documentação
-
-- **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)** — Setup, desenvolvimento local, estrutura
-- **[CI_CD_RUNBOOK.md](./CI_CD_RUNBOOK.md)** — Workflows, deploy, troubleshooting
-- **[CITATION.cff](./CITATION.cff)** — Como citar este trabalho
-
----
-
-## 🧪 Testes
-
-```bash
-npm test
-```
-
-Testes cobrem: indicadores (market share, CR-n, HHI), ranking com empates, crescimento e extração com filtro de UF.
-
----
-
-## 👤 Autor & Acadêmica
+## Autoria
 
 **Danilo S. F. Valim**
-- 🎓 Pós-graduação em Análise de Dados Aplicadas a Políticas Públicas — UFRRJ
-- 🔗 [ORCID: 0009-0009-7250-6151](https://orcid.org/0009-0009-7250-6151)
-- 📧 [danilosfvalim@gmail.com](mailto:danilosfvalim@gmail.com)
+Pós-Graduação em Análise de Dados Aplicadas a Políticas Públicas,
+Universidade Federal Rural do Rio de Janeiro (UFRRJ)
+ORCID [0009-0009-7250-6151](https://orcid.org/0009-0009-7250-6151)
 
-### Identificador persistente (DOI via Zenodo)
+## Como citar
 
-Este projeto está registrado no **Zenodo** para garantir persistência e rastreabilidade acadêmica:
+> Valim, D. S. F. (2026). *NETRANK RJ: Painel do Mercado de Banda Larga Fixa no Estado do
+> Rio de Janeiro* (versão 1.1.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.22839933
 
-- 🔍 Descoberta acadêmica via Google Scholar, ORCID e Zenodo
-- 🏛️ DOI permanente para citação em trabalhos acadêmicos
-- 📚 Versionamento de releases com rastreamento histórico
-- ♻️ Conformidade com FAIR Data Principles
-
-### Como citar este trabalho
-
-**DOI Zenodo:** [![DOI](https://zenodo.org/badge/1372218032.svg)](https://doi.org/10.5281/zenodo.22839933)
-
-**BibTeX:**
 ```bibtex
-@dataset{valim2026netrank,
-  author = {Valim, Danilo S. F.},
-  title = {NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro},
-  year = {2026},
-  doi = {10.5281/zenodo.22839933},
-  url = {https://zenodo.org/records/22839933},
-  note = {Anatel Official Data, IBGE Geospatial Data}
+@software{valim_netrank_rj_2026,
+  author    = {Valim, Danilo S. F.},
+  title     = {{NETRANK RJ}: Painel do Mercado de Banda Larga Fixa no Estado do Rio de Janeiro},
+  year      = {2026},
+  version   = {1.1.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.22839933},
+  url       = {https://doi.org/10.5281/zenodo.22839933}
 }
 ```
 
-**APA:**
-> Valim, D. S. F. (2026). NETRANK RJ: Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro. https://doi.org/10.5281/zenodo.22839933
+Os metadados de citação também estão em [`CITATION.cff`](CITATION.cff); o GitHub gera
+APA e BibTeX a partir dele no botão *Cite this repository*.
 
-**Zenodo Record:** https://zenodo.org/records/22839933
+## Dados
 
-Ver [CITATION.cff](CITATION.cff) para formatos adicionais (Chicago, Harvard, ISO690).
+| Fonte | Uso | Periodicidade |
+|---|---|---|
+| [Anatel — Acessos de Banda Larga Fixa](https://www.anatel.gov.br/dadosabertos/) | Acessos por prestadora, município, velocidade e tipo de pessoa | Mensal, coleta automática no dia 12 |
+| [IBGE — Censo 2022, tabela 4712](https://sidra.ibge.gov.br/tabela/4712) | Domicílios particulares ocupados (denominador da densidade) | Fixa |
+| Receita Federal — CNPJ (dados abertos) | Razão social, situação cadastral e porte das prestadoras | Renovada a cada 30 dias |
+| IBGE — Malha municipal | Geometria dos municípios no mapa | Fixa |
 
----
+Cobertura atual: janeiro de 2024 a julho de 2026.
 
-## 📄 Licença
+## Indicadores
 
-**Creative Commons Attribution 4.0 International** (CC-BY-4.0)
+- **Participação de mercado**: acessos da prestadora sobre o total do recorte.
+- **Concentração**: CR-n e Índice Herfindahl-Hirschman (0 a 10.000), calculados com
+  participações em precisão plena.
+- **Densidade**: acessos de pessoa física por 100 domicílios ocupados.
+- **Velocidade**: distribuição por velocidade *contratada* declarada à Anatel, não medida.
 
-- ✅ Uso comercial permitido
-- ✅ Modificações permitidas  
-- ✅ Distribuição permitida
-- ⚠️ Requer atribuição ao autor
+Limites conhecidos: os números refletem o que as prestadoras declaram à Anatel. A
+densidade é distorcida por domicílios de uso ocasional e por acessos registrados em outro
+município.
 
-**Dados:** Anatel — Agência Nacional de Telecomunicações (dados abertos)
+## Reprodução
 
-O NETRANK RJ é uma camada independente de análise. Indicadores de concentração são estatísticos e não constituem conclusão jurídica ou regulatória.
+Requer Node.js 20 ou superior.
 
----
+```bash
+npm install
+npm run etl -- sincronizar   # baixa e importa os dados da Anatel
+npm run etl -- domicilios    # domicílios do Censo 2022 (IBGE/SIDRA)
+npm run etl -- receita       # cadastro das prestadoras na Receita Federal
+npm run etl -- malhas        # malha municipal do IBGE
+npm run etl -- build         # gera os artefatos JSON do painel
+npm run build                # gera o site estático em apps/web/out
+npm test
+```
 
-<sub>Built with TypeScript, Next.js, SQLite e dados abertos. Atualizado automaticamente a cada 12º dia do mês. | Made with 📊 by Danilo Valim</sub>
+Estrutura:
+
+```
+packages/core   cálculo dos indicadores (TypeScript, testado)
+packages/etl    ingestão, validação e warehouse SQLite
+apps/web        painel Next.js com exportação estática
+data/           cadastros e dados auxiliares versionados
+```
+
+Detalhes técnicos: [`docs/desenvolvimento.md`](docs/desenvolvimento.md) e
+[`docs/operacao-ci-cd.md`](docs/operacao-ci-cd.md).
+
+## Licença
+
+[Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](LICENSE). Os dados de origem
+seguem as licenças de seus publicadores (Anatel, IBGE e Receita Federal).

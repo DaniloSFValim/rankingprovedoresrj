@@ -310,7 +310,7 @@ npm run test:e2e
 # 4. Commit detalhado
 git commit -m "test: adicionar testes para Nova feature"
 git commit -m "feat: implementar Nova feature"
-git commit -m "docs: atualizar DEVELOPMENT_GUIDE.md"
+git commit -m "docs: atualizar docs/desenvolvimento.md"
 
 # 5. Push & PR
 git push -u origin feature/nova-feature
@@ -338,7 +338,7 @@ git push -u origin feature/nova-feature
 
 ## 📚 Related Docs
 
-- `DEVELOPMENT_GUIDE.md` - Guia para desenvolvedores
+- `docs/desenvolvimento.md` - Guia para desenvolvedores
 - `PERFORMANCE_AUDIT.md` - Análise de performance
 - `LOAD_TESTING.md` - Load testing guide
 - `AUDIT_FINAL_REPORT.html` - Relatório de auditoria
