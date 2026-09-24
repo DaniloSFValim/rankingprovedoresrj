@@ -275,6 +275,35 @@ escala: 0 (pulverizado) a 10.000 (monopólio)`}</Formula>
         </p>
       </Bloco>
 
+      <Bloco titulo="Densidade por domicílio">
+        <Formula>{`densidade = acessos de pessoa física × 100 ÷ domicílios particulares ocupados`}</Formula>
+        <p>
+          Acessos de pessoa física vêm da Anatel (coluna &ldquo;Tipo de Pessoa&rdquo;).
+          Domicílios particulares permanentes ocupados vêm do <strong>Censo 2022</strong> do
+          IBGE (SIDRA, tabela 4712). O conceito é o mesmo da densidade publicada pela
+          Anatel, que não é usada: a série oficial tem lacunas (2023 e 2024 ausentes) e
+          valores incompatíveis com os próprios acessos.
+        </p>
+        <p className="rounded-lg border border-atencao/30 bg-atencao/10 p-3 text-atencao">
+          <strong>Acima de 100</strong> não significa mais de um acesso por casa. Em
+          municípios turísticos, casas de veraneio têm internet mas não entram na contagem
+          de domicílios ocupados do Censo. <strong>Valores muito baixos</strong> podem
+          indicar baixa cobertura, mas também acessos registrados pelas prestadoras em
+          outro município. Nos dois casos, o número é um ponto de partida para verificação,
+          não uma conclusão.
+        </p>
+      </Bloco>
+
+      <Bloco titulo="Velocidade contratada">
+        <p>
+          A distribuição usa a velocidade <strong>contratada</strong> informada à Anatel
+          (em Mbps), não a velocidade medida. A &ldquo;Faixa de Velocidade&rdquo; oficial não
+          é usada: sua faixa superior (&ldquo;&gt; 34 Mbps&rdquo;) reúne 95% dos acessos do
+          Estado. <strong>Conexões lentas</strong> são os acessos abaixo de 50 Mbps, sobre o
+          total com velocidade informada.
+        </p>
+      </Bloco>
+
       <Bloco titulo="Rastreabilidade Completa">
         <p>
           Cada artefato de dados publicado contém metadados de rastreabilidade que permitem
