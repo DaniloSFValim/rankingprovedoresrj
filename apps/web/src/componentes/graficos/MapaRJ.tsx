@@ -140,6 +140,10 @@ export function MapaRJ({ municipios, destaque }: Props) {
   const router = useRouter();
   const [estado, setEstado] = useState<Estado>('carregando');
   const [metrica, setMetrica] = useState<Metrica>('densidade');
+  // Durante o zoom o mapa desliza sob o cursor parado; o tooltip mostraria a
+  // cidade que passou por baixo, e não a clicada. Fica oculto até a animação acabar.
+  const [animando, setAnimando] = useState(false);
+  const graficoRef = useRef<{ dispatchAction: (a: { type: string }) => void } | null>(null);
   const [caixas, setCaixas] = useState<Map<string, Caixa> | null>(null);
   const [slugDestaque, setSlugDestaque] = useState<string | null>(destaque ?? null);
   const config = METRICAS[metrica];
@@ -170,6 +174,9 @@ export function MapaRJ({ municipios, destaque }: Props) {
   aoClicar.current = (codigo) => {
     const m = municipios.find((x) => x.codigoIbge === codigo);
     if (!m) return;
+    graficoRef.current?.dispatchAction({ type: 'hideTip' });
+    setAnimando(true);
+    window.setTimeout(() => setAnimando(false), 800);
     if (destaque) {
       if (m.slug !== destaque) router.push(`/municipios/${m.slug}/`);
     } else {
@@ -226,6 +233,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
 
     return {
       tooltip: {
+        show: !animando,
         trigger: 'item',
         formatter: (params) => {
           const p = Array.isArray(params) ? params[0]! : params;
@@ -309,7 +317,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
         },
       ],
     };
-  }, [municipios, config, destacado, caixas]);
+  }, [municipios, config, destacado, caixas, animando]);
 
   if (estado === 'indisponivel') {
     return (
@@ -396,9 +404,10 @@ export function MapaRJ({ municipios, destaque }: Props) {
           `Mapa dos municípios do Rio de Janeiro colorido por ${config.rotulo}` +
           (destacado ? `, com ${destacado.nome} em destaque.` : '.')
         }
-        aoCriar={(grafico) =>
-          grafico.on('click', (p: { name?: string }) => p.name && aoClicar.current(String(p.name)))
-        }
+        aoCriar={(grafico) => {
+          graficoRef.current = grafico;
+          grafico.on('click', (p: { name?: string }) => p.name && aoClicar.current(String(p.name)));
+        }}
       />
 
       {ordenados.length > 0 && (
