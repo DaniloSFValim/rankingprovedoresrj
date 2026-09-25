@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { normalizarCnpj, type CacheReceita } from '../sources/receita.js';
 import { consultarPerfis, densidade, type PerfilAcessos } from './perfil-acessos.js';
-import { alertasDeDensidade, alertasDeSaida, vizinhancaDaMalha, type Alerta } from './alertas.js';
+import { alertasDeDensidade, alertasDeSaida, temEvidencia, vizinhancaDaMalha, type Alerta } from './alertas.js';
 import {
   calcularConcentracao,
   intervaloCompetencias,
@@ -106,7 +106,7 @@ export interface MunicipioIndice {
   variacao12Meses: { absoluta: number; percentual: number | null } | null;
   densidade: number | null;
   percentualAbaixo50: number | null;
-  /** Tipos de alerta de qualidade dos dados ativos no município. */
+  /** Tipos dos alertas com evidência de erro nos dados (ver temEvidencia). */
   alertas: Alerta['tipo'][];
 }
 
@@ -672,7 +672,8 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       ...alertasDeDensidade(pendente.codigoIbge, densidades, vizinhos),
     ];
     const itemIndice = indicePorCodigo.get(pendente.codigoIbge);
-    if (itemIndice) itemIndice.alertas = alertas.map((a) => a.tipo);
+    // No índice (e portanto no mapa) entram só os alertas com evidência de erro.
+    if (itemIndice) itemIndice.alertas = alertas.filter(temEvidencia).map((a) => a.tipo);
     salvar(pendente.relativo, { ...pendente.conteudo, alertas });
   }
 

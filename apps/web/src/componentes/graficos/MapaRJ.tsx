@@ -475,8 +475,8 @@ export function MapaRJ({ municipios, destaque }: Props) {
 
       {municipios.some((m) => m.alertas?.length) && (
         <p className="text-xs text-amber-500/90">
-          Borda tracejada: município com alerta de qualidade dos dados (prestadora que sumiu da
-          base ou densidade implausível). Veja o detalhe na página do município.
+          Borda tracejada: município com indício de erro nos dados (prestadora que sumiu da
+          base, ou vizinhos com densidades opostas e implausíveis). Veja o detalhe na página do município.
         </p>
       )}
 
