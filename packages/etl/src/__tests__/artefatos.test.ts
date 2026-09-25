@@ -88,6 +88,9 @@ describe('construirArtefatos', () => {
     const perfilMunicipio = ler(`municipios/${indice.slug}.json`);
     expect(perfilMunicipio.domicilios).toBe(200);
     expect(perfilMunicipio.perfilAcessos.acessosComVelocidade).toBe(100);
+    // Sem malha no destino não há vizinhos; sem saídas, a lista vem vazia mas presente.
+    expect(perfilMunicipio.alertas).toEqual([]);
+    expect(indice.alertas).toEqual([]);
     fs.rmSync(destino, { recursive: true, force: true });
   });
 });

@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { normalizarCnpj, type CacheReceita } from '../sources/receita.js';
 import { consultarPerfis, densidade, type PerfilAcessos } from './perfil-acessos.js';
+import { alertasDeDensidade, alertasDeSaida, vizinhancaDaMalha, type Alerta } from './alertas.js';
 import {
   calcularConcentracao,
   intervaloCompetencias,
@@ -105,6 +106,8 @@ export interface MunicipioIndice {
   variacao12Meses: { absoluta: number; percentual: number | null } | null;
   densidade: number | null;
   percentualAbaixo50: number | null;
+  /** Tipos de alerta de qualidade dos dados ativos no município. */
+  alertas: Alerta['tipo'][];
 }
 
 export interface PresencaMunicipal {
@@ -518,6 +521,13 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       .map(([codigo], indice) => [codigo, indice + 1]),
   );
 
+  const perfisPendentes: Array<{
+    codigoIbge: string;
+    relativo: string;
+    alertasSaida: Alerta[];
+    conteudo: Record<string, unknown>;
+  }> = [];
+  const presencaAtual = municipiosPorEmpresa(ctx, atual);
   for (const [codigoIbge, empresasDoMunicipio] of municipiosAtual) {
     const resumo = ctx.municipios.get(codigoIbge);
     const p = participantes(empresasDoMunicipio);
@@ -543,6 +553,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       hhi: conc?.hhi ?? null,
       densidade: densidade(perfisMunicipio.get(codigoIbge)?.acessosPessoaFisica ?? 0, perfisMunicipio.has(codigoIbge) ? domicilios[codigoIbge] : undefined),
       percentualAbaixo50: perfisMunicipio.get(codigoIbge)?.percentualAbaixo50 ?? null,
+      alertas: [],
       variacao12Meses:
         totalAntes === null
           ? null
@@ -610,7 +621,12 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
         variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
       }));
 
-    salvar(`municipios/${resumo?.slug ?? codigoIbge}.json`, {
+    const alertasSaida = alertasDeSaida(
+      saidas,
+      anteriorMes ? somar(anteriorMes) : 0,
+      presencaAtual,
+    );
+    perfisPendentes.push({ codigoIbge, relativo: `municipios/${resumo?.slug ?? codigoIbge}.json`, alertasSaida, conteudo: {
       codigoIbge,
       nome: resumo?.nome ?? codigoIbge,
       competencia: atual,
@@ -638,7 +654,26 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       // Posicao no ranking estadual de municipios por acessos.
       posicaoNoEstado: posicaoEstadual.get(codigoIbge) ?? null,
       totalMunicipios: municipiosAtual.size,
-    });
+    } });
+  }
+
+  // Alertas de densidade dependem dos vizinhos, então saem depois do laço.
+  const caminhoMalha = path.join(destino, 'malhas', 'rj-municipios.json');
+  const vizinhos = fs.existsSync(caminhoMalha)
+    ? vizinhancaDaMalha(JSON.parse(fs.readFileSync(caminhoMalha, 'utf8')))
+    : new Map<string, Set<string>>();
+  const densidades = new Map(
+    indiceMunicipios.map((m) => [m.codigoIbge, { nome: m.nome, densidade: m.densidade }]),
+  );
+  const indicePorCodigo = new Map(indiceMunicipios.map((m) => [m.codigoIbge, m]));
+  for (const pendente of perfisPendentes) {
+    const alertas = [
+      ...pendente.alertasSaida,
+      ...alertasDeDensidade(pendente.codigoIbge, densidades, vizinhos),
+    ];
+    const itemIndice = indicePorCodigo.get(pendente.codigoIbge);
+    if (itemIndice) itemIndice.alertas = alertas.map((a) => a.tipo);
+    salvar(pendente.relativo, { ...pendente.conteudo, alertas });
   }
 
   indiceMunicipios.sort((a, b) => b.totalAcessos - a.totalAcessos);
