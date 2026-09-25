@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { alertasDeDensidade, alertasDeSaida, vizinhancaDaMalha } from '../pipeline/alertas.js';
+import { alertasDeDensidade, alertasDeSaida, temEvidencia, vizinhancaDaMalha } from '../pipeline/alertas.js';
 
 describe('alertasDeSaida', () => {
   it('alerta quando prestadora com 20% ou mais da base some', () => {
@@ -61,5 +61,15 @@ describe('alertasDeDensidade', () => {
     expect(alertasDeDensidade('C', densidades, vizinhos)).toEqual([]);
     const semVizinhoAlto = new Map(densidades).set('A', { nome: 'Paracambi', densidade: 60 });
     expect(alertasDeDensidade('B', semVizinhoAlto, vizinhos)).toEqual([]);
+  });
+});
+
+describe('temEvidencia', () => {
+  it('descarta densidade acima de 100 sem vizinho baixo', () => {
+    expect(temEvidencia({ tipo: 'densidade-acima-100', densidade: 176, vizinhosBaixos: [] })).toBe(false);
+    expect(
+      temEvidencia({ tipo: 'densidade-acima-100', densidade: 106, vizinhosBaixos: [{ codigoIbge: 'B', nome: 'F', densidade: 3 }] }),
+    ).toBe(true);
+    expect(temEvidencia({ tipo: 'densidade-muito-baixa', densidade: 3, vizinhosAltos: [] })).toBe(true);
   });
 });
