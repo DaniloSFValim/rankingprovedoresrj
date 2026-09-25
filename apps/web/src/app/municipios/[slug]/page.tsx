@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { AlertasMunicipio } from '@/componentes/AlertasMunicipio';
 import { BarrasVelocidade } from '@/componentes/BarrasVelocidade';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
@@ -139,6 +140,8 @@ export default async function PaginaMunicipio({ params }: Props) {
         <SeletorCidade cidades={cidades} slugAtual={slug} />
       </div>
 
+      {perfil.alertas && <AlertasMunicipio alertas={perfil.alertas} />}
+
       {/* Tamanho do mercado */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
@@ -233,7 +236,7 @@ export default async function PaginaMunicipio({ params }: Props) {
               ajuda="Parcela dos acessos com velocidade contratada abaixo de 50 Mbps."
             />
           </div>
-          {perfil.densidade !== null && (perfil.densidade > 100 || perfil.densidade < 15) && (
+          {perfil.alertas === null && perfil.densidade !== null && (perfil.densidade > 100 || perfil.densidade < 15) && (
             <p className="rounded-lg border border-atencao/30 bg-atencao/10 p-3 text-sm text-atencao">
               {perfil.densidade > 100
                 ? 'Densidade acima de 100: comum em municípios com muitas casas de veraneio, que têm internet mas não entram na contagem de domicílios ocupados do Censo. Não indica mais de um acesso por casa.'

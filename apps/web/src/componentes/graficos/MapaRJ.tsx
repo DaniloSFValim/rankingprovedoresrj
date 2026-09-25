@@ -256,6 +256,9 @@ export function MapaRJ({ municipios, destaque }: Props) {
             `Líder: ${m.liderNome ?? 'n/d'}` +
             (m.liderMarketShare !== null
               ? ` (${m.liderMarketShare.toFixed(1)}%)`
+              : '') +
+            (m.alertas?.length
+              ? '<br/><span style="color:#d97706">⚠ Dados exigem verificação</span>'
               : '')
           );
         },
@@ -300,7 +303,9 @@ export function MapaRJ({ municipios, destaque }: Props) {
               value: valor ?? undefined,
               itemStyle: ehDestaque
                 ? { borderColor: '#fbbf24', borderWidth: 2.5, opacity: 1 }
-                : undefined,
+                : m.alertas?.length
+                  ? { borderColor: '#f59e0b', borderWidth: 1.2, borderType: 'dashed' as const }
+                  : undefined,
               label: ehDestaque
                 ? {
                     show: true,
@@ -467,6 +472,13 @@ export function MapaRJ({ municipios, destaque }: Props) {
           ? 'Clique em outro município para abrir a página dele.'
           : 'Clique em um município para destacá-lo. O destaque segue a última cidade escolhida no seletor.'}
       </p>
+
+      {municipios.some((m) => m.alertas?.length) && (
+        <p className="text-xs text-amber-500/90">
+          Borda tracejada: município com alerta de qualidade dos dados (prestadora que sumiu da
+          base ou densidade implausível). Veja o detalhe na página do município.
+        </p>
+      )}
 
       <p className="text-xs text-grafite-600">
         Malha municipal: IBGE. Municípios sem acessos registrados na competência

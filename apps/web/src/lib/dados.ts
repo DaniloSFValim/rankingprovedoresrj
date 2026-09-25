@@ -126,6 +126,8 @@ export interface MunicipioIndice {
   /** Ausentes em artefatos gerados antes do perfil de acessos. */
   densidade?: number | null;
   percentualAbaixo50?: number | null;
+  /** Tipos de alerta de qualidade ativos; ausente em artefatos antigos. */
+  alertas?: AlertaMunicipio['tipo'][];
 }
 
 export interface PerfilMunicipio {
@@ -166,7 +168,24 @@ export interface PerfilMunicipio {
   saidas: Array<{
     empresaId: string; slug: string; nome: string; acessosAnteriores: number;
   }>;
+  /** null quando o artefato é anterior aos alertas. */
+  alertas: AlertaMunicipio[] | null;
 }
+
+type VizinhoDensidade = { codigoIbge: string; nome: string; densidade: number };
+
+/** Espelha packages/etl/src/pipeline/alertas.ts. */
+export type AlertaMunicipio =
+  | {
+      tipo: 'saida-abrupta';
+      empresaId: string;
+      nome: string;
+      acessosAnteriores: number;
+      percentualDaBase: number;
+      municipiosAtuais: number;
+    }
+  | { tipo: 'densidade-acima-100'; densidade: number; vizinhosBaixos: VizinhoDensidade[] }
+  | { tipo: 'densidade-muito-baixa'; densidade: number; vizinhosAltos: VizinhoDensidade[] };
 
 /** Cadastro na Receita Federal (dados abertos do CNPJ, via BrasilAPI). */
 export interface CadastroReceita {
@@ -315,6 +334,7 @@ export const lerPerfilMunicipio = (slug: string): PerfilMunicipio | null => {
     serie: bruto.serie ?? [],
     tecnologia: bruto.tecnologia ?? [],
     saidas: bruto.saidas ?? [],
+    alertas: bruto.alertas ?? null,
   };
 };
 
