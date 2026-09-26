@@ -124,6 +124,40 @@ function caixasDaMalha(malha: {
   }
   return caixas;
 }
+/** Vizinhos pela malha: fronteiras que compartilham ao menos dois vértices. */
+function vizinhosDaMalha(malha: {
+  features: Array<{ properties: { name: string }; geometry: { coordinates: unknown } }>;
+}): Map<string, Set<string>> {
+  const donos = new Map<string, Set<string>>();
+  for (const f of malha.features) {
+    const codigo = String(f.properties.name);
+    const visitar = (v: unknown): void => {
+      if (!Array.isArray(v)) return;
+      if (typeof v[0] === 'number') {
+        const chave = `${(v[0] as number).toFixed(4)},${(v[1] as number).toFixed(4)}`;
+        const s = donos.get(chave) ?? new Set<string>();
+        s.add(codigo);
+        donos.set(chave, s);
+      } else v.forEach(visitar);
+    };
+    visitar(f.geometry.coordinates);
+  }
+  const contagem = new Map<string, Map<string, number>>();
+  for (const cods of donos.values()) {
+    if (cods.size < 2) continue;
+    for (const a of cods)
+      for (const b of cods) {
+        if (a === b) continue;
+        const m = contagem.get(a) ?? new Map<string, number>();
+        m.set(b, (m.get(b) ?? 0) + 1);
+        contagem.set(a, m);
+      }
+  }
+  return new Map(
+    [...contagem].map(([a, m]) => [a, new Set([...m].filter(([, n]) => n >= 2).map(([b]) => b))]),
+  );
+}
+
 type Estado = 'carregando' | 'pronto' | 'indisponivel';
 
 interface Props {
@@ -144,6 +178,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
   // cidade que passou por baixo, e não a clicada. Fica oculto até a animação acabar.
   const [animando, setAnimando] = useState(false);
   const graficoRef = useRef<{ dispatchAction: (a: { type: string }) => void } | null>(null);
+  const [vizinhos, setVizinhos] = useState<Map<string, Set<string>> | null>(null);
   const [caixas, setCaixas] = useState<Map<string, Caixa> | null>(null);
   const [slugDestaque, setSlugDestaque] = useState<string | null>(destaque ?? null);
   const config = METRICAS[metrica];
@@ -198,6 +233,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
         const echarts = (echartsModule as any).registerMap ? echartsModule : (echartsModule as any).default;
         (echarts as any).registerMap(NOME_MAPA, malha);
         setCaixas(caixasDaMalha(malha));
+        setVizinhos(vizinhosDaMalha(malha));
         setEstado('pronto');
       } catch {
         if (!cancelado) setEstado('indisponivel');
@@ -415,7 +451,37 @@ export function MapaRJ({ municipios, destaque }: Props) {
         }}
       />
 
-      {ordenados.length > 0 && (
+      {destaque && destacado && vizinhos && config.valor(destacado) !== null && (() => {
+        // Na página do município, a comparação é com os vizinhos, não com o Estado.
+        const linhas = [destacado, ...municipios.filter((m) => vizinhos.get(destacado.codigoIbge)?.has(m.codigoIbge))]
+          .filter((m) => config.valor(m) !== null)
+          .sort((x, y) => (config.valor(y) as number) - (config.valor(x) as number));
+        return (
+          <div className="rounded-lg border border-grafite-800 p-3 text-sm">
+            <p className="mb-2 text-xs uppercase tracking-wide text-grafite-500">
+              {config.rotulo}: {destacado.nome} e municípios vizinhos
+            </p>
+            <ol className="space-y-1">
+              {linhas.map((m) => (
+                <li key={m.slug} className="flex justify-between gap-2">
+                  {m.slug === destacado.slug ? (
+                    <span className="font-semibold text-amber-300">{m.nome}</span>
+                  ) : (
+                    <Link href={`/municipios/${m.slug}/`} className="text-grafite-300 hover:text-white">
+                      {m.nome}
+                    </Link>
+                  )}
+                  <span className={`tabular-nums ${m.slug === destacado.slug ? 'font-semibold text-amber-300' : 'text-grafite-400'}`}>
+                    {fmtValor(m)}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        );
+      })()}
+
+      {!destaque && ordenados.length > 0 && (
         <div className="grid gap-3 text-sm md:grid-cols-3">
           <div className="rounded-lg border border-grafite-800 p-3">
             <p className="mb-2 text-xs uppercase tracking-wide text-grafite-500">Maiores valores</p>

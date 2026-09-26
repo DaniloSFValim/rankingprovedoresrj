@@ -127,12 +127,7 @@ export default async function PaginaMunicipio({ params }: Props) {
             {perfil.nome}
           </h1>
           <p className="mt-1 text-sm text-grafite-400">
-            {perfil.posicaoNoEstado !== null && (
-              <>
-                {perfil.posicaoNoEstado}º maior mercado do {MARCA.ufSigla} ·{' '}
-              </>
-            )}
-            {inteiro(perfil.totalMunicipios)} municípios no Estado · IBGE {perfil.codigoIbge}
+            Código IBGE {perfil.codigoIbge}
           </p>
         </div>
 
@@ -149,7 +144,7 @@ export default async function PaginaMunicipio({ params }: Props) {
           <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Tamanho do Mercado</div>
           <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
         </div>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3">
           <Kpi
             rotulo="Total de acessos"
             valor={compacto(c?.totalAcessos)}
@@ -161,11 +156,6 @@ export default async function PaginaMunicipio({ params }: Props) {
             rotulo="Provedores ativos"
             valor={inteiro(c?.numeroProvedores)}
             detalhe="com acessos no município"
-          />
-          <Kpi
-            rotulo="Posição estadual"
-            valor={perfil.posicaoNoEstado !== null ? perfil.posicaoNoEstado : '—'}
-            detalhe={`de ${inteiro(perfil.totalMunicipios)} municípios`}
           />
         </div>
       </div>
@@ -277,8 +267,8 @@ export default async function PaginaMunicipio({ params }: Props) {
       </div>
 
       <Secao
-        titulo={`${perfil.nome} no Estado`}
-        descricao="Compare com os municípios vizinhos — escolha a métrica"
+        titulo={`${perfil.nome} e vizinhos`}
+        descricao="Compare com os municípios que fazem fronteira — escolha a métrica"
       >
         <div className="cartao p-4">
           <MapaRJ municipios={municipios} destaque={slug} />
@@ -403,8 +393,7 @@ export default async function PaginaMunicipio({ params }: Props) {
       <p className="text-xs text-grafite-500">
         Todos os indicadores desta página são calculados{' '}
         <strong>exclusivamente sobre os acessos registrados em {perfil.nome}</strong>.
-        Participação, concentração e ranking referem-se ao mercado local, não ao
-        estadual — um provedor pode liderar aqui e ser pequeno no {MARCA.ufSigla}.
+        Participação, concentração e ranking referem-se ao mercado local.
       </p>
     </main>
   );
