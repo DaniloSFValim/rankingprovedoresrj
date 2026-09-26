@@ -42,6 +42,15 @@ export const LIMITES = {
   densidadeBaixa: 15,
 } as const;
 
+/**
+ * Alertas com evidência de erro nos dados: prestadora que sumiu da base, ou
+ * par de vizinhos alto/baixo. Densidade acima de 100 isolada, típica de
+ * municípios de veraneio, fica só no aviso da página, sem destaque no mapa.
+ */
+export function temEvidencia(a: Alerta): boolean {
+  return a.tipo !== 'densidade-acima-100' || a.vizinhosBaixos.length > 0;
+}
+
 export function alertasDeSaida(
   saidas: Array<{ empresaId: string; nome: string; acessosAnteriores: number }>,
   totalAnterior: number,
