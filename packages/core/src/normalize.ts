@@ -102,3 +102,30 @@ export function resolverIdentidadeEmpresa(
 
   return { empresaId: `nome:${chaveNome}`, origem: 'NOME_CANONICO' };
 }
+
+const SIGLAS = new Set(['ME', 'EPP', 'EIRELI', 'SA', 'S.A.', 'S/A', 'ISP', 'TIM', 'TV', 'SKY', 'BR', 'RJ', 'IP']);
+const MINUSCULAS = new Set(['de', 'da', 'do', 'das', 'dos', 'e', 'em']);
+
+/**
+ * Nome para exibição. A Anatel publica parte das razões sociais toda em
+ * maiúsculas; converte só essas para caixa de título, mantendo siglas
+ * societárias. Nomes que já têm minúsculas foram grafados pela empresa e
+ * ficam como estão. O nome original continua no warehouse.
+ */
+export function nomeParaExibicao(nome: string): string {
+  if (/[a-zà-ú]/.test(nome)) return nome;
+  return nome
+    .split(' ')
+    .map((palavra, i) => {
+      if (palavra === '') return palavra;
+      if (SIGLAS.has(palavra.replace(/[,;]$/, ''))) return palavra;
+      if (/\d/.test(palavra)) return palavra;
+      // Sem vogal é sigla: "MLS", "NDC", "G+B".
+      if (!/[AEIOUÁÉÍÓÚÂÊÔÃÕÀ]/.test(palavra)) return palavra;
+      const baixa = palavra.toLocaleLowerCase('pt-BR');
+      if (i > 0 && MINUSCULAS.has(baixa)) return baixa;
+      // Maiúscula após início e após hífen, barra ou sinal de mais: "C-Comtelecom", "G+B".
+      return baixa.replace(/(^|[-/+.])(\p{L})/gu, (_, sep: string, letra: string) => sep + letra.toLocaleUpperCase('pt-BR'));
+    })
+    .join(' ');
+}

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   chaveNomeEmpresa,
+  nomeParaExibicao,
   normalizarCnpj,
   raizCnpj,
   resolverIdentidadeEmpresa,
@@ -114,5 +115,23 @@ describe('competencia', () => {
   it('rejeita mes fora de faixa', () => {
     expect(() => asCompetencia(2026, 0)).toThrow(RangeError);
     expect(() => asCompetencia(2026, 13)).toThrow(RangeError);
+  });
+});
+
+describe('nomeParaExibicao', () => {
+  it('converte nomes em maiúsculas para caixa de título', () => {
+    expect(nomeParaExibicao('GIGALINK DE NOVA FRIBURGO SOLUÇÕES EM REDE MULTIMÍDIA LTDA')).toBe(
+      'Gigalink de Nova Friburgo Soluções em Rede Multimídia Ltda',
+    );
+    expect(nomeParaExibicao('SPEED VALLEY TECNOLOGIA EIRELI - EPP')).toBe('Speed Valley Tecnologia EIRELI - EPP');
+    expect(nomeParaExibicao('MLS WIRELESS TELECOMUNICACOES S.A.')).toBe('MLS Wireless Telecomunicacoes S.A.');
+    expect(nomeParaExibicao('C-COMTELECOM SERVICOS EIRELI')).toBe('C-Comtelecom Servicos EIRELI');
+    expect(nomeParaExibicao('CLARO')).toBe('Claro');
+    expect(nomeParaExibicao('OI')).toBe('Oi');
+  });
+
+  it('preserva nomes que já têm minúsculas', () => {
+    expect(nomeParaExibicao('Zamix Multiplay Telecomunicacoes Ltda')).toBe('Zamix Multiplay Telecomunicacoes Ltda');
+    expect(nomeParaExibicao('HUGHES')).toBe('Hughes');
   });
 });

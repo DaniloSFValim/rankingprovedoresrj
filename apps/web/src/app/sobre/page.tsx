@@ -201,6 +201,36 @@ export default function PaginaSobre() {
         </dl>
       </section>
 
+      {/* Dados para reutilização */}
+      <section id="dados" className="scroll-mt-24">
+        <h2 className="text-xl font-bold text-white mb-4">Dados para download</h2>
+        <p className="mb-3 text-sm text-grafite-400">
+          Os mesmos arquivos que alimentam o painel, em JSON, sob a licença CC BY 4.0. Cite o
+          projeto e a Anatel como fonte.
+        </p>
+        <ul className="space-y-1.5 text-sm">
+          {[
+            ['/data/estado/ranking.json', 'Ranking estadual de provedores'],
+            ['/data/estado/serie.json', 'Série mensal do Estado'],
+            ['/data/municipios/index.json', 'Indicadores por município, incluindo alertas de qualidade'],
+            ['/data/provedores/index.json', 'Lista de provedores com acessos e participação'],
+            ['/data/malhas/rj-municipios.json', 'Malha municipal (GeoJSON, IBGE)'],
+            ['/data/meta.json', 'Procedência: fonte, competências e data de processamento'],
+          ].map(([href, rotulo]) => (
+            <li key={href} className="flex flex-wrap items-baseline gap-x-2">
+              <a href={href} className="text-marca-400 hover:underline" download>
+                {href.split('/').slice(-2).join('/')}
+              </a>
+              <span className="text-grafite-400">{rotulo}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-xs text-grafite-500">
+          Cada município e cada provedor também têm arquivo próprio em /data/municipios/ e
+          /data/provedores/, pelo mesmo nome usado no endereço da página.
+        </p>
+      </section>
+
       {/* Código e Rastreabilidade */}
       {a && (
         <section>
