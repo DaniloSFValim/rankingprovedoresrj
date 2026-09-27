@@ -28,7 +28,7 @@ export function TabelaRanking({
     <div className="cartao overflow-x-auto">
       <table className="w-full min-w-[720px] text-sm" role="table">
         <thead>
-          <tr className="border-b border-grafite-800 text-left" role="row">
+          <tr className="border-b border-grafite-700 text-left" role="row">
             <th className="w-12 px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">#</th>
             <th className="px-3 py-2.5 font-medium text-grafite-400" scope="col">Provedor</th>
             <th className="px-3 py-2.5 text-right font-medium text-grafite-400" scope="col">Acessos</th>
@@ -44,7 +44,7 @@ export function TabelaRanking({
           {exibidas.map((linha) => (
             <tr
               key={linha.empresaId}
-              className="border-b border-grafite-800/60 last:border-0 hover:bg-grafite-800/40 focus-within:bg-grafite-800/60"
+              className="border-b border-grafite-800 last:border-0 hover:bg-grafite-950 focus-within:bg-grafite-950"
               role="row"
             >
               <td className="numerico px-3 py-2.5 text-right font-semibold text-grafite-300" role="cell">
@@ -52,14 +52,14 @@ export function TabelaRanking({
               </td>
               <td className="relative px-3 py-2.5" role="cell">
                 <div
-                  className="absolute inset-y-1 left-0 rounded-r bg-marca-500/15"
+                  className="absolute inset-y-1 left-0 rounded-r bg-marca-900"
                   style={{ width: `${(linha.marketShare / maiorShare) * 100}%` }}
                   aria-hidden="true"
                 />
                 <div className="relative">
                   <Link
                     href={`/provedores/${linha.slug}/`}
-                    className="font-medium text-white underline-offset-2 hover:underline focus:outline-2 focus:outline-offset-1 focus:outline-marca-400 rounded px-1"
+                    className="font-medium text-tinta underline-offset-2 hover:underline rounded px-1"
                   >
                     {linha.nome}
                   </Link>
@@ -70,18 +70,18 @@ export function TabelaRanking({
                     </span>
                   )}
                   {linha.posicaoAnterior === null && (
-                    <span className="ml-2 rounded bg-marca-500/20 px-1.5 py-0.5 text-[10px] font-medium text-marca-300" aria-label="Provedor novo nesta competência">
-                      NOVO
+                    <span className="ml-2 rounded bg-marca-900 px-1.5 py-0.5 text-xs font-medium text-marca-200" aria-label="Provedor novo nesta competência">
+                      novo
                     </span>
                   )}
                   {linha.cnpj && ehRepetido(repetidos, linha.nome) && (
-                    <span className="block px-1 font-mono text-[11px] text-grafite-400">
+                    <span className="numerico block px-1 text-xs text-grafite-400">
                       CNPJ {cnpjFormatado(linha.cnpj)}
                     </span>
                   )}
                 </div>
               </td>
-              <td className="numerico px-3 py-2.5 text-right text-white">
+              <td className="numerico px-3 py-2.5 text-right text-tinta">
                 {inteiro(linha.acessos)}
               </td>
               <td className="numerico px-3 py-2.5 text-right text-grafite-200">

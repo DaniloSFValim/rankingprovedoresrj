@@ -33,7 +33,7 @@ export default function PaginaSobre() {
     <main className="space-y-12 mx-auto max-w-3xl">
       {/* Sobre o Projeto */}
       <section>
-        <h1 className="text-3xl font-bold text-white mb-4">{MARCA.nome}</h1>
+        <h1 className="text-3xl font-bold text-tinta mb-4">{MARCA.nome}</h1>
         <p className="text-grafite-300 mb-4">
           {MARCA.subtitulo}
         </p>
@@ -53,8 +53,8 @@ export default function PaginaSobre() {
       {/* Como Citar */}
       {a && (
         <section>
-          <h2 className="text-xl font-bold text-white mb-4">Como citar este projeto</h2>
-          <div className="text-xs text-grafite-300 font-mono bg-grafite-950 p-4 rounded border border-grafite-800 overflow-x-auto mb-4">
+          <h2 className="text-xl font-bold text-tinta mb-4">Como citar este projeto</h2>
+          <div className="text-sm leading-relaxed text-grafite-200 bg-white p-4 rounded-md border border-grafite-700 overflow-x-auto mb-4">
             {a.autores.map((au) => au.nome).join(', ')} ({new Date(p.processadoEm).getFullYear()}).
             {' '}
             <span className="text-grafite-200">{MARCA.nome}</span>. Versão {a.versaoDataset}.
@@ -83,11 +83,11 @@ export default function PaginaSobre() {
       {/* Autores */}
       {a && (
         <section>
-          <h2 className="text-xl font-bold text-white mb-4">Autoria</h2>
+          <h2 className="text-xl font-bold text-tinta mb-4">Autoria</h2>
           <div className="space-y-4">
             {a.autores.map((au) => (
               <div key={au.email || au.nome} className="border-l-2 border-marca-600 pl-4">
-                <p className="font-medium text-white">{au.nome}</p>
+                <p className="font-medium text-tinta">{au.nome}</p>
                 {au.orcid && (
                   <p className="text-sm text-marca-400">
                     <a
@@ -115,7 +115,7 @@ export default function PaginaSobre() {
 
       {/* Dados e Procedência */}
       <section>
-        <h2 className="text-xl font-bold text-white mb-4">Dados e Procedência</h2>
+        <h2 className="text-xl font-bold text-tinta mb-4">Dados e Procedência</h2>
         <dl className="space-y-3 text-sm">
           <div>
             <dt className="font-medium text-marca-400">Fonte</dt>
@@ -164,7 +164,7 @@ export default function PaginaSobre() {
 
       {/* Indicadores */}
       <section id="indicadores" className="scroll-mt-24">
-        <h2 className="text-xl font-bold text-white mb-4">Como os indicadores são calculados</h2>
+        <h2 className="text-xl font-bold text-tinta mb-4">Como os indicadores são calculados</h2>
         <dl className="space-y-3 text-sm text-grafite-400">
           <div>
             <dt className="font-semibold text-grafite-200">Participação de mercado</dt>
@@ -203,7 +203,7 @@ export default function PaginaSobre() {
 
       {/* Dados para reutilização */}
       <section id="dados" className="scroll-mt-24">
-        <h2 className="text-xl font-bold text-white mb-4">Dados para download</h2>
+        <h2 className="text-xl font-bold text-tinta mb-4">Dados para download</h2>
         <p className="mb-3 text-sm text-grafite-400">
           Os mesmos arquivos que alimentam o painel, em JSON, sob a licença CC BY 4.0. Cite o
           projeto e a Anatel como fonte.
@@ -234,7 +234,7 @@ export default function PaginaSobre() {
       {/* Código e Rastreabilidade */}
       {a && (
         <section>
-          <h2 className="text-xl font-bold text-white mb-4">Rastreabilidade Técnica</h2>
+          <h2 className="text-xl font-bold text-tinta mb-4">Rastreabilidade Técnica</h2>
           <div className="space-y-2 text-sm text-grafite-400">
             <p>
               Repositório:{' '}
@@ -249,7 +249,7 @@ export default function PaginaSobre() {
             </p>
             <p>
               Commit:{' '}
-              <code className="text-grafite-300 font-mono">
+              <code className="numerico text-grafite-300">
                 <a
                   href={`${a.urlRepositorio}/commit/${a.commitHash}`}
                   className="text-marca-400 hover:underline"
@@ -266,7 +266,7 @@ export default function PaginaSobre() {
 
       {/* Links Úteis */}
       <section className="pt-8 border-t border-grafite-800">
-        <h2 className="text-xl font-bold text-white mb-4">Referências</h2>
+        <h2 className="text-xl font-bold text-tinta mb-4">Referências</h2>
         <ul className="space-y-2 text-sm">
           <li>
             <a
@@ -275,7 +275,7 @@ export default function PaginaSobre() {
               rel="noreferrer noopener"
               target="_blank"
             >
-              → Dados abertos da Anatel
+              Dados abertos da Anatel
             </a>
           </li>
           <li>
@@ -285,7 +285,7 @@ export default function PaginaSobre() {
               rel="noreferrer noopener"
               target="_blank"
             >
-              → Código-fonte
+              Código-fonte
             </a>
           </li>
         </ul>

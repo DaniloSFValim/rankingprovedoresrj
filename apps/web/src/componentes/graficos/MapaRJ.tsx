@@ -46,7 +46,7 @@ const METRICAS: Record<
     valor: (m) => m.densidade ?? null,
     sufixo: '',
     casas: 1,
-    cores: ['#0c2d3a', '#0e5a70', '#0e7490', '#22d3ee', '#a5f3fc'],
+    cores: ['#e3eeee', '#a9cdd0', '#5e9fa7', '#237080', '#0a3f4a'],
     descricao: 'Acessos residenciais por 100 domicílios ocupados (IBGE, Censo 2022).',
   },
   lentas: {
@@ -54,7 +54,7 @@ const METRICAS: Record<
     valor: (m) => m.percentualAbaixo50 ?? null,
     sufixo: '%',
     casas: 1,
-    cores: ['#1e3a4a', '#475569', '#9f5a6a', '#e11d48', '#fb7185'],
+    cores: ['#efe9f1', '#d0bdd8', '#a585b5', '#744f8c', '#46275c'],
     descricao: 'Parcela dos acessos com velocidade contratada abaixo de 50 Mbps.',
   },
   provedores: {
@@ -62,7 +62,7 @@ const METRICAS: Record<
     valor: (m) => m.numeroProvedores,
     sufixo: '',
     casas: 0,
-    cores: ['#0c2d3a', '#0e5a70', '#0e7490', '#22d3ee', '#a5f3fc'],
+    cores: ['#e3eeee', '#a9cdd0', '#5e9fa7', '#237080', '#0a3f4a'],
     descricao: 'Provedores com acessos registrados no município.',
   },
   concentracao: {
@@ -70,7 +70,7 @@ const METRICAS: Record<
     valor: (m) => m.hhi,
     sufixo: '',
     casas: 0,
-    cores: ['#1e3a4a', '#475569', '#92702a', '#d97706', '#fbbf24'],
+    cores: ['#f4efe3', '#e0cfa0', '#c3a55a', '#96762a', '#5f4a14'],
     descricao: 'Índice Herfindahl-Hirschman (0–10.000). Indicador estatístico, sem juízo de valor.',
   },
 };
@@ -294,20 +294,20 @@ export function MapaRJ({ municipios, destaque }: Props) {
               ? ` (${m.liderMarketShare.toFixed(1)}%)`
               : '') +
             (m.alertas?.length
-              ? '<br/><span style="color:#d97706">⚠ Dados exigem verificação</span>'
+              ? '<br/><span style="color:#8f5b00">Dados exigem verificação</span>'
               : '')
           );
         },
       },
       visualMap: {
         type: 'piecewise',
-        backgroundColor: 'rgba(2, 6, 23, 0.85)',
+        backgroundColor: 'rgba(255, 255, 255, 0.92)',
         padding: 8,
         left: 8,
         bottom: 8,
         itemWidth: 14,
         itemHeight: 10,
-        textStyle: { color: '#94a3b8', fontSize: 11 },
+        textStyle: { color: '#44515e', fontSize: 11 },
         pieces: faixas.map((f) => ({
           ...f,
           label: `${fmt(f.gte)} – ${fmt('lte' in f ? f.lte! : f.lt!)}`,
@@ -325,10 +325,10 @@ export function MapaRJ({ municipios, destaque }: Props) {
           // properties.name durante o download da malha.
           nameProperty: 'name',
           label: { show: false },
-          itemStyle: { borderColor: '#020617', borderWidth: 0.6, areaColor: '#1e293b' },
+          itemStyle: { borderColor: '#ffffff', borderWidth: 0.6, areaColor: '#e1e6e8' },
           emphasis: {
             label: { show: false },
-            itemStyle: { areaColor: '#67e8f9', borderColor: '#f8fafc' },
+            itemStyle: { areaColor: '#f2c14e', borderColor: '#141d26' },
           },
           select: { disabled: true },
           data: municipios.map((m) => {
@@ -338,18 +338,18 @@ export function MapaRJ({ municipios, destaque }: Props) {
               name: m.codigoIbge,
               value: valor ?? undefined,
               itemStyle: ehDestaque
-                ? { borderColor: '#fbbf24', borderWidth: 2.5, opacity: 1 }
+                ? { borderColor: '#141d26', borderWidth: 2.5, opacity: 1 }
                 : m.alertas?.length
-                  ? { borderColor: '#f59e0b', borderWidth: 1.2, borderType: 'dashed' as const }
+                  ? { borderColor: '#8f5b00', borderWidth: 1.4, borderType: 'dashed' as const }
                   : undefined,
               label: ehDestaque
                 ? {
                     show: true,
                     formatter: m.nome,
-                    color: '#f8fafc',
+                    color: '#141d26',
                     fontWeight: 'bold',
                     fontSize: 12,
-                    textBorderColor: '#020617',
+                    textBorderColor: '#ffffff',
                     textBorderWidth: 3,
                   }
                 : undefined,
@@ -391,8 +391,8 @@ export function MapaRJ({ municipios, destaque }: Props) {
             onClick={() => setMetrica(chave)}
             className={`rounded-md px-3 py-1.5 text-sm transition ${
               metrica === chave
-                ? 'bg-grafite-700 text-white'
-                : 'text-grafite-400 hover:bg-grafite-800 hover:text-white'
+                ? 'bg-tinta text-white'
+                : 'text-grafite-400 hover:bg-grafite-800 hover:text-tinta'
             }`}
           >
             {METRICAS[chave].rotulo}
@@ -406,7 +406,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
           <button
             type="button"
             onClick={() => setSlugDestaque(null)}
-            className="rounded-md border border-grafite-700 px-2 py-1 text-xs text-grafite-300 hover:text-white"
+            className="rounded-md border border-grafite-700 px-2 py-1 text-xs text-grafite-300 hover:text-tinta"
           >
             Ver Estado inteiro
           </button>
@@ -414,8 +414,8 @@ export function MapaRJ({ municipios, destaque }: Props) {
       </div>
 
       {destacado && (
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-sm">
-          <span className="font-semibold text-white">{destacado.nome}</span>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-md border border-marca-800 bg-marca-950 px-3 py-2 text-sm">
+          <span className="font-semibold text-tinta">{destacado.nome}</span>
           <span className="text-grafite-300">{inteiro(destacado.totalAcessos)} acessos</span>
           <span className="text-grafite-300">{destacado.numeroProvedores} provedores</span>
           {destacado.liderNome && (
@@ -428,9 +428,9 @@ export function MapaRJ({ municipios, destaque }: Props) {
           {!destaque && (
             <span className="ml-auto flex gap-3">
               <Link href={`/municipios/${destacado.slug}/`} className="text-marca-300 hover:underline">
-                Ver município →
+                Abrir página do município
               </Link>
-              <button type="button" onClick={() => setSlugDestaque(null)} className="text-grafite-400 hover:text-white">
+              <button type="button" onClick={() => setSlugDestaque(null)} className="text-grafite-400 hover:text-tinta">
                 Limpar destaque
               </button>
             </span>
@@ -457,21 +457,21 @@ export function MapaRJ({ municipios, destaque }: Props) {
           .filter((m) => config.valor(m) !== null)
           .sort((x, y) => (config.valor(y) as number) - (config.valor(x) as number));
         return (
-          <div className="rounded-lg border border-grafite-800 p-3 text-sm">
-            <p className="mb-2 text-xs uppercase tracking-wide text-grafite-500">
+          <div className="cartao p-3 text-sm">
+            <p className="mb-2 text-sm font-semibold text-tinta">
               {config.rotulo}: {destacado.nome} e municípios vizinhos
             </p>
             <ol className="space-y-1">
               {linhas.map((m) => (
                 <li key={m.slug} className="flex justify-between gap-2">
                   {m.slug === destacado.slug ? (
-                    <span className="font-semibold text-amber-300">{m.nome}</span>
+                    <span className="font-semibold text-tinta">{m.nome}</span>
                   ) : (
-                    <Link href={`/municipios/${m.slug}/`} className="text-grafite-300 hover:text-white">
+                    <Link href={`/municipios/${m.slug}/`} className="text-grafite-300 hover:text-tinta">
                       {m.nome}
                     </Link>
                   )}
-                  <span className={`tabular-nums ${m.slug === destacado.slug ? 'font-semibold text-amber-300' : 'text-grafite-400'}`}>
+                  <span className={`tabular-nums ${m.slug === destacado.slug ? 'font-semibold text-tinta' : 'text-grafite-400'}`}>
                     {fmtValor(m)}
                   </span>
                 </li>
@@ -483,12 +483,12 @@ export function MapaRJ({ municipios, destaque }: Props) {
 
       {!destaque && ordenados.length > 0 && (
         <div className="grid gap-3 text-sm md:grid-cols-3">
-          <div className="rounded-lg border border-grafite-800 p-3">
-            <p className="mb-2 text-xs uppercase tracking-wide text-grafite-500">Maiores valores</p>
+          <div className="cartao p-3">
+            <p className="mb-2 text-sm font-semibold text-tinta">Maiores valores</p>
             <ol className="space-y-1">
               {ordenados.slice(0, 5).map((m, i) => (
                 <li key={m.slug} className="flex justify-between gap-2">
-                  <Link href={`/municipios/${m.slug}/`} className="text-grafite-300 hover:text-white">
+                  <Link href={`/municipios/${m.slug}/`} className="text-grafite-300 hover:text-tinta">
                     {i + 1}. {m.nome}
                   </Link>
                   <span className="tabular-nums text-grafite-400">{fmtValor(m)}</span>
@@ -496,12 +496,12 @@ export function MapaRJ({ municipios, destaque }: Props) {
               ))}
             </ol>
           </div>
-          <div className="rounded-lg border border-grafite-800 p-3">
-            <p className="mb-2 text-xs uppercase tracking-wide text-grafite-500">Menores valores</p>
+          <div className="cartao p-3">
+            <p className="mb-2 text-sm font-semibold text-tinta">Menores valores</p>
             <ol className="space-y-1">
               {ordenados.slice(-5).reverse().map((m, i) => (
                 <li key={m.slug} className="flex justify-between gap-2">
-                  <Link href={`/municipios/${m.slug}/`} className="text-grafite-300 hover:text-white">
+                  <Link href={`/municipios/${m.slug}/`} className="text-grafite-300 hover:text-tinta">
                     {ordenados.length - i}. {m.nome}
                   </Link>
                   <span className="tabular-nums text-grafite-400">{fmtValor(m)}</span>
@@ -509,12 +509,12 @@ export function MapaRJ({ municipios, destaque }: Props) {
               ))}
             </ol>
           </div>
-          <div className="rounded-lg border border-grafite-800 p-3">
-            <p className="mb-2 text-xs uppercase tracking-wide text-grafite-500">
+          <div className="cartao p-3">
+            <p className="mb-2 text-sm font-semibold text-tinta">
               {destacado && posicao >= 0 ? destacado.nome : 'Referência'}
             </p>
             {destacado && posicao >= 0 && (
-              <p className="text-2xl font-bold text-white tabular-nums">
+              <p className="text-2xl font-bold text-tinta tabular-nums">
                 {fmtValor(destacado)}
                 <span className="ml-2 text-sm font-normal text-grafite-400">
                   {posicao + 1}º de {ordenados.length}
@@ -540,13 +540,13 @@ export function MapaRJ({ municipios, destaque }: Props) {
       </p>
 
       {municipios.some((m) => m.alertas?.length) && (
-        <p className="text-xs text-amber-500/90">
+        <p className="text-xs text-atencao">
           Borda tracejada: município com indício de erro nos dados (prestadora que sumiu da
           base, ou vizinhos com densidades opostas e implausíveis). Veja o detalhe na página do município.
         </p>
       )}
 
-      <p className="text-xs text-grafite-600">
+      <p className="text-xs text-grafite-500">
         Malha municipal: IBGE. Municípios sem acessos registrados na competência
         aparecem sem preenchimento. Junção pelo código IBGE.
       </p>

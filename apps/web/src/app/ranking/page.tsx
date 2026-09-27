@@ -19,9 +19,9 @@ export default function PaginaRanking() {
   const c = kpis.concentracao;
 
   return (
-    <main className="space-y-8">
+    <main className="space-y-12">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+        <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
           Ranking dos provedores no {MARCA.ufSigla}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
@@ -29,20 +29,19 @@ export default function PaginaRanking() {
         </p>
       </div>
 
-      {/* Pódio — os três primeiros recebem destaque visual */}
-      <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Três maiores</div>
+            <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-tinta">Três maiores</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {ranking.slice(0, 3).map((linha, indice) => (
             <div
               key={linha.empresaId}
-              className={`cartao p-5 ${indice === 0 ? 'border-marca-700 bg-marca-950/40' : ''}`}
+              className={`p-0 pt-3 ${indice === 0 ? 'border-t-4 border-marca-500' : 'border-t-2 border-tinta'}`}
             >
               <div className="flex items-baseline gap-2">
-                <span className="numerico text-3xl font-bold text-marca-400">{linha.posicao}º</span>
+                <span className="numerico text-3xl font-semibold text-tinta">{linha.posicao}º</span>
                 <span className="rotulo">{percentual(linha.marketShare, 2)} do mercado</span>
               </div>
-              <div className="mt-2 truncate font-semibold text-white" title={linha.nome}>
+              <div className="mt-2 truncate font-semibold text-tinta" title={linha.nome}>
                 {linha.nome}
               </div>
               <div className="numerico mt-1 text-xl text-grafite-100">
@@ -58,7 +57,7 @@ export default function PaginaRanking() {
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Concentração</div>
+        <h2 className="text-xl font-semibold text-tinta">Concentração</h2>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Kpi rotulo="CR1" valor={percentual(c?.cr1, 1)} detalhe="maior provedor" />
           <Kpi rotulo="CR3" valor={percentual(c?.cr3, 1)} detalhe="três maiores" />
@@ -68,7 +67,7 @@ export default function PaginaRanking() {
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Participação dos 15 maiores</div>
+        <h2 className="text-xl font-semibold text-tinta">Participação dos 15 maiores</h2>
         <div className="cartao p-3">
           <BarrasShare
             itens={ranking.slice(0, 15).map((l) => ({ nome: l.nome, marketShare: l.marketShare }))}
@@ -77,20 +76,20 @@ export default function PaginaRanking() {
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Tipo de atuação</div>
+        <h2 className="text-xl font-semibold text-tinta">Tipo de atuação</h2>
         <div className="cartao p-3">
           <TipoAtuacaoPie provedores={ranking} />
         </div>
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Todos os provedores</div>
+        <h2 className="text-xl font-semibold text-tinta">Todos os provedores</h2>
         <TabelaRanking linhas={ranking} />
       </div>
 
       <p className="text-xs text-grafite-500">
         Total do Estado na competência: {compacto(kpis.totalAcessos)} acessos. Empresas
-        sem competência anterior aparecem marcadas como NOVO e não recebem variação
+        sem competência anterior aparecem marcadas como novas e não recebem variação
         percentual — um entrante não cresceu, ele entrou.
       </p>
     </main>

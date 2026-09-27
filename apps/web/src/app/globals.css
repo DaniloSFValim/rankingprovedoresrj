@@ -3,25 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --fonte-sans: 'Inter', system-ui, sans-serif;
-  --fonte-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --fonte-sans: 'Public Sans Variable', system-ui, sans-serif;
 }
 
 @layer base {
-  html { color-scheme: dark; }
+  html { color-scheme: light; }
   body {
-    @apply bg-grafite-950 text-grafite-100 antialiased;
+    @apply bg-grafite-950 text-grafite-200 antialiased;
+    font-feature-settings: 'tnum' 0;
+  }
+  h1, h2, h3 { @apply text-tinta; text-wrap: balance; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    @apply outline-2 outline-offset-2 outline-marca-500;
   }
   /* Numeros de KPI usam tabular para nao "dancar" entre atualizacoes. */
   .numerico { font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
 }
 
 @layer components {
+  /* Superficie de dados: fundo branco e uma linha fina, sem sombra. */
   .cartao {
-    @apply rounded-xl border border-grafite-800 bg-grafite-900/60 backdrop-blur;
+    @apply rounded-md border border-grafite-700 bg-white;
   }
   .rotulo {
-    @apply text-[11px] font-medium uppercase tracking-wider text-grafite-400;
+    @apply text-[13px] font-medium text-grafite-400;
   }
   /* Screen reader only text — visible on focus for accessibility */
   .sr-only {

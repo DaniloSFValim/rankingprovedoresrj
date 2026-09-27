@@ -15,9 +15,9 @@ export default function PaginaProvedores() {
   const kpis = lerKpis();
 
   return (
-    <main className="space-y-6">
+    <main className="space-y-12">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+        <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
           Provedores do {MARCA.ufSigla}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
@@ -38,7 +38,7 @@ export default function PaginaProvedores() {
                 {percentual(p.marketShare, 2)}
               </span>
             </div>
-            <div className="mt-1 truncate font-medium text-white group-hover:text-marca-200" title={p.nome}>
+            <div className="mt-1 truncate font-medium text-tinta group-hover:text-marca-200" title={p.nome}>
               {p.nome}
             </div>
             <div className="numerico mt-1 text-sm text-grafite-300">

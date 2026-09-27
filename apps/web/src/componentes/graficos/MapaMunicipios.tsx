@@ -35,21 +35,21 @@ const METRICAS: Record<
     rotulo: 'Acessos',
     valor: (m) => m.totalAcessos,
     sufixo: '',
-    cores: ['#164e63', '#67e8f9'],
+    cores: ['#a9cdd0', '#0a3f4a'],
     descricao: 'Total de acessos de banda larga fixa no município.',
   },
   provedores: {
     rotulo: 'Nº de provedores',
     valor: (m) => m.numeroProvedores,
     sufixo: '',
-    cores: ['#164e63', '#67e8f9'],
+    cores: ['#a9cdd0', '#0a3f4a'],
     descricao: 'Quantidade de provedores com acessos registrados no município.',
   },
   concentracao: {
     rotulo: 'HHI',
     valor: (m) => m.hhi,
     sufixo: '',
-    cores: ['#0e7490', '#f59e0b'],
+    cores: ['#e0cfa0', '#5f4a14'],
     descricao:
       'Índice Herfindahl-Hirschman municipal (0–10.000). Indicador estatístico ' +
       'de concentração, sem juízo de valor.',
@@ -58,14 +58,14 @@ const METRICAS: Record<
     rotulo: 'Participação do líder',
     valor: (m) => m.liderMarketShare,
     sufixo: '%',
-    cores: ['#0e7490', '#f59e0b'],
+    cores: ['#e0cfa0', '#5f4a14'],
     descricao: 'Fatia de mercado do maior provedor do município.',
   },
   crescimento: {
     rotulo: 'Crescimento 12 meses',
     valor: (m) => m.variacao12Meses?.percentual ?? null,
     sufixo: '%',
-    cores: ['#f43f5e', '#10b981'],
+    cores: ['#b3372c', '#1e7b4c'],
     descricao: 'Variação percentual do total de acessos em 12 meses.',
   },
 };
@@ -103,7 +103,7 @@ export function MapaMunicipios({ municipios }: { municipios: MunicipioIndice[] }
         left: 'center',
         bottom: 0,
         calculable: true,
-        textStyle: { color: '#94a3b8', fontSize: 11 },
+        textStyle: { color: '#44515e', fontSize: 11 },
         inRange: { color: config.cores },
       },
       series: [
@@ -119,11 +119,11 @@ export function MapaMunicipios({ municipios }: { municipios: MunicipioIndice[] }
           label: {
             show: true,
             formatter: '{b}',
-            color: '#f8fafc',
+            color: '#141d26',
             fontSize: 11,
             overflow: 'truncate',
           },
-          itemStyle: { borderColor: '#020617', borderWidth: 2, gapWidth: 2 },
+          itemStyle: { borderColor: '#ffffff', borderWidth: 2, gapWidth: 2 },
           data: comValor.map((m) => ({
             name: m.nome,
             // O valor do treemap define a AREA (acessos); a cor vem do visualMap.
@@ -149,8 +149,8 @@ export function MapaMunicipios({ municipios }: { municipios: MunicipioIndice[] }
             onClick={() => setMetrica(chave)}
             className={`rounded-md px-3 py-1.5 text-sm transition ${
               metrica === chave
-                ? 'bg-grafite-700 text-white'
-                : 'text-grafite-400 hover:bg-grafite-800 hover:text-white'
+                ? 'bg-grafite-700 text-tinta'
+                : 'text-grafite-400 hover:bg-grafite-800 hover:text-tinta'
             }`}
           >
             {METRICAS[chave].rotulo}

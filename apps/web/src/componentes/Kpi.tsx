@@ -17,17 +17,17 @@ interface Props {
 export function Kpi({ rotulo, valor, unidade, detalhe, variacao, variacaoTexto, ajuda }: Props) {
   return (
     <div
-      className="cartao p-4"
+      className="border-t-2 border-tinta pt-3"
       role="region"
       aria-label={rotulo}
       title={ajuda}
     >
-      <div className="rotulo">{rotulo}</div>
+      <div className="text-sm font-medium text-grafite-300">{rotulo}</div>
       <div className="mt-1 flex items-baseline gap-1.5">
-        <span className="numerico text-2xl font-semibold text-white md:text-3xl" aria-label={`Valor: ${valor}${unidade ? ` ${unidade}` : ''}`}>{valor}</span>
+        <span className="numerico text-3xl font-semibold tracking-[-0.02em] text-tinta" aria-label={`Valor: ${valor}${unidade ? ` ${unidade}` : ''}`}>{valor}</span>
         {unidade && <span className="text-sm text-grafite-400">{unidade}</span>}
       </div>
-      {detalhe && <div className="mt-1 truncate text-sm text-grafite-300">{detalhe}</div>}
+      {detalhe && <div className="mt-1 truncate text-sm text-grafite-400">{detalhe}</div>}
       {variacaoTexto !== undefined && (
         <div className={`numerico mt-1.5 text-xs ${corVariacao(variacao)}`} aria-label={`Variação: ${variacaoTexto}`}>
           {setaVariacao(variacao)} {variacaoTexto}

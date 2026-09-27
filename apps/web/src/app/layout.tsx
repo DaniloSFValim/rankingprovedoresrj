@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@fontsource-variable/public-sans';
 import './globals.css';
 import { Navegacao } from '@/componentes/Navegacao';
 import type { ItemBusca } from '@/componentes/BuscaAvancada';
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 function SemDados() {
   return (
     <main className="mx-auto max-w-2xl px-4 py-24">
-      <h1 className="text-2xl font-bold text-white">Sem dados carregados</h1>
+      <h1 className="text-2xl font-bold text-tinta">Sem dados carregados</h1>
       <p className="mt-4 text-grafite-300">
         Os artefatos analíticos ainda não foram gerados. Rode o pipeline:
       </p>
@@ -49,7 +50,7 @@ npm run etl -- demo`}
 export default function LayoutRaiz({ children }: { children: React.ReactNode }) {
   if (!artefatosDisponiveis()) {
     return (
-      <html lang="pt-BR" className="dark">
+      <html lang="pt-BR" >
         <body><SemDados /></body>
       </html>
     );
@@ -96,7 +97,7 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
   ];
 
   return (
-    <html lang="pt-BR" className="dark">
+    <html lang="pt-BR" >
       <body className="min-h-screen bg-grafite-950">
         <CidadeSelecionadaProvider>
           <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-marca-600 focus:px-4 focus:py-2 focus:rounded-md focus:text-white focus:font-semibold">

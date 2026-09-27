@@ -98,7 +98,7 @@ export function BuscaAvancada({
         onFocus={() => setAberto(true)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className="w-full rounded-lg border border-grafite-700 bg-grafite-900 px-4 py-2 text-sm text-white placeholder:text-grafite-500 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-marca-400"
+        className="w-full rounded-lg border border-grafite-700 bg-grafite-900 px-4 py-2 text-sm text-tinta placeholder:text-grafite-500 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-marca-400"
         aria-autocomplete="list"
         aria-expanded={aberto && resultados.length > 0}
         aria-label="Busca avançada"
@@ -106,7 +106,7 @@ export function BuscaAvancada({
 
       {aberto && termo && resultados.length > 0 && (
         <div
-          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-96 overflow-y-auto rounded-lg border border-grafite-700 bg-grafite-900 shadow-2xl"
+          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-96 overflow-y-auto rounded-lg border border-grafite-700 bg-grafite-900 shadow-lg"
           role="listbox"
         >
           {resultados.map((item, indice) => (
@@ -128,7 +128,7 @@ export function BuscaAvancada({
                 {getCategoryLabel(item.categoria)}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-white">{item.titulo}</div>
+                <div className="font-medium text-tinta">{item.titulo}</div>
                 {item.descricao && (
                   <div className="mt-0.5 text-xs text-grafite-400 truncate">{item.descricao}</div>
                 )}

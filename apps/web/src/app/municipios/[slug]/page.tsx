@@ -117,13 +117,13 @@ export default async function PaginaMunicipio({ params }: Props) {
   const entrantes = perfil.ranking.filter((l) => l.posicaoAnterior === null);
 
   return (
-    <main className="space-y-8">
+    <main className="space-y-12">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="flex-1">
           <Link href="/municipios/" className="text-sm text-marca-400 underline-offset-2 hover:underline">
-            ← Todos os municípios
+            Todos os municípios
           </Link>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
+          <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
             {perfil.nome}
           </h1>
           <p className="mt-1 text-sm text-grafite-400">
@@ -139,11 +139,7 @@ export default async function PaginaMunicipio({ params }: Props) {
 
       {/* Tamanho do mercado */}
       <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
-          <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Tamanho do Mercado</div>
-          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
-        </div>
+        <h2 className="text-xl font-semibold text-tinta">Tamanho do mercado</h2>
         <div className="grid grid-cols-2 gap-3">
           <Kpi
             rotulo="Total de acessos"
@@ -162,11 +158,7 @@ export default async function PaginaMunicipio({ params }: Props) {
 
       {/* Liderança e concentração */}
       <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
-          <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Liderança e Concentração</div>
-          <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
-        </div>
+        <h2 className="text-xl font-semibold text-tinta">Liderança e concentração</h2>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Kpi
             rotulo="Líder"
@@ -197,11 +189,7 @@ export default async function PaginaMunicipio({ params }: Props) {
 
       {pa && (
         <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="h-0.5 flex-1 bg-gradient-to-r from-marca-500 to-transparent" />
-            <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Acesso e Velocidade</div>
-            <div className="h-0.5 flex-1 bg-gradient-to-l from-marca-500 to-transparent" />
-          </div>
+          <h2 className="text-xl font-semibold text-tinta">Acesso e velocidade</h2>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <Kpi
               rotulo="Densidade"
@@ -227,7 +215,7 @@ export default async function PaginaMunicipio({ params }: Props) {
             />
           </div>
           {perfil.alertas === null && perfil.densidade !== null && (perfil.densidade > 100 || perfil.densidade < 15) && (
-            <p className="rounded-lg border border-atencao/30 bg-atencao/10 p-3 text-sm text-atencao">
+            <p className="rounded-md border border-atencao/30 bg-atencao/5 p-3 text-sm text-atencao">
               {perfil.densidade > 100
                 ? 'Densidade acima de 100: comum em municípios com muitas casas de veraneio, que têm internet mas não entram na contagem de domicílios ocupados do Censo. Não indica mais de um acesso por casa.'
                 : 'Densidade muito baixa: pode indicar pouca cobertura, mas também acessos registrados pelas prestadoras em outro município. Trate como ponto de verificação, não como conclusão.'}{' '}
@@ -268,7 +256,7 @@ export default async function PaginaMunicipio({ params }: Props) {
 
       <Secao
         titulo={`${perfil.nome} e vizinhos`}
-        descricao="Compare com os municípios que fazem fronteira — escolha a métrica"
+        descricao="Compare com os municípios que fazem fronteira."
       >
         <div className="cartao p-4">
           <MapaRJ municipios={municipios} destaque={slug} />
@@ -281,7 +269,7 @@ export default async function PaginaMunicipio({ params }: Props) {
             <ol className="cartao divide-y divide-grafite-800">
               {cresceram.map((l) => (
                 <li key={l.empresaId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
-                  <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                  <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-tinta underline-offset-2 hover:underline">
                     {l.nome}
                   </Link>
                   <span className="numerico shrink-0 font-medium text-alta">
@@ -300,7 +288,7 @@ export default async function PaginaMunicipio({ params }: Props) {
             <ol className="cartao divide-y divide-grafite-800">
               {recuaram.map((l) => (
                 <li key={l.empresaId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
-                  <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                  <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-tinta underline-offset-2 hover:underline">
                     {l.nome}
                   </Link>
                   <span className="numerico shrink-0 font-medium text-baixa">
@@ -321,10 +309,10 @@ export default async function PaginaMunicipio({ params }: Props) {
             )}
             {entrantes.slice(0, 5).map((l) => (
               <div key={l.empresaId} className="flex items-center gap-2 px-4 py-2.5 text-sm">
-                <span className="shrink-0 rounded bg-alta/20 px-1.5 py-0.5 text-[10px] font-medium text-alta">
-                  ENTROU
+                <span className="shrink-0 rounded bg-alta/10 px-1.5 py-0.5 text-xs font-medium text-alta">
+                  entrou
                 </span>
-                <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                <Link href={`/provedores/${l.slug}/`} className="flex-1 truncate text-tinta underline-offset-2 hover:underline">
                   {l.nome}
                 </Link>
                 <span className="numerico shrink-0 text-xs text-grafite-400">
@@ -334,8 +322,8 @@ export default async function PaginaMunicipio({ params }: Props) {
             ))}
             {perfil.saidas.slice(0, 5).map((s) => (
               <div key={s.empresaId} className="flex items-center gap-2 px-4 py-2.5 text-sm">
-                <span className="shrink-0 rounded bg-baixa/20 px-1.5 py-0.5 text-[10px] font-medium text-baixa">
-                  SAIU
+                <span className="shrink-0 rounded bg-baixa/10 px-1.5 py-0.5 text-xs font-medium text-baixa">
+                  saiu
                 </span>
                 <Link href={`/provedores/${s.slug}/`} className="flex-1 truncate text-grafite-300 underline-offset-2 hover:underline">
                   {s.nome}
@@ -349,21 +337,21 @@ export default async function PaginaMunicipio({ params }: Props) {
         </Secao>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Secao titulo="Tecnologia" descricao="Distribuição dos acessos no município" className="lg:col-span-1">
+      <div className="grid gap-10 lg:grid-cols-2">
+        <Secao titulo="Tecnologia" descricao="Distribuição dos acessos no município">
           <Tecnologias perfil={perfil} />
         </Secao>
 
-        <Secao titulo="Tipo de atuação" descricao="Distribuição de provedores por categoria" className="lg:col-span-1">
+        <Secao titulo="Tipo de atuação" descricao="Distribuição de provedores por categoria">
           <div className="cartao p-3">
             <TipoAtuacaoPie provedores={perfil.ranking} />
           </div>
         </Secao>
+      </div>
 
-        <Secao
+      <Secao
           titulo="Ranking local completo"
           descricao={`${inteiro(perfil.ranking.length)} provedores com acessos em ${perfil.nome}`}
-          className="lg:col-span-1"
         >
           <TabelaRanking
             linhas={perfil.ranking.map((l) => ({
@@ -388,7 +376,6 @@ export default async function PaginaMunicipio({ params }: Props) {
             ocultarMunicipios
           />
         </Secao>
-      </div>
 
       <p className="text-xs text-grafite-500">
         Todos os indicadores desta página são calculados{' '}

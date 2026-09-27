@@ -117,7 +117,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
         onClick={() => setAberto((a) => !a)}
         className={
           ehDestaque
-            ? 'flex w-full items-center justify-between gap-3 rounded-xl border-2 border-marca-700 bg-marca-950/50 px-5 py-4 text-left transition hover:border-marca-500 hover:bg-marca-950 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:ring-offset-2 focus:ring-offset-grafite-950'
+            ? 'flex w-full items-center justify-between gap-3 rounded-md border-2 border-marca-700 bg-marca-950/50 px-5 py-4 text-left transition hover:border-marca-500 hover:bg-marca-950 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:ring-offset-2 focus:ring-offset-grafite-950'
             : 'flex w-full items-center justify-between gap-2 rounded-lg border border-grafite-700 bg-grafite-900 px-3 py-2 text-left text-sm transition hover:border-grafite-600 focus:outline-none focus:ring-2 focus:ring-marca-500'
         }
         aria-expanded={aberto}
@@ -129,7 +129,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
           </span>
           <span
             className={`block truncate ${
-              ehDestaque ? 'mt-1 text-xl font-semibold text-white' : 'text-grafite-200'
+              ehDestaque ? 'mt-1 text-xl font-semibold text-tinta' : 'text-grafite-200'
             }`}
           >
             {atual ? atual.nome : ehDestaque ? 'Buscar um município…' : 'Escolher município…'}
@@ -139,7 +139,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
       </button>
 
       {aberto && (
-        <div className="absolute left-0 right-0 z-50 mt-2 overflow-hidden rounded-xl border border-grafite-700 bg-grafite-900 shadow-2xl">
+        <div className="absolute left-0 right-0 z-50 mt-2 overflow-hidden rounded-md border border-grafite-700 bg-grafite-900 shadow-lg">
           <div className="border-b border-grafite-800 bg-grafite-950 p-3">
             <input
               ref={campo}
@@ -147,7 +147,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
               onChange={(e) => setBusca(e.target.value)}
               onKeyDown={aoTeclar}
               placeholder="Digite para buscar um município…"
-              className="w-full bg-grafite-900 px-3 py-2 text-sm text-white outline-none placeholder:text-grafite-500 focus:ring-0"
+              className="w-full bg-grafite-900 px-3 py-2 text-sm text-tinta outline-none placeholder:text-grafite-500 focus:ring-0"
               aria-label="Buscar município"
             />
             {busca && (
@@ -169,7 +169,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
                   onMouseEnter={() => setIndiceFoco(indice)}
                   onClick={() => escolher(cidade)}
                   className={`flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm transition min-h-11 focus-visible:outline-2 focus-visible:outline-offset-(-1) focus-visible:outline-marca-400 ${
-                    indice === indiceFoco ? 'bg-marca-900/40 text-white' : 'text-grafite-200 hover:bg-grafite-800/50'
+                    indice === indiceFoco ? 'bg-marca-900/40 text-tinta' : 'text-grafite-200 hover:bg-grafite-800/50'
                   } ${
                     atual?.slug === cidade.slug ? 'border-l-2 border-marca-500 bg-grafite-800/30' : ''
                   }`}

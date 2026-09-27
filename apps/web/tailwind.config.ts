@@ -17,24 +17,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Tema claro. As escalas seguem a convencao "50 = mais forte": 50 e a
+        // tinta, 950 o papel. Assim text-grafite-100 e texto principal e
+        // bg-grafite-950 e o fundo da pagina.
         marca: {
-          50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9',
-          400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2', 700: '#0e7490',
-          800: '#155e75', 900: '#164e63', 950: '#083344',
+          50: '#062f37', 100: '#08404a', 200: '#0a4f5b', 300: '#0b5b68',
+          400: '#0b6572', 500: '#0e7482', 600: '#0b5f6b', 700: '#8fc1c6',
+          800: '#bfdcde', 900: '#dcedee', 950: '#eef6f6',
         },
         grafite: {
-          50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
-          400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155',
-          800: '#1e293b', 900: '#0f172a', 950: '#020617',
+          50: '#141d26', 100: '#1f2a35', 200: '#2e3a46', 300: '#44515e',
+          400: '#56626e', 500: '#66717c', 600: '#a3acb4', 700: '#cdd4d8',
+          800: '#e1e6e8', 900: '#ffffff', 950: '#f3f5f4',
         },
-        alta: '#10b981',
-        baixa: '#f43f5e',
-        atencao: '#f59e0b',
+        tinta: '#141d26',
+        alta: '#1e7b4c',
+        baixa: '#b3372c',
+        atencao: '#8f5b00',
       },
       fontFamily: {
         sans: ['var(--fonte-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--fonte-mono)', 'ui-monospace', 'monospace'],
-      },
+              },
     },
   },
   plugins: [],

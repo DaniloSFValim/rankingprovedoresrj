@@ -11,30 +11,31 @@ import type { EChartsOption } from 'echarts';
  * adjacentes: a cor identifica a série, não decora o gráfico.
  */
 export const PALETA_SERIES = [
-  '#22d3ee', '#a78bfa', '#f59e0b', '#34d399', '#f472b6',
-  '#60a5fa', '#fb923c', '#4ade80', '#e879f9', '#2dd4bf',
+  '#0e7482', '#b5832a', '#6a4c93', '#1e7b4c', '#b3372c',
+  '#3d6fb6', '#7c8a2e', '#a8558c', '#44515e', '#2c9c9c',
 ] as const;
 
 const BASE: EChartsOption = {
   color: [...PALETA_SERIES],
   backgroundColor: 'transparent',
-  textStyle: { fontFamily: 'var(--fonte-sans)', color: '#cbd5e1' },
+  textStyle: { fontFamily: 'var(--fonte-sans)', color: '#2e3a46' },
   grid: { left: 8, right: 16, top: 24, bottom: 8, containLabel: true },
   tooltip: {
-    backgroundColor: 'rgba(2,6,23,0.95)',
-    borderColor: '#334155',
-    textStyle: { color: '#e2e8f0' },
+    backgroundColor: '#ffffff',
+    borderColor: '#cdd4d8',
+    textStyle: { color: '#1f2a35' },
+    extraCssText: 'box-shadow: none; border-radius: 4px;',
   },
 };
 
-const EIXO_ESCURO = {
-  axisLine: { lineStyle: { color: '#334155' } },
-  axisLabel: { color: '#94a3b8', fontSize: 11 },
-  splitLine: { lineStyle: { color: '#1e293b' } },
+const EIXO = {
+  axisLine: { lineStyle: { color: '#a3acb4' } },
+  axisLabel: { color: '#56626e', fontSize: 11 },
+  splitLine: { lineStyle: { color: '#e1e6e8' } },
 };
 
 export function eixo(extra: Record<string, unknown> = {}): Record<string, unknown> {
-  return { ...EIXO_ESCURO, ...extra };
+  return { ...EIXO, ...extra };
 }
 
 interface Props {
@@ -106,7 +107,7 @@ function GraficoInterno({ opcao, altura = 320, descricao, aoCriar }: Props) {
 function GraficoSkeleton() {
   return (
     <div
-      className="w-full bg-grafite-800 animate-pulse"
+      className="w-full bg-grafite-800"
       style={{ height: 320 }}
       role="status"
       aria-label="Carregando gráfico"

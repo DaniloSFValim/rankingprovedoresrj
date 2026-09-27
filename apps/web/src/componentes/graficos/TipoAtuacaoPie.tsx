@@ -37,10 +37,10 @@ export function TipoAtuacaoPie({
     };
 
     const cores: Record<string, string> = {
-      OPERADORA: '#f59e0b',
-      PROVEDOR: '#34d399',
-      AMBOS: '#22d3ee',
-      INDEFINIDO: '#94a3b8',
+      OPERADORA: '#b5832a',
+      PROVEDOR: '#1e7b4c',
+      AMBOS: '#0e7482',
+      INDEFINIDO: '#56626e',
     };
 
     const dados = Object.entries(distribuicao)
@@ -68,19 +68,19 @@ export function TipoAtuacaoPie({
           avoidLabelOverlap: false,
           data: dados,
           itemStyle: {
-            color: (params) => cores[dados[params.dataIndex]?.tipo] || '#94a3b8',
+            color: (params) => cores[dados[params.dataIndex]?.tipo] || '#56626e',
           },
           label: {
             show: true,
             formatter: '{b}: {c}',
             fontSize: 11,
-            color: '#e2e8f0',
+            color: '#1f2a35',
           },
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
               shadowOffsetX: 0,
-              shadowColor: 'rgba(255, 255, 255, 0.5)',
+              shadowColor: 'rgba(0, 0, 0, 0)',
             },
           },
         },
