@@ -39,14 +39,13 @@ export default function PaginaSobre() {
         </p>
         <div className="space-y-3 text-sm text-grafite-400">
           <p>
-            Uma plataforma independente de análise sobre o mercado de banda larga fixa do Rio de Janeiro,
-            desenvolvida para monitoramento da <strong>Secretaria Municipal de Conservação e Serviços Públicos (Seconser)</strong>,
-            do Setor de Fiscalização de Serviços Concedidos, Prefeitura Municipal de Niterói.
+            Painel feito para acompanhar a banda larga fixa nos municípios fluminenses, como apoio ao
+            Setor de Fiscalização de Serviços Concedidos da <strong>Secretaria Municipal de Conservação e
+            Serviços Públicos (Seconser)</strong> da Prefeitura de Niterói.
           </p>
           <p>
-            Os dados são obtidos diretamente dos arquivos públicos da Anatel (Agência Nacional de Telecomunicações)
-            e processados de forma independente. {MARCA.nome} não possui vínculo com a Agência e não constitui
-            conclusão jurídica ou regulatória.
+            Os números vêm dos dados abertos da Anatel e são processados de forma independente. O {MARCA.nome}
+            não tem vínculo com a Agência, e seus indicadores não são conclusão jurídica ou regulatória.
           </p>
         </div>
       </section>
@@ -58,7 +57,7 @@ export default function PaginaSobre() {
           <div className="text-xs text-grafite-300 font-mono bg-grafite-950 p-4 rounded border border-grafite-800 overflow-x-auto mb-4">
             {a.autores.map((au) => au.nome).join(', ')} ({new Date(p.processadoEm).getFullYear()}).
             {' '}
-            <span className="text-grafite-200">{MARCA.nome}</span>. Version {a.versaoDataset}.
+            <span className="text-grafite-200">{MARCA.nome}</span>. Versão {a.versaoDataset}.
             {a.doi && (
               <>
                 {' '}
@@ -72,7 +71,7 @@ export default function PaginaSobre() {
 
           <details className="border border-grafite-800 rounded p-4">
             <summary className="cursor-pointer font-medium text-marca-300 hover:text-marca-200">
-              📋 Formato BibTeX
+              BibTeX
             </summary>
             <pre className="mt-3 text-xs bg-grafite-900 p-3 rounded border border-grafite-800 overflow-x-auto text-grafite-300">
 {bibtex}

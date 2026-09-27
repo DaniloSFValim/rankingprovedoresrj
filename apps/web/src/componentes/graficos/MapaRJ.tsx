@@ -11,7 +11,7 @@ import type { MunicipioIndice } from '@/lib/dados';
 import { inteiro } from '@/lib/formato';
 
 /**
- * Mapa coroplético dos municípios do Rio de Janeiro (§18, §19, §32).
+ * Mapa coroplético dos municípios do Rio de Janeiro.
  *
  * A malha é carregada em tempo de execução, e não embutida no bundle: o
  * GeoJSON do IBGE tem alguns megabytes e penalizaria todas as páginas que não

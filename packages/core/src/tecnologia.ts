@@ -1,12 +1,12 @@
 /**
- * Classificacao de tecnologia de acesso (§33).
+ * Classificacao de tecnologia de acesso.
  *
  * A Anatel publica o campo "Tecnologia" com dezenas de rotulos e a grafia
  * varia entre safras do arquivo. Reduzimos a um conjunto fechado e estavel,
  * preservando o rotulo bruto no warehouse para auditoria.
  *
  * Rotulo desconhecido NAO e descartado nem chutado: cai em 'OUTRAS' e e
- * contabilizado no relatorio de qualidade (§40), para que a lista abaixo
+ * contabilizado no relatorio de qualidade, para que a lista abaixo
  * possa ser estendida conscientemente.
  */
 

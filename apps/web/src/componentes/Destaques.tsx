@@ -3,7 +3,7 @@ import type { Movimentacoes } from '@/lib/dados';
 import { corVariacao, inteiroComSinal, percentualComSinal } from '@/lib/formato';
 
 /**
- * Radar de mudanças (§27).
+ * Radar de mudanças.
  *
  * Todo texto aqui é derivado dos dados — não há frase editorial escrita à mão.
  * O componente ordena fatos; a interpretação fica com quem lê.
@@ -59,7 +59,7 @@ export function Destaques({ movimentacoes }: { movimentacoes: Movimentacoes }) {
       : null,
     expansao && expansao.variacao > 0
       ? {
-          icone: '🏙',
+          icone: '+',
           rotulo: 'Maior expansão territorial',
           nome: expansao.nome,
           slug: expansao.slug,
@@ -103,7 +103,7 @@ export function Destaques({ movimentacoes }: { movimentacoes: Movimentacoes }) {
   );
 }
 
-/** Lista compacta de trocas de liderança municipal (§26). */
+/** Lista compacta de trocas de liderança municipal. */
 export function TrocasLideranca({ movimentacoes }: { movimentacoes: Movimentacoes }) {
   const trocas = movimentacoes.trocasLiderancaMunicipal;
   if (trocas.length === 0) {

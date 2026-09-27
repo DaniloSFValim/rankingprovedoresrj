@@ -45,7 +45,7 @@ export function compacto(valor: number | null | undefined): string {
   return inteiro(valor);
 }
 
-/** Classe de cor semantica para uma variacao (§43). */
+/** Classe de cor semantica para uma variacao. */
 export function corVariacao(valor: number | null | undefined): string {
   if (valor === null || valor === undefined || !Number.isFinite(valor) || valor === 0) {
     return 'text-grafite-400';

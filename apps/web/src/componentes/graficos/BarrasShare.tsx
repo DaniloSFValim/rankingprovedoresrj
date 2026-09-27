@@ -5,7 +5,7 @@ import type { EChartsOption } from 'echarts';
 import { Grafico, eixo } from '@/componentes/Grafico';
 
 /**
- * Participação de mercado em barras horizontais (§11).
+ * Participação de mercado em barras horizontais.
  *
  * Barras horizontais em vez de pizza: comparar comprimentos é mais preciso
  * que comparar ângulos, e o nome do provedor cabe sem rotação.

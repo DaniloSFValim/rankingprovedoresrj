@@ -1,7 +1,7 @@
 /**
- * Etapa NORMALIZACAO -> BANCO do pipeline (§6).
+ * Etapa NORMALIZACAO -> BANCO do pipeline.
  *
- * Contrato de historico (§38): a carga substitui apenas as competencias
+ * Contrato de historico: a carga substitui apenas as competencias
  * presentes no lote. Competencias ja armazenadas e ausentes do arquivo
  * permanecem intactas. Nao existe caminho de codigo que apague a serie inteira.
  */
@@ -159,7 +159,7 @@ export function carregar(
       upsertMunicipio.run(municipio.codigoIbge, municipio.nome);
     }
 
-    // Substitui somente as competencias deste lote (§38).
+    // Substitui somente as competencias deste lote.
     for (const competencia of extracao.competencias) {
       apagarCompetencia.run(competencia);
       apagarPerfilCompetencia.run(competencia);
@@ -190,7 +190,7 @@ export function carregar(
 }
 
 /**
- * Remove todo vestigio de dados demonstrativos do warehouse (§48).
+ * Remove todo vestigio de dados demonstrativos do warehouse.
  *
  * Chamado antes de qualquer importacao real. Sem isso, competencias que a
  * fixture sintetica cobria e o arquivo real nao cobre permaneceriam no banco,

@@ -117,7 +117,7 @@ async function importar(
     throw new Error(`Arquivo nao encontrado: ${caminhoCsv}`);
   }
 
-  // Dado real e dado demonstrativo jamais coexistem no warehouse (§48).
+  // Dado real e dado demonstrativo jamais coexistem no warehouse.
   if (!opcoes.dadosDemonstrativos) {
     const removidos = purgarDadosDemonstrativos(db);
     if (removidos > 0) {
@@ -232,7 +232,7 @@ function build(db: Banco): void {
   const competencias = competenciasArmazenadas(db);
   const demonstrativos = fonte.dados_demonstrativos === 1;
 
-  // Salvaguarda de producao (§48): artefato demonstrativo nunca vai ao ar
+  // Salvaguarda de producao: artefato demonstrativo nunca vai ao ar
   // sem que alguem assuma explicitamente a decisao.
   if (demonstrativos && process.env['NETRANK_AMBIENTE'] === 'producao') {
     throw new Error(

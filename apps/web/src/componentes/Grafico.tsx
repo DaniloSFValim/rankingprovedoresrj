@@ -8,7 +8,7 @@ import type { EChartsOption } from 'echarts';
  * Invólucro do ECharts com o tema do produto.
  *
  * A paleta de séries é fixa e ordenada por contraste entre categorias
- * adjacentes (§43): a cor identifica a série, não decora o gráfico.
+ * adjacentes: a cor identifica a série, não decora o gráfico.
  */
 export const PALETA_SERIES = [
   '#22d3ee', '#a78bfa', '#f59e0b', '#34d399', '#f472b6',

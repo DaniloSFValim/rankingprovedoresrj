@@ -31,7 +31,7 @@ export default function PaginaRanking() {
 
       {/* Pódio — os três primeiros recebem destaque visual */}
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Top 3 — Líderes</div>
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Três maiores</div>
         <div className="grid gap-3 md:grid-cols-3">
           {ranking.slice(0, 3).map((linha, indice) => (
             <div
@@ -58,7 +58,7 @@ export default function PaginaRanking() {
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Concentração de Mercado</div>
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Concentração</div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Kpi rotulo="CR1" valor={percentual(c?.cr1, 1)} detalhe="maior provedor" />
           <Kpi rotulo="CR3" valor={percentual(c?.cr3, 1)} detalhe="três maiores" />
@@ -68,7 +68,7 @@ export default function PaginaRanking() {
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Market Share dos Top 15</div>
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Participação dos 15 maiores</div>
         <div className="cartao p-3">
           <BarrasShare
             itens={ranking.slice(0, 15).map((l) => ({ nome: l.nome, marketShare: l.marketShare }))}
@@ -77,21 +77,14 @@ export default function PaginaRanking() {
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Distribuição por Tipo de Atuação</div>
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Tipo de atuação</div>
         <div className="cartao p-3">
           <TipoAtuacaoPie provedores={ranking} />
         </div>
       </div>
 
       <div className="space-y-4">
-        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Ranking Completo</div>
-        <div className="cartao p-4 bg-grafite-900/50 border-b border-grafite-800">
-          <p className="text-xs text-grafite-400 mb-3">💡 Dica: Use a busca global no topo para encontrar um provedor específico</p>
-          <div className="grid gap-2 text-xs text-grafite-500">
-            <p>Total de registros: {inteiro(ranking.length)}</p>
-            <p>Fonte: Anatel, competência {kpis.competencia}</p>
-          </div>
-        </div>
+        <div className="text-xs font-bold uppercase tracking-wide text-marca-400">Todos os provedores</div>
         <TabelaRanking linhas={ranking} />
       </div>
 

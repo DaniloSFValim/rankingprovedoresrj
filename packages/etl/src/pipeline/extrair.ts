@@ -1,8 +1,8 @@
 /**
- * Etapa COLETA -> DADOS BRUTOS -> VALIDACAO -> NORMALIZACAO do pipeline (§6).
+ * Etapa COLETA -> DADOS BRUTOS -> VALIDACAO -> NORMALIZACAO do pipeline.
  *
  * O filtro UF = RJ e aplicado linha a linha, durante o streaming, antes de
- * qualquer alocacao de estrutura (§37). Um arquivo nacional de centenas de MB
+ * qualquer alocacao de estrutura. Um arquivo nacional de centenas de MB
  * e reduzido ao Rio de Janeiro sem nunca ser materializado em memoria.
  */
 
@@ -84,7 +84,7 @@ export interface ResultadoExtracao {
   empresas: Map<string, EmpresaDescoberta>;
   municipios: Map<string, MunicipioDescoberto>;
   competencias: Set<Competencia>;
-  /** Rotulos de tecnologia que cairam em OUTRAS — insumo do controle de qualidade (§40). */
+  /** Rotulos de tecnologia que cairam em OUTRAS — insumo do controle de qualidade. */
   tecnologiasNaoMapeadas: Map<string, number>;
   estatisticas: {
     linhasLidas: number;
@@ -220,7 +220,7 @@ export async function extrairRj(
     resultado.estatisticas.linhasLidas += 1;
     const cols = mapa!;
 
-    // --- filtro RJ o mais cedo possivel (§37) -------------------------------
+    // --- filtro RJ o mais cedo possivel -------------------------------
     const uf = (linha[cols.uf!] ?? '').trim().toUpperCase();
     if (uf !== UF_ALVO) continue;
     resultado.estatisticas.linhasRj += 1;

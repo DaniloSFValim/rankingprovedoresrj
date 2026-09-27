@@ -227,7 +227,7 @@ export function mapearCabecalho(cabecalho: readonly string[]): MapaColunas {
  * Converte o campo de acessos para inteiro.
  * A Anatel usa separador de milhar "." e decimal "," em algumas safras.
  * Valor nao numerico retorna null — a linha e contabilizada como rejeitada,
- * nunca convertida em zero (§5).
+ * nunca convertida em zero.
  */
 export function interpretarAcessos(bruto: string | undefined): number | null {
   if (bruto === undefined) return null;

@@ -1,5 +1,5 @@
 /**
- * Geração de relatório estruturado de qualidade (§40, §44).
+ * Geração de relatório estruturado de qualidade.
  *
  * Produz data-quality-report.json com:
  * - Resultados de validações matemáticas

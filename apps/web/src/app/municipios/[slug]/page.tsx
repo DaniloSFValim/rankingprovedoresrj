@@ -354,7 +354,7 @@ export default async function PaginaMunicipio({ params }: Props) {
           <Tecnologias perfil={perfil} />
         </Secao>
 
-        <Secao titulo="Tipo de Atuação" descricao="Distribuição de provedores por categoria" className="lg:col-span-1">
+        <Secao titulo="Tipo de atuação" descricao="Distribuição de provedores por categoria" className="lg:col-span-1">
           <div className="cartao p-3">
             <TipoAtuacaoPie provedores={perfil.ranking} />
           </div>

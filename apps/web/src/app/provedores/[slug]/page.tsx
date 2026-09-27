@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props) {
   const perfil = lerPerfilProvedor(slug);
   if (!perfil) return { title: 'Provedor não encontrado' };
   return {
-    title: `${perfil.nome} — acessos, market share e municípios no ${MARCA.ufSigla}`,
+    title: `${perfil.nome} — acessos, participação e municípios no ${MARCA.ufSigla}`,
     description:
       `Perfil de ${perfil.nome} no mercado de banda larga fixa do ${MARCA.uf}: ` +
       `posição no ranking, número de acessos, participação de mercado, evolução ` +
@@ -95,7 +95,7 @@ export default async function PaginaProvedor({ params }: Props) {
           variacao={perfil.variacaoMensal.percentual}
           variacaoTexto={`${percentualComSinal(perfil.variacaoMensal.percentual)} no mês`}
         />
-        <Kpi rotulo="Market share" valor={percentual(perfil.marketShare, 2)} detalhe="do mercado estadual" />
+        <Kpi rotulo="Participação" valor={percentual(perfil.marketShare, 2)} detalhe="do mercado estadual" />
         <Kpi
           rotulo="Crescimento 12 meses"
           valor={percentualComSinal(perfil.variacao12Meses.percentual)}

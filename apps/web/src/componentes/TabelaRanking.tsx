@@ -4,7 +4,7 @@ import { ehRepetido, nomesRepetidos } from '@/lib/homonimos';
 import { cnpjFormatado, corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal, setaVariacao } from '@/lib/formato';
 
 /**
- * Tabela do ranking estadual (§9).
+ * Tabela do ranking estadual.
  *
  * A barra de participação é renderizada atrás do nome, e não em coluna
  * separada: a leitura da ordem de grandeza acontece no mesmo movimento

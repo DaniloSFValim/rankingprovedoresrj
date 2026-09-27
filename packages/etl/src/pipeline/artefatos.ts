@@ -1,10 +1,10 @@
 /**
- * Etapa CALCULOS -> API -> DASHBOARDS do pipeline (§6).
+ * Etapa CALCULOS -> API -> DASHBOARDS do pipeline.
  *
  * Decisao arquitetural (ver docs/adr/0001-arquitetura.md): o mercado de banda
  * larga fixa do RJ, agregado, cabe em poucos megabytes. Em vez de manter um
  * servidor de API consultado a cada grafico, o build materializa os recortes
- * analiticos em JSON estatico — o equivalente a materialized views (§41),
+ * analiticos em JSON estatico — o equivalente a materialized views,
  * servidas por CDN. O navegador nunca recebe milhoes de registros: recebe o
  * recorte ja calculado.
  */
@@ -122,7 +122,7 @@ export interface PresencaMunicipal {
 
 // ------------------------------------------------------------------ apoio ---
 
-/** Slug estavel e legivel, usado em URLs compartilhaveis (§35). */
+/** Slug estavel e legivel, usado em URLs compartilhaveis. */
 export function gerarSlug(texto: string): string {
   return canonizarTexto(texto).toLowerCase().replace(/ /g, '-').slice(0, 80) || 'sem-nome';
 }
@@ -310,7 +310,7 @@ function municipiosPorEmpresa(ctx: Contexto, competencia: Competencia): Map<stri
 export interface OpcoesBuild {
   destino: string;
   procedencia: ProcedenciaDados;
-  /** Tamanho do top exportado para a corrida do ranking (§13). */
+  /** Tamanho do top exportado para a corrida do ranking. */
   topCorrida?: number;
   /** Cadastro da Receita Federal por CNPJ, anexado ao perfil do provedor. */
   receita?: CacheReceita;
@@ -427,7 +427,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   salvar('estado/kpis.json', kpis);
   salvar('estado/ranking.json', { competencia: atual, linhas: linhasRanking });
 
-  // Serie historica do mercado estadual (§12).
+  // Serie historica do mercado estadual.
   //
   // Percorre o intervalo CONTIGUO, nao apenas as competencias presentes: mes
   // ausente entra com null, e o grafico desenha uma interrupcao. Omitir a
@@ -462,7 +462,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   });
   salvar('estado/serie.json', serie);
 
-  // Corrida do ranking (§13): posicao e acessos por competencia para o top N final.
+  // Corrida do ranking: posicao e acessos por competencia para o top N final.
   const elegiveis = new Set(linhasRanking.slice(0, topCorrida).map((l) => l.empresaId));
   const corrida = ctx.competencias.map((c) => {
     const ranking = construirRanking(participantes(ctx.estadoPorCompetencia.get(c)));
@@ -487,7 +487,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     competencias: corrida,
   });
 
-  // Serie por empresa, para o seletor de comparacao (§12).
+  // Serie por empresa, para o seletor de comparacao.
   salvar(
     'estado/series-empresas.json',
     [...ctx.empresas.values()].map((e) => ({
@@ -563,7 +563,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
             },
     });
 
-    // Perfil individual do municipio (§22).
+    // Perfil individual do municipio.
     const serieMunicipio = serieCompleta.map((c) => {
       const competenciaExiste = ctx.municipalPorCompetencia.has(c);
       const mapa = ctx.municipalPorCompetencia.get(c)?.get(codigoIbge);
@@ -714,7 +714,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     }
     presenca.sort((a, b) => b.acessos - a.acessos);
 
-    // Evolucao territorial (§25): contagem de municipios por competencia.
+    // Evolucao territorial: contagem de municipios por competencia.
     const territorio = ctx.competencias.map((c) => {
       const porMunicipio = ctx.municipalPorCompetencia.get(c);
       let atendidos = 0;
@@ -778,7 +778,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
 }
 
 /**
- * Radar de mudancas (§27). Todos os destaques sao derivados dos dados, sem
+ * Radar de mudancas. Todos os destaques sao derivados dos dados, sem
  * texto editorial: o modulo produz fatos ordenados, e a interface os apresenta.
  */
 function construirMovimentacoes(
@@ -819,7 +819,7 @@ function construirMovimentacoes(
     .filter((e) => municipiosAnterior.size > 0)
     .sort((a, b) => b.variacao - a.variacao);
 
-  // Trocas de lideranca municipal (§26).
+  // Trocas de lideranca municipal.
   const trocasLideranca: Array<{
     codigoIbge: string;
     slug: string;

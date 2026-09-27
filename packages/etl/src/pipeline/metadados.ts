@@ -1,5 +1,5 @@
 /**
- * Gerenciamento de metadados de rastreabilidade para artefatos (§41, §43).
+ * Gerenciamento de metadados de rastreabilidade para artefatos.
  *
  * Adiciona versão, commit, timestamp, fonte ANATEL e procedência a cada
  * artefato, formando a cadeia de rastreabilidade completa (ANATEL ->

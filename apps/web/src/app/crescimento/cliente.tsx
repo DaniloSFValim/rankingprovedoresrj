@@ -13,7 +13,7 @@ import { useCidadeSelecionada } from '@/contextos/CidadeSelecionada';
  * Lista de destaques.
  *
  * Absoluto e percentual aparecem em blocos SEPARADOS e nunca na mesma
- * ordenação (§14): misturar as duas grandezas faz um provedor minúsculo que
+ * ordenação: misturar as duas grandezas faz um provedor minúsculo que
  * dobrou de tamanho parecer mais relevante que o líder que ganhou dezenas de
  * milhares de acessos.
  */
@@ -226,7 +226,7 @@ export function PaginaCrescimentoCliente({
 
       <Secao
         titulo="Crescimento dos provedores"
-        descricao="Tamanho = número de acessos, cores = crescimento (verde = crescimento, vermelho = queda)"
+        descricao="O tamanho mostra os acessos; a cor, o crescimento (verde) ou a queda (vermelho)"
       >
         <div className="cartao p-3">
           {pontosRadar.length > 0 ? (
@@ -289,7 +289,7 @@ export function PaginaCrescimentoCliente({
           )}
         </Secao>
 
-        <Secao titulo="Expansão territorial" descricao="Municípios ganhos no mês (§25)">
+        <Secao titulo="Expansão territorial" descricao="Municípios ganhos no mês">
           {maioresExpansoesTerritoriais.length > 0 ? (
             <ol className="cartao divide-y divide-grafite-800">
               {maioresExpansoesTerritoriais.map((i) => (
@@ -313,9 +313,8 @@ export function PaginaCrescimentoCliente({
       </div>
 
       <p className="text-xs text-grafite-500">
-        Crescimento absoluto e percentual são grandezas distintas e nunca aparecem na
-        mesma ordenação. Provedores sem competência anterior não recebem variação
-        percentual: um entrante não cresceu, ele entrou.
+        Provedores que estrearam no mês não têm variação percentual: não há base
+        anterior para comparar.
       </p>
     </main>
   );

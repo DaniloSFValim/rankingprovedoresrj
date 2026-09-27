@@ -2,10 +2,10 @@
  * Motor de calculo do NETRANK RJ.
  *
  * Regras invioláveis deste modulo:
- *  1. Nenhuma funcao inventa, estima ou interpola dados ausentes (§5).
+ *  1. Nenhuma funcao inventa, estima ou interpola dados ausentes.
  *     Ausencia de dado retorna `null`, nunca zero implicito.
  *  2. Crescimento absoluto e crescimento percentual sao grandezas distintas
- *     e jamais sao misturadas (§14).
+ *     e jamais sao misturadas.
  *  3. Arredondamento e responsabilidade da apresentacao. Os calculos
  *     intermediarios (em especial o HHI) usam shares em precisao plena.
  */
@@ -149,7 +149,7 @@ export function razaoConcentracao(
  * erro material.
  *
  * Indicador estatistico de concentracao. O NETRANK nao converte o valor em
- * conclusao juridica ou regulatoria (§17).
+ * conclusao juridica ou regulatoria.
  */
 export function hhi(participantes: readonly ParticipanteMercado[]): number | null {
   const ativos = participantes.filter((p) => p.acessos > 0);
