@@ -28,22 +28,22 @@ export function BarrasShare({
         },
       },
       grid: { left: 8, right: 48, top: 8, bottom: 8, containLabel: true },
-      xAxis: eixo({ type: 'value', axisLabel: { formatter: '{value}%', color: '#94a3b8' } }),
+      xAxis: eixo({ type: 'value', axisLabel: { formatter: '{value}%', color: '#56626e' } }),
       yAxis: eixo({
         type: 'category',
         data: ordenados.map((i) => i.nome),
-        axisLabel: { color: '#cbd5e1', fontSize: 11, width: 180, overflow: 'truncate' },
+        axisLabel: { color: '#2e3a46', fontSize: 11, width: 180, overflow: 'truncate' },
         splitLine: { show: false },
       }),
       series: [
         {
           type: 'bar',
           data: ordenados.map((i) => i.marketShare),
-          itemStyle: { color: '#22d3ee', borderRadius: [0, 4, 4, 0] },
+          itemStyle: { color: '#0e7482', borderRadius: [0, 2, 2, 0] },
           label: {
             show: true,
             position: 'right',
-            color: '#94a3b8',
+            color: '#56626e',
             fontSize: 11,
             formatter: (p) => `${Number(p.value).toFixed(1)}%`,
           },

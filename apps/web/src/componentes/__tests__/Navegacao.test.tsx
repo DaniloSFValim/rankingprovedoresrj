@@ -58,7 +58,7 @@ describe('Navegacao', () => {
 
   it('displays current competência', () => {
     render(<Navegacao meta={mockMeta} cidades={mockCidades} />);
-    expect(screen.getByText('Competência')).toBeInTheDocument();
+    expect(screen.getByText('Dados de')).toBeInTheDocument();
     expect(screen.getByText(/2025/)).toBeInTheDocument();
   });
 

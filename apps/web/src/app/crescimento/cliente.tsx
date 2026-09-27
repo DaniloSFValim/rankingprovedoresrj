@@ -43,7 +43,7 @@ function ListaDestaques({
             </span>
             <Link
               href={`/provedores/${item.slug}/`}
-              className="flex-1 truncate text-sm text-white underline-offset-2 hover:underline"
+              className="flex-1 truncate text-sm text-tinta underline-offset-2 hover:underline"
               title={item.nome}
             >
               {item.nome}
@@ -99,7 +99,7 @@ export function PaginaCrescimentoCliente({
     // Dados municipais
     if (perfil) {
       titulo = `Crescimento e retração em ${perfil.nome}`;
-      descricaoSubtitulo = `Comparação entre ${rotularCompetencia(perfil.serie[perfil.serie.length - 2]?.competencia || '')} e ${rotularCompetencia(perfil.competencia)} · dados mensais`;
+      descricaoSubtitulo = `Comparação entre ${rotularCompetencia(perfil.serie[perfil.serie.length - 2]?.competencia || '')} e ${rotularCompetencia(perfil.competencia)}`;
 
       // Preparar dados para treemap
       pontosRadar = perfil.ranking
@@ -177,7 +177,7 @@ export function PaginaCrescimentoCliente({
     }
   } else {
     // Dados estaduais (comportamento anterior)
-    descricaoSubtitulo = `Mudanças de ${rotularCompetencia(movimentacoes.competenciaComparada)} para ${rotularCompetencia(movimentacoes.competencia)} · dados mensais`;
+    descricaoSubtitulo = `Mudanças de ${rotularCompetencia(movimentacoes.competenciaComparada)} para ${rotularCompetencia(movimentacoes.competencia)}`;
 
     pontosRadar = ranking
       .filter((l) => l.variacao12Percentual !== null && l.acessos > 0)
@@ -197,10 +197,10 @@ export function PaginaCrescimentoCliente({
   }
 
   return (
-    <main className="space-y-10">
+    <main className="space-y-12">
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+          <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
             {titulo}
           </h1>
           <p className="mt-1 text-sm text-grafite-400">
@@ -275,7 +275,7 @@ export function PaginaCrescimentoCliente({
             <ol className="cartao divide-y divide-grafite-800">
               {maioresAvancosRanking.map((i) => (
                 <li key={i.empresaId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
-                  <Link href={`/provedores/${i.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                  <Link href={`/provedores/${i.slug}/`} className="flex-1 truncate text-tinta underline-offset-2 hover:underline">
                     {i.nome}
                   </Link>
                   <span className="numerico font-medium text-alta">
@@ -294,7 +294,7 @@ export function PaginaCrescimentoCliente({
             <ol className="cartao divide-y divide-grafite-800">
               {maioresExpansoesTerritoriais.map((i) => (
                 <li key={i.empresaId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
-                  <Link href={`/provedores/${i.slug}/`} className="flex-1 truncate text-white underline-offset-2 hover:underline">
+                  <Link href={`/provedores/${i.slug}/`} className="flex-1 truncate text-tinta underline-offset-2 hover:underline">
                     {i.nome}
                   </Link>
                   <span className={`numerico font-medium ${corVariacao(i.variacao)}`}>

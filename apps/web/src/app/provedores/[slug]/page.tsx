@@ -56,12 +56,12 @@ export default async function PaginaProvedor({ params }: Props) {
   const receita = perfil.receita ?? null;
 
   return (
-    <main className="space-y-8">
+    <main className="space-y-12">
       <div>
         <Link href="/provedores/" className="text-sm text-marca-400 underline-offset-2 hover:underline">
           ← Provedores
         </Link>
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
+        <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
           {perfil.nome}
         </h1>
         <div className="mt-1 space-y-0.5 text-sm text-grafite-400">
@@ -72,7 +72,7 @@ export default async function PaginaProvedor({ params }: Props) {
           </p>
           {perfil.cnpj && (
             <p>
-              CNPJ: <span className="font-mono text-grafite-300">{cnpjFormatado(perfil.cnpj)}</span>
+              CNPJ: <span className="numerico text-grafite-300">{cnpjFormatado(perfil.cnpj)}</span>
             </p>
           )}
         </div>
@@ -181,7 +181,7 @@ export default async function PaginaProvedor({ params }: Props) {
               {perfil.presenca.map((p) => (
                 <tr key={p.codigoIbge} className="border-b border-grafite-800/60 last:border-0 hover:bg-grafite-800/40">
                   <td className="px-3 py-2.5">
-                    <Link href={`/municipios/${p.slug}/`} className="font-medium text-white underline-offset-2 hover:underline">
+                    <Link href={`/municipios/${p.slug}/`} className="font-medium text-tinta underline-offset-2 hover:underline">
                       {p.nome}
                     </Link>
                     {p.lidera && (
@@ -190,7 +190,7 @@ export default async function PaginaProvedor({ params }: Props) {
                       </span>
                     )}
                   </td>
-                  <td className="numerico px-3 py-2.5 text-right text-white">{inteiro(p.acessos)}</td>
+                  <td className="numerico px-3 py-2.5 text-right text-tinta">{inteiro(p.acessos)}</td>
                   <td className="numerico px-3 py-2.5 text-right text-grafite-200">
                     {percentual(p.marketShareLocal, 2)}
                   </td>

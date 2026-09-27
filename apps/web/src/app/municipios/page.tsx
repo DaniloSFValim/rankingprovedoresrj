@@ -26,9 +26,9 @@ export default function PaginaMunicipios() {
     .sort((a, b) => (b.variacao12Meses?.percentual ?? 0) - (a.variacao12Meses?.percentual ?? 0))[0];
 
   return (
-    <main className="space-y-8">
+    <main className="space-y-12">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+        <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
           Municípios do {MARCA.ufSigla}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
@@ -86,11 +86,11 @@ export default function PaginaMunicipios() {
                 <tr key={m.codigoIbge} className="border-b border-grafite-800/60 last:border-0 hover:bg-grafite-800/40">
                   <td className="numerico px-3 py-2.5 text-right text-grafite-400">{indice + 1}</td>
                   <td className="px-3 py-2.5">
-                    <Link href={`/municipios/${m.slug}/`} className="font-medium text-white underline-offset-2 hover:underline">
+                    <Link href={`/municipios/${m.slug}/`} className="font-medium text-tinta underline-offset-2 hover:underline">
                       {m.nome}
                     </Link>
                   </td>
-                  <td className="numerico px-3 py-2.5 text-right text-white">{inteiro(m.totalAcessos)}</td>
+                  <td className="numerico px-3 py-2.5 text-right text-tinta">{inteiro(m.totalAcessos)}</td>
                   <td className={`numerico px-3 py-2.5 text-right ${corVariacao(m.variacao12Meses?.percentual)}`}>
                     {percentualComSinal(m.variacao12Meses?.percentual)}
                   </td>

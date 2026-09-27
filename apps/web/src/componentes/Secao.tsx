@@ -14,17 +14,17 @@ interface Props {
 export function Secao({ titulo, descricao, href, hrefRotulo, children, className }: Props) {
   return (
     <section className={className}>
-      <div className="mb-3 flex items-end justify-between gap-4">
+      <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <div>
-          <h2 className="text-lg font-semibold text-white">{titulo}</h2>
-          {descricao && <p className="mt-0.5 text-sm text-grafite-400">{descricao}</p>}
+          <h2 className="text-xl font-semibold tracking-[-0.01em] text-tinta">{titulo}</h2>
+          {descricao && <p className="mt-1 text-sm text-grafite-400">{descricao}</p>}
         </div>
         {href && (
           <Link
             href={href}
-            className="shrink-0 text-sm text-marca-400 underline-offset-2 hover:underline"
+            className="shrink-0 text-sm font-medium text-marca-400 underline decoration-marca-700 underline-offset-4 hover:decoration-marca-400"
           >
-            {hrefRotulo ?? 'Ver tudo'} →
+            {hrefRotulo ?? 'Ver tudo'}
           </Link>
         )}
       </div>

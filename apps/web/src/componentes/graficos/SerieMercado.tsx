@@ -11,7 +11,7 @@ export function SerieMercado({ serie, altura = 300 }: { serie: PontoSerie[]; alt
   const opcao = useMemo<EChartsOption>(
     () => ({
       tooltip: { trigger: 'axis' },
-      legend: { textStyle: { color: '#94a3b8' }, top: 0 },
+      legend: { textStyle: { color: '#56626e' }, top: 0 },
       grid: { left: 8, right: 8, top: 36, bottom: 8, containLabel: true },
       xAxis: eixo({
         type: 'category',
@@ -22,9 +22,9 @@ export function SerieMercado({ serie, altura = 300 }: { serie: PontoSerie[]; alt
         eixo({
           type: 'value',
           name: 'Acessos',
-          nameTextStyle: { color: '#64748b', fontSize: 10 },
+          nameTextStyle: { color: '#66717c', fontSize: 10 },
           axisLabel: {
-            color: '#94a3b8',
+            color: '#56626e',
             fontSize: 11,
             formatter: (v: number) =>
               v >= 1e6 ? `${(v / 1e6).toFixed(1)} mi` : `${(v / 1e3).toFixed(0)} mil`,
@@ -33,7 +33,7 @@ export function SerieMercado({ serie, altura = 300 }: { serie: PontoSerie[]; alt
         eixo({
           type: 'value',
           name: 'Provedores',
-          nameTextStyle: { color: '#64748b', fontSize: 10 },
+          nameTextStyle: { color: '#66717c', fontSize: 10 },
           splitLine: { show: false },
         }),
       ],

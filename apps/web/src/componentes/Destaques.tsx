@@ -59,7 +59,6 @@ export function Destaques({ movimentacoes }: { movimentacoes: Movimentacoes }) {
       : null,
     expansao && expansao.variacao > 0
       ? {
-          icone: '+',
           rotulo: 'Maior expansão territorial',
           nome: expansao.nome,
           slug: expansao.slug,
@@ -79,16 +78,13 @@ export function Destaques({ movimentacoes }: { movimentacoes: Movimentacoes }) {
   }
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
       {cartoes.map((c) => (
-        <div key={c.rotulo} className="cartao p-4">
-          <div className="flex items-center gap-1.5">
-            <span className={`text-base ${corVariacao(c.variacao)}`}>{c.icone}</span>
-            <span className="rotulo">{c.rotulo}</span>
-          </div>
+        <div key={c.rotulo} className="border-t-2 border-tinta pt-3">
+          <div className="text-sm text-grafite-400">{c.rotulo}</div>
           <Link
             href={`/provedores/${c.slug}/`}
-            className="mt-2 block truncate font-medium text-white underline-offset-2 hover:underline"
+            className="mt-2 block truncate font-medium text-tinta underline-offset-2 hover:underline"
             title={c.nome}
           >
             {c.nome}
@@ -119,7 +115,7 @@ export function TrocasLideranca({ movimentacoes }: { movimentacoes: Movimentacoe
         <li key={t.codigoIbge} className="flex flex-wrap items-baseline gap-x-2 px-4 py-3 text-sm">
           <Link
             href={`/municipios/${t.slug}/`}
-            className="font-medium text-white underline-offset-2 hover:underline"
+            className="font-medium text-tinta underline-offset-2 hover:underline"
           >
             {t.nome}
           </Link>

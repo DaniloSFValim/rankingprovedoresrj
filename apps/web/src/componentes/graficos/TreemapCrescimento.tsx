@@ -44,10 +44,10 @@ export function TreemapCrescimento({
             show: true,
             formatter: '{b}' as const,
             fontSize: 11,
-            color: '#f8fafc',
+            color: '#141d26',
           },
           itemStyle: {
-            borderColor: '#1e293b',
+            borderColor: '#ffffff',
             borderWidth: 2,
           },
           visualMap: {
@@ -55,10 +55,10 @@ export function TreemapCrescimento({
             min: minCrescimento,
             max: maxCrescimento,
             inRange: {
-              color: ['#991b1b', '#fee2e2', '#dcfce7', '#22863a'],
+              color: ['#b3372c', '#f1dcd8', '#d8ebdf', '#1e7b4c'],
             },
             textStyle: {
-              color: '#cbd5e1',
+              color: '#2e3a46',
             },
             orient: 'vertical',
             right: 10,
