@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 /**
- * Paleta do NETRANK RJ (§43).
+ * Paleta do NETRANK RJ.
  *
  * As cores nao sao decorativas: cada uma tem funcao semantica fixa.
  *  - `alta`  : crescimento, ganho de posicao, expansao

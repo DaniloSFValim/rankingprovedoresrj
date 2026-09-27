@@ -6,7 +6,7 @@ import { Grafico } from '@/componentes/Grafico';
 import type { MunicipioIndice } from '@/lib/dados';
 
 /**
- * Mapa de calor dos municípios (§32), com métrica alternável.
+ * Mapa de calor dos municípios, com métrica alternável.
  *
  * NOTA DE HONESTIDADE — por que treemap e não coroplético:
  * um mapa coroplético exige a malha geográfica dos municípios do RJ (GeoJSON

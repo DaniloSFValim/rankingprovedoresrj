@@ -1,12 +1,12 @@
 /**
- * Identidade do produto (§3). Centralizada para que a troca de nome seja
+ * Identidade do produto. Centralizada para que a troca de nome seja
  * uma edicao de uma linha, e nao uma varredura pelo codigo.
  */
 export const MARCA = {
   nome: 'NETRANK RJ',
-  subtitulo: 'Inteligência de Mercado de Banda Larga Fixa no Rio de Janeiro',
+  subtitulo: 'Painel do mercado de banda larga fixa no Estado do Rio de Janeiro',
   descricaoCurta:
-    'Plataforma de monitoramento de mercado de banda larga fixa do Estado do Rio de Janeiro para apoiar atividades de fiscalização de serviços concedidos.',
+    'Acessos, provedores e concentração da banda larga fixa nos municípios do Rio de Janeiro, com dados da Anatel.',
   uf: 'Rio de Janeiro',
   ufSigla: 'RJ',
 } as const;

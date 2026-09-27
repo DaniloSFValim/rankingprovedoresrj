@@ -3,7 +3,7 @@
  *
  * A leitura acontece em tempo de BUILD, no servidor: cada pagina e gerada
  * estaticamente com o recorte de que precisa. O navegador nunca busca o
- * warehouse nem recebe registros brutos (§41).
+ * warehouse nem recebe registros brutos.
  */
 
 import fs from 'node:fs';

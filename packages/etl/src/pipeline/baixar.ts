@@ -1,9 +1,9 @@
 /**
- * Etapa COLETA do pipeline (§6).
+ * Etapa COLETA do pipeline.
  *
  * Principios:
  *  - O arquivo baixado e gravado em data/raw/ EXATAMENTE como veio, sem
- *    qualquer transformacao. E a evidencia da procedencia (§5) e o insumo de
+ *    qualquer transformacao. E a evidencia da procedencia e o insumo de
  *    qualquer reprocessamento futuro.
  *  - O SHA-256 e calculado durante o download. Se a Anatel republicar o mesmo
  *    arquivo com conteudo diferente, o hash muda e a diferenca fica registrada.

@@ -1,5 +1,5 @@
 /**
- * Malha geografica dos municipios do Rio de Janeiro (§18, §19, §32).
+ * Malha geografica dos municipios do Rio de Janeiro.
  *
  * FONTE: API de malhas territoriais do IBGE. A Anatel publica os acessos, mas
  * nao a geometria; as duas bases se juntam pelo codigo IBGE de 7 digitos, que

@@ -3,7 +3,7 @@ import type { Meta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
 /**
- * Faixa de aviso de dados demonstrativos (§48).
+ * Faixa de aviso de dados demonstrativos.
  *
  * Deliberadamente impossível de ignorar: fica no topo de toda página, em
  * contraste alto, enquanto a flag estiver ligada nos artefatos.
@@ -76,7 +76,7 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
         <section className="text-xs text-grafite-400">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <dt className="text-marca-400 font-semibold mb-1">Fonte de Dados</dt>
+              <dt className="text-marca-400 font-semibold mb-1">Fonte</dt>
               <dd className="text-grafite-300 font-medium">
                 Anatel
               </dd>
@@ -85,7 +85,7 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
               </dd>
             </div>
             <div>
-              <dt className="text-marca-400 font-semibold mb-1">Última Atualização</dt>
+              <dt className="text-marca-400 font-semibold mb-1">Atualização</dt>
               <dd className="text-grafite-300 text-[11px]">
                 {new Date(p.processadoEm).toLocaleString('pt-BR')}
               </dd>
@@ -102,22 +102,19 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
                     ))}
                   </div>
                 )}
-                <div className="text-[10px] text-grafite-500">
-                  Desenvolvimento independente
-                </div>
               </dd>
             </div>
             <div>
-              <dt className="text-marca-400 font-semibold mb-1">Mais Informações</dt>
+              <dt className="text-marca-400 font-semibold mb-1">Saiba mais</dt>
               <dd className="space-y-1">
                 <div>
                   <a href="/sobre/" className="text-marca-400 hover:underline text-[11px]">
-                    → Sobre o projeto
+                    Sobre o projeto
                   </a>
                 </div>
                 <div>
                   <a href="/sobre/#indicadores" className="text-marca-400 hover:underline text-[11px]">
-                    → Como os indicadores são calculados
+                    Como os indicadores são calculados
                   </a>
                 </div>
               </dd>

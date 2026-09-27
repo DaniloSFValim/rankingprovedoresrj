@@ -17,14 +17,14 @@ import { compacto, inteiro, percentual, percentualComSinal } from '@/lib/formato
 import { MARCA } from '@/lib/marca';
 
 export const metadata = {
-  title: `Banda larga fixa no ${MARCA.uf} — ranking, market share e evolução`,
+  title: `Banda larga fixa no ${MARCA.uf} — ranking, participação e evolução`,
   description:
     `Panorama do mercado de banda larga fixa do Estado do ${MARCA.uf}: maiores ` +
     `provedores, participação de mercado, crescimento e concentração, a partir ` +
     `dos dados oficiais da Anatel.`,
   openGraph: {
     title: `Ranking de Provedores de Banda Larga do ${MARCA.uf}`,
-    description: `Dados atualizados sobre provedores de internet. Veja quais empresas operam, número de clientes, market share e análise completa por município.`,
+    description: `Dados atualizados sobre provedores de internet. Quem opera em cada município, com quantos acessos e qual participação.`,
     type: 'website',
     url: `https://rankingprovedoresrj.vercel.app/`,
     images: [
@@ -39,7 +39,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: `Ranking de Provedores de Banda Larga do ${MARCA.uf}`,
-    description: `Dados atualizados sobre provedores de internet. Veja quais empresas operam, número de clientes e market share.`,
+    description: `Dados atualizados sobre provedores de internet. Quem opera em cada município, com quantos acessos e qual participação.`,
     images: [`https://rankingprovedoresrj.vercel.app/og-image.png`],
   },
   icons: {
@@ -68,7 +68,7 @@ export default function Home() {
               Banda larga fixa no {MARCA.uf}
             </h1>
             <p className="text-grafite-300">
-              Dados oficiais da Anatel: ranking de provedores, market share, concentração de mercado e evolução histórica.
+              Provedores, participação, concentração e evolução mensal, com base nos dados abertos da Anatel.
             </p>
           </div>
 

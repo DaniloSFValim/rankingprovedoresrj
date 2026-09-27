@@ -1,5 +1,5 @@
 /**
- * Normalizacao de empresas (§8).
+ * Normalizacao de empresas.
  *
  * A Anatel publica a mesma prestadora sob grafias distintas ao longo dos anos
  * ("FULANO TELECOM LTDA", "Fulano Telecom", "FULANO TELECOM ME"). Rankings
@@ -70,7 +70,7 @@ export type OrigemIdentidade = 'OVERRIDE_MANUAL' | 'RAIZ_CNPJ' | 'NOME_CANONICO'
 export interface IdentidadeEmpresa {
   /** Identificador estavel da empresa no NETRANK. */
   empresaId: string;
-  /** Como a identidade foi determinada — exposto na auditoria (§40). */
+  /** Como a identidade foi determinada — exposto na auditoria. */
   origem: OrigemIdentidade;
 }
 

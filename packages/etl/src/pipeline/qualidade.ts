@@ -1,5 +1,5 @@
 /**
- * Controle de qualidade (§40).
+ * Controle de qualidade.
  *
  * Regra estrutural: este modulo NUNCA altera, corrige ou remove um registro.
  * Ele apenas observa e registra alertas. Correcao e decisao humana, tomada no
@@ -25,7 +25,7 @@ export interface Alerta {
   mensagem: string;
 }
 
-/** Limiar de variacao mensal a partir do qual um provedor e sinalizado (§40). */
+/** Limiar de variacao mensal a partir do qual um provedor e sinalizado. */
 export const LIMIAR_VARIACAO_ANORMAL = 30;
 
 /** Piso de acessos para sinalizar variacao: evita ruido de provedores minusculos. */
@@ -207,7 +207,7 @@ export function auditarExtracao(extracao: ResultadoExtracao): Alerta[] {
     });
   }
 
-  // Empresas identificadas apenas por nome sao as candidatas a erro de fusao (§8).
+  // Empresas identificadas apenas por nome sao as candidatas a erro de fusao.
   const semCnpj = [...extracao.empresas.values()].filter(
     (e) => e.origem === 'NOME_CANONICO',
   );

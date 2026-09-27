@@ -37,7 +37,7 @@ export default function PaginaMunicipios() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi rotulo="Municípios analisados" valor={inteiro(municipios.length)} />
+        <Kpi rotulo="Municípios" valor={inteiro(municipios.length)} />
         <Kpi
           rotulo="Mais provedores"
           valor={inteiro(maisProvedores?.numeroProvedores)}
@@ -47,7 +47,7 @@ export default function PaginaMunicipios() {
           rotulo="Maior HHI"
           valor={inteiro(maisConcentrado?.hhi ? Math.round(maisConcentrado.hhi) : null)}
           detalhe={maisConcentrado?.nome ?? '—'}
-          ajuda="Município com maior concentração estatística de mercado. Indicador objetivo, sem juízo de valor."
+          ajuda="Município em que o mercado está mais concentrado em poucas empresas."
         />
         <Kpi
           rotulo="Maior crescimento 12m"

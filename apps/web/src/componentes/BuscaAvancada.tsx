@@ -78,9 +78,9 @@ export function BuscaAvancada({
 
   const getCategoryLabel = (categoria: string) => {
     const labels: Record<string, string> = {
-      municipio: '🏢 Município',
-      provedor: '🌐 Provedor',
-      pagina: '📄 Página',
+      municipio: 'Município',
+      provedor: 'Provedor',
+      pagina: 'Página',
     };
     return labels[categoria] || categoria;
   };

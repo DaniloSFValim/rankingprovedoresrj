@@ -10,7 +10,7 @@
  * A Base dos Dados mantem os microdados de acessos de banda larga fixa da
  * Anatel tratados e consultaveis via BigQuery.
  *
- * PROCEDENCIA (§5): os dados continuam sendo da Anatel, mas passam por
+ * PROCEDENCIA: os dados continuam sendo da Anatel, mas passam por
  * tratamento de terceiro. A interface DEVE declarar "Anatel, via Base dos
  * Dados" — atribuir diretamente a Anatel esconderia uma camada de
  * processamento que nao e nossa nem dela.
@@ -208,7 +208,7 @@ export interface LinhaBdd {
  *
  * A agregacao acontece no BigQuery, nao no cliente: filtrar e somar do lado do
  * servidor reduz o trafego de milhoes de linhas nacionais para alguns milhares
- * de linhas do Rio de Janeiro — que e o mesmo principio do §37 aplicado a uma
+ * de linhas do Rio de Janeiro — que e o mesmo principio aplicado a uma
  * fonte remota.
  */
 export function montarConsultaRj(

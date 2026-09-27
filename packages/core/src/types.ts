@@ -28,9 +28,9 @@ export type Tecnologia =
 
 export interface Empresa {
   id: string;
-  /** Nome exatamente como publicado pela Anatel (rastreabilidade, §5). */
+  /** Nome exatamente como publicado pela Anatel. */
   nomeOriginalAnatel: string;
-  /** Nome de exibicao apos normalizacao (§8). */
+  /** Nome de exibicao apos normalizacao. */
   nomeNormalizado: string;
   cnpj: string | null;
   grupoEconomicoId: string | null;
@@ -131,7 +131,7 @@ export interface MetadadosAcademicos {
   urlRepositorio: string;
 }
 
-/** Metadados de rastreabilidade exigidos pelo §5. */
+/** Metadados de rastreabilidade exigidos para rastrear a origem dos dados. */
 export interface ProcedenciaDados {
   fonte: string;
   url: string;
@@ -143,7 +143,7 @@ export interface ProcedenciaDados {
   /** ISO-8601 do momento do processamento. */
   processadoEm: string;
   /**
-   * true apenas em ambiente de desenvolvimento com fixtures sinteticas (§48).
+   * true apenas em ambiente de desenvolvimento com fixtures sinteticas.
    * A interface DEVE exibir aviso ostensivo quando verdadeiro.
    */
   dadosDemonstrativos: boolean;

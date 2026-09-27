@@ -1,5 +1,5 @@
 /**
- * Sincronizacao nao interativa (§37).
+ * Sincronizacao nao interativa.
  *
  * Encadeia descoberta, download e importacao sem intervencao humana, para que
  * a atualizacao mensal possa rodar em CI. O comando `descobrir` continua

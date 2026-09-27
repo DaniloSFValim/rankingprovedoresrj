@@ -1,11 +1,11 @@
 /**
- * Esquema relacional do NETRANK RJ (§7).
+ * Esquema relacional do NETRANK RJ.
  *
  * Motor: SQLite (arquivo unico, portavel, versionavel). O SQL e mantido
  * deliberadamente proximo de ANSI para que a migracao para PostgreSQL/Supabase
- * seja uma troca de driver, e nao uma reescrita (§42).
+ * seja uma troca de driver, e nao uma reescrita.
  *
- * Principio de historico (§38): `fato_acessos` e append-only por competencia.
+ * Principio de historico: `fato_acessos` e append-only por competencia.
  * Reprocessar uma competencia apaga e regrava APENAS aquela competencia;
  * nenhuma importacao jamais trunca a serie historica inteira.
  */
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS empresas (
 );
 
 -- Todas as grafias da Anatel ja vistas, apontando para a empresa normalizada.
--- E a tabela que torna o agrupamento auditavel e corrigivel (§8, §39).
+-- E a tabela que torna o agrupamento auditavel e corrigivel.
 CREATE TABLE IF NOT EXISTS empresas_aliases (
   chave_nome           TEXT PRIMARY KEY,
   nome_original_anatel TEXT NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS fato_perfil (
   PRIMARY KEY (competencia, codigo_ibge, empresa_id)
 );
 
--- Indices alinhados aos quatro eixos de consulta do produto (§41).
+-- Indices alinhados aos quatro eixos de consulta do produto.
 CREATE INDEX IF NOT EXISTS ix_fato_competencia   ON fato_acessos (competencia);
 CREATE INDEX IF NOT EXISTS ix_fato_municipio     ON fato_acessos (codigo_ibge, competencia);
 CREATE INDEX IF NOT EXISTS ix_fato_empresa       ON fato_acessos (empresa_id, competencia);

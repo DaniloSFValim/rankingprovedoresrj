@@ -1,5 +1,5 @@
 /**
- * Validações matemáticas e de integridade do pipeline (§40, §44).
+ * Validações matemáticas e de integridade do pipeline.
  *
  * Testes que verificam invariantes matemáticos dos dados:
  * - Somas de acessos por agregação

@@ -1,5 +1,5 @@
 /**
- * Gerador de dados DEMONSTRATIVOS (§48).
+ * Gerador de dados DEMONSTRATIVOS.
  *
  * AVISO INEGOCIAVEL: nada aqui e dado da Anatel. O arquivo produzido serve
  * exclusivamente para exercitar o pipeline e a interface em desenvolvimento.
@@ -110,7 +110,7 @@ export function gerarCsvDemo(opcoes: OpcoesDemo = {}): string {
       }
     }
 
-    // Linha de outra UF em toda competencia: garante que o filtro RJ (§37)
+    // Linha de outra UF em toda competencia: garante que o filtro RJ
     // esteja sendo exercitado pelo pipeline, e nao apenas pelos testes.
     linhas.push(
       [ano, String(Number(mes)), 'Grupo Externo', 'Provedor Fora do Escopo LTDA',
