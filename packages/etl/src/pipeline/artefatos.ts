@@ -24,6 +24,7 @@ import {
   crescimentoPercentual,
   deslocarCompetencia,
   marketShare,
+  nomeParaExibicao,
   type Competencia,
   type IndicadoresConcentracao,
   type LinhaRankingComVariacao,
@@ -186,7 +187,7 @@ function carregarContexto(db: Banco): Contexto {
       {
         id: e.id,
         slug: slugsEmpresa.get(e.id)!,
-        nome: e.nome,
+        nome: nomeParaExibicao(e.nome),
         cnpj: e.cnpj ?? null,
         grupoEconomico: e.grupo,
         tipoAtuacao: (e.tipo_atuacao as any) || 'INDEFINIDO',
