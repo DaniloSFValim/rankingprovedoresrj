@@ -96,6 +96,8 @@ export function PaginaCrescimentoCliente({
   let titulo = `Crescimento e retração`;
   let descricaoSubtitulo = '';
   const piso = perfil ? PISO_ACESSOS_MUNICIPIO : PISO_ACESSOS_ESTADO;
+  let retornosAposQueda: NonNullable<Movimentacoes['retornosAposQueda']> =
+    movimentacoes.retornosAposQueda ?? [];
   let pontosRadar: Array<{ nome: string; crescimento: number; acessos: number; marketShare: number }> = [];
   let maioresCrescimentosAbsolutos: DestaqueEmpresa[] = [];
   let maioresRetracoesAbsolutas: DestaqueEmpresa[] = [];
@@ -121,7 +123,20 @@ export function PaginaCrescimentoCliente({
         }));
 
       // Preparar destaques
-      maioresCrescimentosAbsolutos = perfil.ranking
+      // Declaração parcial no mês anterior: a variação não é de clientes.
+      const validas = perfil.ranking.filter((l) => !l.retornoAposQueda);
+      retornosAposQueda = perfil.ranking
+        .filter((l) => l.retornoAposQueda)
+        .map((l) => ({
+          empresaId: l.empresaId,
+          slug: l.slug,
+          nome: l.nome,
+          acessos: l.acessos,
+          acessosAnteriores: l.acessos - (l.variacaoAbsoluta ?? 0),
+          acessosRetrasados: l.acessosRetrasados ?? 0,
+        }));
+
+      maioresCrescimentosAbsolutos = validas
         .filter((l) => l.variacaoAbsoluta !== null)
         .sort((a, b) => (b.variacaoAbsoluta || 0) - (a.variacaoAbsoluta || 0))
         .slice(0, 5)
@@ -134,7 +149,7 @@ export function PaginaCrescimentoCliente({
           variacaoPosicao: l.variacaoPosicao,
         }));
 
-      maioresRetracoesAbsolutas = perfil.ranking
+      maioresRetracoesAbsolutas = validas
         .filter((l) => l.variacaoAbsoluta !== null)
         .sort((a, b) => (a.variacaoAbsoluta || 0) - (b.variacaoAbsoluta || 0))
         .slice(0, 5)
@@ -149,7 +164,7 @@ export function PaginaCrescimentoCliente({
 
       // Mesmo piso do Estado, menor porque o mercado local é menor: sem ele,
       // provedores com dezenas de acessos dominam as listas de % e de posição.
-      const comBase = perfil.ranking.filter(
+      const comBase = validas.filter(
         (l) => l.acessos - (l.variacaoAbsoluta ?? 0) >= PISO_ACESSOS_MUNICIPIO,
       );
 
@@ -327,13 +342,13 @@ export function PaginaCrescimentoCliente({
         </Secao>
       </div>
 
-      {!perfil && (movimentacoes.retornosAposQueda?.length ?? 0) > 0 && (
+      {retornosAposQueda.length > 0 && (
         <Secao
           titulo="Fora dos destaques: retorno após falha de declaração"
           descricao="Provedores que declararam menos da metade da base no mês anterior e voltaram ao patamar de antes. A variação é da declaração, não de clientes."
         >
           <ul className="cartao divide-y divide-grafite-800">
-            {movimentacoes.retornosAposQueda!.map((r) => (
+            {retornosAposQueda.map((r) => (
               <li key={r.empresaId} className="flex flex-wrap items-baseline gap-x-3 px-4 py-2.5 text-sm">
                 <Link href={`/provedores/${r.slug}/`} className="flex-1 truncate text-tinta underline-offset-2 hover:underline">
                   {r.nome}

@@ -157,6 +157,9 @@ export interface PerfilMunicipio {
     variacaoPercentual: number | null;
     variacao12Absoluta: number | null;
     variacao12Percentual: number | null;
+    /** Mês anterior foi queda isolada no município. Ausente em artefatos antigos. */
+    retornoAposQueda?: boolean;
+    acessosRetrasados?: number | null;
   }>;
   serie: Array<{
     competencia: Competencia;
