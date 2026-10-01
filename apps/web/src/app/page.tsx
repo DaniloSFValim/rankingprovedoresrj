@@ -65,7 +65,7 @@ export default function Home() {
         <p className="text-sm text-grafite-400">
           Banda larga fixa no {MARCA.uf}, {rotularCompetencia(meta.competenciaAtual)}
         </p>
-        <h1 className="mt-3 text-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-tinta sm:text-4xl md:text-[3.25rem]">
+        <h1 className="mt-3 text-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-tinta sm:text-4xl sm:leading-[1.15] md:text-[3.25rem] md:leading-[1.1]">
           <span className="numerico">{compacto(kpis.totalAcessos)}</span> acessos em{' '}
           <span className="numerico">{inteiro(kpis.numeroMunicipios)}</span> municípios, divididos entre{' '}
           <span className="numerico">{inteiro(kpis.numeroProvedores)}</span> provedores.
