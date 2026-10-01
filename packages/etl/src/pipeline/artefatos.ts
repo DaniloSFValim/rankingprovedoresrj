@@ -611,8 +611,22 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       }))
       .sort((a, b) => b.acessosAnteriores - a.acessosAnteriores);
 
+    const retrasadoMes = ctx.municipalPorCompetencia
+      .get(deslocarCompetencia(atual, -2))
+      ?.get(codigoIbge);
     const municipioRanking = rankingComparado.map((l) => ({
         ...l,
+        // Mes anterior foi uma queda isolada (declaracao parcial): a variacao
+        // do mes nao e de clientes e a pagina tira o provedor dos destaques.
+        retornoAposQueda:
+          l.variacaoAbsoluta !== null &&
+          ehRetornoAposQueda(
+            retrasadoMes?.get(l.empresaId),
+            l.acessos - l.variacaoAbsoluta,
+            l.acessos,
+            PISO_ACESSOS_MOVIMENTACAO_MUNICIPIO,
+          ),
+        acessosRetrasados: retrasadoMes?.get(l.empresaId) ?? null,
         slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
         nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
         cnpj: ctx.empresas.get(l.empresaId)?.cnpj ?? null,
@@ -787,6 +801,9 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
  */
 export const PISO_ACESSOS_MOVIMENTACAO = 1000;
 
+/** Piso equivalente na visao de um municipio, cujo mercado e menor. */
+export const PISO_ACESSOS_MOVIMENTACAO_MUNICIPIO = 100;
+
 /**
  * Retorno apos queda isolada: o mes anterior ficou abaixo da metade do mes
  * retrasado e o atual voltou a pelo menos 80% dele. E o padrao de declaracao
@@ -800,8 +817,9 @@ export function ehRetornoAposQueda(
   retrasado: number | undefined,
   anterior: number,
   atual: number,
+  piso: number = PISO_ACESSOS_MOVIMENTACAO,
 ): boolean {
-  if (!retrasado || retrasado < PISO_ACESSOS_MOVIMENTACAO) return false;
+  if (!retrasado || retrasado < piso) return false;
   return (
     anterior < retrasado * LIMITES_QUEDA_ISOLADA.queda &&
     atual >= retrasado * LIMITES_QUEDA_ISOLADA.retorno

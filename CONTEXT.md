@@ -31,9 +31,9 @@ piso.
 **Retorno após queda isolada fica fora dos destaques.** Se o mês anterior
 ficou abaixo de 50% do mês retrasado e o atual voltou a pelo menos 80% dele, a
 variação é da declaração, não de clientes (E-Mex, jun/2026: 24.213, 4.886,
-24.883). O provedor sai de todas as listas de movimentação do Estado e aparece
-numa lista à parte na página de crescimento. A visão municipal ainda não
-aplica a regra.
+24.883). O provedor sai de todas as listas de movimentação e aparece numa
+lista à parte na página de crescimento. Vale no Estado (com o piso de 1.000
+acessos no mês retrasado) e em cada município (piso de 100).
 
 **Os números são o que as prestadoras declaram.** Acessos, municípios e
 velocidades vêm das declarações das prestadoras à Anatel. Velocidade é a

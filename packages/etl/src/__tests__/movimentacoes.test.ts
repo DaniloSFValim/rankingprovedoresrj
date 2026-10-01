@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { ehRetornoAposQueda, PISO_ACESSOS_MOVIMENTACAO } from '../pipeline/artefatos';
+import {
+  ehRetornoAposQueda,
+  PISO_ACESSOS_MOVIMENTACAO,
+  PISO_ACESSOS_MOVIMENTACAO_MUNICIPIO,
+} from '../pipeline/artefatos';
 
 describe('ehRetornoAposQueda', () => {
   it('detecta a declaração parcial da E-Mex (jun/2026)', () => {
@@ -17,5 +21,10 @@ describe('ehRetornoAposQueda', () => {
   it('ignora provedor sem histórico ou abaixo do piso', () => {
     expect(ehRetornoAposQueda(undefined, 10, 500)).toBe(false);
     expect(ehRetornoAposQueda(PISO_ACESSOS_MOVIMENTACAO - 1, 10, 900)).toBe(false);
+  });
+
+  it('aceita o piso menor da visão municipal', () => {
+    expect(ehRetornoAposQueda(500, 100, 480)).toBe(false);
+    expect(ehRetornoAposQueda(500, 100, 480, PISO_ACESSOS_MOVIMENTACAO_MUNICIPIO)).toBe(true);
   });
 });
