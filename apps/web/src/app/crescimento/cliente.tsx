@@ -327,6 +327,26 @@ export function PaginaCrescimentoCliente({
         </Secao>
       </div>
 
+      {!perfil && (movimentacoes.retornosAposQueda?.length ?? 0) > 0 && (
+        <Secao
+          titulo="Fora dos destaques: retorno após falha de declaração"
+          descricao="Provedores que declararam menos da metade da base no mês anterior e voltaram ao patamar de antes. A variação é da declaração, não de clientes."
+        >
+          <ul className="cartao divide-y divide-grafite-800">
+            {movimentacoes.retornosAposQueda!.map((r) => (
+              <li key={r.empresaId} className="flex flex-wrap items-baseline gap-x-3 px-4 py-2.5 text-sm">
+                <Link href={`/provedores/${r.slug}/`} className="flex-1 truncate text-tinta underline-offset-2 hover:underline">
+                  {r.nome}
+                </Link>
+                <span className="numerico text-grafite-400">
+                  {inteiro(r.acessosRetrasados)}, {inteiro(r.acessosAnteriores)}, {inteiro(r.acessos)} nos últimos três meses
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Secao>
+      )}
+
       <p className="text-xs text-grafite-500">
         Provedores que estrearam no mês não têm variação percentual: não há base
         anterior para comparar.

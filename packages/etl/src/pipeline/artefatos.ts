@@ -788,6 +788,27 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
 export const PISO_ACESSOS_MOVIMENTACAO = 1000;
 
 /**
+ * Retorno apos queda isolada: o mes anterior ficou abaixo da metade do mes
+ * retrasado e o atual voltou a pelo menos 80% dele. E o padrao de declaracao
+ * parcial a Anatel (E-Mex, jun/2026: 24.213 -> 4.886 -> 24.883), nao de
+ * crescimento. Esses provedores saem dos destaques de crescimento do mes e
+ * sao listados a parte.
+ */
+export const LIMITES_QUEDA_ISOLADA = { queda: 0.5, retorno: 0.8 } as const;
+
+export function ehRetornoAposQueda(
+  retrasado: number | undefined,
+  anterior: number,
+  atual: number,
+): boolean {
+  if (!retrasado || retrasado < PISO_ACESSOS_MOVIMENTACAO) return false;
+  return (
+    anterior < retrasado * LIMITES_QUEDA_ISOLADA.queda &&
+    atual >= retrasado * LIMITES_QUEDA_ISOLADA.retorno
+  );
+}
+
+/**
  * Radar de mudancas. Todos os destaques sao derivados dos dados, sem
  * texto editorial: o modulo produz fatos ordenados, e a interface os apresenta.
  */
@@ -804,7 +825,26 @@ function construirMovimentacoes(
     variacaoPosicao: number | null;
   }>,
 ) {
-  const comparaveis = ranking.filter((l) => l.variacaoAbsoluta !== null);
+  const retrasado = ctx.estadoPorCompetencia.get(deslocarCompetencia(atual, -2));
+  const retornos = ranking
+    .filter(
+      (l) =>
+        l.variacaoAbsoluta !== null &&
+        ehRetornoAposQueda(retrasado?.get(l.empresaId), l.acessos - l.variacaoAbsoluta, l.acessos),
+    )
+    .map((l) => ({
+      empresaId: l.empresaId,
+      slug: l.slug,
+      nome: l.nome,
+      acessos: l.acessos,
+      acessosAnteriores: l.acessos - (l.variacaoAbsoluta ?? 0),
+      acessosRetrasados: retrasado?.get(l.empresaId) ?? 0,
+    }));
+  const idsRetorno = new Set(retornos.map((r) => r.empresaId));
+
+  const comparaveis = ranking.filter(
+    (l) => l.variacaoAbsoluta !== null && !idsRetorno.has(l.empresaId),
+  );
   const comBase = comparaveis.filter(
     (l) => l.acessos - (l.variacaoAbsoluta ?? 0) >= PISO_ACESSOS_MOVIMENTACAO,
   );
@@ -879,5 +919,6 @@ function construirMovimentacoes(
     maioresExpansoesTerritoriais: expansao.slice(0, 10),
     maioresRetracoesTerritoriais: expansao.slice(-10).reverse(),
     trocasLiderancaMunicipal: trocasLideranca,
+    retornosAposQueda: retornos,
   };
 }

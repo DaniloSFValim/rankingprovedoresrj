@@ -274,6 +274,14 @@ export interface Movimentacoes {
     codigoIbge: string; slug: string; nome: string;
     liderAtual: string; liderAnterior: string;
   }>;
+  /**
+   * Provedores cujo mês anterior foi uma queda isolada (declaração parcial à
+   * Anatel). Ficam fora dos destaques. Ausente em artefatos antigos.
+   */
+  retornosAposQueda?: Array<{
+    empresaId: string; slug: string; nome: string;
+    acessos: number; acessosAnteriores: number; acessosRetrasados: number;
+  }>;
 }
 
 
