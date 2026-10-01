@@ -17,6 +17,17 @@ HHI) são mostrados como números. Não rotulamos um mercado como "concentrado"
 ou "competitivo", e não citamos limites regulatórios (como as faixas de HHI do
 CADE): isso seria conclusão concorrencial, que o painel não faz.
 
+**Não é site oficial.** O painel cita a Seconser porque nasceu como apoio à
+fiscalização, mas não é da Prefeitura nem expressa posição dela. Qualquer texto
+que mencione a Secretaria deve deixar isso explícito: concentração de mercado é
+tema sensível com as prestadoras que a Prefeitura acompanha.
+
+**Piso nas movimentações.** As listas de variação percentual e de avanço no
+ranking só incluem provedores com ao menos 1.000 acessos no mês anterior (100 na
+visão municipal). Sem o piso, a cauda de centenas de provedores pequenos domina
+as listas com saltos de centenas de posições. Ganho e perda absolutos não usam
+piso.
+
 **Os números são o que as prestadoras declaram.** Acessos, municípios e
 velocidades vêm das declarações das prestadoras à Anatel. Velocidade é a
 contratada, não a medida. Nada é corrigido, estimado ou preenchido: uma

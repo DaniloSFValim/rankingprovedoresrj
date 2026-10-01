@@ -6,8 +6,16 @@ import { Secao } from '@/componentes/Secao';
 import { TreemapCrescimento } from '@/componentes/graficos/TreemapCrescimento';
 import { SeletorCidade, type CidadeOpcao } from '@/componentes/SeletorCidade';
 import type { DestaqueEmpresa, Movimentacoes, LinhaRankingEstadual, Meta, PerfilMunicipio } from '@/lib/dados';
-import { corVariacao, inteiroComSinal, percentualComSinal } from '@/lib/formato';
+import { corVariacao, inteiro, inteiroComSinal, percentualComSinal } from '@/lib/formato';
 import { useCidadeSelecionada } from '@/contextos/CidadeSelecionada';
+
+/**
+ * Base mínima, em acessos no mês anterior, para entrar nas listas de variação
+ * percentual e de posição. O piso do Estado é aplicado no ETL
+ * (PISO_ACESSOS_MOVIMENTACAO); o municipal é menor porque o mercado é menor.
+ */
+const PISO_ACESSOS_ESTADO = 1000;
+const PISO_ACESSOS_MUNICIPIO = 100;
 
 /**
  * Lista de destaques.
@@ -87,6 +95,7 @@ export function PaginaCrescimentoCliente({
   // Se há cidade selecionada, usar dados municipais; senão, usar dados estaduais
   let titulo = `Crescimento e retração`;
   let descricaoSubtitulo = '';
+  const piso = perfil ? PISO_ACESSOS_MUNICIPIO : PISO_ACESSOS_ESTADO;
   let pontosRadar: Array<{ nome: string; crescimento: number; acessos: number; marketShare: number }> = [];
   let maioresCrescimentosAbsolutos: DestaqueEmpresa[] = [];
   let maioresRetracoesAbsolutas: DestaqueEmpresa[] = [];
@@ -138,7 +147,13 @@ export function PaginaCrescimentoCliente({
           variacaoPosicao: l.variacaoPosicao,
         }));
 
-      maioresCrescimentosPercentuais = perfil.ranking
+      // Mesmo piso do Estado, menor porque o mercado local é menor: sem ele,
+      // provedores com dezenas de acessos dominam as listas de % e de posição.
+      const comBase = perfil.ranking.filter(
+        (l) => l.acessos - (l.variacaoAbsoluta ?? 0) >= PISO_ACESSOS_MUNICIPIO,
+      );
+
+      maioresCrescimentosPercentuais = comBase
         .filter((l) => l.variacaoPercentual !== null)
         .sort((a, b) => (b.variacaoPercentual || 0) - (a.variacaoPercentual || 0))
         .slice(0, 5)
@@ -151,7 +166,7 @@ export function PaginaCrescimentoCliente({
           variacaoPosicao: l.variacaoPosicao,
         }));
 
-      maioresRetracoesPercentuais = perfil.ranking
+      maioresRetracoesPercentuais = comBase
         .filter((l) => l.variacaoPercentual !== null)
         .sort((a, b) => (a.variacaoPercentual || 0) - (b.variacaoPercentual || 0))
         .slice(0, 5)
@@ -164,7 +179,7 @@ export function PaginaCrescimentoCliente({
           variacaoPosicao: l.variacaoPosicao,
         }));
 
-      maioresAvancosRanking = perfil.ranking
+      maioresAvancosRanking = comBase
         .filter((l) => l.variacaoPosicao !== null && (l.variacaoPosicao || 0) > 0)
         .sort((a, b) => (b.variacaoPosicao || 0) - (a.variacaoPosicao || 0))
         .slice(0, 5)
@@ -256,21 +271,21 @@ export function PaginaCrescimentoCliente({
 
         <Secao
           titulo="Maior crescimento percentual"
-          descricao="Ritmo de expansão relativo ao próprio tamanho"
+          descricao={`Relativo ao próprio tamanho. Só provedores com ao menos ${inteiro(piso)} acessos no mês anterior.`}
         >
           <ListaDestaques itens={maioresCrescimentosPercentuais} metrica="percentual" />
         </Secao>
 
         <Secao
           titulo="Maior queda percentual"
-          descricao="Ritmo de retração relativo ao próprio tamanho"
+          descricao={`Relativo ao próprio tamanho. Só provedores com ao menos ${inteiro(piso)} acessos no mês anterior.`}
         >
           <ListaDestaques itens={maioresRetracoesPercentuais} metrica="percentual" />
         </Secao>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Secao titulo="Maiores avanços no ranking" descricao="Posições ganhas no mês">
+        <Secao titulo="Maiores avanços no ranking" descricao={`Posições ganhas no mês, entre provedores com ao menos ${inteiro(piso)} acessos no mês anterior.`}>
           {maioresAvancosRanking.length > 0 ? (
             <ol className="cartao divide-y divide-grafite-800">
               {maioresAvancosRanking.map((i) => (

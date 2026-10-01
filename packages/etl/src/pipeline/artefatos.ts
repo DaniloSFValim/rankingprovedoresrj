@@ -779,6 +779,15 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
 }
 
 /**
+ * Base minima (acessos na competencia anterior) para entrar nos destaques de
+ * variacao percentual e de posicao. Na cauda do ranking, com centenas de
+ * provedores pequenos, poucas centenas de acessos movem uma empresa centenas
+ * de posicoes ou produzem variacoes de milhares por cento: e ruido, nao
+ * movimento de mercado. Os destaques em acessos absolutos nao precisam do piso.
+ */
+export const PISO_ACESSOS_MOVIMENTACAO = 1000;
+
+/**
  * Radar de mudancas. Todos os destaques sao derivados dos dados, sem
  * texto editorial: o modulo produz fatos ordenados, e a interface os apresenta.
  */
@@ -789,22 +798,26 @@ function construirMovimentacoes(
     empresaId: string;
     slug: string;
     nome: string;
+    acessos: number;
     variacaoAbsoluta: number | null;
     variacaoPercentual: number | null;
     variacaoPosicao: number | null;
   }>,
 ) {
   const comparaveis = ranking.filter((l) => l.variacaoAbsoluta !== null);
+  const comBase = comparaveis.filter(
+    (l) => l.acessos - (l.variacaoAbsoluta ?? 0) >= PISO_ACESSOS_MOVIMENTACAO,
+  );
   const anterior = deslocarCompetencia(atual, -1);
 
   const porAbsoluta = [...comparaveis].sort(
     (a, b) => (b.variacaoAbsoluta ?? 0) - (a.variacaoAbsoluta ?? 0),
   );
-  const comPercentual = comparaveis.filter((l) => l.variacaoPercentual !== null);
+  const comPercentual = comBase.filter((l) => l.variacaoPercentual !== null);
   const porPercentual = [...comPercentual].sort(
     (a, b) => (b.variacaoPercentual ?? 0) - (a.variacaoPercentual ?? 0),
   );
-  const porPosicao = comparaveis.filter((l) => (l.variacaoPosicao ?? 0) !== 0);
+  const porPosicao = comBase.filter((l) => (l.variacaoPosicao ?? 0) !== 0);
 
   // Expansao territorial: diferenca de municipios atendidos entre as duas competencias.
   const municipiosAtual = municipiosPorEmpresa(ctx, atual);

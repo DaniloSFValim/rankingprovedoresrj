@@ -56,10 +56,10 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
         <div className="max-w-md space-y-2 text-grafite-400">
           <p className="font-semibold text-tinta">{MARCA.nome}</p>
           <p>
-            Análise independente sobre dados públicos da Anatel, feita por Danilo Valim
-            (Secretaria Municipal de Conservação e Serviços Públicos de Niterói). Os
-            indicadores de concentração são estatísticos e não constituem conclusão
-            jurídica ou regulatória.
+            Análise independente de Danilo Valim sobre dados públicos da Anatel. Não é
+            site oficial da Prefeitura de Niterói nem da Seconser e não expressa posição
+            dessas instituições. Os indicadores de concentração (CR-n e HHI) são
+            estatísticos e não constituem conclusão jurídica, concorrencial ou regulatória.
           </p>
         </div>
         <dl className="space-y-3">

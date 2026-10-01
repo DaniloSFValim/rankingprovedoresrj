@@ -44,8 +44,14 @@ export default function PaginaSobre() {
             Serviços Públicos (Seconser)</strong> da Prefeitura de Niterói.
           </p>
           <p>
+            <strong>Não é um site oficial</strong> da Prefeitura de Niterói nem da Seconser. É um trabalho
+            independente do autor, e os números, indicadores e alertas publicados aqui não expressam posição
+            da Prefeitura ou da Secretaria sobre o mercado ou sobre qualquer prestadora.
+          </p>
+          <p>
             Os números vêm dos dados abertos da Anatel e são processados de forma independente. O {MARCA.nome}
-            não tem vínculo com a Agência, e seus indicadores não são conclusão jurídica ou regulatória.
+            também não tem vínculo com a Agência, e seus indicadores não são conclusão jurídica, concorrencial
+            ou regulatória.
           </p>
         </div>
       </section>
@@ -171,11 +177,28 @@ export default function PaginaSobre() {
             <dd>Acessos da prestadora ÷ total de acessos do recorte (estado ou município), na competência mais recente.</dd>
           </div>
           <div>
+            <dt className="font-semibold text-grafite-200">Concentração (CR-n)</dt>
+            <dd>
+              Soma das participações das <em>n</em> maiores prestadoras do recorte. CR3 = participação somada
+              das três maiores; o painel mostra CR1, CR3, CR5 e CR10.
+            </dd>
+          </div>
+          <div>
             <dt className="font-semibold text-grafite-200">Concentração (HHI)</dt>
             <dd>
-              Soma dos quadrados das participações de todas as prestadoras, de 0 (pulverizado) a 10.000
-              (monopólio). É um indicador estatístico de estrutura de mercado, não uma conclusão jurídica,
+              Soma dos quadrados das participações, em pontos percentuais, de todas as prestadoras do recorte:
+              HHI = s₁² + s₂² + … + sₙ². Vai de perto de 0 (mercado pulverizado) a 10.000 (uma só prestadora).
+              Exemplo: quatro prestadoras com 25% cada dão 4 × 625 = 2.500. É um indicador estatístico de estrutura de mercado, não uma conclusão jurídica,
               concorrencial ou regulatória.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-grafite-200">Movimentações do mês</dt>
+            <dd>
+              Ganho e perda de acessos são comparados em números absolutos. As listas de variação percentual
+              e de avanço no ranking só incluem provedores com ao menos 1.000 acessos no mês anterior (100 na
+              visão de um município): abaixo disso, poucas centenas de acessos movem um provedor centenas de
+              posições ou produzem variações de milhares por cento.
             </dd>
           </div>
           <div>
