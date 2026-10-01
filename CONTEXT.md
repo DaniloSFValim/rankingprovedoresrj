@@ -28,6 +28,13 @@ visão municipal). Sem o piso, a cauda de centenas de provedores pequenos domina
 as listas com saltos de centenas de posições. Ganho e perda absolutos não usam
 piso.
 
+**Retorno após queda isolada fica fora dos destaques.** Se o mês anterior
+ficou abaixo de 50% do mês retrasado e o atual voltou a pelo menos 80% dele, a
+variação é da declaração, não de clientes (E-Mex, jun/2026: 24.213, 4.886,
+24.883). O provedor sai de todas as listas de movimentação do Estado e aparece
+numa lista à parte na página de crescimento. A visão municipal ainda não
+aplica a regra.
+
 **Os números são o que as prestadoras declaram.** Acessos, municípios e
 velocidades vêm das declarações das prestadoras à Anatel. Velocidade é a
 contratada, não a medida. Nada é corrigido, estimado ou preenchido: uma
