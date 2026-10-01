@@ -48,6 +48,11 @@ interface Props {
 function GraficoInterno({ opcao, altura = 320, descricao, aoCriar }: Props) {
   const elemento = useRef<HTMLDivElement>(null);
   const instancia = useRef<any>(null);
+  // Opção mais recente. O ECharts carrega de forma assíncrona: se a opção
+  // mudar antes disso (ex.: cidade salva aplicada logo após montar), a
+  // criação precisa usar a versão atual, não a do primeiro render.
+  const opcaoAtual = useRef(opcao);
+  opcaoAtual.current = opcao;
 
   useEffect(() => {
     const el = elemento.current;
@@ -69,7 +74,7 @@ function GraficoInterno({ opcao, altura = 320, descricao, aoCriar }: Props) {
       }
 
       instancia.current = grafico;
-      grafico.setOption({ ...BASE, ...opcao });
+      grafico.setOption({ ...BASE, ...opcaoAtual.current });
       aoCriar?.(grafico);
 
       observador = new ResizeObserver(() => grafico.resize());

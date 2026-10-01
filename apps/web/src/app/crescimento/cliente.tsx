@@ -241,14 +241,14 @@ export function PaginaCrescimentoCliente({
 
       <Secao
         titulo="Crescimento dos provedores"
-        descricao="O tamanho mostra os acessos; a cor, o crescimento (verde) ou a queda (vermelho)"
+        descricao={`O tamanho mostra os acessos; a cor, a variação ${perfil ? 'no mês' : 'em 12 meses'}: verde para alta, vermelho para queda`}
       >
         <div className="cartao p-3">
           {pontosRadar.length > 0 ? (
-            <TreemapCrescimento pontos={pontosRadar} />
+            <TreemapCrescimento pontos={pontosRadar} periodo={perfil ? 'no mês' : 'em 12 meses'} teto={perfil ? 5 : 30} />
           ) : (
             <p className="p-6 text-sm text-grafite-400">
-              Sem 12 meses de histórico carregados para comparar.
+              {perfil ? 'Sem o mês anterior carregado para comparar.' : 'Sem 12 meses de histórico carregados para comparar.'}
             </p>
           )}
         </div>
