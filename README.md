@@ -17,7 +17,8 @@ de mercado. Foi desenvolvido como instrumento de apoio ao monitoramento de servi
 concedidos pela Secretaria Municipal de Conservação e Serviços Públicos de Niterói
 (Seconser), Setor de Fiscalização de Serviços Concedidos.
 
-É um trabalho independente, sem vínculo com a Anatel. Os indicadores são estatísticos e
+É um trabalho independente do autor. Não é site oficial da Prefeitura de Niterói nem da
+Seconser e não expressa posição dessas instituições; também não tem vínculo com a Anatel. Os indicadores são estatísticos e
 não constituem conclusão jurídica, concorrencial ou regulatória.
 
 ## Autoria
