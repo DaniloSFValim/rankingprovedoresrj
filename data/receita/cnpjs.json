@@ -307,6 +307,24 @@
    "capitalSocial": 15655430,
    "consultadoEm": "2026-09-23T21:11:32.430Z"
   },
+  "02519876000174": {
+   "cnpj": "02519876000174",
+   "razaoSocial": "C. J. ALVES NETWORK SERVICOS DE INFORMATICA E INTERNET LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2005-11-03",
+   "dataAbertura": "1998-04-28",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO GONCALO",
+   "uf": "RJ",
+   "capitalSocial": 5250,
+   "consultadoEm": "2026-10-12T18:51:51.285Z"
+  },
   "02533755000187": {
    "cnpj": "02533755000187",
    "razaoSocial": "LESTE FLU SERVICOS DE TELECOM LTDA",
@@ -775,6 +793,24 @@
    "capitalSocial": 2330992000,
    "consultadoEm": "2026-09-23T20:59:09.211Z"
   },
+  "05245502000104": {
+   "cnpj": "05245502000104",
+   "razaoSocial": "MHNET TELECOMUNICACOES LTDA",
+   "nomeFantasia": "MHNET TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2004-09-18",
+   "dataAbertura": "2002-08-22",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110801",
+    "descricao": "Serviços de telefonia fixa comutada - STFC"
+   },
+   "municipio": "MARAVILHA",
+   "uf": "SC",
+   "capitalSocial": 147531790,
+   "consultadoEm": "2026-10-12T18:52:44.635Z"
+  },
   "05288799000187": {
    "cnpj": "05288799000187",
    "razaoSocial": "STAR NET SERVICOS DE INFORMATICA LTDA",
@@ -954,6 +990,24 @@
    "uf": "SP",
    "capitalSocial": 2639407000,
    "consultadoEm": "2026-09-23T20:59:10.443Z"
+  },
+  "05900718000158": {
+   "cnpj": "05900718000158",
+   "razaoSocial": "INTERCOM INFORMATICA LTDA",
+   "nomeFantasia": "INTERCOM INFORMATICA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2005-11-03",
+   "dataAbertura": "2003-09-08",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SANTA LUZIA DO PARA",
+   "uf": "PA",
+   "capitalSocial": 300000,
+   "consultadoEm": "2026-10-12T18:52:46.139Z"
   },
   "05920419000185": {
    "cnpj": "05920419000185",
@@ -1711,6 +1765,24 @@
    "capitalSocial": 1870833700,
    "consultadoEm": "2026-09-23T20:59:16.099Z"
   },
+  "07872397000150": {
+   "cnpj": "07872397000150",
+   "razaoSocial": "GRZ SERVICOS E TECNOLOGIAS LTDA",
+   "nomeFantasia": "INFORR - SOLUCOES EM TECNOLOGIA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2006-03-08",
+   "dataAbertura": "2006-03-08",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "BOA VISTA",
+   "uf": "RR",
+   "capitalSocial": 200000,
+   "consultadoEm": "2026-10-12T18:52:19.520Z"
+  },
   "07987002000165": {
    "cnpj": "07987002000165",
    "razaoSocial": "LIG TECH TELECOMUNICACOES LTDA",
@@ -1980,6 +2052,24 @@
    "uf": "RJ",
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:01:04.732Z"
+  },
+  "08608451000118": {
+   "cnpj": "08608451000118",
+   "razaoSocial": "G V TELECOMUNICACOES LTDA",
+   "nomeFantasia": "WEBNET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2007-01-24",
+   "dataAbertura": "2007-01-24",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIBEIRAO CLARO",
+   "uf": "PR",
+   "capitalSocial": 200000,
+   "consultadoEm": "2026-10-12T18:52:47.701Z"
   },
   "08611669000121": {
    "cnpj": "08611669000121",
@@ -2521,6 +2611,24 @@
    "capitalSocial": 2222000,
    "consultadoEm": "2026-09-23T21:19:15.272Z"
   },
+  "09607728000150": {
+   "cnpj": "09607728000150",
+   "razaoSocial": "MALUGAINFOR COMERCIO DE PRODUTOS DE INFORMATICA LTDA",
+   "nomeFantasia": "CONEXAO LINK INTERNET BANDA LARGA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2008-06-06",
+   "dataAbertura": "2008-06-06",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "CASCAVEL",
+   "uf": "CE",
+   "capitalSocial": 200000,
+   "consultadoEm": "2026-10-12T18:53:36.976Z"
+  },
   "09610690000175": {
    "cnpj": "09610690000175",
    "razaoSocial": "WESTLINK TECNOLOGIA E COMUNICACAO LTDA.",
@@ -2538,6 +2646,42 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:05:50.431Z"
+  },
+  "09617372000136": {
+   "cnpj": "09617372000136",
+   "razaoSocial": "NWA TELECOMUNICACOES LTDA",
+   "nomeFantasia": "VIAMAR INTERNET BANDA LARGA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2008-06-10",
+   "dataAbertura": "2008-06-10",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CABO FRIO",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:51:31.164Z"
+  },
+  "09637271000127": {
+   "cnpj": "09637271000127",
+   "razaoSocial": "TRACECOM SOLUCOES EM TI INFRAESTRUTURA E TELECOMUNICACOES LTDA",
+   "nomeFantasia": "TRACECOM SOLUCOES",
+   "situacao": "ATIVA",
+   "dataSituacao": "2008-06-12",
+   "dataAbertura": "2008-06-12",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "MIGUEL PEREIRA",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:51:43.656Z"
   },
   "10159315000130": {
    "cnpj": "10159315000130",
@@ -2971,6 +3115,24 @@
    "capitalSocial": 120000,
    "consultadoEm": "2026-09-23T21:01:11.741Z"
   },
+  "10903116000194": {
+   "cnpj": "10903116000194",
+   "razaoSocial": "VIVA LINK INTERNET LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2009-06-17",
+   "dataAbertura": "2009-06-17",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO GONCALO",
+   "uf": "RJ",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:53:38.483Z"
+  },
   "10934244000103": {
    "cnpj": "10934244000103",
    "razaoSocial": "AMA SERVICOS MULTIMIDIA LTDA",
@@ -3259,6 +3421,24 @@
    "capitalSocial": 20000,
    "consultadoEm": "2026-09-23T21:18:19.432Z"
   },
+  "11274764000191": {
+   "cnpj": "11274764000191",
+   "razaoSocial": "J E PROVEDOR DE REDE DE COMUNICACAO LTDA",
+   "nomeFantasia": "REDE BRASIL INTERNET BANDA LARGA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2009-10-30",
+   "dataAbertura": "2009-10-30",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 20000,
+   "consultadoEm": "2026-10-12T18:51:45.173Z"
+  },
   "11415297000172": {
    "cnpj": "11415297000172",
    "razaoSocial": "VIEGAS TELECOM LTDA",
@@ -3385,6 +3565,24 @@
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:12:39.741Z"
   },
+  "11736994000125": {
+   "cnpj": "11736994000125",
+   "razaoSocial": "ITTNET PRIME PROVEDORES E SERVICOS DE COMUNICACAO LTDA",
+   "nomeFantasia": "ITTNET PRIME",
+   "situacao": "ATIVA",
+   "dataSituacao": "2010-03-22",
+   "dataAbertura": "2010-03-22",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "TERESINA",
+   "uf": "PI",
+   "capitalSocial": 500000,
+   "consultadoEm": "2026-10-12T18:52:49.226Z"
+  },
   "11802435000176": {
    "cnpj": "11802435000176",
    "razaoSocial": "J.VIEIRA DOS SANTOS INFORMATICA",
@@ -3402,6 +3600,24 @@
    "uf": "RJ",
    "capitalSocial": 1,
    "consultadoEm": "2026-09-23T21:09:30.573Z"
+  },
+  "11802875000123": {
+   "cnpj": "11802875000123",
+   "razaoSocial": "POWERNET SOLUTIONS LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2010-04-12",
+   "dataAbertura": "2010-04-12",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "MACAE",
+   "uf": "RJ",
+   "capitalSocial": 350000,
+   "consultadoEm": "2026-10-12T18:52:07.195Z"
   },
   "11812715000165": {
    "cnpj": "11812715000165",
@@ -3817,6 +4033,24 @@
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:12:47.142Z"
   },
+  "12653719000100": {
+   "cnpj": "12653719000100",
+   "razaoSocial": "RS VIEIRA SERVICOS DE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "UNI REDE RJ",
+   "situacao": "ATIVA",
+   "dataSituacao": "2010-10-12",
+   "dataAbertura": "2010-10-12",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 110000,
+   "consultadoEm": "2026-10-12T18:51:26.054Z"
+  },
   "12656699000121": {
    "cnpj": "12656699000121",
    "razaoSocial": "FIRMA TELECOM LTDA",
@@ -3925,6 +4159,24 @@
    "capitalSocial": 60000,
    "consultadoEm": "2026-09-23T21:12:51.711Z"
   },
+  "12819970000100": {
+   "cnpj": "12819970000100",
+   "razaoSocial": "RALPH ANTUNES DE AZEVEDO",
+   "nomeFantasia": "CONECTE - PROVEDOR DE ACESSO A INTERNET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2010-11-08",
+   "dataAbertura": "2010-11-08",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Empresário (Individual)",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "ITAOCARA",
+   "uf": "RJ",
+   "capitalSocial": 1,
+   "consultadoEm": "2026-10-12T18:52:02.612Z"
+  },
   "12850193000159": {
    "cnpj": "12850193000159",
    "razaoSocial": "EVEREST RIDGE DO BRASIL LTDA",
@@ -3942,6 +4194,24 @@
    "uf": "SP",
    "capitalSocial": 95000,
    "consultadoEm": "2026-09-23T21:08:49.786Z"
+  },
+  "12856483000100": {
+   "cnpj": "12856483000100",
+   "razaoSocial": "MMR TELECOM SERVICOS LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2010-11-11",
+   "dataAbertura": "2010-11-11",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 3000000,
+   "consultadoEm": "2026-10-12T18:52:50.757Z"
   },
   "12881491000106": {
    "cnpj": "12881491000106",
@@ -4429,6 +4699,42 @@
    "capitalSocial": 4000000,
    "consultadoEm": "2026-09-23T21:13:06.163Z"
   },
+  "14133689000137": {
+   "cnpj": "14133689000137",
+   "razaoSocial": "3R INTERNET SOLUCOES EM INFORMATICA LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2011-08-17",
+   "dataAbertura": "2011-08-17",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 40000,
+   "consultadoEm": "2026-10-12T18:52:52.295Z"
+  },
+  "14178158000160": {
+   "cnpj": "14178158000160",
+   "razaoSocial": "LEM TELECOMUNICACOES LTDA",
+   "nomeFantasia": "MEGABITS",
+   "situacao": "ATIVA",
+   "dataSituacao": "2011-08-16",
+   "dataAbertura": "2011-08-16",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 60000,
+   "consultadoEm": "2026-10-12T18:52:21.182Z"
+  },
   "14180308000170": {
    "cnpj": "14180308000170",
    "razaoSocial": "DNL NETWORK TELECOMUNICACOES E AFINS LTDA",
@@ -4572,6 +4878,24 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:13:09.297Z"
+  },
+  "14498951000147": {
+   "cnpj": "14498951000147",
+   "razaoSocial": "ETI SERVICOS DE TELECOMUNICACOES, INFORMATICA E ELETRICA LTDA",
+   "nomeFantasia": "ETI SOLUCOES EM TELECOMUNICACOES",
+   "situacao": "ATIVA",
+   "dataSituacao": "2011-10-21",
+   "dataAbertura": "2011-10-21",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6120599",
+    "descricao": "Serviços de telecomunicações sem fio não especificados anteriormente"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:52:53.820Z"
   },
   "14577533000145": {
    "cnpj": "14577533000145",
@@ -4789,6 +5113,42 @@
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:13:17.033Z"
   },
+  "15354402000161": {
+   "cnpj": "15354402000161",
+   "razaoSocial": "TSCM NET BRASIL TELECOMUNICACOES LTDA",
+   "nomeFantasia": "TSCM NET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2012-04-12",
+   "dataAbertura": "2012-04-12",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "MESQUITA",
+   "uf": "RJ",
+   "capitalSocial": 20000,
+   "consultadoEm": "2026-10-12T18:52:11.901Z"
+  },
+  "15507182000169": {
+   "cnpj": "15507182000169",
+   "razaoSocial": "+ PALHADA WIFI TELECOMUNICACOES E INFORMATICA LTDA",
+   "nomeFantasia": "+ PALHADA WIFI",
+   "situacao": "ATIVA",
+   "dataSituacao": "2012-05-10",
+   "dataAbertura": "2012-05-10",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CABO FRIO",
+   "uf": "RJ",
+   "capitalSocial": 30000,
+   "consultadoEm": "2026-10-12T18:51:32.696Z"
+  },
   "15533309000114": {
    "cnpj": "15533309000114",
    "razaoSocial": "NAVEGUE.COM SERVICOS DE TELECOMUNICACOES LTDA",
@@ -4987,6 +5347,24 @@
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:10:25.700Z"
   },
+  "17304212000165": {
+   "cnpj": "17304212000165",
+   "razaoSocial": "BATISTA PEREIRA INFORMATICA LTDA",
+   "nomeFantasia": "NETSYSTEM - SERVICOS DE COMUNICACAO E INFORMATICA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2012-12-14",
+   "dataAbertura": "2012-12-14",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CAMPOS DOS GOYTACAZES",
+   "uf": "RJ",
+   "capitalSocial": 500000,
+   "consultadoEm": "2026-10-12T18:51:34.209Z"
+  },
   "17387189000110": {
    "cnpj": "17387189000110",
    "razaoSocial": "LINK NET COMPUTADORES LTDA",
@@ -5112,6 +5490,24 @@
    "uf": "MG",
    "capitalSocial": 10000000,
    "consultadoEm": "2026-09-23T21:07:29.663Z"
+  },
+  "17795932000170": {
+   "cnpj": "17795932000170",
+   "razaoSocial": "W.R. INTERNET LTDA",
+   "nomeFantasia": "WEB TURBO FIBRA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2013-03-15",
+   "dataAbertura": "2013-03-15",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO GONCALO",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:53:40.023Z"
   },
   "17869823000150": {
    "cnpj": "17869823000150",
@@ -5509,6 +5905,24 @@
    "capitalSocial": 153000,
    "consultadoEm": "2026-09-23T21:07:37.518Z"
   },
+  "19179242000112": {
+   "cnpj": "19179242000112",
+   "razaoSocial": "INFINITY NET FIBRA PROVEDOR SERVICOS DE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "INFINITY NET FIBRA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2013-10-31",
+   "dataAbertura": "2013-10-31",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:52:22.714Z"
+  },
   "19263655000180": {
    "cnpj": "19263655000180",
    "razaoSocial": "F. P. FARIAS INFORMATICA LTDA",
@@ -5616,6 +6030,78 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:05:54.933Z"
+  },
+  "19898058000122": {
+   "cnpj": "19898058000122",
+   "razaoSocial": "R RODRIGUES MENEZES SERVICOS DE INTERNET LTDA",
+   "nomeFantasia": "CBX NET TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2014-03-18",
+   "dataAbertura": "2014-03-18",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 150000,
+   "consultadoEm": "2026-10-12T18:52:24.255Z"
+  },
+  "19943322000100": {
+   "cnpj": "19943322000100",
+   "razaoSocial": "WNET TELECOM E INFORMATICA LTDA",
+   "nomeFantasia": "WNET TELECOM E INFORMATICA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2014-03-24",
+   "dataAbertura": "2014-03-24",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "BOM JARDIM",
+   "uf": "RJ",
+   "capitalSocial": 74200,
+   "consultadoEm": "2026-10-12T18:51:29.634Z"
+  },
+  "19965553000107": {
+   "cnpj": "19965553000107",
+   "razaoSocial": "MUNDO TI TELECOM SOLUCOES E DESIGN LTDA",
+   "nomeFantasia": "MUNDO TI",
+   "situacao": "ATIVA",
+   "dataSituacao": "2014-03-26",
+   "dataAbertura": "2014-03-26",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110801",
+    "descricao": "Serviços de telefonia fixa comutada - STFC"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 78800,
+   "consultadoEm": "2026-10-12T18:52:55.339Z"
+  },
+  "20045650000160": {
+   "cnpj": "20045650000160",
+   "razaoSocial": "NETFLESH TELECOMUNICACOES E COMERCIO DE PRODUTOS DE INFORMATICA LTDA",
+   "nomeFantasia": "NETFLESH TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2014-04-04",
+   "dataAbertura": "2014-04-04",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 60000,
+   "consultadoEm": "2026-10-12T18:52:56.857Z"
   },
   "20059578000120": {
    "cnpj": "20059578000120",
@@ -5815,6 +6301,24 @@
    "capitalSocial": 20000,
    "consultadoEm": "2026-09-23T21:01:35.030Z"
   },
+  "21232074000123": {
+   "cnpj": "21232074000123",
+   "razaoSocial": "F.F TELECOM CONECTA LTDA",
+   "nomeFantasia": "TELECOM CONECTA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2014-10-15",
+   "dataAbertura": "2014-10-15",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "ITABORAI",
+   "uf": "RJ",
+   "capitalSocial": 55000,
+   "consultadoEm": "2026-10-12T18:51:53.452Z"
+  },
   "21309994000100": {
    "cnpj": "21309994000100",
    "razaoSocial": "ASAP GLOBAL TELECOM LTDA.",
@@ -5887,6 +6391,24 @@
    "capitalSocial": 1000000,
    "consultadoEm": "2026-09-23T21:05:06.790Z"
   },
+  "21732939000110": {
+   "cnpj": "21732939000110",
+   "razaoSocial": "FABLINUXER CONNECT TELECOMUNICACOES LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2015-01-22",
+   "dataAbertura": "2015-01-22",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "ITAPERUNA",
+   "uf": "RJ",
+   "capitalSocial": 30000,
+   "consultadoEm": "2026-10-12T18:52:04.156Z"
+  },
   "21754815000136": {
    "cnpj": "21754815000136",
    "razaoSocial": "TOPETEX TELECOM LTDA",
@@ -5904,6 +6426,24 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:09:42.666Z"
+  },
+  "21850223000118": {
+   "cnpj": "21850223000118",
+   "razaoSocial": "WANTEL TECNOLOGIA LTDA.",
+   "nomeFantasia": "WANTEL TECNOLOGIA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2015-02-10",
+   "dataAbertura": "2015-02-10",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "PETROLINA",
+   "uf": "PE",
+   "capitalSocial": 3094400,
+   "consultadoEm": "2026-10-12T18:52:58.376Z"
   },
   "21868394000174": {
    "cnpj": "21868394000174",
@@ -6265,6 +6805,24 @@
    "capitalSocial": 1000,
    "consultadoEm": "2026-09-23T21:14:05.075Z"
   },
+  "23455086000142": {
+   "cnpj": "23455086000142",
+   "razaoSocial": "CLICKPLAY PROVEDOR DE ACESSO LTDA",
+   "nomeFantasia": "CLICK FIBRA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2015-10-08",
+   "dataAbertura": "2015-10-08",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CASIMIRO DE ABREU",
+   "uf": "RJ",
+   "capitalSocial": 40000,
+   "consultadoEm": "2026-10-12T18:51:40.596Z"
+  },
   "23530399000118": {
    "cnpj": "23530399000118",
    "razaoSocial": "INFINYT ALPHA S.A",
@@ -6282,6 +6840,24 @@
    "uf": "RJ",
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:06:02.398Z"
+  },
+  "23629163000133": {
+   "cnpj": "23629163000133",
+   "razaoSocial": "WEBNET PROVEDOR LTDA",
+   "nomeFantasia": "W&BNET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2015-11-09",
+   "dataAbertura": "2015-11-09",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "IGUABA GRANDE",
+   "uf": "RJ",
+   "capitalSocial": 300000,
+   "consultadoEm": "2026-10-12T18:51:21.454Z"
   },
   "23640870000120": {
    "cnpj": "23640870000120",
@@ -6336,6 +6912,42 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:00:06.709Z"
+  },
+  "24352022000189": {
+   "cnpj": "24352022000189",
+   "razaoSocial": "PALHADA WIFI SERVICOS TELECOMUNICACOES E INFORMATICA LTDA",
+   "nomeFantasia": "PALHADA WIFI",
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-03-09",
+   "dataAbertura": "2016-03-09",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:52:25.811Z"
+  },
+  "24492478000144": {
+   "cnpj": "24492478000144",
+   "razaoSocial": "KORE BRASIL LTDA",
+   "nomeFantasia": "KORE BRASIL",
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-03-31",
+   "dataAbertura": "2016-03-31",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO PAULO",
+   "uf": "SP",
+   "capitalSocial": 12599196,
+   "consultadoEm": "2026-10-12T18:51:16.769Z"
   },
   "24608793000194": {
    "cnpj": "24608793000194",
@@ -6535,6 +7147,24 @@
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:08:43.557Z"
   },
+  "25239301000101": {
+   "cnpj": "25239301000101",
+   "razaoSocial": "ROCHAS SERVICOS DE INTERNET E TELECOMUNICACOES LTDA",
+   "nomeFantasia": "FUN FIBRA TELECOMUNICACOES",
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-07-18",
+   "dataAbertura": "2016-07-18",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:52:59.878Z"
+  },
   "25450139000168": {
    "cnpj": "25450139000168",
    "razaoSocial": "SEA TELECOM LTDA",
@@ -6552,6 +7182,24 @@
    "uf": "PA",
    "capitalSocial": 30000,
    "consultadoEm": "2026-09-23T21:14:15.803Z"
+  },
+  "25462592000194": {
+   "cnpj": "25462592000194",
+   "razaoSocial": "IP TELECOM E SISTEMAS LTDA",
+   "nomeFantasia": "INFOPLUS INTERNET TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-07-20",
+   "dataAbertura": "2016-07-20",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 20000,
+   "consultadoEm": "2026-10-12T18:53:01.406Z"
   },
   "26090275000157": {
    "cnpj": "26090275000157",
@@ -6588,6 +7236,24 @@
    "uf": "GO",
    "capitalSocial": 200000,
    "consultadoEm": "2026-09-23T21:14:17.307Z"
+  },
+  "26158902000144": {
+   "cnpj": "26158902000144",
+   "razaoSocial": "ONLINE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "ONLINE TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-09-13",
+   "dataAbertura": "2016-09-13",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "VARJOTA",
+   "uf": "CE",
+   "capitalSocial": 1900000,
+   "consultadoEm": "2026-10-12T18:53:02.937Z"
   },
   "26187384000197": {
    "cnpj": "26187384000197",
@@ -6769,6 +7435,24 @@
    "capitalSocial": 96000,
    "consultadoEm": "2026-09-23T21:05:12.995Z"
   },
+  "26700572000177": {
+   "cnpj": "26700572000177",
+   "razaoSocial": "ENOKI & RUIZ LTDA.",
+   "nomeFantasia": "FUTURANET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-12-12",
+   "dataAbertura": "2016-12-12",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "TAQUARITINGA",
+   "uf": "SP",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:51:22.975Z"
+  },
   "26719073000121": {
    "cnpj": "26719073000121",
    "razaoSocial": "UON NETWORK LTDA",
@@ -6786,6 +7470,42 @@
    "uf": "RJ",
    "capitalSocial": 20000,
    "consultadoEm": "2026-09-23T21:02:08.464Z"
+  },
+  "26767241000154": {
+   "cnpj": "26767241000154",
+   "razaoSocial": "ULTRA NETWORK TELECOMUNICACOES LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-12-27",
+   "dataAbertura": "2016-12-27",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 510000,
+   "consultadoEm": "2026-10-12T18:53:04.611Z"
+  },
+  "26795356000152": {
+   "cnpj": "26795356000152",
+   "razaoSocial": "CM TELECOM TELECOMUNICACOES LTDA",
+   "nomeFantasia": "CM TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2016-12-29",
+   "dataAbertura": "2016-12-29",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 88000,
+   "consultadoEm": "2026-10-12T18:53:06.138Z"
   },
   "26812397000100": {
    "cnpj": "26812397000100",
@@ -6841,6 +7561,24 @@
    "capitalSocial": 23186496,
    "consultadoEm": "2026-09-23T21:14:24.884Z"
   },
+  "26830424000177": {
+   "cnpj": "26830424000177",
+   "razaoSocial": "CB INTERNET PROVEDOR WIRELESS E CABO LTDA",
+   "nomeFantasia": "CB INTERNET FIBRA OPTICA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-01-10",
+   "dataAbertura": "2017-01-10",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "MACAE",
+   "uf": "RJ",
+   "capitalSocial": 5000,
+   "consultadoEm": "2026-10-12T18:52:08.736Z"
+  },
   "26946367000196": {
    "cnpj": "26946367000196",
    "razaoSocial": "FAST CONNECTION TELECOMUNICACOES LTDA",
@@ -6894,6 +7632,24 @@
    "uf": "RJ",
    "capitalSocial": 60000,
    "consultadoEm": "2026-09-23T21:06:33.521Z"
+  },
+  "27001440000110": {
+   "cnpj": "27001440000110",
+   "razaoSocial": "VIASAT BRASIL SERVICOS DE COMUNICACOES LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-01-31",
+   "dataAbertura": "2017-01-31",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190699",
+    "descricao": "Outras atividades de telecomunicações não especificadas anteriormente"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 255073500,
+   "consultadoEm": "2026-10-12T18:51:18.297Z"
   },
   "27125404000168": {
    "cnpj": "27125404000168",
@@ -7057,6 +7813,24 @@
    "capitalSocial": 30000,
    "consultadoEm": "2026-09-23T21:04:27.445Z"
   },
+  "27583479000192": {
+   "cnpj": "27583479000192",
+   "razaoSocial": "GUARULHOS TELECOMUNICACOES LTDA",
+   "nomeFantasia": "REDFOX INTERNET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-04-24",
+   "dataAbertura": "2017-04-24",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "GUARULHOS",
+   "uf": "SP",
+   "capitalSocial": 3500000,
+   "consultadoEm": "2026-10-12T18:53:07.681Z"
+  },
   "27681171000180": {
    "cnpj": "27681171000180",
    "razaoSocial": "ULTRA LINK SOLUCOES EM INTERNET LTDA",
@@ -7201,6 +7975,24 @@
    "capitalSocial": 5474048,
    "consultadoEm": "2026-09-23T21:07:20.000Z"
   },
+  "27951997000111": {
+   "cnpj": "27951997000111",
+   "razaoSocial": "INNOVATEPLUS SERVICOS DE TELECOM LTDA",
+   "nomeFantasia": "INNOVATEPLUS SERVICOS DE TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-06-12",
+   "dataAbertura": "2017-06-12",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 40000,
+   "consultadoEm": "2026-10-12T18:52:13.441Z"
+  },
   "27986060000181": {
    "cnpj": "27986060000181",
    "razaoSocial": "REDE ATIVA BR LTDA",
@@ -7308,6 +8100,24 @@
    "uf": "RJ",
    "capitalSocial": 93700,
    "consultadoEm": "2026-09-23T21:14:37.216Z"
+  },
+  "28080176000110": {
+   "cnpj": "28080176000110",
+   "razaoSocial": "NET ON TELECOMUNICACOES LTDA",
+   "nomeFantasia": "NET ON",
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-03-10",
+   "dataAbertura": "2017-06-30",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 81000,
+   "consultadoEm": "2026-10-12T18:52:27.332Z"
   },
   "28137886000139": {
    "cnpj": "28137886000139",
@@ -7417,6 +8227,24 @@
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:05:20.629Z"
   },
+  "28530024000171": {
+   "cnpj": "28530024000171",
+   "razaoSocial": "VOAFIBRA TELECOMUNICACOES E SERVICOS LTDA",
+   "nomeFantasia": "VOANET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-08-29",
+   "dataAbertura": "2017-08-29",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SALVADOR",
+   "uf": "BA",
+   "capitalSocial": 4701268,
+   "consultadoEm": "2026-10-12T18:51:24.502Z"
+  },
   "28553357000116": {
    "cnpj": "28553357000116",
    "razaoSocial": "APSYS CLOUD TECNOLOGIA E INFORMATICA LTDA",
@@ -7434,6 +8262,24 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:08:57.423Z"
+  },
+  "28562068000183": {
+   "cnpj": "28562068000183",
+   "razaoSocial": "WEB FIBER PROVEDOR TELECOM ACESSO A REDES DE INTERNET LTDA",
+   "nomeFantasia": "WEB FIBER PROVEDOR",
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-09-01",
+   "dataAbertura": "2017-09-01",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 60000,
+   "consultadoEm": "2026-10-12T18:53:09.188Z"
   },
   "28596737000138": {
    "cnpj": "28596737000138",
@@ -7524,6 +8370,42 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:03:45.267Z"
+  },
+  "28947293000138": {
+   "cnpj": "28947293000138",
+   "razaoSocial": "D&M SERVICOS DE COMUNICACOES E TELECOMUNICACOES LTDA",
+   "nomeFantasia": "ZENIC",
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-10-26",
+   "dataAbertura": "2017-10-26",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "DUQUE DE CAXIAS",
+   "uf": "RJ",
+   "capitalSocial": 93700,
+   "consultadoEm": "2026-10-12T18:51:46.698Z"
+  },
+  "28958182000127": {
+   "cnpj": "28958182000127",
+   "razaoSocial": "TUDDO INTERNET LTDA",
+   "nomeFantasia": "TUDDO INTERNET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2017-10-30",
+   "dataAbertura": "2017-10-30",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "IBATIBA",
+   "uf": "ES",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:51:39.064Z"
   },
   "29132100000153": {
    "cnpj": "29132100000153",
@@ -7633,6 +8515,24 @@
    "capitalSocial": 44419996,
    "consultadoEm": "2026-09-23T21:05:26.705Z"
   },
+  "29575360000101": {
+   "cnpj": "29575360000101",
+   "razaoSocial": "MULTICONTROLE - CONDOMINIOS E CASAS INTELIGENTES LTDA",
+   "nomeFantasia": "MULTICONTROLE - CONDOMINIOS E CASAS INTELIGENTES",
+   "situacao": "ATIVA",
+   "dataSituacao": "2018-01-31",
+   "dataAbertura": "2018-01-31",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "QUEIMADOS",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:52:41.183Z"
+  },
   "29684403000189": {
    "cnpj": "29684403000189",
    "razaoSocial": "M T N TELECOMUNICACOES LTDA",
@@ -7650,6 +8550,24 @@
    "uf": "PA",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:14:38.726Z"
+  },
+  "29782518000106": {
+   "cnpj": "29782518000106",
+   "razaoSocial": "QFP TELECOMUNICACOES LTDA",
+   "nomeFantasia": "PALMAS NET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2026-05-27",
+   "dataAbertura": "2018-02-26",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "JOINVILLE",
+   "uf": "SC",
+   "capitalSocial": 3000000,
+   "consultadoEm": "2026-10-12T18:53:10.688Z"
   },
   "29792914000114": {
    "cnpj": "29792914000114",
@@ -7939,6 +8857,24 @@
    "capitalSocial": 6000,
    "consultadoEm": "2026-09-23T21:11:04.490Z"
   },
+  "31004982000113": {
+   "cnpj": "31004982000113",
+   "razaoSocial": "OLAH CONNECT SERVICOS E INTERNET LTDA",
+   "nomeFantasia": "OLAH CONNECT",
+   "situacao": "ATIVA",
+   "dataSituacao": "2018-07-23",
+   "dataAbertura": "2018-07-23",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "PINHAO",
+   "uf": "SE",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:53:12.229Z"
+  },
   "31043482000190": {
    "cnpj": "31043482000190",
    "razaoSocial": "INOVSAT TELECOM LTDA",
@@ -8011,6 +8947,24 @@
    "capitalSocial": 95400,
    "consultadoEm": "2026-09-23T21:05:29.687Z"
   },
+  "31289818000108": {
+   "cnpj": "31289818000108",
+   "razaoSocial": "VERTICAL NET LTDA",
+   "nomeFantasia": "VERTICAL NET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2018-08-21",
+   "dataAbertura": "2018-08-21",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110802",
+    "descricao": "Serviços de redes de transportes de telecomunicações - SRTT"
+   },
+   "municipio": "TABOAO DA SERRA",
+   "uf": "SP",
+   "capitalSocial": 1000,
+   "consultadoEm": "2026-10-12T18:51:54.983Z"
+  },
   "31300180000150": {
    "cnpj": "31300180000150",
    "razaoSocial": "M. A. SILVA FREITAS COMERCIO VAREJISTA DE INFORMATICA",
@@ -8046,6 +9000,24 @@
    "uf": "RJ",
    "capitalSocial": 60000,
    "consultadoEm": "2026-09-23T21:09:50.386Z"
+  },
+  "31320644000190": {
+   "cnpj": "31320644000190",
+   "razaoSocial": "FRIENDS PROVEDOR DE INTERNET LTDA",
+   "nomeFantasia": "FRIENDS TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2018-08-23",
+   "dataAbertura": "2018-08-23",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "SENHOR DO BONFIM",
+   "uf": "BA",
+   "capitalSocial": 150000,
+   "consultadoEm": "2026-10-12T18:53:13.782Z"
   },
   "31345375000117": {
    "cnpj": "31345375000117",
@@ -8190,6 +9162,24 @@
    "uf": "RJ",
    "capitalSocial": 80000,
    "consultadoEm": "2026-09-23T21:03:33.157Z"
+  },
+  "31553353000142": {
+   "cnpj": "31553353000142",
+   "razaoSocial": "JAP TELECOMUNICACOES E INFORMATICA LTDA",
+   "nomeFantasia": "MUNDO NET FIBRA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2018-09-19",
+   "dataAbertura": "2018-09-19",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CARDOSO",
+   "uf": "SP",
+   "capitalSocial": 90000,
+   "consultadoEm": "2026-10-12T18:53:15.331Z"
   },
   "31559620000199": {
    "cnpj": "31559620000199",
@@ -8443,6 +9433,60 @@
    "capitalSocial": 80000,
    "consultadoEm": "2026-09-23T21:15:08.159Z"
   },
+  "32029563000107": {
+   "cnpj": "32029563000107",
+   "razaoSocial": "MARKSAT TELECOMUNICACOES LTDA",
+   "nomeFantasia": "PEGANET - PROVEDORES DE INTERNET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2005-11-03",
+   "dataAbertura": "1988-05-03",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "MIGUEL PEREIRA",
+   "uf": "RJ",
+   "capitalSocial": 80000,
+   "consultadoEm": "2026-10-12T18:52:16.486Z"
+  },
+  "32133533000138": {
+   "cnpj": "32133533000138",
+   "razaoSocial": "MAIS EMPREENDIMENTOS E TELECOM LTDA",
+   "nomeFantasia": "OS INTERNET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2018-11-29",
+   "dataAbertura": "2018-11-29",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "MAGE",
+   "uf": "RJ",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:52:10.275Z"
+  },
+  "32148799000154": {
+   "cnpj": "32148799000154",
+   "razaoSocial": "ULTRA NET TELECOM LTDA",
+   "nomeFantasia": "ULTRANET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-04-22",
+   "dataAbertura": "2018-11-30",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO GONCALO",
+   "uf": "RJ",
+   "capitalSocial": 120000,
+   "consultadoEm": "2026-10-12T18:53:41.552Z"
+  },
   "32249817000194": {
    "cnpj": "32249817000194",
    "razaoSocial": "ELEVE TELECOM PROVEDOR DE INTERNET LTDA",
@@ -8532,6 +9576,24 @@
    "uf": "RJ",
    "capitalSocial": 1000000,
    "consultadoEm": "2026-09-23T21:02:13.047Z"
+  },
+  "32412837000134": {
+   "cnpj": "32412837000134",
+   "razaoSocial": "TRIPON SERVICOS DE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "FIBRANET - INTERNET BANDA LARGA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2019-01-10",
+   "dataAbertura": "2019-01-10",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CAMPOS DOS GOYTACAZES",
+   "uf": "RJ",
+   "capitalSocial": 150000,
+   "consultadoEm": "2026-10-12T18:51:35.741Z"
   },
   "32441949000113": {
    "cnpj": "32441949000113",
@@ -8677,6 +9739,24 @@
    "capitalSocial": 20000,
    "consultadoEm": "2026-09-23T21:15:15.844Z"
   },
+  "33130909000113": {
+   "cnpj": "33130909000113",
+   "razaoSocial": "MSL GOYTACA TECNOLOGIA E SERVICOS LTDA",
+   "nomeFantasia": "GOYTACA",
+   "situacao": "ATIVA",
+   "dataSituacao": "2019-03-25",
+   "dataAbertura": "2019-03-25",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CAMPOS DOS GOYTACAZES",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:51:37.284Z"
+  },
   "33144975000142": {
    "cnpj": "33144975000142",
    "razaoSocial": "SUA FIBRA TELECOMUNICACOES LTDA",
@@ -8803,6 +9883,24 @@
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:15:22.175Z"
   },
+  "33697671000102": {
+   "cnpj": "33697671000102",
+   "razaoSocial": "NEXRIO TELECOM LTDA",
+   "nomeFantasia": "NEXRIO TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2019-05-22",
+   "dataAbertura": "2019-05-22",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:53:16.905Z"
+  },
   "33765097000182": {
    "cnpj": "33765097000182",
    "razaoSocial": "FOUR SOLUCOES E SERVICOS DE TELECOMUNICACOES LTDA",
@@ -8856,6 +9954,24 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:15:23.681Z"
+  },
+  "33906142000171": {
+   "cnpj": "33906142000171",
+   "razaoSocial": "JE PROVEDOR SERVICO DE TELECOMUNICACAO DE INTERNET LTDA",
+   "nomeFantasia": "JE PROVEDOR",
+   "situacao": "ATIVA",
+   "dataSituacao": "2019-06-12",
+   "dataAbertura": "2019-06-12",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 150000,
+   "consultadoEm": "2026-10-12T18:52:28.873Z"
   },
   "33948509000110": {
    "cnpj": "33948509000110",
@@ -9055,6 +10171,24 @@
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:02:14.639Z"
   },
+  "34866109000128": {
+   "cnpj": "34866109000128",
+   "razaoSocial": "LOPEZ SANTOS SAT NIT TELECOMUNICACOES LTDA",
+   "nomeFantasia": "WSAT CONNECTION",
+   "situacao": "ATIVA",
+   "dataSituacao": "2019-09-13",
+   "dataAbertura": "2019-09-13",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:52:30.402Z"
+  },
   "34908910000199": {
    "cnpj": "34908910000199",
    "razaoSocial": "FIBRA MAR SOLUCOES EM TELECOMUNICACOES LTDA",
@@ -9198,6 +10332,24 @@
    "uf": "SP",
    "capitalSocial": 30000,
    "consultadoEm": "2026-09-23T21:15:34.749Z"
+  },
+  "35398746000180": {
+   "cnpj": "35398746000180",
+   "razaoSocial": "ANDERSON E THIAGO TELECOMUNICACOES LTDA",
+   "nomeFantasia": "A & T TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2019-11-04",
+   "dataAbertura": "2019-11-04",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 88000,
+   "consultadoEm": "2026-10-12T18:53:18.428Z"
   },
   "35420289000182": {
    "cnpj": "35420289000182",
@@ -9631,6 +10783,24 @@
    "capitalSocial": 1200000,
    "consultadoEm": "2026-09-23T20:59:41.394Z"
   },
+  "37566125000193": {
+   "cnpj": "37566125000193",
+   "razaoSocial": "D&B PROVEDOR DE SERVICOS DE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "REDE BRASIL TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2020-06-30",
+   "dataAbertura": "2020-06-30",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 115000,
+   "consultadoEm": "2026-10-12T18:52:32.011Z"
+  },
   "37612878000198": {
    "cnpj": "37612878000198",
    "razaoSocial": "MAP NET TELECOMUNICACOES LTDA",
@@ -9792,6 +10962,24 @@
    "uf": "RJ",
    "capitalSocial": 7000,
    "consultadoEm": "2026-09-23T21:15:56.178Z"
+  },
+  "38131359000170": {
+   "cnpj": "38131359000170",
+   "razaoSocial": "ALLIANCE NET BANDA LARGA LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2020-08-18",
+   "dataAbertura": "2020-08-18",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:53:19.955Z"
   },
   "38174307000181": {
    "cnpj": "38174307000181",
@@ -10009,6 +11197,24 @@
    "capitalSocial": 30000,
    "consultadoEm": "2026-09-23T21:06:34.992Z"
   },
+  "39441087000178": {
+   "cnpj": "39441087000178",
+   "razaoSocial": "NOVA REAL LINK SERVICOS DE COMUNICACOES MULTIMIDIA LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2020-10-15",
+   "dataAbertura": "2020-10-15",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "ITABORAI",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:51:56.516Z"
+  },
   "39479512000118": {
    "cnpj": "39479512000118",
    "razaoSocial": "TITANIUM TELECOMUNICACOES LTDA",
@@ -10026,6 +11232,24 @@
    "uf": "RJ",
    "capitalSocial": 300000,
    "consultadoEm": "2026-09-23T21:16:02.330Z"
+  },
+  "39502099000165": {
+   "cnpj": "39502099000165",
+   "razaoSocial": "TERABYTE MAXIMA CONEXAO LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2020-10-21",
+   "dataAbertura": "2020-10-21",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:53:21.710Z"
   },
   "39650158000142": {
    "cnpj": "39650158000142",
@@ -10981,6 +12205,24 @@
    "capitalSocial": 20000,
    "consultadoEm": "2026-09-23T21:18:16.483Z"
   },
+  "43305067000147": {
+   "cnpj": "43305067000147",
+   "razaoSocial": "BFIBER NET SERVICOS DE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "VOA NET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2021-08-27",
+   "dataAbertura": "2021-08-27",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO GONCALO",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:53:43.098Z"
+  },
   "43344129000120": {
    "cnpj": "43344129000120",
    "razaoSocial": "KIX TELECOM LTDA",
@@ -11034,6 +12276,24 @@
    "uf": "RJ",
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:11:26.303Z"
+  },
+  "43491090000173": {
+   "cnpj": "43491090000173",
+   "razaoSocial": "REDE PACIENCIA TELECOM LTDA",
+   "nomeFantasia": "REDE PACIENCIA TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2021-09-13",
+   "dataAbertura": "2021-09-13",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:53:23.246Z"
   },
   "43522213000196": {
    "cnpj": "43522213000196",
@@ -11106,6 +12366,24 @@
    "uf": "RJ",
    "capitalSocial": 80000,
    "consultadoEm": "2026-09-23T21:16:31.592Z"
+  },
+  "43944672000168": {
+   "cnpj": "43944672000168",
+   "razaoSocial": "L C PROVEDORES DE ACESSO AS REDES DE COMUNICACAO E INFORMATICA LTDA",
+   "nomeFantasia": "OPYT",
+   "situacao": "ATIVA",
+   "dataSituacao": "2021-10-20",
+   "dataAbertura": "2021-10-20",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "GOIANESIA",
+   "uf": "GO",
+   "capitalSocial": 80000,
+   "consultadoEm": "2026-10-12T18:53:24.772Z"
   },
   "44073081000125": {
    "cnpj": "44073081000125",
@@ -11359,6 +12637,24 @@
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:08:18.958Z"
   },
+  "45137901000168": {
+   "cnpj": "45137901000168",
+   "razaoSocial": "HIPERNET COMERCIO E SERVICOS DE COMUNICACAO LTDA",
+   "nomeFantasia": "HIPERNET SERVICOS",
+   "situacao": "ATIVA",
+   "dataSituacao": "2022-02-03",
+   "dataAbertura": "2022-02-03",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:53:26.306Z"
+  },
   "45175935000147": {
    "cnpj": "45175935000147",
    "razaoSocial": "J R NETWORK FIBRA LTDA",
@@ -11502,6 +12798,24 @@
    "uf": "RJ",
    "capitalSocial": 80000,
    "consultadoEm": "2026-09-23T21:18:36.118Z"
+  },
+  "45455751000130": {
+   "cnpj": "45455751000130",
+   "razaoSocial": "VOAR TELECOM SERVICOS LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2022-02-25",
+   "dataAbertura": "2022-02-25",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "TANGUA",
+   "uf": "RJ",
+   "capitalSocial": 150000,
+   "consultadoEm": "2026-10-12T18:53:49.231Z"
   },
   "45517137000156": {
    "cnpj": "45517137000156",
@@ -11700,6 +13014,24 @@
    "uf": "RJ",
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:06:11.861Z"
+  },
+  "46185343000179": {
+   "cnpj": "46185343000179",
+   "razaoSocial": "GENESIS TELECOM LTDA",
+   "nomeFantasia": "GENESIS TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2022-04-28",
+   "dataAbertura": "2022-04-28",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 30000,
+   "consultadoEm": "2026-10-12T18:52:33.543Z"
   },
   "46189297000186": {
    "cnpj": "46189297000186",
@@ -12006,6 +13338,24 @@
    "uf": "RJ",
    "capitalSocial": 200000,
    "consultadoEm": "2026-09-23T21:04:18.753Z"
+  },
+  "47602532000162": {
+   "cnpj": "47602532000162",
+   "razaoSocial": "NS TELECOMUNICACOES LTDA",
+   "nomeFantasia": "PROLINK TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2022-08-17",
+   "dataAbertura": "2022-08-17",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "CASIMIRO DE ABREU",
+   "uf": "RJ",
+   "capitalSocial": 5000,
+   "consultadoEm": "2026-10-12T18:51:42.131Z"
   },
   "47858698000144": {
    "cnpj": "47858698000144",
@@ -12493,6 +13843,24 @@
    "capitalSocial": 54000,
    "consultadoEm": "2026-09-23T21:05:41.452Z"
   },
+  "50160843000123": {
+   "cnpj": "50160843000123",
+   "razaoSocial": "DC TEIXEIRA TELECOM LTDA",
+   "nomeFantasia": "SUPER CLICK TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-03-31",
+   "dataAbertura": "2023-03-31",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 73000,
+   "consultadoEm": "2026-10-12T18:53:27.996Z"
+  },
   "50203572000146": {
    "cnpj": "50203572000146",
    "razaoSocial": "NEXUSLINK DATACENTER LTDA",
@@ -12601,6 +13969,24 @@
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:10:13.275Z"
   },
+  "50867446000196": {
+   "cnpj": "50867446000196",
+   "razaoSocial": "RAP 10 INTERNET LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-05-30",
+   "dataAbertura": "2023-05-30",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO ACIMA",
+   "uf": "MG",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:51:48.251Z"
+  },
   "50899815000122": {
    "cnpj": "50899815000122",
    "razaoSocial": "TECNOMUNDO WEB TELECOM LTDA",
@@ -12619,6 +14005,24 @@
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:17:12.936Z"
   },
+  "50970675000131": {
+   "cnpj": "50970675000131",
+   "razaoSocial": "FIBRA UNIC SERVICOS DE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "FIBRA UNIC",
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-06-07",
+   "dataAbertura": "2023-06-07",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:53:29.542Z"
+  },
   "50980214000140": {
    "cnpj": "50980214000140",
    "razaoSocial": "ANDRE L CARDOSO DOS SANTOS",
@@ -12636,6 +14040,24 @@
    "uf": "RJ",
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:04:21.746Z"
+  },
+  "51039474000188": {
+   "cnpj": "51039474000188",
+   "razaoSocial": "W FIBRA TELECOM LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-06-14",
+   "dataAbertura": "2023-06-14",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NITEROI",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:52:17.993Z"
   },
   "51079292000130": {
    "cnpj": "51079292000130",
@@ -12708,6 +14130,24 @@
    "uf": "MT",
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:01:00.230Z"
+  },
+  "51403647000103": {
+   "cnpj": "51403647000103",
+   "razaoSocial": "ROSEANE DE LIMA OLIVEIRA LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-07-13",
+   "dataAbertura": "2023-07-13",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "SAO JOSE DO PEIXE",
+   "uf": "PI",
+   "capitalSocial": 5000,
+   "consultadoEm": "2026-10-12T18:51:58.039Z"
   },
   "51404328000104": {
    "cnpj": "51404328000104",
@@ -12835,6 +14275,24 @@
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:17:20.469Z"
   },
+  "52229482000150": {
+   "cnpj": "52229482000150",
+   "razaoSocial": "WDM PONTO COM LTDA",
+   "nomeFantasia": "FIBER VOX",
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-09-19",
+   "dataAbertura": "2023-09-19",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "ITABORAI",
+   "uf": "RJ",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:51:59.543Z"
+  },
   "52279729000142": {
    "cnpj": "52279729000142",
    "razaoSocial": "JUMP NETWORK LTDA",
@@ -12942,6 +14400,24 @@
    "uf": "RJ",
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:17:21.941Z"
+  },
+  "52650648000107": {
+   "cnpj": "52650648000107",
+   "razaoSocial": "01 NET SERVICOS DE COMUNICACAO E COMERCIO LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2023-10-24",
+   "dataAbertura": "2023-10-24",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 1500000,
+   "consultadoEm": "2026-10-12T18:52:35.069Z"
   },
   "52815775000119": {
    "cnpj": "52815775000119",
@@ -13123,6 +14599,24 @@
    "capitalSocial": 300000,
    "consultadoEm": "2026-09-23T21:05:42.924Z"
   },
+  "53932197000163": {
+   "cnpj": "53932197000163",
+   "razaoSocial": "GIN FIBRA INTERNET LTDA",
+   "nomeFantasia": "TOP LINK",
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-02-16",
+   "dataAbertura": "2024-02-16",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "ITAPERUNA",
+   "uf": "RJ",
+   "capitalSocial": 500000,
+   "consultadoEm": "2026-10-12T18:52:05.690Z"
+  },
   "53965808000170": {
    "cnpj": "53965808000170",
    "razaoSocial": "FIBRA + SERVICOS DE TELECOMUNICACOES LTDA",
@@ -13267,6 +14761,24 @@
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:17:36.951Z"
   },
+  "54536170000114": {
+   "cnpj": "54536170000114",
+   "razaoSocial": "ANGRA NET SERVICOS DE COMUNICACAO LTDA",
+   "nomeFantasia": "ANGRA NET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-04-01",
+   "dataAbertura": "2024-04-01",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "ANGRA DOS REIS",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:51:19.872Z"
+  },
   "54618477000164": {
    "cnpj": "54618477000164",
    "razaoSocial": "LEKSTRJ - LTDA",
@@ -13356,6 +14868,24 @@
    "uf": "RJ",
    "capitalSocial": 200000,
    "consultadoEm": "2026-09-23T21:05:44.403Z"
+  },
+  "55051100000139": {
+   "cnpj": "55051100000139",
+   "razaoSocial": "TREE NETWORK LTDA",
+   "nomeFantasia": "TREE NETWORK",
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-05-08",
+   "dataAbertura": "2024-05-08",
+   "porte": "EMPRESA DE PEQUENO PORTE",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "TERESOPOLIS",
+   "uf": "RJ",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:52:39.660Z"
   },
   "55127089000143": {
    "cnpj": "55127089000143",
@@ -13501,6 +15031,24 @@
    "capitalSocial": 10000,
    "consultadoEm": "2026-09-23T21:17:44.445Z"
   },
+  "55668477000131": {
+   "cnpj": "55668477000131",
+   "razaoSocial": "MAXXILINK TELECOM LTDA",
+   "nomeFantasia": "MAXXILINK",
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-06-25",
+   "dataAbertura": "2024-06-25",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 450000,
+   "consultadoEm": "2026-10-12T18:53:31.084Z"
+  },
   "55757755000127": {
    "cnpj": "55757755000127",
    "razaoSocial": "PBR SERVICOS DE TELECOMUNICACOES LTDA",
@@ -13518,6 +15066,24 @@
    "uf": "CE",
    "capitalSocial": 150000,
    "consultadoEm": "2026-09-23T21:10:46.012Z"
+  },
+  "56200420000176": {
+   "cnpj": "56200420000176",
+   "razaoSocial": "MAIS PROVEDOR DE REDE DE COMUNICACAO LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-08-01",
+   "dataAbertura": "2024-08-01",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "NOVA IGUACU",
+   "uf": "RJ",
+   "capitalSocial": 150000,
+   "consultadoEm": "2026-10-12T18:52:14.966Z"
   },
   "56419775000150": {
    "cnpj": "56419775000150",
@@ -13555,6 +15121,24 @@
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:03:16.289Z"
   },
+  "57016035000136": {
+   "cnpj": "57016035000136",
+   "razaoSocial": "LIKE.NET TELECOMUNICACOES LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-08-26",
+   "dataAbertura": "2024-08-26",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "ITABORAI",
+   "uf": "RJ",
+   "capitalSocial": 52000,
+   "consultadoEm": "2026-10-12T18:52:01.079Z"
+  },
   "57085453000185": {
    "cnpj": "57085453000185",
    "razaoSocial": "ORIGEM DATACENTER LTDA",
@@ -13572,6 +15156,24 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:06:17.992Z"
+  },
+  "57087277000110": {
+   "cnpj": "57087277000110",
+   "razaoSocial": "SPEED FIBRA SERVICOS TELECOMUNICACOES LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-08-30",
+   "dataAbertura": "2024-08-30",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:53:33.763Z"
   },
   "57211337000165": {
    "cnpj": "57211337000165",
@@ -13663,6 +15265,24 @@
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:17:45.930Z"
   },
+  "58195734000153": {
+   "cnpj": "58195734000153",
+   "razaoSocial": "CYBER CAMPOS NET LTDA",
+   "nomeFantasia": "FB NET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2024-11-22",
+   "dataAbertura": "2024-11-22",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "QUEIMADOS",
+   "uf": "RJ",
+   "capitalSocial": 20000,
+   "consultadoEm": "2026-10-12T18:52:42.909Z"
+  },
   "58228007000145": {
    "cnpj": "58228007000145",
    "razaoSocial": "CRMJNET TELECOM LTDA",
@@ -13734,6 +15354,24 @@
    "uf": "RJ",
    "capitalSocial": 100000,
    "consultadoEm": "2026-09-23T21:18:39.136Z"
+  },
+  "59270268000196": {
+   "cnpj": "59270268000196",
+   "razaoSocial": "ROSSI SOLUTIONS LTDA",
+   "nomeFantasia": "VIVACOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2025-02-04",
+   "dataAbertura": "2025-02-04",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO JOAO DE MERITI",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:51:28.098Z"
   },
   "59286694000118": {
    "cnpj": "59286694000118",
@@ -13951,6 +15589,24 @@
    "capitalSocial": 30000,
    "consultadoEm": "2026-09-23T21:08:24.890Z"
   },
+  "60741102000190": {
+   "cnpj": "60741102000190",
+   "razaoSocial": "FIBER COMMUNICATION INTERNET SERVICOS LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2025-05-08",
+   "dataAbertura": "2025-05-08",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "SAO JOAO DE MERITI",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:53:47.643Z"
+  },
   "60814783000179": {
    "cnpj": "60814783000179",
    "razaoSocial": "NJ SERVICOS DE TELECOMUNICACOES LTDA",
@@ -14022,6 +15678,24 @@
    "uf": "SP",
    "capitalSocial": 2000000,
    "consultadoEm": "2026-09-23T21:17:55.140Z"
+  },
+  "61203045000158": {
+   "cnpj": "61203045000158",
+   "razaoSocial": "SANTOS NASCIMENTO XEREM SERVICOS DE INTERNET LTDA",
+   "nomeFantasia": "VIA LINE",
+   "situacao": "ATIVA",
+   "dataSituacao": "2025-06-03",
+   "dataAbertura": "2025-06-03",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "DUQUE DE CAXIAS",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:51:49.769Z"
   },
   "61298593000109": {
    "cnpj": "61298593000109",
@@ -14221,6 +15895,24 @@
    "capitalSocial": 5500000,
    "consultadoEm": "2026-09-23T21:09:20.025Z"
   },
+  "63320885000126": {
+   "cnpj": "63320885000126",
+   "razaoSocial": "BOA TELECOM LTDA",
+   "nomeFantasia": "BOA TELECOM",
+   "situacao": "ATIVA",
+   "dataSituacao": "2025-10-22",
+   "dataAbertura": "2025-10-22",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6190601",
+    "descricao": "Provedores de acesso às redes de comunicações"
+   },
+   "municipio": "SAO GONCALO",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:53:44.624Z"
+  },
   "63811417000154": {
    "cnpj": "63811417000154",
    "razaoSocial": "ATI FIBRA LTDA",
@@ -14275,6 +15967,24 @@
    "capitalSocial": 200000,
    "consultadoEm": "2026-09-23T21:18:01.245Z"
   },
+  "65476221000186": {
+   "cnpj": "65476221000186",
+   "razaoSocial": "ZAAZ NO NE LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2026-03-04",
+   "dataAbertura": "2026-03-04",
+   "porte": "DEMAIS",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110801",
+    "descricao": "Serviços de telefonia fixa comutada - STFC"
+   },
+   "municipio": "VARJOTA",
+   "uf": "CE",
+   "capitalSocial": 10000,
+   "consultadoEm": "2026-10-12T18:53:46.138Z"
+  },
   "65655837000114": {
    "cnpj": "65655837000114",
    "razaoSocial": "INFINITY VIP NET LTDA",
@@ -14292,6 +16002,24 @@
    "uf": "RJ",
    "capitalSocial": 50000,
    "consultadoEm": "2026-09-23T21:09:21.521Z"
+  },
+  "66006293000122": {
+   "cnpj": "66006293000122",
+   "razaoSocial": "G&G OLIVEIRAS SERVICOS DE TELECOMUNICACOES LTDA",
+   "nomeFantasia": "UNITY NET PROVEDOR",
+   "situacao": "ATIVA",
+   "dataSituacao": "2026-03-31",
+   "dataAbertura": "2026-03-31",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "JAPERI",
+   "uf": "RJ",
+   "capitalSocial": 100000,
+   "consultadoEm": "2026-10-12T18:52:36.640Z"
   },
   "66323327000102": {
    "cnpj": "66323327000102",
@@ -14346,6 +16074,24 @@
    "uf": "SP",
    "capitalSocial": 15456095000,
    "consultadoEm": "2026-09-23T21:00:52.529Z"
+  },
+  "67121231000124": {
+   "cnpj": "67121231000124",
+   "razaoSocial": "BRAVO NET TELECOMUNICACOES E INFORMATICA LTDA",
+   "nomeFantasia": "BRAVO NET",
+   "situacao": "ATIVA",
+   "dataSituacao": "2026-06-02",
+   "dataAbertura": "2026-06-02",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:52:38.145Z"
   },
   "71208516000174": {
    "cnpj": "71208516000174",
@@ -14418,6 +16164,24 @@
    "uf": "SC",
    "capitalSocial": 30000,
    "consultadoEm": "2026-09-23T21:18:04.238Z"
+  },
+  "73306151000146": {
+   "cnpj": "73306151000146",
+   "razaoSocial": "FIBRA FORTE TELECOMUNICACOES LTDA",
+   "nomeFantasia": null,
+   "situacao": "ATIVA",
+   "dataSituacao": "2022-05-19",
+   "dataAbertura": "1993-08-24",
+   "porte": "MICRO EMPRESA",
+   "naturezaJuridica": "Sociedade Empresária Limitada",
+   "cnaePrincipal": {
+    "codigo": "6110803",
+    "descricao": "Serviços de comunicação multimídia - SCM"
+   },
+   "municipio": "RIO DE JANEIRO",
+   "uf": "RJ",
+   "capitalSocial": 50000,
+   "consultadoEm": "2026-10-12T18:53:35.460Z"
   },
   "74209909000190": {
    "cnpj": "74209909000190",
