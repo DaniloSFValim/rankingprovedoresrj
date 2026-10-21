@@ -1,6 +1,7 @@
 import { rotularCompetencia } from '@netrank/core';
 import type { Meta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
+import { AUTORIA } from '@/lib/autoria';
 
 /**
  * Faixa de aviso de dados demonstrativos.
@@ -61,52 +62,86 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
   );
 }
 
-/** Rodapé institucional com informações essenciais. Conteúdo detalhado está em /sobre/. */
+const LINK = 'text-marca-400 underline-offset-4 hover:underline';
+
+/**
+ * Rodapé com autoria e registro citável, no mesmo desenho do OpenLux: o que é
+ * o painel, quem fez e como citar. Detalhes em /sobre/.
+ */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;
+  const a = AUTORIA;
+  const autor = a.autores[0]!;
+  const ano = new Date(p.processadoEm).getFullYear();
 
   return (
-    <footer className="mt-20 border-t border-grafite-700 bg-white">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 text-sm md:grid-cols-[2fr_1fr_1fr]">
-        <div className="max-w-md space-y-2 text-grafite-400">
-          <p className="font-semibold text-tinta">{MARCA.nome}</p>
+    <footer className="mt-20 border-t border-grafite-700 bg-white" role="contentinfo">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 text-sm leading-relaxed md:grid-cols-[1.2fr_1.5fr_0.8fr]">
+        <div className="space-y-3 text-grafite-400">
+          <h2 className="text-base font-semibold text-tinta">{MARCA.nome}</h2>
           <p>
-            Análise independente de Danilo Valim sobre dados públicos da Anatel. Não é
-            site oficial da Prefeitura de Niterói nem da Seconser e não expressa posição
-            dessas instituições. Os indicadores de concentração (CR-n e HHI) são
-            estatísticos e não constituem conclusão jurídica, concorrencial ou regulatória.
+            Painel do mercado de banda larga fixa nos municípios do Rio de Janeiro, feito
+            sobre os dados abertos da Anatel. Os dados de cada página podem ser baixados em
+            JSON.
+          </p>
+          <p>
+            Não é site oficial da Prefeitura de Niterói nem da Seconser e não expressa
+            posição dessas instituições. CR-n e HHI são indicadores estatísticos, sem
+            conclusão jurídica, concorrencial ou regulatória.
+          </p>
+          <p className="numerico">
+            Versão {a.versaoDataset}. Dados processados em{' '}
+            {new Date(p.processadoEm).toLocaleDateString('pt-BR')}.
           </p>
         </div>
-        <dl className="space-y-3">
-          <div>
-            <dt className="text-grafite-400">Fonte</dt>
-            <dd className="text-grafite-200">Anatel, dados abertos</dd>
-          </div>
-          <div>
-            <dt className="text-grafite-400">Processado em</dt>
-            <dd className="numerico text-grafite-200">
-              {new Date(p.processadoEm).toLocaleDateString('pt-BR')}
-            </dd>
-          </div>
-        </dl>
-        <ul className="space-y-2">
-          <li>
-            <a href="/sobre/" className="text-marca-400 underline-offset-4 hover:underline">Sobre o projeto</a>
-          </li>
-          <li>
-            <a href="/sobre/#indicadores" className="text-marca-400 underline-offset-4 hover:underline">Como os indicadores são calculados</a>
-          </li>
-          <li>
-            <a
-              href="https://doi.org/10.5281/zenodo.22839933"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-marca-400 underline-offset-4 hover:underline"
-            >
-              DOI 10.5281/zenodo.22839933
+
+        <div className="space-y-3 text-grafite-400">
+          <h2 className="text-base font-semibold text-tinta">Autoria e citação</h2>
+          <p>
+            Autoria de <strong className="text-grafite-200">{autor.nome}</strong>, {a.afiliacao}.
+            {autor.orcid && (
+              <>
+                {' '}ORCID{' '}
+                <a href={`https://orcid.org/${autor.orcid}`} target="_blank" rel="noopener noreferrer" className={LINK}>
+                  {autor.orcid}
+                </a>
+                .
+              </>
+            )}
+          </p>
+          <p>
+            Registro citável no Zenodo, DOI{' '}
+            <a href={`https://doi.org/${a.doi}`} target="_blank" rel="noopener noreferrer" className={LINK}>
+              {a.doi}
             </a>
-          </li>
-        </ul>
+            . Código e dados sob licença{' '}
+            <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-br" target="_blank" rel="noopener noreferrer" className={LINK}>
+              CC BY 4.0
+            </a>
+            ; a fonte primária é a Anatel.
+          </p>
+          <p className="text-xs">
+            Como citar: Valim, D. S. F. ({ano}). <em>{MARCA.nome}: {MARCA.subtitulo}</em>{' '}
+            (versão {a.versaoDataset}) [Software]. Zenodo.{' '}
+            <a href={`https://doi.org/${a.doi}`} target="_blank" rel="noopener noreferrer" className={LINK}>
+              doi.org/{a.doi}
+            </a>
+          </p>
+        </div>
+
+        <nav aria-label="Rodapé">
+          <h2 className="text-base font-semibold text-tinta">Mais</h2>
+          <ul className="mt-3 space-y-2">
+            <li><a href="/sobre/" className={LINK}>Sobre o projeto</a></li>
+            <li><a href="/sobre/#indicadores" className={LINK}>Como os indicadores são calculados</a></li>
+            <li><a href="/sobre/#dados" className={LINK}>Dados para download</a></li>
+            <li>
+              <a href={a.urlRepositorio} target="_blank" rel="noopener noreferrer" className={LINK}>
+                Código no GitHub
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </footer>
   );
