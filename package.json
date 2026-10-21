@@ -2,6 +2,7 @@
   "name": "netrank-rj",
   "private": true,
   "version": "0.1.0",
+  "license": "AGPL-3.0-only",
   "description": "NETRANK RJ - Inteligencia de Mercado de Banda Larga Fixa no Rio de Janeiro",
   "workspaces": [
     "packages/*",

@@ -1,7 +1,7 @@
 import { rotularCompetencia } from '@netrank/core';
 import type { Meta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
-import { AUTORIA } from '@/lib/autoria';
+import citacao from '@/lib/citacao.json';
 
 /**
  * Faixa de aviso de dados demonstrativos.
@@ -70,9 +70,6 @@ const LINK = 'text-marca-400 underline-offset-4 hover:underline';
  */
 export function RodapeProcedencia({ meta }: { meta: Meta }) {
   const p = meta.procedencia;
-  const a = AUTORIA;
-  const autor = a.autores[0]!;
-  const ano = new Date(p.processadoEm).getFullYear();
 
   return (
     <footer className="mt-20 border-t border-grafite-700 bg-white" role="contentinfo">
@@ -90,42 +87,8 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
             conclusão jurídica, concorrencial ou regulatória.
           </p>
           <p className="numerico">
-            Versão {a.versaoDataset}. Dados processados em{' '}
-            {new Date(p.processadoEm).toLocaleDateString('pt-BR')}.
-          </p>
-        </div>
-
-        <div className="space-y-3 text-grafite-400">
-          <h2 className="text-base font-semibold text-tinta">Autoria e citação</h2>
-          <p>
-            Autoria de <strong className="text-grafite-200">{autor.nome}</strong>, {a.afiliacao}.
-            {autor.orcid && (
-              <>
-                {' '}ORCID{' '}
-                <a href={`https://orcid.org/${autor.orcid}`} target="_blank" rel="noopener noreferrer" className={LINK}>
-                  {autor.orcid}
-                </a>
-                .
-              </>
-            )}
-          </p>
-          <p>
-            Registro citável no Zenodo, DOI{' '}
-            <a href={`https://doi.org/${a.doi}`} target="_blank" rel="noopener noreferrer" className={LINK}>
-              {a.doi}
-            </a>
-            . Código e dados sob licença{' '}
-            <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-br" target="_blank" rel="noopener noreferrer" className={LINK}>
-              CC BY 4.0
-            </a>
-            ; a fonte primária é a Anatel.
-          </p>
-          <p className="text-xs">
-            Como citar: Valim, D. S. F. ({ano}). <em>{MARCA.nome}: {MARCA.subtitulo}</em>{' '}
-            (versão {a.versaoDataset}) [Software]. Zenodo.{' '}
-            <a href={`https://doi.org/${a.doi}`} target="_blank" rel="noopener noreferrer" className={LINK}>
-              doi.org/{a.doi}
-            </a>
+            Versão {citacao.versao}. Dados processados em{' '}
+            {new Date(p.processadoEm).toLocaleDateString('pt-BR')}. A fonte primária é a Anatel.
           </p>
         </div>
 
@@ -136,13 +99,43 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
             <li><a href="/sobre/#indicadores" className={LINK}>Como os indicadores são calculados</a></li>
             <li><a href="/sobre/#dados" className={LINK}>Dados para download</a></li>
             <li>
-              <a href={a.urlRepositorio} target="_blank" rel="noopener noreferrer" className={LINK}>
+              <a href="https://github.com/DaniloSFValim/rankingprovedoresrj" target="_blank" rel="noopener noreferrer" className={LINK}>
                 Código no GitHub
               </a>
             </li>
           </ul>
         </nav>
       </div>
+      <LinhasCitacao />
     </footer>
+  );
+}
+
+/**
+ * Linhas de autoria e registro. O mesmo texto está em todos os projetos do
+ * autor; os dados vêm de citacao.json, gerado a partir do Zenodo e do ORCID.
+ */
+export function LinhasCitacao() {
+  const ano = new Date(citacao.dataPublicacao).getFullYear();
+  return (
+    <div className="border-t border-grafite-700 px-4 py-4 text-xs text-grafite-400">
+      <div className="mx-auto max-w-7xl space-y-1">
+        <p>
+          Desenvolvido por <span className="text-grafite-200">{citacao.autor}</span> (UFRRJ), ORCID{' '}
+          <a href={`https://orcid.org/${citacao.orcid}`} target="_blank" rel="noopener noreferrer" className={LINK}>
+            {citacao.orcid}
+          </a>
+          . Código sob AGPL-3.0; documentação e dados sob CC BY 4.0.
+        </p>
+        <p>
+          Registro citável no Zenodo, DOI{' '}
+          <a href={`https://doi.org/${citacao.doiConceito}`} target="_blank" rel="noopener noreferrer" className={LINK}>
+            {citacao.doiConceito}
+          </a>
+          .
+        </p>
+        <p>© {ano} {citacao.autor}.</p>
+      </div>
+    </div>
   );
 }

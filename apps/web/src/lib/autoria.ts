@@ -10,7 +10,7 @@ export const AUTORIA: MetadadosAcademicos = {
     'Universidade Federal Rural do Rio de Janeiro (UFRRJ) — Pós-Graduação em Análise de Dados Aplicadas a Políticas Públicas',
   doi: '10.5281/zenodo.22839933',
   versaoDataset: '1.1.0',
-  licenca: 'CC-BY-4.0',
+  licenca: 'AGPL-3.0-only',
   // GITHUB_SHA existe no build do GitHub Actions; localmente cai para main.
   commitHash: process.env.GITHUB_SHA ?? 'main',
   urlRepositorio: 'https://github.com/DaniloSFValim/rankingprovedoresrj',

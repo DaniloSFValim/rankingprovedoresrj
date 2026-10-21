@@ -100,5 +100,7 @@ Detalhes técnicos: [`docs/desenvolvimento.md`](docs/desenvolvimento.md) e
 
 ## Licença
 
-[Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](LICENSE). Os dados de origem
-seguem as licenças de seus publicadores (Anatel, IBGE e Receita Federal).
+- **Código-fonte:** [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE-CODIGO).
+- **Documentação e dados processados:** [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](LICENSE).
+
+Os dados de origem seguem as licenças de seus publicadores (Anatel, IBGE e Receita Federal).
