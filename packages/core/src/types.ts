@@ -126,7 +126,7 @@ export interface MetadadosAcademicos {
   afiliacao?: string;
   doi?: string;
   versaoDataset: string;
-  licenca: 'CC-BY-4.0' | 'CC0' | 'MIT' | 'CC-BY-SA-4.0';
+  licenca: 'AGPL-3.0-only' | 'CC-BY-4.0' | 'CC0' | 'MIT' | 'CC-BY-SA-4.0';
   commitHash: string;
   urlRepositorio: string;
 }

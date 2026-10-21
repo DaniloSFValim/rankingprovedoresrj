@@ -19,7 +19,7 @@ authors:
 repository-code: "https://github.com/DaniloSFValim/rankingprovedoresrj"
 url: "https://netranking-rj.labdados.org"
 doi: "10.5281/zenodo.22839933"
-license: CC-BY-4.0
+license: AGPL-3.0-only
 version: "1.1.0"
 date-released: "2026-09-24"
 keywords:

@@ -153,16 +153,23 @@ export default function PaginaSobre() {
           <div className="pt-3 border-t border-grafite-800">
             <dt className="font-medium text-marca-400">Licença</dt>
             <dd className="text-grafite-300">
-              {a?.licenca && (
-                <a
-                  href="https://creativecommons.org/licenses/by/4.0/"
-                  className="text-marca-400 hover:underline"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  {a.licenca}
-                </a>
-              )}
+              <a
+                href="https://github.com/DaniloSFValim/rankingprovedoresrj/blob/main/LICENSE-CODIGO"
+                className="text-marca-400 hover:underline"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                AGPL-3.0 (código)
+              </a>
+              {' '}e{' '}
+              <a
+                href="https://creativecommons.org/licenses/by/4.0/deed.pt-br"
+                className="text-marca-400 hover:underline"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                CC BY 4.0 (documentação e dados)
+              </a>
             </dd>
           </div>
         </dl>
