@@ -19,6 +19,21 @@ export function FaixaDemonstrativo({ meta }: { meta: Meta }) {
 }
 
 /**
+ * O mês mais recente chega incompleto: prestadoras declaram com atraso e a
+ * Anatel o revisa para cima na publicação seguinte. Sem o aviso, a variação
+ * contra o mês anterior, já consolidado, parece uma queda de mercado.
+ */
+export function AvisoPreliminar({ competencia }: { competencia: string }) {
+  return (
+    <p className="rounded-md border border-atencao/30 bg-atencao/5 px-4 py-3 text-sm text-grafite-200">
+      Os dados de {rotularCompetencia(competencia)} são preliminares. Parte das
+      prestadoras declara com atraso, e a Anatel costuma revisar o mês para cima na
+      publicação seguinte. Variações contra o mês anterior tendem a parecer quedas.
+    </p>
+  );
+}
+
+/**
  * Aviso de descontinuidade na série histórica.
  *
  * Uma competência ausente é invisível num gráfico: a linha liga o mês anterior

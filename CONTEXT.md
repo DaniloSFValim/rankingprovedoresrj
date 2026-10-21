@@ -35,6 +35,16 @@ variação é da declaração, não de clientes (E-Mex, jun/2026: 24.213, 4.886,
 lista à parte na página de crescimento. Vale no Estado (com o piso de 1.000
 acessos no mês retrasado) e em cada município (piso de 100).
 
+**O último mês é preliminar.** Prestadoras declaram com atraso e a Anatel
+revisa o mês mais recente para cima na publicação seguinte. Na única revisão
+observada até agora, julho/2026 passou de 4.258.767 acessos e 804 provedores
+(base de 23/set) para 4.350.038 e 875 (base de 12/out), +2,1%; maio e junho
+mudaram cerca de 0,2%. Comparado ao mês anterior já consolidado, o último mês
+vira uma queda falsa. Por isso: as movimentações (home e página de
+crescimento, visão do Estado) comparam o penúltimo mês com o antepenúltimo, e
+home, ranking e a visão municipal do crescimento mostram o aviso de dado
+preliminar. A visão municipal ainda compara o último mês.
+
 **Os números são o que as prestadoras declaram.** Acessos, municípios e
 velocidades vêm das declarações das prestadoras à Anatel. Velocidade é a
 contratada, não a medida. Nada é corrigido, estimado ou preenchido: uma

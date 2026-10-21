@@ -8,6 +8,7 @@ import { SeletorCidade, type CidadeOpcao } from '@/componentes/SeletorCidade';
 import type { DestaqueEmpresa, Movimentacoes, LinhaRankingEstadual, Meta, PerfilMunicipio } from '@/lib/dados';
 import { corVariacao, inteiro, inteiroComSinal, percentualComSinal } from '@/lib/formato';
 import { useCidadeSelecionada } from '@/contextos/CidadeSelecionada';
+import { AvisoPreliminar } from '@/componentes/Procedencia';
 
 /**
  * Base mínima, em acessos no mês anterior, para entrar nas listas de variação
@@ -237,6 +238,16 @@ export function PaginaCrescimentoCliente({
             {descricaoSubtitulo}
           </p>
         </div>
+        {perfil ? (
+          <AvisoPreliminar competencia={meta.competenciaAtual} />
+        ) : movimentacoes.competenciaPreliminar &&
+          movimentacoes.competenciaPreliminar !== movimentacoes.competencia ? (
+          <p className="text-sm text-grafite-400">
+            As mudanças comparam meses já consolidados. Os dados de{' '}
+            {rotularCompetencia(movimentacoes.competenciaPreliminar)} ainda são preliminares
+            e ficam fora da comparação até a próxima publicação da Anatel.
+          </p>
+        ) : null}
         <div className="flex flex-col gap-4 max-w-sm">
           <SeletorCidade
             cidades={cidades}

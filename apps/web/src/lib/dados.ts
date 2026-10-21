@@ -258,6 +258,8 @@ export interface DestaqueEmpresa {
 export interface Movimentacoes {
   competencia: Competencia;
   competenciaComparada: Competencia;
+  /** Mês mais recente, ainda preliminar; as movimentações usam o anterior. */
+  competenciaPreliminar?: Competencia;
   temBaseDeComparacao: boolean;
   maioresCrescimentosAbsolutos: DestaqueEmpresa[];
   maioresRetracoesAbsolutas: DestaqueEmpresa[];

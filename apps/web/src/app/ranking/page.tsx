@@ -5,6 +5,8 @@ import { TipoAtuacaoPie } from '@/componentes/graficos/TipoAtuacaoPie';
 import { lerKpis, lerRankingEstadual } from '@/lib/dados';
 import { compacto, inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
+import { rotularCompetencia } from '@netrank/core';
+import { AvisoPreliminar } from '@/componentes/Procedencia';
 
 export const metadata = {
   title: `Ranking dos provedores de internet do ${MARCA.uf}`,
@@ -25,9 +27,11 @@ export default function PaginaRanking() {
           Ranking dos provedores no {MARCA.ufSigla}
         </h1>
         <p className="mt-1 text-sm text-grafite-400">
-          {inteiro(ranking.length)} provedores — competência atual
+          {inteiro(ranking.length)} provedores em {rotularCompetencia(kpis.competencia)}
         </p>
       </div>
+
+      <AvisoPreliminar competencia={kpis.competencia} />
 
             <div className="space-y-4">
         <h2 className="text-xl font-semibold text-tinta">Três maiores</h2>

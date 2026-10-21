@@ -215,6 +215,14 @@ export default function PaginaSobre() {
             </dd>
           </div>
           <div>
+            <dt className="font-semibold text-grafite-200">Último mês preliminar</dt>
+            <dd>
+              O mês mais recente chega incompleto, porque parte das prestadoras declara com atraso, e
+              costuma ser revisado para cima na publicação seguinte. As listas de movimentação comparam
+              os dois meses anteriores, já consolidados.
+            </dd>
+          </div>
+          <div>
             <dt className="font-semibold text-grafite-200">Limite geral</dt>
             <dd>
               Os números refletem o que as prestadoras informam à Anatel; erros ou atrasos nessas declarações
