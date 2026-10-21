@@ -787,7 +787,24 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
   }
 
   // ------------------------------------------------------- movimentacoes ----
-  salvar('movimentacoes.json', construirMovimentacoes(ctx, atual, linhasRanking));
+  // O ultimo mes chega incompleto: a Anatel recebe declaracoes atrasadas e o
+  // revisa para cima na publicacao seguinte (jul/2026 ganhou 91 mil acessos e
+  // 71 provedores). Comparado ao mes anterior, ja consolidado, ele vira uma
+  // queda falsa. Por isso as movimentacoes usam o penultimo mes.
+  const consolidada =
+    ctx.competencias.length >= 3 ? ctx.competencias[ctx.competencias.length - 2]! : atual;
+  const rankingConsolidado =
+    consolidada === atual
+      ? linhasRanking
+      : rankingEstadualComparado(ctx, consolidada, 1).map((l) => ({
+          ...l,
+          slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
+          nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
+        }));
+  salvar('movimentacoes.json', {
+    ...construirMovimentacoes(ctx, consolidada, rankingConsolidado),
+    competenciaPreliminar: atual,
+  });
 
   return { competenciaAtual: atual, arquivosGerados: arquivos };
 }

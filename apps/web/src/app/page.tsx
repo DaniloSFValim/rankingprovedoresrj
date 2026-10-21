@@ -16,6 +16,7 @@ import {
 } from '@/lib/dados';
 import { compacto, inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
+import { AvisoPreliminar } from '@/componentes/Procedencia';
 
 export const metadata = {
   title: `Banda larga fixa no ${MARCA.uf} — ranking, participação e evolução`,
@@ -78,6 +79,9 @@ export default function Home() {
             ? `Em doze meses, o total ${v12 >= 0 ? 'cresceu' : 'caiu'} ${percentual(Math.abs(v12), 1)}.`
             : ''}
         </p>
+        <div className="mt-6 max-w-2xl">
+          <AvisoPreliminar competencia={meta.competenciaAtual} />
+        </div>
         <nav className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-base" aria-label="Atalhos">
           <Link href="/ranking/" className="font-semibold text-marca-400 underline decoration-marca-700 decoration-2 underline-offset-4 hover:decoration-marca-400">
             Ver o ranking completo
