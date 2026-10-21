@@ -111,10 +111,15 @@ export function PaginaCrescimentoCliente({
     // Dados municipais
     if (perfil) {
       titulo = `Crescimento e retração em ${perfil.nome}`;
-      descricaoSubtitulo = `Comparação entre ${rotularCompetencia(perfil.serie[perfil.serie.length - 2]?.competencia || '')} e ${rotularCompetencia(perfil.competencia)}`;
+      // O último mês é preliminar: quando há mês consolidado, as listas usam ele.
+      const mov = perfil.movimentacao;
+      const base = mov?.ranking ?? perfil.ranking;
+      descricaoSubtitulo = mov
+        ? `Comparação entre ${rotularCompetencia(mov.competenciaComparada)} e ${rotularCompetencia(mov.competencia)}`
+        : `Comparação entre ${rotularCompetencia(perfil.serie[perfil.serie.length - 2]?.competencia || '')} e ${rotularCompetencia(perfil.competencia)}`;
 
       // Preparar dados para treemap
-      pontosRadar = perfil.ranking
+      pontosRadar = base
         .filter((l) => l.variacaoPercentual !== null && l.acessos > 0)
         .map((l) => ({
           nome: l.nome,
@@ -125,8 +130,8 @@ export function PaginaCrescimentoCliente({
 
       // Preparar destaques
       // Declaração parcial no mês anterior: a variação não é de clientes.
-      const validas = perfil.ranking.filter((l) => !l.retornoAposQueda);
-      retornosAposQueda = perfil.ranking
+      const validas = base.filter((l) => !l.retornoAposQueda);
+      retornosAposQueda = base
         .filter((l) => l.retornoAposQueda)
         .map((l) => ({
           empresaId: l.empresaId,
@@ -238,13 +243,13 @@ export function PaginaCrescimentoCliente({
             {descricaoSubtitulo}
           </p>
         </div>
-        {perfil ? (
+        {perfil && !perfil.movimentacao ? (
           <AvisoPreliminar competencia={meta.competenciaAtual} />
-        ) : movimentacoes.competenciaPreliminar &&
-          movimentacoes.competenciaPreliminar !== movimentacoes.competencia ? (
+        ) : (perfil ? perfil.movimentacao!.competencia : movimentacoes.competencia) !==
+          meta.competenciaAtual ? (
           <p className="text-sm text-grafite-400">
             As mudanças comparam meses já consolidados. Os dados de{' '}
-            {rotularCompetencia(movimentacoes.competenciaPreliminar)} ainda são preliminares
+            {rotularCompetencia(meta.competenciaAtual)} ainda são preliminares
             e ficam fora da comparação até a próxima publicação da Anatel.
           </p>
         ) : null}

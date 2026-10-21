@@ -167,6 +167,21 @@ export interface PerfilMunicipio {
     numeroProvedores: number | null;
     hhi: number | null;
   }>;
+  /**
+   * Movimentações do mês consolidado (o último é preliminar). Ausente em
+   * artefatos antigos ou com menos de três meses de série.
+   */
+  movimentacao?: {
+    competencia: Competencia;
+    competenciaComparada: Competencia;
+    ranking: Array<{
+      empresaId: string; slug: string; nome: string;
+      acessos: number; marketShare: number;
+      posicaoAnterior: number | null; variacaoPosicao: number | null;
+      variacaoAbsoluta: number | null; variacaoPercentual: number | null;
+      retornoAposQueda?: boolean; acessosRetrasados?: number | null;
+    }>;
+  } | null;
   tecnologia: Array<{ competencia: Competencia; distribuicao: Record<string, number> }>;
   saidas: Array<{
     empresaId: string; slug: string; nome: string; acessosAnteriores: number;

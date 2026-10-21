@@ -529,6 +529,9 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
     conteudo: Record<string, unknown>;
   }> = [];
   const presencaAtual = municipiosPorEmpresa(ctx, atual);
+  // Mes consolidado para as movimentacoes municipais (o ultimo e preliminar).
+  const consolidadaMunicipal =
+    ctx.competencias.length >= 3 ? ctx.competencias[ctx.competencias.length - 2]! : atual;
   for (const [codigoIbge, empresasDoMunicipio] of municipiosAtual) {
     const resumo = ctx.municipios.get(codigoIbge);
     const p = participantes(empresasDoMunicipio);
@@ -636,6 +639,43 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
         variacao12Percentual: ranking12Municipal.get(l.empresaId)?.variacaoPercentual ?? null,
       }));
 
+    // Movimentacoes do mes consolidado, com a mesma marcacao de queda isolada.
+    const doMesConsolidado =
+      consolidadaMunicipal === atual
+        ? undefined
+        : ctx.municipalPorCompetencia.get(consolidadaMunicipal)?.get(codigoIbge);
+    const movimentacao = doMesConsolidado
+      ? (() => {
+          const ant = ctx.municipalPorCompetencia
+            .get(deslocarCompetencia(consolidadaMunicipal, -1))
+            ?.get(codigoIbge);
+          const ret = ctx.municipalPorCompetencia
+            .get(deslocarCompetencia(consolidadaMunicipal, -2))
+            ?.get(codigoIbge);
+          return {
+            competencia: consolidadaMunicipal,
+            competenciaComparada: deslocarCompetencia(consolidadaMunicipal, -1),
+            ranking: compararRankings(
+              construirRanking(participantes(doMesConsolidado)),
+              ant ? construirRanking(participantes(ant)) : [],
+            ).map((l) => ({
+              ...l,
+              slug: ctx.empresas.get(l.empresaId)?.slug ?? gerarSlug(l.empresaId),
+              nome: ctx.empresas.get(l.empresaId)?.nome ?? l.empresaId,
+              retornoAposQueda:
+                l.variacaoAbsoluta !== null &&
+                ehRetornoAposQueda(
+                  ret?.get(l.empresaId),
+                  l.acessos - l.variacaoAbsoluta,
+                  l.acessos,
+                  PISO_ACESSOS_MOVIMENTACAO_MUNICIPIO,
+                ),
+              acessosRetrasados: ret?.get(l.empresaId) ?? null,
+            })),
+          };
+        })()
+      : null;
+
     const alertasSaida = alertasDeSaida(
       saidas,
       anteriorMes ? somar(anteriorMes) : 0,
@@ -654,6 +694,7 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
               percentual: crescimentoPercentual(totalAtual, totalAntes),
             },
       ranking: municipioRanking,
+      movimentacao,
       serie: serieMunicipio,
       // Distribuicao por tecnologia ao longo do tempo, no municipio.
       tecnologia: ctx.competencias.map((c) => ({
