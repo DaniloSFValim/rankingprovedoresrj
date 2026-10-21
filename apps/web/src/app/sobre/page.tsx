@@ -154,7 +154,7 @@ export default function PaginaSobre() {
             <dt className="font-medium text-marca-400">Licença</dt>
             <dd className="text-grafite-300">
               <a
-                href="https://github.com/DaniloSFValim/rankingprovedoresrj/blob/main/LICENSE-CODIGO"
+                href="https://www.gnu.org/licenses/agpl-3.0.html"
                 className="text-marca-400 hover:underline"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -275,28 +275,8 @@ export default function PaginaSobre() {
           <h2 className="text-xl font-bold text-tinta mb-4">Rastreabilidade Técnica</h2>
           <div className="space-y-2 text-sm text-grafite-400">
             <p>
-              Repositório:{' '}
-              <a
-                href={a.urlRepositorio}
-                className="text-marca-400 hover:underline"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                {a.urlRepositorio}
-              </a>
-            </p>
-            <p>
               Commit:{' '}
-              <code className="numerico text-grafite-300">
-                <a
-                  href={`${a.urlRepositorio}/commit/${a.commitHash}`}
-                  className="text-marca-400 hover:underline"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  {a.commitHash}
-                </a>
-              </code>
+              <code className="numerico text-grafite-300">{a.commitHash}</code>
             </p>
           </div>
         </section>
@@ -314,16 +294,6 @@ export default function PaginaSobre() {
               target="_blank"
             >
               Dados abertos da Anatel
-            </a>
-          </li>
-          <li>
-            <a
-              href={a?.urlRepositorio}
-              className="text-marca-400 hover:underline"
-              rel="noreferrer noopener"
-              target="_blank"
-            >
-              Código-fonte
             </a>
           </li>
         </ul>
