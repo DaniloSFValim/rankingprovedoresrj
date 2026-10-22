@@ -5,12 +5,16 @@ apresentação dos dados:
 
 @CONTEXT.md
 
+Padrões compartilhados entre os projetos (fonte, rodapé, licenças, metadados):
+`docs/PADROES.md`.
+
 ## Comandos
 
 ```bash
 npm test                      # testes de todos os pacotes
 npm run build -w @netrank/web # site estático em apps/web/out
 npm run etl -- build          # artefatos JSON (precisa de data/netrank.sqlite)
+npm run check-metadata        # confere versão, título, licença e DOI entre os arquivos
 ```
 
 ## Lembretes

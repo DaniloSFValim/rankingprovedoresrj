@@ -1,7 +1,7 @@
 {
   "name": "netrank-rj",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.1.0",
   "license": "AGPL-3.0-only",
   "description": "NETRANK RJ - Inteligencia de Mercado de Banda Larga Fixa no Rio de Janeiro",
   "workspaces": [
@@ -17,6 +17,7 @@
     "test:watch": "vitest",
     "typecheck": "tsc -b --pretty false",
     "etl": "npm run start -w @netrank/etl --",
+    "check-metadata": "node scripts/check-metadata.mjs",
     "dev": "npm run dev -w @netrank/web",
     "build": "npm run build -w @netrank/web",
     "preview": "npx serve@14 apps/web/out"
