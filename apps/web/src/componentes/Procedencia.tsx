@@ -98,11 +98,6 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
             <li><a href="/sobre/" className={LINK}>Sobre o projeto</a></li>
             <li><a href="/sobre/#indicadores" className={LINK}>Como os indicadores são calculados</a></li>
             <li><a href="/sobre/#dados" className={LINK}>Dados para download</a></li>
-            <li>
-              <a href="https://github.com/DaniloSFValim/rankingprovedoresrj" target="_blank" rel="noopener noreferrer" className={LINK}>
-                Código no GitHub
-              </a>
-            </li>
           </ul>
         </nav>
       </div>
