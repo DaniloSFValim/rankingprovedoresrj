@@ -28,6 +28,8 @@ confere('versão package.json x CITATION.cff', pacote.version, campoYaml(cff, 'v
 confere('versão package.json x .zenodo.json', pacote.version, zenodo.version);
 confere('versão package.json x citacao.json', pacote.version, citacao.versao);
 confere('título CITATION.cff x .zenodo.json', campoYaml(cff, 'title'), zenodo.title);
+// O título publicado (citacao.json) é o do último registro no Zenodo e pode ser o anterior
+// até a próxima versão citável; por isso não é comparado com o CITATION.cff.
 confere('licença package.json x CITATION.cff', pacote.license, campoYaml(cff, 'license'));
 confere('licença package.json x .zenodo.json', LICENCA_ZENODO[pacote.license], zenodo.license);
 confere('DOI CITATION.cff x DOI de conceito do rodapé', campoYaml(cff, 'doi'), citacao.doiConceito.replace('https://doi.org/', ''));

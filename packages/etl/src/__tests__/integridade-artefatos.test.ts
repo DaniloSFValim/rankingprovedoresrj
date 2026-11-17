@@ -145,3 +145,84 @@ describe.skipIf(!temDados)('artefatos publicados', () => {
     expect(serie.at(-1)!.totalAcessos).toBe(kpis.totalAcessos);
   });
 });
+
+describe('coerência entre artefatos (tabelas, mapa e páginas)', () => {
+  interface Provedor {
+    id: string;
+    acessos: number;
+    posicao: number;
+    municipiosAtendidos: number;
+    presenca: Array<{ codigoIbge: string; acessos: number }>;
+  }
+  const lerProvedores = (): Provedor[] =>
+    readdirSync(join(DADOS, 'provedores'))
+      .filter((f) => f.endsWith('.json') && f !== 'index.json')
+      .map((f) => ler<Provedor>(`provedores/${f}`));
+  const provedores = lerProvedores();
+  const porId = new Map(provedores.map((p) => [p.id, p]));
+  const indice = ler<{ municipios: Array<Municipio & { liderEmpresaId: string | null }> }>(
+    'municipios/index.json',
+  ).municipios;
+  const ranking = ler<{ linhas: Array<Linha & { municipiosAtendidos: number }> }>('estado/ranking.json').linhas;
+
+  it('malha do IBGE e índice têm os mesmos 92 códigos e os mesmos nomes', () => {
+    const malha = ler<{ features: Array<{ properties: { codigoIbge: string; nome: string } }> }>(
+      'malhas/rj-municipios.json',
+    ).features.map((f) => f.properties);
+    expect(malha).toHaveLength(92);
+    const nomes = new Map(malha.map((m) => [m.codigoIbge, m.nome]));
+    for (const m of indice) expect(nomes.get(m.codigoIbge)).toBe(m.nome);
+  });
+
+  it('nenhuma prestadora repetida: id, slug e raiz de CNPJ únicos', () => {
+    const linhas = ranking as Array<Linha & { cnpj?: string }>;
+    expect(new Set(linhas.map((l) => l.empresaId)).size).toBe(linhas.length);
+    expect(new Set(linhas.map((l) => l.slug)).size).toBe(linhas.length);
+    const raizes = linhas.filter((l) => l.cnpj).map((l) => l.cnpj!.slice(0, 8));
+    expect(new Set(raizes).size).toBe(raizes.length);
+  });
+
+  it('página do provedor repete posição, acessos e municípios do ranking', () => {
+    for (const l of ranking) {
+      const p = porId.get(l.empresaId)!;
+      expect([p.posicao, p.acessos, p.municipiosAtendidos]).toEqual([l.posicao, l.acessos, l.municipiosAtendidos]);
+      expect(p.presenca.reduce((s, x) => s + x.acessos, 0)).toBe(p.acessos);
+    }
+  });
+
+  it('acessos por município somados a partir dos provedores fecham com o índice e o ranking local', () => {
+    const soma = new Map<string, number>();
+    for (const p of provedores)
+      for (const x of p.presenca) soma.set(x.codigoIbge, (soma.get(x.codigoIbge) ?? 0) + x.acessos);
+    for (const m of indice) {
+      expect(soma.get(m.codigoIbge) ?? 0).toBe(m.totalAcessos);
+      const local = ler<{ ranking: Linha[] }>(`municipios/${m.slug}.json`).ranking;
+      for (const r of local) {
+        const presenca = porId.get(r.empresaId)?.presenca.find((x) => x.codigoIbge === m.codigoIbge);
+        expect(presenca?.acessos ?? 0).toBe(r.acessos);
+      }
+      if (local.length) expect(local[0]!.empresaId).toBe(m.liderEmpresaId);
+    }
+  });
+
+  it('série estadual é a soma das séries de todas as prestadoras, mês a mês', () => {
+    const serie = ler<Array<{ totalAcessos: number | null; numeroProvedores: number | null }>>('estado/serie.json');
+    const empresas = ler<Array<{ pontos: Array<number | null> }>>('estado/series-empresas.json');
+    serie.forEach((p, i) => {
+      if (p.totalAcessos === null) return;
+      const valores = empresas.map((e) => e.pontos[i] ?? 0);
+      expect(valores.reduce((s, v) => s + v, 0)).toBe(p.totalAcessos);
+      expect(valores.filter((v) => v > 0)).toHaveLength(p.numeroProvedores!);
+    });
+  });
+
+  it('densidade é acessos de pessoa física por 100 domicílios', () => {
+    for (const m of indice) {
+      const f = ler<{ densidade: number | null; domicilios: number | null; perfilAcessos: { acessosPessoaFisica: number } }>(
+        `municipios/${m.slug}.json`,
+      );
+      if (f.densidade === null || !f.domicilios) continue;
+      expect(f.densidade).toBeCloseTo((100 * f.perfilAcessos.acessosPessoaFisica) / f.domicilios, 6);
+    }
+  });
+});

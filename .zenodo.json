@@ -1,5 +1,5 @@
 {
-  "title": "NETRANK RJ: Painel do Mercado de Banda Larga Fixa no Estado do Rio de Janeiro",
+  "title": "NETRANK RJ: Plataforma de Inteligência de Dados da Banda Larga Fixa no Estado do Rio de Janeiro",
   "upload_type": "software",
   "description": "<p>Software independente, de finalidade acadêmica e de pesquisa: painel público e pipeline reprodutível de análise do mercado de banda larga fixa nos 92 municípios do Estado do Rio de Janeiro.</p><p>Usa apenas dados públicos: os acessos de banda larga fixa publicados pela Anatel, os domicílios do Censo 2022 e a malha municipal do IBGE, e o cadastro de CNPJ da Receita Federal. Calcula participação de mercado, índices de concentração (CR-n e HHI), densidade de acessos por domicílio e distribuição por velocidade contratada, com atualização mensal automatizada e alertas de qualidade dos dados declarados.</p><p>Os indicadores são estatísticos e não constituem conclusão jurídica, concorrencial ou regulatória. Sem vínculo com as instituições que publicam os dados nem com qualquer órgão público.</p><p>Painel: <a href=\"https://netranking-rj.labdados.org\">netranking-rj.labdados.org</a></p>",
   "creators": [

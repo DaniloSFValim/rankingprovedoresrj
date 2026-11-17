@@ -8,6 +8,19 @@ arquivada no Zenodo sob o DOI de conceito
 
 ## [Não publicado]
 
+### Escopo científico e funcional
+
+- Seis testes de coerência entre artefatos: malha do IBGE x índice, prestadoras sem
+  duplicidade, provedor x ranking, município x provedores, série do Estado x séries das
+  prestadoras, densidade recalculada.
+- Testes da busca (acentos, caixa, prioridade do prefixo).
+- `scripts/bench-indicadores.ts` para medir o cálculo dos indicadores.
+- Capturas de tela, análises disponíveis e critérios de avaliação no README.
+- Apresentação como plataforma independente de inteligência de dados; textos falam em
+  acessos registrados, nunca em cobertura.
+- Corrigido: meses sem declaração na série por prestadora passam a ser `null`.
+- Removido: `lib/mapas.ts`, sem uso, com rótulos de concentração e escala de cobertura.
+
 ### Adicionado
 
 - Testes de integridade dos artefatos publicados: somas, participações, concentração,

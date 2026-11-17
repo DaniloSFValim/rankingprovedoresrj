@@ -60,6 +60,19 @@ competência ausente aparece como lacuna (`null`), nunca como zero ou valor esti
 | Variação mensal e em 12 meses | Diferença absoluta e percentual contra a mesma prestadora ou recorte no período anterior |
 | Ranking | Ordem decrescente de acessos; empates recebem a mesma posição (1, 2, 2, 4) |
 
+### O que os números medem e o que não medem
+
+| Medida | É | Não é |
+|---|---|---|
+| Acessos | Contratos de banda larga fixa declarados pelas prestadoras à Anatel | Pessoas, domicílios ou empresas atendidas |
+| Participação | Fatia da prestadora no total de acessos registrados no recorte | Participação em receita ou em cobertura de rede |
+| Municípios atendidos | Municípios em que a prestadora declarou ao menos um acesso | Área coberta pela rede da prestadora |
+| Densidade | Razão entre acessos de pessoa física e domicílios ocupados | Percentual de domicílios com internet (um domicílio pode ter mais de um acesso) |
+| Velocidade | Velocidade contratada | Velocidade medida |
+
+Sem dados de rede ou de domicílios atendidos, o painel não calcula cobertura. Os textos
+usam "acessos registrados", "distribuição dos acessos" e "participação das prestadoras".
+
 A densidade publicada pela Anatel não é usada: a série dela tem lacunas e valores
 incompatíveis com os próprios acessos.
 

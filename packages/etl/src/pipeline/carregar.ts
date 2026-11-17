@@ -352,7 +352,7 @@ export function competenciasArmazenadas(db: Banco): Competencia[] {
  * Classifica todas as empresas pelo tipo de atuacao: Operadora, Provedor ou Ambos.
  *
  * Calcula metricas por empresa (municipios atendidos, acessos totais, tecnologias)
- * e classifica usando heuristicas baseadas em grupo economico e cobertura.
+ * e classifica usando heuristicas baseadas em grupo economico e presenca territorial.
  *
  * Chamado apos a carga de dados para enriquecer a tabela de empresas.
  */

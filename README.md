@@ -1,6 +1,6 @@
 # NETRANK RJ
 
-**Painel do Mercado de Banda Larga Fixa no Estado do Rio de Janeiro**
+**Plataforma de Inteligência de Dados da Banda Larga Fixa no Estado do Rio de Janeiro**
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22839933.svg)](https://doi.org/10.5281/zenodo.22839933)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0009--7250--6151-a6ce39.svg)](https://orcid.org/0009-0009-7250-6151)
@@ -12,10 +12,17 @@ Painel publicado em [netranking-rj.labdados.org](https://netranking-rj.labdados.
 
 ## Sobre
 
-O NETRANK RJ é um software independente, de autoria própria, desenvolvido para fins
-acadêmicos, científicos e de pesquisa. Ele organiza os dados públicos de acessos de banda
-larga fixa dos 92 municípios fluminenses em indicadores comparáveis de participação de
-mercado, concentração, densidade de acessos por domicílio e velocidade contratada.
+O NETRANK RJ é uma plataforma independente de inteligência de dados sobre o mercado de
+banda larga fixa fluminense, de autoria própria e finalidade acadêmica e de pesquisa. Ela
+transforma os dados públicos de acessos de banda larga fixa dos 92 municípios do Estado do
+Rio de Janeiro em rankings, indicadores, comparações e visualizações geográficas:
+participação das prestadoras, concentração de mercado, distribuição territorial dos
+acessos, evolução mensal, densidade de acessos por domicílio e velocidade contratada.
+
+O NETRANK mede **acessos registrados**, não pessoas, domicílios atendidos nem cobertura
+territorial da rede. Um domicílio pode ter mais de um acesso, e uma rede pode passar por
+uma rua sem nenhum acesso contratado. Os textos usam "acessos", "distribuição" e
+"participação", nunca "cobertura".
 
 Usa exclusivamente dados públicos, citados com suas fontes e licenças. Não tem vínculo com
 as instituições que publicam esses dados (Anatel, IBGE, Receita Federal) nem com qualquer
@@ -37,6 +44,34 @@ jurídica, concorrencial ou regulatória.
   implausível), sinalizados no mapa e nas páginas, sem alterar nenhum número.
 - **Dados para download**: os mesmos JSON que alimentam o site, sob CC BY 4.0.
 - **Atualização mensal automática** a partir dos dados abertos da Anatel.
+
+### Análises disponíveis
+
+| Análise | Onde |
+|---|---|
+| Ranking de prestadoras por quantidade de acessos | `/ranking/`, ranking local em cada município |
+| Participação relativa das prestadoras | Ranking, páginas de município e de provedor |
+| Distribuição territorial dos acessos | Mapa da página inicial; presença por município na página do provedor |
+| Comparações entre municípios | `/municipios/` e comparação com vizinhos na página do município |
+| Evolução temporal | Série mensal do Estado, de cada município e de cada provedor; `/crescimento/` |
+| Concentração de mercado | CR1, CR3, CR5, CR10 e HHI no Estado e em cada município |
+| Visualizações geográficas | Mapa por densidade, conexões lentas, número de provedores e HHI |
+| Diferenças na distribuição dos acessos | Densidade por domicílio, velocidade contratada e tecnologia por município |
+
+### Capturas de tela
+
+Telas do site publicado, com os dados de setembro de 2026.
+
+| | |
+|---|---|
+| ![Página inicial com o total de acessos do Estado](docs/img/inicio.png) | ![Mapa dos municípios por densidade de acessos](docs/img/mapa.png) |
+| Página inicial | Mapa por densidade de acessos |
+| ![Ranking estadual de prestadoras](docs/img/ranking.png) | ![Página do município de Niterói](docs/img/municipio.png) |
+| Ranking estadual | Página de um município |
+| ![Movimentações do mês](docs/img/crescimento.png) | ![Página de um provedor](docs/img/provedor.png) |
+| Crescimento | Página de um provedor |
+
+<img src="docs/img/celular.png" alt="Página de município no celular" width="280">
 
 ## Arquitetura
 
@@ -132,7 +167,7 @@ Detalhes em [`docs/DESENVOLVIMENTO.md`](docs/DESENVOLVIMENTO.md).
 | [IBGE, Malha Municipal (API de malhas)](https://servicodados.ibge.gov.br/api/docs/malhas) | Geometria dos municípios no mapa | Fixa |
 | Receita Federal, CNPJ (dados abertos, via BrasilAPI e Minha Receita) | Razão social, situação cadastral e porte das prestadoras | A cada 30 dias |
 
-Cobertura atual: janeiro de 2025 a setembro de 2026. O mês mais recente é preliminar: a
+Período dos dados: janeiro de 2025 a setembro de 2026. O mês mais recente é preliminar: a
 Anatel o revisa para cima na publicação seguinte.
 
 Fontes, transformações, critérios, tratamento de lacunas e limitações conhecidas estão em
@@ -145,6 +180,16 @@ Fontes, transformações, critérios, tratamento de lacunas e limitações conhe
 - A velocidade é a contratada, não a medida.
 - A densidade é distorcida por domicílios de uso ocasional (municípios de veraneio) e por
   acessos registrados em outro município.
+
+## Critérios de avaliação
+
+| Critério | Onde verificar |
+|---|---|
+| Autoria | Histórico de commits, `CITATION.cff`, registro no Zenodo e ORCID (seção abaixo) |
+| Arquitetura | [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md): camadas, fluxo de dados e decisões |
+| Funcionalidade | Site publicado e `npm run build && npm run preview` num clone limpo |
+| Qualidade | `npm run validar`, `npm run test:e2e`, CI em `.github/workflows`, [`SECURITY.md`](SECURITY.md), [`docs/AUDITORIA.md`](docs/AUDITORIA.md) |
+| Fundamentação científica | [`docs/DADOS.md`](docs/DADOS.md): fontes públicas, fórmulas, critérios, limitações e reprodução |
 
 ## Licença
 

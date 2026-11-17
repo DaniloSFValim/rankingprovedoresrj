@@ -77,8 +77,8 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
         <div className="space-y-3 text-grafite-400">
           <h2 className="text-base font-semibold text-tinta">{MARCA.nome}</h2>
           <p>
-            Painel do mercado de banda larga fixa nos municípios do Rio de Janeiro, feito
-            sobre dados públicos da Anatel, do IBGE e da Receita Federal. Os dados de cada
+            Plataforma de inteligência de dados sobre a banda larga fixa nos 92 municípios do
+            Rio de Janeiro, feita sobre dados públicos da Anatel, do IBGE e da Receita Federal. Os dados de cada
             página podem ser baixados em JSON.
           </p>
           <p>
