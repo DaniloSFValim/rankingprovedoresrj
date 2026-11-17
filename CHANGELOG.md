@@ -10,6 +10,8 @@ arquivada no Zenodo sob o DOI de conceito
 
 ## [1.2.0] - 2026-11-17
 
+DOI da versão: [10.5281/zenodo.24312771](https://doi.org/10.5281/zenodo.24312771).
+
 Versão da auditoria técnica. Primeira arquivada no Zenodo com o código sob AGPL-3.0, a
 descrição de plataforma independente e o título novo.
 

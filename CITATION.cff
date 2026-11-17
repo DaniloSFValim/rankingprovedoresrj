@@ -24,8 +24,8 @@ identifiers:
     value: "10.5281/zenodo.22839933"
     description: "DOI de conceito: todas as versões, resolve para a mais recente."
   - type: doi
-    value: "10.5281/zenodo.22948694"
-    description: "DOI da versão anterior (1.1.0); o da 1.2.0 é atribuído pelo Zenodo na publicação."
+    value: "10.5281/zenodo.24312771"
+    description: "DOI da versão 1.2.0."
 license: AGPL-3.0-only
 version: "1.2.0"
 date-released: "2026-11-17"
