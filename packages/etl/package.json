@@ -7,10 +7,10 @@
     "start": "tsx src/cli.ts"
   },
   "dependencies": {
-    "@google-cloud/bigquery": "^7.9.4",
+    "@google-cloud/bigquery": "^9.6.1",
     "@netrank/core": "*",
     "better-sqlite3": "^11.7.0",
-    "csv-parse": "^5.6.0",
+    "csv-parse": "^7.0.3",
     "iconv-lite": "^0.6.3",
     "yauzl": "^3.2.0"
   },

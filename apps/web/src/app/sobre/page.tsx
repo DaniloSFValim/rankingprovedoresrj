@@ -1,25 +1,23 @@
-import Link from 'next/link';
 import { lerMeta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
+import citacao from '@/lib/citacao.json';
 
 export const metadata = {
   title: `Sobre — ${MARCA.nome}`,
   description: 'Informações sobre o projeto, autoria, registro, dados e indicadores.',
 };
 
-/** Gerar citação em formato BibTeX */
-function gerarBibtex(a: any, p: any): string {
-  const ano = new Date(p.processadoEm).getFullYear();
-  const autores = a.autores.map((au: any) => au.nome).join(' and ');
-  const doi = a.doi || '10.zenodo.XXXXXXX';
-  return `@dataset{${MARCA.nome.toLowerCase().replace(/\s+/g, '_')}_${ano},
-  author = {${autores}},
-  title = {${MARCA.nome}: ${MARCA.subtitulo}},
-  year = {${ano}},
-  version = {${a.versaoDataset}},
+/** Citação em BibTeX a partir do registro do Zenodo (DOI de conceito). */
+function gerarBibtex(): string {
+  const ano = citacao.dataPublicacao.slice(0, 4);
+  return `@software{valim_netrank_rj_${ano},
+  author    = {Valim, Danilo},
+  title     = {{${MARCA.nome}}: ${MARCA.subtitulo}},
+  year      = {${ano}},
+  version   = {${citacao.versao}},
   publisher = {Zenodo},
-  doi = {${doi}},
-  url = {https://doi.org/${doi}}
+  doi       = {${citacao.doiConceito}},
+  url       = {https://doi.org/${citacao.doiConceito}}
 }`;
 }
 
@@ -27,10 +25,10 @@ export default function PaginaSobre() {
   const meta = lerMeta();
   const p = meta.procedencia;
   const a = p.academicos;
-  const bibtex = a ? gerarBibtex(a, p) : '';
+  const bibtex = gerarBibtex();
 
   return (
-    <main className="space-y-12 mx-auto max-w-3xl">
+    <div className="space-y-12 mx-auto max-w-3xl">
       {/* Sobre o Projeto */}
       <section>
         <h1 className="text-3xl font-bold text-tinta mb-4">{MARCA.nome}</h1>
@@ -39,19 +37,15 @@ export default function PaginaSobre() {
         </p>
         <div className="space-y-3 text-sm text-grafite-400">
           <p>
-            Painel feito para acompanhar a banda larga fixa nos municípios fluminenses, como apoio ao
-            Setor de Fiscalização de Serviços Concedidos da <strong>Secretaria Municipal de Conservação e
-            Serviços Públicos (Seconser)</strong> da Prefeitura de Niterói.
+            Software independente, de autoria própria, com finalidade acadêmica e de pesquisa. Organiza os
+            dados públicos de acessos de banda larga fixa dos municípios fluminenses em indicadores comparáveis
+            de participação, concentração, densidade e velocidade contratada.
           </p>
           <p>
-            <strong>Não é um site oficial</strong> da Prefeitura de Niterói nem da Seconser. É um trabalho
-            independente do autor, e os números, indicadores e alertas publicados aqui não expressam posição
-            da Prefeitura ou da Secretaria sobre o mercado ou sobre qualquer prestadora.
-          </p>
-          <p>
-            Os números vêm dos dados abertos da Anatel e são processados de forma independente. O {MARCA.nome}
-            também não tem vínculo com a Agência, e seus indicadores não são conclusão jurídica, concorrencial
-            ou regulatória.
+            Usa apenas dados públicos: a Anatel publica os acessos, o IBGE os domicílios e a malha municipal, e
+            a Receita Federal o cadastro de CNPJ. O {MARCA.nome} não tem vínculo com essas instituições nem com
+            qualquer órgão público ou empresa, e seus indicadores não são conclusão jurídica, concorrencial ou
+            regulatória.
           </p>
         </div>
       </section>
@@ -61,19 +55,16 @@ export default function PaginaSobre() {
         <section>
           <h2 className="text-xl font-bold text-tinta mb-4">Como citar este projeto</h2>
           <div className="text-sm leading-relaxed text-grafite-200 bg-white p-4 rounded-md border border-grafite-700 overflow-x-auto mb-4">
-            {a.autores.map((au) => au.nome).join(', ')} ({new Date(p.processadoEm).getFullYear()}).
-            {' '}
-            <span className="text-grafite-200">{MARCA.nome}</span>. Versão {a.versaoDataset}.
-            {a.doi && (
-              <>
-                {' '}
-                DOI:{' '}
-                <a href={`https://doi.org/${a.doi}`} className="text-marca-400 hover:underline">
-                  {a.doi}
-                </a>
-              </>
-            )}
+            Valim, D. ({citacao.dataPublicacao.slice(0, 4)}). <em>{MARCA.nome}: {MARCA.subtitulo}</em>{' '}
+            (versão {citacao.versao}) [Software]. Zenodo.{' '}
+            <a href={`https://doi.org/${citacao.doiConceito}`} className="text-marca-400 underline underline-offset-4">
+              https://doi.org/{citacao.doiConceito}
+            </a>
           </div>
+          <p className="mb-4 text-sm text-grafite-400">
+            O DOI acima é o de conceito: identifica o projeto e sempre resolve para a versão mais recente.
+            Para citar exatamente a versão {citacao.versao}, use o DOI de versão listado no registro do Zenodo.
+          </p>
 
           <details className="border border-grafite-800 rounded p-4">
             <summary className="cursor-pointer font-medium text-marca-300 hover:text-marca-200">
@@ -298,6 +289,6 @@ export default function PaginaSobre() {
           </li>
         </ul>
       </section>
-    </main>
+    </div>
   );
 }

@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, Suspense } from 'react';
+import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import type { EChartsOption } from 'echarts';
+import type { ECharts, EChartsOption } from 'echarts';
 
 /**
  * Invólucro do ECharts com o tema do produto.
@@ -38,21 +38,31 @@ export function eixo(extra: Record<string, unknown> = {}): Record<string, unknow
   return { ...EIXO, ...extra };
 }
 
+type ModuloEcharts = typeof import('echarts');
+
+/** Carrega o ECharts sob demanda; alguns empacotamentos expõem o módulo em `default`. */
+export async function carregarEcharts(): Promise<ModuloEcharts> {
+  const modulo = await import('echarts');
+  return 'init' in modulo ? modulo : (modulo as unknown as { default: ModuloEcharts }).default;
+}
+
 interface Props {
   opcao: EChartsOption;
   altura?: number;
   descricao: string;
-  aoCriar?: (instancia: any) => void;
+  aoCriar?: (instancia: ECharts) => void;
 }
 
 function GraficoInterno({ opcao, altura = 320, descricao, aoCriar }: Props) {
   const elemento = useRef<HTMLDivElement>(null);
-  const instancia = useRef<any>(null);
+  const instancia = useRef<ECharts | null>(null);
   // Opção mais recente. O ECharts carrega de forma assíncrona: se a opção
   // mudar antes disso (ex.: cidade salva aplicada logo após montar), a
   // criação precisa usar a versão atual, não a do primeiro render.
   const opcaoAtual = useRef(opcao);
-  opcaoAtual.current = opcao;
+  useEffect(() => {
+    opcaoAtual.current = opcao;
+  }, [opcao]);
 
   useEffect(() => {
     const el = elemento.current;
@@ -62,8 +72,7 @@ function GraficoInterno({ opcao, altura = 320, descricao, aoCriar }: Props) {
     let observador: ResizeObserver | null = null;
 
     (async () => {
-      const echartsModule = await import('echarts');
-      const echarts = (echartsModule as any).init ? echartsModule : (echartsModule as any).default;
+      const echarts = await carregarEcharts();
 
       if (!isMounted) return;
 

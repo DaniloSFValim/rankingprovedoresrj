@@ -92,7 +92,7 @@ export function obterOpacidade(numeroProvedores: number | null | undefined): num
 export function obterEstiloFeature(
   hhi?: number | null,
   opcoes?: { tipo?: 'hhi' | 'cobertura'; cobertura?: number; provedores?: number },
-): Record<string, any> {
+): Record<string, string | number> {
   const tipo = opcoes?.tipo || 'hhi';
   const cor =
     tipo === 'hhi'

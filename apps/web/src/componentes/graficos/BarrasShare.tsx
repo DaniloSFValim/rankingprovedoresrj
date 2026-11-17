@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import type { EChartsOption } from 'echarts';
 import { Grafico, eixo } from '@/componentes/Grafico';
+import { escaparHtml } from '@/lib/formato';
 
 /**
  * Participação de mercado em barras horizontais.
@@ -24,7 +25,7 @@ export function BarrasShare({
         trigger: 'item',
         formatter: (params) => {
           const p = Array.isArray(params) ? params[0]! : params;
-          return `${p.name}<br/><b>${Number(p.value).toFixed(2)}%</b> do mercado`;
+          return `${escaparHtml(p.name)}<br/><b>${Number(p.value).toFixed(2)}%</b> do mercado`;
         },
       },
       grid: { left: 8, right: 48, top: 8, bottom: 8, containLabel: true },

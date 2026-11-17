@@ -13,21 +13,33 @@
   },
   "scripts": {
     "build:core": "npm run build -w @netrank/core",
-    "test": "vitest run",
+    "test": "vitest run && npm run test -w @netrank/web",
     "test:watch": "vitest",
-    "typecheck": "tsc -b --pretty false",
+    "typecheck": "tsc --noEmit -p packages/core && tsc --noEmit -p packages/etl && tsc --noEmit -p apps/web",
     "etl": "npm run start -w @netrank/etl --",
     "check-metadata": "node scripts/check-metadata.mjs",
     "dev": "npm run dev -w @netrank/web",
     "build": "npm run build -w @netrank/web",
-    "preview": "npx serve@14 apps/web/out"
+    "preview": "npx serve@14 apps/web/out",
+    "test:pacotes": "vitest run",
+    "lint": "eslint .",
+    "test:e2e": "npm run test:e2e -w @netrank/web",
+    "validar": "npm run lint && npm run typecheck && npm test && npm run check-metadata && npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.6",
     "typescript": "^5.6.3",
-    "vitest": "^5.0.1"
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^5.1.0"
   },
   "dependencies": {
     "echarts": "6.1.0"
+  },
+  "overrides": {
+    "source-map-js": "^1.2.2",
+    "postcss-selector-parser": "^6.1.6",
+    "vite": "^8.3.8"
   }
 }

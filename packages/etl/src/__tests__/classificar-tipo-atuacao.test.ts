@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import {
   classificarTipoAtuacao,
   classificarEmpresas,
-  type TipoAtuacao,
 } from '../pipeline/classificar-tipo-atuacao.js';
 
 describe('classificarTipoAtuacao', () => {

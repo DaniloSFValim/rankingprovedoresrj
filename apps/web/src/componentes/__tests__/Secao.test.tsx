@@ -33,7 +33,7 @@ describe('Secao', () => {
   });
 
   it('renders without descricao when not provided', () => {
-    const { container } = render(
+    render(
       <Secao titulo="Teste">
         <p>Conteúdo</p>
       </Secao>

@@ -55,7 +55,7 @@ export function TipoAtuacaoPie({
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
-          const p = params as any;
+          const p = params as { name: string; value: number };
           const total = provedores.length;
           const percentual = ((p.value / total) * 100).toFixed(1);
           return `${p.name}<br/><b>${p.value}</b> provedores (${percentual}%)`;

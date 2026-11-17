@@ -72,3 +72,17 @@ export function dataBr(valor: string | null | undefined): string {
   const m = valor ? /^(\d{4})-(\d{2})-(\d{2})/.exec(valor) : null;
   return m ? `${m[3]}/${m[2]}/${m[1]}` : ND;
 }
+
+/**
+ * Escapa texto para HTML. Os tooltips do ECharts aceitam HTML, e nomes de
+ * prestadoras vêm de dados de terceiros (Anatel, Receita): sem escape, um nome
+ * com marcação seria interpretado pelo navegador.
+ */
+export function escaparHtml(texto: string | null | undefined): string {
+  return String(texto ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}

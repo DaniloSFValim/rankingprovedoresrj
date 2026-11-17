@@ -89,13 +89,13 @@ export function TabelaRanking({
               </td>
               <td className={`numerico px-3 py-2.5 text-right ${corVariacao(linha.variacaoAbsoluta)}`}>
                 {inteiroComSinal(linha.variacaoAbsoluta)}
-                <div className="text-[11px] opacity-70">
+                <div className="text-xs">
                   {percentualComSinal(linha.variacaoPercentual)}
                 </div>
               </td>
               <td className={`numerico px-3 py-2.5 text-right ${corVariacao(linha.variacao12Absoluta)}`}>
                 {inteiroComSinal(linha.variacao12Absoluta)}
-                <div className="text-[11px] opacity-70">
+                <div className="text-xs">
                   {percentualComSinal(linha.variacao12Percentual)}
                 </div>
               </td>

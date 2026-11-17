@@ -59,9 +59,6 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
     });
   }, [busca, cidades]);
 
-  useEffect(() => {
-    setIndiceFoco(0);
-  }, [busca]);
 
   useEffect(() => {
     if (!aberto) return;
@@ -144,7 +141,10 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
             <input
               ref={campo}
               value={busca}
-              onChange={(e) => setBusca(e.target.value)}
+              onChange={(e) => {
+                setBusca(e.target.value);
+                setIndiceFoco(0);
+              }}
               onKeyDown={aoTeclar}
               placeholder="Digite para buscar um município…"
               className="w-full bg-grafite-900 px-3 py-2 text-sm text-tinta outline-none placeholder:text-grafite-500 focus:ring-0"
@@ -159,7 +159,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
           <ul role="listbox" className="max-h-80 overflow-y-auto">
             {filtradas.length === 0 && (
               <li className="px-4 py-4 text-center text-sm text-grafite-400">
-                Nenhum município encontrado para "{busca}"
+                Nenhum município encontrado para “{busca}”
               </li>
             )}
             {filtradas.map((cidade, indice) => (
@@ -213,6 +213,8 @@ export function UltimaCidade({ cidades }: { cidades: CidadeOpcao[] }) {
   const [slug, setSlug] = useState<string | null>(null);
 
   useEffect(() => {
+    // localStorage só existe no navegador: ler na montagem evita divergência de hidratação.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSlug(lerUltimaCidade());
   }, []);
 

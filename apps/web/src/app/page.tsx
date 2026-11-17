@@ -61,7 +61,7 @@ export default function Home() {
   const v12 = kpis.variacao12Meses?.percentual;
 
   return (
-    <main className="space-y-14">
+    <div className="space-y-14">
       <header className="max-w-4xl pt-4">
         <p className="text-sm text-grafite-400">
           Banda larga fixa no {MARCA.uf}, {rotularCompetencia(meta.competenciaAtual)}
@@ -118,7 +118,7 @@ export default function Home() {
         <TabelaRanking linhas={ranking} limite={10} />
       </Secao>
 
-      <div className="grid gap-10 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
         <Secao titulo="Participação de mercado" descricao="Dez maiores provedores do Estado">
           <div className="cartao p-3">
             <BarrasShare itens={ranking.slice(0, 10).map((l) => ({ nome: l.nome, marketShare: l.marketShare }))} />
@@ -167,6 +167,6 @@ export default function Home() {
           </table>
         </div>
       </Secao>
-    </main>
+    </div>
   );
 }

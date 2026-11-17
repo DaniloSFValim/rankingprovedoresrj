@@ -43,11 +43,7 @@ export function BuscaAvancada({
     });
 
     return encontrados.slice(0, 10);
-  }, [busca, itens]);
-
-  useEffect(() => {
-    setIndiceFoco(0);
-  }, [busca]);
+  }, [termo, itens]);
 
   useEffect(() => {
     if (!aberto) return;
@@ -90,9 +86,12 @@ export function BuscaAvancada({
       <input
         ref={input}
         type="text"
+        role="combobox"
+        aria-controls="busca-avancada-resultados"
         value={busca}
         onChange={(e) => {
           setBusca(e.target.value);
+          setIndiceFoco(0);
           setAberto(true);
         }}
         onFocus={() => setAberto(true)}
@@ -107,6 +106,7 @@ export function BuscaAvancada({
       {aberto && termo && resultados.length > 0 && (
         <div
           className="absolute left-0 right-0 top-full z-50 mt-1 max-h-96 overflow-y-auto rounded-lg border border-grafite-700 bg-grafite-900 shadow-lg"
+          id="busca-avancada-resultados"
           role="listbox"
         >
           {resultados.map((item, indice) => (
@@ -140,7 +140,7 @@ export function BuscaAvancada({
 
       {aberto && termo && resultados.length === 0 && (
         <div className="absolute left-0 right-0 top-full z-50 mt-1 rounded-lg border border-grafite-700 bg-grafite-900 px-4 py-3 text-center text-sm text-grafite-400">
-          Nenhum resultado para "{busca}"
+          Nenhum resultado para “{busca}”
         </div>
       )}
     </div>

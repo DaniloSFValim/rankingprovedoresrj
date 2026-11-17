@@ -12,7 +12,7 @@ import { SerieMercado } from '@/componentes/graficos/SerieMercado';
 import { TipoAtuacaoPie } from '@/componentes/graficos/TipoAtuacaoPie';
 import { lerIndiceMunicipios, lerPerfilMunicipio } from '@/lib/dados';
 import type { PerfilMunicipio } from '@/lib/dados';
-import { compacto, corVariacao, inteiro, inteiroComSinal, percentual, percentualComSinal } from '@/lib/formato';
+import { compacto, inteiro, inteiroComSinal, percentual, percentualComSinal } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
 
 /**
@@ -117,7 +117,7 @@ export default async function PaginaMunicipio({ params }: Props) {
   const entrantes = perfil.ranking.filter((l) => l.posicaoAnterior === null);
 
   return (
-    <main className="space-y-12">
+    <div className="space-y-12">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="flex-1">
           <Link href="/municipios/" className="text-sm text-marca-400 underline-offset-2 hover:underline">
@@ -230,7 +230,7 @@ export default async function PaginaMunicipio({ params }: Props) {
         </div>
       )}
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Secao titulo="Participação de mercado" descricao="Top 10 provedores do município">
           <div className="cartao p-3">
             <BarrasShare
@@ -263,7 +263,7 @@ export default async function PaginaMunicipio({ params }: Props) {
         </div>
       </Secao>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Secao titulo="Quem mais cresceu" descricao="Acessos ganhos no último mês">
           {cresceram.length > 0 ? (
             <ol className="cartao divide-y divide-grafite-800">
@@ -337,7 +337,7 @@ export default async function PaginaMunicipio({ params }: Props) {
         </Secao>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
         <Secao titulo="Tecnologia" descricao="Distribuição dos acessos no município">
           <Tecnologias perfil={perfil} />
         </Secao>
@@ -382,6 +382,6 @@ export default async function PaginaMunicipio({ params }: Props) {
         <strong>exclusivamente sobre os acessos registrados em {perfil.nome}</strong>.
         Participação, concentração e ranking referem-se ao mercado local.
       </p>
-    </main>
+    </div>
   );
 }

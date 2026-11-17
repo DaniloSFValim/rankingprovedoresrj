@@ -233,7 +233,7 @@ export function PaginaCrescimentoCliente({
   }
 
   return (
-    <main className="space-y-12">
+    <div className="space-y-12">
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
@@ -285,7 +285,7 @@ export function PaginaCrescimentoCliente({
         </div>
       </Secao>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Secao
           titulo="Quem mais ganhou clientes"
           descricao="Crescimento absoluto — novos acessos no mês"
@@ -315,7 +315,7 @@ export function PaginaCrescimentoCliente({
         </Secao>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Secao titulo="Maiores avanços no ranking" descricao={`Posições ganhas no mês, entre provedores com ao menos ${inteiro(piso)} acessos no mês anterior.`}>
           {maioresAvancosRanking.length > 0 ? (
             <ol className="cartao divide-y divide-grafite-800">
@@ -382,6 +382,6 @@ export function PaginaCrescimentoCliente({
         Provedores que estrearam no mês não têm variação percentual: não há base
         anterior para comparar.
       </p>
-    </main>
+    </div>
   );
 }
