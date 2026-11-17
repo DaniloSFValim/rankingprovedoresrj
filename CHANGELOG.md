@@ -10,10 +10,8 @@ arquivada no Zenodo sob o DOI de conceito
 
 ### Alterado
 
-- Rodapé no padrão compartilhado (`docs/PADROES.md`, §3): autoria, afiliação,
-  licenças, DOI de conceito e ano. Sem link para o GitHub no site.
-- Separadores "·" substituídos por pontuação comum nos textos; sombras removidas
-  dos menus suspensos (§1 e §2 do padrão).
+- Bloco de identificação acadêmica no rodapé e no README: software acadêmico de
+  inteligência de dados, com DOI (Zenodo), ORCID e GitHub.
 - DOI da versão 1.2.0 no `CITATION.cff`, no README e no CHANGELOG.
 
 ## [1.2.0] - 2026-11-17

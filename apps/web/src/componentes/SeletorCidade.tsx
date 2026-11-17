@@ -136,7 +136,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
       </button>
 
       {aberto && (
-        <div className="absolute left-0 right-0 z-50 mt-2 overflow-hidden rounded-md border border-grafite-700 bg-grafite-900">
+        <div className="absolute left-0 right-0 z-50 mt-2 overflow-hidden rounded-md border border-grafite-700 bg-grafite-900 shadow-lg">
           <div className="border-b border-grafite-800 bg-grafite-950 p-3">
             <input
               ref={campo}
@@ -181,7 +181,7 @@ export function SeletorCidade({ cidades, slugAtual, variante = 'compacto', onSel
                     )}
                   </div>
                   <span className="numerico shrink-0 text-xs text-grafite-500">
-                    {inteiro(cidade.totalAcessos)} acessos, {cidade.numeroProvedores} provedores
+                    {inteiro(cidade.totalAcessos)} · {cidade.numeroProvedores}
                   </span>
                 </button>
               </li>
