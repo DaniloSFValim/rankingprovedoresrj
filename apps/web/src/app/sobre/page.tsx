@@ -48,6 +48,11 @@ export default function PaginaSobre() {
             qualquer órgão público ou empresa, e seus indicadores não são conclusão jurídica, concorrencial ou
             regulatória.
           </p>
+          <p>
+            O desenvolvimento contou com assistência de inteligência artificial (Claude Code, da Anthropic) na
+            escrita de código, testes e documentação. Concepção, escolha das fontes, decisões de método, revisão e
+            validação são do autor. Nenhum dado foi gerado ou alterado pela IA.
+          </p>
         </div>
       </section>
 

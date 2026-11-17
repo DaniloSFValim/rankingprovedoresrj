@@ -25,10 +25,10 @@ identifiers:
     description: "DOI de conceito: todas as versões, resolve para a mais recente."
   - type: doi
     value: "10.5281/zenodo.22948694"
-    description: "DOI da versão 1.1.0."
+    description: "DOI da versão anterior (1.1.0); o da 1.2.0 é atribuído pelo Zenodo na publicação."
 license: AGPL-3.0-only
-version: "1.1.0"
-date-released: "2026-09-25"
+version: "1.2.0"
+date-released: "2026-11-17"
 keywords:
   - banda larga fixa
   - telecomunicações

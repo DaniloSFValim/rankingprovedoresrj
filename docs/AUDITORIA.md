@@ -139,6 +139,13 @@ Verificado por consulta às APIs públicas do Zenodo, do DataCite (resolução d
 | Licença | Repositório: AGPL-3.0 (código) e CC BY 4.0 (dados e documentação). Zenodo 1.1.0: CC BY 4.0 | Divergente até a próxima versão |
 | Metadados entre plataformas | Título, versão, autor e ORCID coerentes. A descrição do registro 1.1.0 no Zenodo ainda cita a Seconser | Pendente (ação do autor) |
 
+### Versão 1.2.0 preparada
+
+O repositório já está em 1.2.0 (`package.json`, `CITATION.cff`, `.zenodo.json`,
+`citacao.json`, CHANGELOG), com título, descrição e licença novos. Falta só o autor
+publicar o release no GitHub (passo 3 abaixo), que faz o Zenodo arquivar a versão e
+atribuir o DOI dela.
+
 ### Ações que dependem do autor
 
 1. **Descrição do registro no Zenodo.** Em zenodo.org, abra o registro 1.1.0, clique em

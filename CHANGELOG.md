@@ -8,6 +8,11 @@ arquivada no Zenodo sob o DOI de conceito
 
 ## [Não publicado]
 
+## [1.2.0] - 2026-11-17
+
+Versão da auditoria técnica. Primeira arquivada no Zenodo com o código sob AGPL-3.0, a
+descrição de plataforma independente e o título novo.
+
 ### Escopo científico e funcional
 
 - Seis testes de coerência entre artefatos: malha do IBGE x índice, prestadoras sem
@@ -23,6 +28,11 @@ arquivada no Zenodo sob o DOI de conceito
 
 ### Adicionado
 
+- Declaração de uso de inteligência artificial (`docs/USO-DE-IA.md`), resumida no README
+  e na página Sobre.
+- Aviso de salto isolado na série do Estado (mês que se afasta 5% ou mais dos dois vizinhos
+  enquanto eles ficam a até 3% entre si), como out/2024. O número não muda.
+- Base a partir de janeiro de 2024 (33 competências).
 - Testes de integridade dos artefatos publicados: somas, participações, concentração,
   ranking com empates, municípios e arquivos por município e provedor.
 - Testes de navegador reescritos sobre o site estático, em desktop e celular, com

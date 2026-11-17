@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { rotularCompetencia } from '@netrank/core';
+import { rotularCompetencia, saltosIsolados } from '@netrank/core';
 import { Secao } from '@/componentes/Secao';
 import { TabelaRanking } from '@/componentes/TabelaRanking';
 import { Destaques } from '@/componentes/Destaques';
@@ -56,6 +56,7 @@ export default function Home() {
   const kpis = lerKpis();
   const ranking = lerRankingEstadual();
   const serie = lerSerieEstado();
+  const saltos = saltosIsolados(serie.map((p) => ({ competencia: p.competencia, valor: p.totalAcessos })));
   const movimentacoes = lerMovimentacoes();
   const municipios = lerIndiceMunicipios();
   const v12 = kpis.variacao12Meses?.percentual;
@@ -129,6 +130,18 @@ export default function Home() {
           <div className="cartao p-3">
             <SerieMercado serie={serie} />
           </div>
+          {saltos.length > 0 && (
+            <p className="mt-3 text-sm text-grafite-400">
+              {saltos.map((s, i) => (
+                <span key={s.competencia}>
+                  {i > 0 && ' '}
+                  {rotularCompetencia(s.competencia)} se afasta {percentual(Math.abs(s.desvioPercentual))} dos meses
+                  vizinhos e volta no mês seguinte: padrão de declaração, não de clientes. O número é mostrado como
+                  declarado.
+                </span>
+              ))}
+            </p>
+          )}
         </Secao>
       </div>
 

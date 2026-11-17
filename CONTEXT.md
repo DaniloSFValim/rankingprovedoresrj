@@ -61,6 +61,11 @@ causa deles. Regras em `packages/etl/src/pipeline/alertas.ts`:
   no mapa. Densidade acima de 100 sem vizinho baixo é típica de municípios de
   veraneio e fica apenas como aviso na página do município.
 
+**Salto isolado na série do Estado vira aviso.** Um mês que se afasta 5% ou mais da média
+dos dois vizinhos, com os vizinhos a até 3% entre si, é padrão de declaração (out/2024:
+4.083.589, 4.413.205, 4.144.803). A home mostra o aviso abaixo do gráfico; o número fica
+como declarado. Regra em `packages/core/src/serie.ts`.
+
 **Vizinhança vem da malha do IBGE.** Dois municípios são vizinhos quando as
 fronteiras compartilham ao menos dois vértices, com coordenadas arredondadas a
 4 casas. Um vértice só é contato em ponto e não conta.
