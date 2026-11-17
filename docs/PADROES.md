@@ -81,9 +81,8 @@ resto em `LICENSE`. O README explica a divisão.
 
 ## 7. Estado atual do NETRANK RJ
 
-- O registro no Zenodo (versão 1.1.0) tem licença CC BY 4.0 e descrição antiga.
-  A AGPL-3.0 do código e a descrição nova passam a valer no próximo release.
-- A integração GitHub–Zenodo só pode ser confirmada pelo autor, na conta do
-  Zenodo (aba GitHub).
+- Versão 1.2.0 arquivada no Zenodo em 17/11/2026 (DOI 10.5281/zenodo.24312771),
+  com licença AGPL-3.0 e a descrição atual, pela integração GitHub–Zenodo.
+- O perfil ORCID do autor lista o projeto com o DOI de conceito.
 
 As pendências dos outros projetos ficam nos repositórios deles.

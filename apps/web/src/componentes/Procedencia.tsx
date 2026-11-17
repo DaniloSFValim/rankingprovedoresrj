@@ -106,30 +106,57 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
   );
 }
 
+const REPOSITORIO = 'https://github.com/DaniloSFValim/rankingprovedoresrj';
+
 /**
- * Linhas de autoria e registro. O mesmo texto está em todos os projetos do
- * autor; os dados vêm de citacao.json, gerado a partir do Zenodo e do ORCID.
+ * Identificação acadêmica do produto: o mesmo bloco em todos os projetos do
+ * autor (nome, natureza, DOI, ORCID, GitHub). Os dados vêm de citacao.json.
  */
 export function LinhasCitacao() {
   const ano = new Date(citacao.dataPublicacao).getFullYear();
+  const itens = [
+    {
+      rotulo: 'DOI',
+      href: `https://doi.org/${citacao.doiConceito}`,
+      valor: citacao.doiConceito,
+      nota: 'registro no Zenodo',
+    },
+    {
+      rotulo: 'ORCID',
+      href: `https://orcid.org/${citacao.orcid}`,
+      valor: citacao.orcid,
+      nota: `${citacao.autor}, UFRRJ`,
+    },
+    {
+      rotulo: 'GitHub',
+      href: REPOSITORIO,
+      valor: 'DaniloSFValim/rankingprovedoresrj',
+      nota: 'código-fonte e versões',
+    },
+  ];
   return (
-    <div className="border-t border-grafite-700 px-4 py-4 text-xs text-grafite-400">
-      <div className="mx-auto max-w-7xl space-y-1">
-        <p>
-          Desenvolvido por <span className="text-grafite-200">{citacao.autor}</span> (UFRRJ), ORCID{' '}
-          <a href={`https://orcid.org/${citacao.orcid}`} target="_blank" rel="noopener noreferrer" className={LINK}>
-            {citacao.orcid}
-          </a>
-          . Código sob AGPL-3.0; documentação e dados sob CC BY 4.0.
+    <div className="border-t border-grafite-700 px-4 py-6 text-sm text-grafite-400">
+      <div className="mx-auto max-w-7xl space-y-3">
+        <div>
+          <p className="font-semibold text-tinta">{MARCA.nome}</p>
+          <p className="text-xs">Software acadêmico · Inteligência de dados · versão {citacao.versao}</p>
+        </div>
+        <dl className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+          {itens.map((item) => (
+            <div key={item.rotulo}>
+              <dt className="text-xs text-grafite-400">{item.rotulo}</dt>
+              <dd>
+                <a href={item.href} target="_blank" rel="noopener noreferrer" className={`${LINK} numerico`}>
+                  {item.valor}
+                </a>
+                <span className="block text-xs">{item.nota}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p className="text-xs">
+          Código sob AGPL-3.0; documentação e dados sob CC BY 4.0. © {ano} {citacao.autor}.
         </p>
-        <p>
-          Registro citável no Zenodo, DOI{' '}
-          <a href={`https://doi.org/${citacao.doiConceito}`} target="_blank" rel="noopener noreferrer" className={LINK}>
-            {citacao.doiConceito}
-          </a>
-          .
-        </p>
-        <p>© {ano} {citacao.autor}.</p>
       </div>
     </div>
   );

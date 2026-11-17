@@ -8,7 +8,14 @@
 [![Código: AGPL-3.0](https://img.shields.io/badge/c%C3%B3digo-AGPL--3.0-blue.svg)](LICENSE-CODIGO)
 [![Dados e documentação: CC BY 4.0](https://img.shields.io/badge/dados%20e%20docs-CC%20BY%204.0-lightgrey.svg)](LICENSE)
 
-Painel publicado em [netranking-rj.labdados.org](https://netranking-rj.labdados.org).
+Software acadêmico · Inteligência de dados
+
+| | |
+|---|---|
+| DOI | [10.5281/zenodo.22839933](https://doi.org/10.5281/zenodo.22839933), registro no Zenodo |
+| ORCID | [0009-0009-7250-6151](https://orcid.org/0009-0009-7250-6151), Danilo Valim (UFRRJ) |
+| GitHub | [DaniloSFValim/rankingprovedoresrj](https://github.com/DaniloSFValim/rankingprovedoresrj), código-fonte e versões |
+| Site | [netranking-rj.labdados.org](https://netranking-rj.labdados.org) |
 
 ## Sobre
 
@@ -214,11 +221,10 @@ e validação são do autor. Detalhes em [`docs/USO-DE-IA.md`](docs/USO-DE-IA.md
 | | |
 |---|---|
 | DOI de conceito (todas as versões) | [10.5281/zenodo.22839933](https://doi.org/10.5281/zenodo.22839933) |
-| DOI da versão 1.1.0 | [10.5281/zenodo.22948694](https://doi.org/10.5281/zenodo.22948694) |
-| Registro no Zenodo | [zenodo.org/records/22948694](https://zenodo.org/records/22948694) |
+| DOI da versão 1.2.0 | [10.5281/zenodo.24312771](https://doi.org/10.5281/zenodo.24312771) |
+| Registro no Zenodo | [zenodo.org/records/24312771](https://zenodo.org/records/24312771) |
 | ORCID do autor | [0009-0009-7250-6151](https://orcid.org/0009-0009-7250-6151) |
-| Versão atual do código | 1.2.0, de 17/11/2026; o DOI desta versão é atribuído pelo Zenodo ao publicar o release |
-| Última versão arquivada | 1.1.0, de 25/09/2026 |
+| Versão citável | 1.2.0, publicada em 17/11/2026 |
 
 Use o DOI de conceito para citar o projeto e o DOI de versão para citar exatamente a versão
 usada.

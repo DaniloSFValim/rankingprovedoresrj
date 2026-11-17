@@ -128,44 +128,26 @@ Verificado por consulta às APIs públicas do Zenodo, do DataCite (resolução d
 | Elemento | Resultado | Situação |
 |---|---|---|
 | DOI de conceito | `10.5281/zenodo.22839933` resolve (HTTP 302) para o registro no Zenodo | Aprovado |
-| DOI da versão 1.1.0 | `10.5281/zenodo.22948694`, publicado em 25/09/2026 | Aprovado |
-| Outras versões | 1.0.1, `10.5281/zenodo.22839934`, de 19/09/2026 | Documentado no CHANGELOG |
-| Registro no Zenodo | Público e acessível (HTTP 200), acesso aberto | Aprovado |
-| ORCID | `0009-0009-7250-6151`: dígito verificador válido; registro público com nome de crédito "Danilo Valim"; presente no criador do registro do Zenodo | Aprovado |
-| Obra no perfil ORCID | O perfil público não lista o NETRANK entre as obras | Pendente (ação do autor) |
-| `CITATION.cff` | Válido no schema CFF 1.2.0; DOI de conceito e de versão; ORCID; data igual à do Zenodo | Corrigido |
+| DOI da versão 1.2.0 | `10.5281/zenodo.24312771`, publicado em 17/11/2026 pela integração GitHub–Zenodo; resolve (HTTP 302) | Aprovado |
+| Versões anteriores | 1.1.0 (`10.5281/zenodo.22948694`, 25/09/2026) e 1.0.1 (`10.5281/zenodo.22839934`, 19/09/2026) | Documentado no CHANGELOG |
+| Registro no Zenodo | Público, acesso aberto, título novo, descrição sem referência institucional e com a declaração de uso de IA | Aprovado |
+| ORCID | `0009-0009-7250-6151`: dígito verificador válido; presente no criador do registro, com afiliação UFRRJ | Aprovado |
+| Obra no perfil ORCID | O perfil público lista o NETRANK com o DOI de conceito | Aprovado |
+| `CITATION.cff` | Válido no schema CFF 1.2.0; DOI de conceito e da versão 1.2.0; ORCID; data igual à do Zenodo | Corrigido |
 | README | Seção "Identificação acadêmica e citação" com DOI, registro, ORCID, versão e citação | Corrigido |
-| Integração GitHub–Zenodo | `.zenodo.json` presente; a ativação do webhook só é visível na conta do autor | Não verificável daqui |
-| Licença | Repositório: AGPL-3.0 (código) e CC BY 4.0 (dados e documentação). Zenodo 1.1.0: CC BY 4.0 | Divergente até a próxima versão |
-| Metadados entre plataformas | Título, versão, autor e ORCID coerentes. A descrição do registro 1.1.0 no Zenodo ainda cita a Seconser | Pendente (ação do autor) |
+| Integração GitHub–Zenodo | Ativa: a versão 1.2.0 foi arquivada a partir do release do GitHub | Aprovado |
+| Licença | Repositório e Zenodo 1.2.0: AGPL-3.0 (código); dados e documentação sob CC BY 4.0. Versões 1.0.1 e 1.1.0 ficam com CC BY 4.0, como foram publicadas | Aprovado |
+| Metadados entre plataformas | Título, versão, autor, ORCID e licença coerentes entre repositório, Zenodo e ORCID | Aprovado |
 
-### Versão 1.2.0 preparada
-
-O repositório já está em 1.2.0 (`package.json`, `CITATION.cff`, `.zenodo.json`,
-`citacao.json`, CHANGELOG), com título, descrição e licença novos. Falta só o autor
-publicar o release no GitHub (passo 3 abaixo), que faz o Zenodo arquivar a versão e
-atribuir o DOI dela.
-
-### Ações que dependem do autor
-
-1. **Descrição do registro no Zenodo.** Em zenodo.org, abra o registro 1.1.0, clique em
-   *Edit*, substitua a descrição pelo texto de `.zenodo.json` e publique. Editar metadados não
-   gera DOI novo. Alternativa: publicar a próxima versão (passo 3), que já usa o texto novo.
-2. **Obra no ORCID.** Em orcid.org, *Works → Add → Search & link → DataCite*, autorize e
-   importe o registro do NETRANK; ou *Add manually* com o DOI de conceito. No DataCite, a
-   opção de atualização automática do ORCID passa a incluir as próximas versões.
-3. **Próxima versão citável (sugerida: 1.2.0).** Siga `docs/DESENVOLVIMENTO.md`, seção
-   "Nova versão citável". O Zenodo cria um DOI de versão sob o mesmo DOI de conceito, com a
-   licença AGPL-3.0 e a descrição nova.
-4. **Integração GitHub–Zenodo.** Em zenodo.org, *Settings → GitHub*, confirme que o
-   repositório `DaniloSFValim/rankingprovedoresrj` está ativado.
+As versões 1.0.1 e 1.1.0 continuam no Zenodo com os títulos e descrições da época, como
+manda o arquivamento: registros publicados não são reescritos. O DOI de conceito resolve
+para a 1.2.0.
 
 ## 7. Pendências e limitações
 
 | Item | Motivo |
 |---|---|
-| Descrição e licença do registro 1.1.0 no Zenodo | Exigem acesso à conta do autor |
-| Obra ausente no perfil ORCID | Exige login do autor no ORCID |
+| Integração Workers Builds da Cloudflare falha em todo PR | Duplica o deploy oficial (`deploy.yml`); desconectar no painel da Cloudflare |
 | Histórico do Git contém o e-mail removido e os textos institucionais antigos | Reescrever o histórico de `main` é destrutivo e não foi feito; o conteúdo atual está limpo |
 | CSP com `'unsafe-inline'` | Exigência da exportação estática do Next.js e do ECharts (ver `SECURITY.md`) |
 | Cabeçalhos de `_headers` | Só aplicados no Cloudflare Workers; confirmar com uma requisição ao site publicado após o deploy |
@@ -230,7 +212,6 @@ há cache e só CNPJ novo ou vencido é reconsultado. O cálculo dos indicadores
 | Segurança | Boa para um site estático: sem vulnerabilidades conhecidas, cabeçalhos restritivos, XSS tratado, sem segredos |
 | Dados e reprodutibilidade | Boa: procedência registrada, níveis de dado separados, nada estimado, pipeline reprodutível e automatizado |
 | Documentação | Boa: README executável num clone limpo, arquitetura, dados, desenvolvimento e segurança |
-| Identificação acadêmica | Parcial: DOI, ORCID e CFF corretos e verificados no repositório; registro no Zenodo e perfil ORCID dependem de ação do autor |
+| Identificação acadêmica | Madura: DOI de conceito e de versão, Zenodo, ORCID e CFF coerentes e verificados nas APIs públicas |
 
-O software está em condições de avaliação técnica independente. Para fechar a parte de
-identificação acadêmica, faltam as quatro ações do autor listadas na seção 6.
+O software está em condições de avaliação técnica independente. 
