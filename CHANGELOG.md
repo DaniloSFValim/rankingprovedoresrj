@@ -28,6 +28,8 @@ descrição de plataforma independente e o título novo.
 
 ### Adicionado
 
+- Declaração de uso de inteligência artificial (`docs/USO-DE-IA.md`), resumida no README
+  e na página Sobre.
 - Aviso de salto isolado na série do Estado (mês que se afasta 5% ou mais dos dois vizinhos
   enquanto eles ficam a até 3% entre si), como out/2024. O número não muda.
 - Base a partir de janeiro de 2024 (33 competências).

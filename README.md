@@ -203,6 +203,12 @@ Os dados de origem seguem as licenças de seus publicadores (Anatel, IBGE e Rece
 **Danilo Valim**, Universidade Federal Rural do Rio de Janeiro (UFRRJ).
 ORCID: https://orcid.org/0009-0009-7250-6151
 
+### Uso de inteligência artificial
+
+O desenvolvimento contou com assistência de IA (Claude Code, da Anthropic) na escrita de
+código, testes e documentação. Concepção, escolha das fontes, decisões de método, revisão
+e validação são do autor. Detalhes em [`docs/USO-DE-IA.md`](docs/USO-DE-IA.md).
+
 ## Identificação acadêmica e citação
 
 | | |
