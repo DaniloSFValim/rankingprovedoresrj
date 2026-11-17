@@ -160,7 +160,7 @@ export function MapaMunicipios({ municipios }: { municipios: MunicipioIndice[] }
       </div>
 
       <p className="text-xs text-grafite-500">
-        Área proporcional ao número de acessos. Cor conforme {config.rotulo.toLowerCase()}.{' '}
+        Área proporcional ao número de acessos · Cor conforme {config.rotulo.toLowerCase()}.{' '}
         {config.descricao}
       </p>
 
