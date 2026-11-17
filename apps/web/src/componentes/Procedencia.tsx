@@ -62,7 +62,7 @@ export function AvisoLacunas({ meta }: { meta: Meta }) {
   );
 }
 
-const LINK = 'text-marca-400 underline-offset-4 hover:underline';
+const LINK = 'text-marca-400 underline underline-offset-4 hover:decoration-2';
 
 /**
  * Rodapé com autoria e registro citável, no mesmo desenho do OpenLux: o que é
@@ -78,13 +78,13 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
           <h2 className="text-base font-semibold text-tinta">{MARCA.nome}</h2>
           <p>
             Painel do mercado de banda larga fixa nos municípios do Rio de Janeiro, feito
-            sobre os dados abertos da Anatel. Os dados de cada página podem ser baixados em
-            JSON.
+            sobre dados públicos da Anatel, do IBGE e da Receita Federal. Os dados de cada
+            página podem ser baixados em JSON.
           </p>
           <p>
-            Não é site oficial da Prefeitura de Niterói nem da Seconser e não expressa
-            posição dessas instituições. CR-n e HHI são indicadores estatísticos, sem
-            conclusão jurídica, concorrencial ou regulatória.
+            Software independente, de autoria própria, com finalidade acadêmica. Sem
+            vínculo com a Anatel, com o IBGE ou com qualquer órgão público. CR-n e HHI são
+            indicadores estatísticos, sem conclusão jurídica, concorrencial ou regulatória.
           </p>
           <p className="numerico">
             Versão {citacao.versao}. Dados processados em{' '}

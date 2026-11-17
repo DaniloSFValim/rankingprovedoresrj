@@ -21,7 +21,7 @@ export default function PaginaRanking() {
   const c = kpis.concentracao;
 
   return (
-    <main className="space-y-12">
+    <div className="space-y-12">
       <div>
         <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
           Ranking dos provedores no {MARCA.ufSigla}
@@ -35,7 +35,7 @@ export default function PaginaRanking() {
 
             <div className="space-y-4">
         <h2 className="text-xl font-semibold text-tinta">Três maiores</h2>
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {ranking.slice(0, 3).map((linha, indice) => (
             <div
               key={linha.empresaId}
@@ -96,6 +96,6 @@ export default function PaginaRanking() {
         sem competência anterior aparecem marcadas como novas e não recebem variação
         percentual — um entrante não cresceu, ele entrou.
       </p>
-    </main>
+    </div>
   );
 }

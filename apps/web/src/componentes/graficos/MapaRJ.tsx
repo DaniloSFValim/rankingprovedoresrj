@@ -4,11 +4,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { EChartsOption } from 'echarts';
-import { Grafico } from '@/componentes/Grafico';
+import { Grafico, carregarEcharts } from '@/componentes/Grafico';
 import { lerUltimaCidade } from '@/componentes/SeletorCidade';
 import { MapaMunicipios } from '@/componentes/graficos/MapaMunicipios';
 import type { MunicipioIndice } from '@/lib/dados';
-import { inteiro } from '@/lib/formato';
+import { escaparHtml, inteiro } from '@/lib/formato';
 
 /**
  * Mapa coroplético dos municípios do Rio de Janeiro.
@@ -201,23 +201,27 @@ export function MapaRJ({ municipios, destaque }: Props) {
   const posicao = destacado ? ordenados.findIndex((m) => m.slug === destacado.slug) : -1;
 
   useEffect(() => {
+    // Cidade salva no navegador; lida após a montagem para não divergir da página estática.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!destaque) setSlugDestaque(lerUltimaCidade());
   }, [destaque]);
 
   // O ECharts registra o handler uma vez; a ref mantém o comportamento atual.
   const aoClicar = useRef<(codigo: string) => void>(() => {});
-  aoClicar.current = (codigo) => {
-    const m = municipios.find((x) => x.codigoIbge === codigo);
-    if (!m) return;
-    graficoRef.current?.dispatchAction({ type: 'hideTip' });
-    setAnimando(true);
-    window.setTimeout(() => setAnimando(false), 800);
-    if (destaque) {
-      if (m.slug !== destaque) router.push(`/municipios/${m.slug}/`);
-    } else {
-      setSlugDestaque((atual) => (atual === m.slug ? null : m.slug));
-    }
-  };
+  useEffect(() => {
+    aoClicar.current = (codigo) => {
+      const m = municipios.find((x) => x.codigoIbge === codigo);
+      if (!m) return;
+      graficoRef.current?.dispatchAction({ type: 'hideTip' });
+      setAnimando(true);
+      window.setTimeout(() => setAnimando(false), 800);
+      if (destaque) {
+        if (m.slug !== destaque) router.push(`/municipios/${m.slug}/`);
+      } else {
+        setSlugDestaque((atual) => (atual === m.slug ? null : m.slug));
+      }
+    };
+  });
 
   useEffect(() => {
     let cancelado = false;
@@ -229,9 +233,8 @@ export function MapaRJ({ municipios, destaque }: Props) {
         const malha = await resposta.json();
         if (cancelado) return;
 
-        const echartsModule = await import('echarts');
-        const echarts = (echartsModule as any).registerMap ? echartsModule : (echartsModule as any).default;
-        (echarts as any).registerMap(NOME_MAPA, malha);
+        const echarts = await carregarEcharts();
+        echarts.registerMap(NOME_MAPA, malha);
         setCaixas(caixasDaMalha(malha));
         setVizinhos(vizinhosDaMalha(malha));
         setEstado('pronto');
@@ -281,7 +284,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
           }
           const valor = config.valor(m);
           return (
-            `<b>${m.nome}</b><br/>` +
+            `<b>${escaparHtml(m.nome)}</b><br/>` +
             `${config.rotulo}: <b>${
               valor === null
                 ? 'n/d'
@@ -289,7 +292,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
             }</b><br/>` +
             `Acessos: ${m.totalAcessos.toLocaleString('pt-BR')}<br/>` +
             `Provedores: ${m.numeroProvedores}<br/>` +
-            `Líder: ${m.liderNome ?? 'n/d'}` +
+            `Líder: ${escaparHtml(m.liderNome ?? 'n/d')}` +
             (m.liderMarketShare !== null
               ? ` (${m.liderMarketShare.toFixed(1)}%)`
               : '') +
@@ -447,7 +450,9 @@ export function MapaRJ({ municipios, destaque }: Props) {
         }
         aoCriar={(grafico) => {
           graficoRef.current = grafico;
-          grafico.on('click', (p: { name?: string }) => p.name && aoClicar.current(String(p.name)));
+          grafico.on('click', (p: { name?: string }) => {
+            if (p.name) aoClicar.current(String(p.name));
+          });
         }}
       />
 
@@ -482,7 +487,7 @@ export function MapaRJ({ municipios, destaque }: Props) {
       })()}
 
       {!destaque && ordenados.length > 0 && (
-        <div className="grid gap-3 text-sm md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 text-sm md:grid-cols-3">
           <div className="cartao p-3">
             <p className="mb-2 text-sm font-semibold text-tinta">Maiores valores</p>
             <ol className="space-y-1">

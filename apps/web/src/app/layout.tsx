@@ -2,12 +2,9 @@ import type { Metadata } from 'next';
 import '@fontsource-variable/public-sans';
 import './globals.css';
 import { Navegacao } from '@/componentes/Navegacao';
-import type { ItemBusca } from '@/componentes/BuscaAvancada';
 import { FaixaDemonstrativo, RodapeProcedencia } from '@/componentes/Procedencia';
 import { CidadeSelecionadaProvider } from '@/contextos/CidadeSelecionada';
-import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta, lerRankingEstadual } from '@/lib/dados';
-import { cnpjFormatado } from '@/lib/formato';
-import { ehRepetido, nomesRepetidos } from '@/lib/homonimos';
+import { artefatosDisponiveis, lerIndiceMunicipios, lerMeta } from '@/lib/dados';
 import { MARCA } from '@/lib/marca';
 
 export const metadata: Metadata = {
@@ -64,37 +61,6 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
     numeroProvedores: m.numeroProvedores,
   }));
 
-  const provedores = lerRankingEstadual();
-  const repetidos = nomesRepetidos(provedores);
-
-  const itensBusca: ItemBusca[] = [
-    ...cidades.map((c) => ({
-      id: `municipio-${c.slug}`,
-      titulo: c.nome,
-      descricao: `${c.numeroProvedores} provedores`,
-      categoria: 'municipio' as const,
-      href: `/municipios/${c.slug}/`,
-      texto: c.nome,
-    })),
-    ...provedores.map((p) => {
-      const municipios = `${p.municipiosAtendidos || 0} ${p.municipiosAtendidos === 1 ? 'município' : 'municípios'}`;
-      return {
-        id: `provedor-${p.slug}`,
-        titulo: p.nome,
-        descricao:
-          ehRepetido(repetidos, p.nome) && p.cnpj
-            ? `CNPJ ${cnpjFormatado(p.cnpj)}`
-            : municipios,
-        categoria: 'provedor' as const,
-        href: `/provedores/${p.slug}/`,
-        texto: p.cnpj ? `${p.nome} ${p.cnpj}` : p.nome,
-      };
-    }),
-    { id: 'pagina-ranking', titulo: 'Ranking', categoria: 'pagina' as const, href: '/ranking/', texto: 'Ranking' },
-    { id: 'pagina-crescimento', titulo: 'Crescimento', categoria: 'pagina' as const, href: '/crescimento/', texto: 'Crescimento' },
-    { id: 'pagina-municipios', titulo: 'Municípios', categoria: 'pagina' as const, href: '/municipios/', texto: 'Municípios' },
-    { id: 'pagina-provedores', titulo: 'Provedores', categoria: 'pagina' as const, href: '/provedores/', texto: 'Provedores' },
-  ];
 
   return (
     <html lang="pt-BR" >
@@ -104,7 +70,7 @@ export default function LayoutRaiz({ children }: { children: React.ReactNode }) 
             Ir para conteúdo principal
           </a>
           <FaixaDemonstrativo meta={meta} />
-          <Navegacao meta={meta} cidades={cidades} itensBusca={itensBusca} />
+          <Navegacao meta={meta} cidades={cidades} />
           <main id="main-content" className="mx-auto max-w-7xl px-4 py-6 focus:outline-none">
             {children}
           </main>

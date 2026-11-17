@@ -18,6 +18,8 @@ export function CidadeSelecionadaProvider({ children }: { children: React.ReactN
   useEffect(() => {
     try {
       const salvo = localStorage.getItem(CHAVE_CIDADE_SELECIONADA);
+      // localStorage só existe no navegador: ler na montagem evita divergência de hidratação.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSlugCidade(salvo);
     } catch {
       setSlugCidade(null);

@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import type { EChartsOption } from 'echarts';
 import { Grafico } from '@/componentes/Grafico';
+import { escaparHtml } from '@/lib/formato';
 import { TETO_CRESCIMENTO, corCrescimento, corTextoCrescimento } from '@/lib/corCrescimento';
 
 /**
@@ -29,10 +30,10 @@ export function TreemapCrescimento({
     tooltip: {
       trigger: 'item',
       formatter: (params) => {
-        const p = (params as any).data;
+        const p = (params as unknown as { data: { nome: string; acessos: number; crescimento: number; marketShare: number } }).data;
         const sinal = p.crescimento > 0 ? '+' : '';
         return (
-          `<b>${p.nome}</b><br/>` +
+          `<b>${escaparHtml(p.nome)}</b><br/>` +
           `Acessos: ${p.acessos.toLocaleString('pt-BR')}<br/>` +
           `Variação ${periodo}: ${sinal}${p.crescimento.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%<br/>` +
           `Participação: ${p.marketShare.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`

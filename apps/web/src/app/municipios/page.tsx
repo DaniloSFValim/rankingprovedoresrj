@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Kpi } from '@/componentes/Kpi';
 import { Secao } from '@/componentes/Secao';
 import { MapaRJ } from '@/componentes/graficos/MapaRJ';
-import { lerIndiceMunicipios, lerKpis } from '@/lib/dados';
+import { lerIndiceMunicipios } from '@/lib/dados';
 import { corVariacao, inteiro, percentual, percentualComSinal } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
 
@@ -15,7 +15,6 @@ export const metadata = {
 
 export default function PaginaMunicipios() {
   const municipios = lerIndiceMunicipios();
-  const kpis = lerKpis();
 
   const maisProvedores = [...municipios].sort((a, b) => b.numeroProvedores - a.numeroProvedores)[0];
   const maisConcentrado = [...municipios]
@@ -26,7 +25,7 @@ export default function PaginaMunicipios() {
     .sort((a, b) => (b.variacao12Meses?.percentual ?? 0) - (a.variacao12Meses?.percentual ?? 0))[0];
 
   return (
-    <main className="space-y-12">
+    <div className="space-y-12">
       <div>
         <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
           Municípios do {MARCA.ufSigla}
@@ -113,6 +112,6 @@ export default function PaginaMunicipios() {
         município com poucos provedores não significa o mesmo que em município com
         muitos — leia sempre junto com a coluna de provedores.
       </p>
-    </main>
+    </div>
   );
 }

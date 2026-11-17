@@ -12,7 +12,7 @@ import {
   normalizarCnpj,
   type Competencia,
 } from '@netrank/core';
-import { classificarTipoAtuacao, type TipoAtuacao } from './classificar-tipo-atuacao.js';
+import { classificarTipoAtuacao } from './classificar-tipo-atuacao.js';
 import type { Banco } from '../warehouse/db.js';
 import type { ResultadoExtracao } from './extrair.js';
 

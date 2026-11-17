@@ -8,7 +8,6 @@ import { lerIndiceProvedores, lerPerfilProvedor } from '@/lib/dados';
 import {
   cnpjFormatado,
   compacto,
-  corVariacao,
   dataBr,
   inteiro,
   inteiroComSinal,
@@ -56,7 +55,7 @@ export default async function PaginaProvedor({ params }: Props) {
   const receita = perfil.receita ?? null;
 
   return (
-    <main className="space-y-12">
+    <div className="space-y-12">
       <div>
         <Link href="/provedores/" className="text-sm text-marca-400 underline-offset-2 hover:underline">
           ← Provedores
@@ -157,7 +156,7 @@ export default async function PaginaProvedor({ params }: Props) {
                 className="rounded-lg border border-alta/40 bg-alta/10 px-3 py-1.5 text-sm text-alta transition hover:bg-alta/20"
               >
                 {p.nome}{' '}
-                <span className="numerico text-xs opacity-70">
+                <span className="numerico text-xs">
                   {percentual(p.marketShareLocal, 0)}
                 </span>
               </Link>
@@ -237,7 +236,7 @@ export default async function PaginaProvedor({ params }: Props) {
           </dl>
         </Secao>
       )}
-    </main>
+    </div>
   );
 }
 

@@ -190,7 +190,7 @@ function carregarContexto(db: Banco): Contexto {
         nome: nomeParaExibicao(e.nome),
         cnpj: e.cnpj ?? null,
         grupoEconomico: e.grupo,
-        tipoAtuacao: (e.tipo_atuacao as any) || 'INDEFINIDO',
+        tipoAtuacao: (e.tipo_atuacao as EmpresaResumo['tipoAtuacao']) || 'INDEFINIDO',
       },
     ]),
   );
@@ -946,7 +946,7 @@ function construirMovimentacoes(
       municipiosAtual: contagem,
       variacao: contagem - (municipiosAnterior.get(empresaId) ?? 0),
     }))
-    .filter((e) => municipiosAnterior.size > 0)
+    .filter(() => municipiosAnterior.size > 0)
     .sort((a, b) => b.variacao - a.variacao);
 
   // Trocas de lideranca municipal.

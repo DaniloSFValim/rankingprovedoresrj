@@ -10,6 +10,8 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
+    // Os testes de navegador (e2e/) rodam no Playwright, não no Vitest.
+    include: ['src/**/*.test.{ts,tsx}'],
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     css: true,

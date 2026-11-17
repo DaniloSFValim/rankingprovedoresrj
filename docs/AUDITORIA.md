@@ -1,0 +1,182 @@
+# Relatório de auditoria técnica
+
+Auditoria integral do repositório em 17/11/2026, sobre o commit `bdd81fc` (dados da
+competência de setembro de 2026). Todas as verificações abaixo foram executadas; nenhum
+resultado foi estimado.
+
+## 1. Diagnóstico inicial
+
+O projeto já tinha uma base técnica sólida: separação clara entre cálculo (`packages/core`),
+ingestão (`packages/etl`) e apresentação (`apps/web`); 180 testes unitários nos pacotes;
+ingestão mensal automatizada; site estático sem servidor; registro no Zenodo com DOI.
+
+Os problemas estavam na periferia do código: identidade institucional indevida,
+dependências vulneráveis, ausência de lint, testes do site fora do CI, testes de navegador
+obsoletos, peso excessivo das páginas, documentação com informações falsas e metadados
+acadêmicos inconsistentes.
+
+## 2. Problemas encontrados
+
+| # | Criticidade | Problema | Situação |
+|---|---|---|---|
+| 1 | Crítica | Next.js 16.3.5 com vulnerabilidade crítica (execução remota em `next/og`) e outras 14 vulnerabilidades em dependências | Corrigido |
+| 2 | Alta | Referências à Prefeitura de Niterói e à Seconser no README, `CITATION.cff`, `.zenodo.json`, página Sobre, rodapé e `CONTEXT.md`, descrevendo o projeto como apoio à fiscalização municipal | Corrigido no repositório; pendente no registro já publicado do Zenodo |
+| 3 | Alta | E-mail pessoal do autor publicado no site em `dataset-schema.json`, arquivo sem uso | Corrigido (arquivo removido; permanece no histórico do Git) |
+| 4 | Alta | Tooltips dos gráficos renderizam como HTML nomes vindos de dados de terceiros (Anatel, Receita), sem escape: vetor de XSS | Corrigido |
+| 5 | Alta | Índice de busca (1.351 itens) embutido em todas as páginas: cerca de 200 KB por página e 933 MB de site compilado | Corrigido |
+| 6 | Alta | Testes do site (26) não rodavam em `npm test` nem no CI; os 4 arquivos de testes de navegador apontavam para páginas inexistentes e servidor de desenvolvimento (27 de 74 falhavam) | Corrigido |
+| 7 | Média | Sem lint: o script `next lint` não existe no Next.js 16; 45 achados ao configurar o ESLint | Corrigido |
+| 8 | Média | `npm run typecheck` quebrado (referências de projeto TypeScript sem `composite`) | Corrigido |
+| 9 | Média | Violações WCAG 2.1 AA: atributo ARIA inválido na busca (crítico no axe), contraste insuficiente nas variações do ranking (até 1.672 nós por página), links sem sublinhado em texto; `main` duplicado em todas as páginas | Corrigido |
+| 10 | Média | Rolagem horizontal no celular em `/provedores/` (256 px) e `/crescimento/` (179 px) | Corrigido |
+| 11 | Média | Sem cabeçalhos de segurança HTTP (CSP, anti-clickjacking, `nosniff`) | Corrigido |
+| 12 | Média | `security.yml` nunca falhava (`npm audit ... \|\| true`, `continue-on-error`) e afirmava tolerar vulnerabilidades "do BigQuery" | Corrigido |
+| 13 | Média | Guias em `docs/` com informações falsas: domínio `rankingprovedoresrj.com`, testes de carga com k6 e contatos de emergência inexistentes | Corrigido (substituídos) |
+| 14 | Média | README com cobertura desatualizada ("jan/2024 a jul/2026"; real: jan/2025 a set/2026) | Corrigido |
+| 15 | Baixa | 822 linhas de código do ETL sem nenhum uso (`metadados`, `relatorio-qualidade`, `validacoes-matematicas`) | Corrigido (removido; as verificações viraram testes de integridade) |
+| 16 | Baixa | `CITATION.cff` com data de publicação divergente do Zenodo (24/09 x 25/09) e nome diferente do ORCID e do Zenodo | Corrigido |
+| 17 | Baixa | BibTeX da página Sobre com tipo `@dataset` e DOI de exemplo como alternativa | Corrigido |
+| 18 | Baixa | Sem `.env.example`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md` | Corrigido |
+
+## 3. Problemas corrigidos e melhorias
+
+### Arquitetura e manutenção
+
+- Índice de busca gerado como arquivo estático (`src/app/busca.json/route.ts`) e carregado
+  sob demanda, com estados de carregamento e erro.
+- Função única `carregarEcharts` para o carregamento dinâmico do ECharts, com tipos, no lugar
+  de quatro conversões para `any`.
+- Remoção de código morto; tipagem dos parâmetros de tooltip e da instância do gráfico.
+- Leitura de `localStorage` após a montagem documentada como exceção justificada à regra
+  `set-state-in-effect`; os demais `setState` em efeito foram movidos para os eventos.
+
+### Segurança
+
+- Dependências: Next.js 16.4.6, Vitest 5.1, `@vitejs/plugin-react` 6, csv-parse 7,
+  BigQuery 9 e overrides para `vite`, `source-map-js` e `postcss-selector-parser`.
+  `npm audit`: **0 vulnerabilidades** (antes: 1 crítica, 3 altas, 11 moderadas).
+- `escaparHtml` nos tooltips de todos os gráficos com nomes de terceiros.
+- `apps/web/public/_headers` com CSP restrita ao próprio domínio, `X-Frame-Options: DENY`,
+  `nosniff`, `Referrer-Policy`, `Permissions-Policy` e COOP. A CSP foi testada no navegador
+  nas páginas com gráficos e mapa: nenhuma violação e todos os gráficos renderizados.
+- Varredura de segredos no repositório: nenhuma chave, token ou arquivo `.env` versionado.
+- SQL do warehouse: consultas parametrizadas; os trechos dinâmicos montam só marcadores `?`.
+
+### Desempenho
+
+| Medida | Antes | Depois |
+|---|---|---|
+| Site compilado | 933 MB | 243 MB |
+| HTML da página Sobre | 261 KB | 52 KB |
+| HTML da página de um provedor | 373 KB | 163 KB |
+
+### Interface e acessibilidade
+
+- Zero violações WCAG 2.1 A/AA (axe-core) nas 8 páginas principais, em desktop (1280 px) e
+  celular (Pixel 5).
+- Sem rolagem horizontal no celular.
+- Um único landmark `main` por página; combobox de busca com `aria-controls`.
+- Rodapé e Sobre apresentam o projeto como software independente, com autoria, ORCID, DOI e
+  licenças.
+
+### Qualidade e testes
+
+- ESLint 9 (`eslint.config.mjs`) com regras do Next.js, React Hooks, jsx-a11y e TypeScript.
+- `npm test` roda os testes dos pacotes e do site.
+- Testes de integridade dos artefatos publicados (11 invariantes).
+- Testes de navegador reescritos sobre o site estático (29 cenários × 2 dispositivos).
+- `check-metadata` valida o `CITATION.cff` contra o schema CFF 1.2.0 e o dígito verificador
+  do ORCID (ISO 7064 MOD 11-2).
+- CI: lint, typecheck, testes, metadados, build e testes de navegador; segurança com
+  `npm audit --audit-level=high` bloqueante e CodeQL.
+
+## 4. Testes executados
+
+Executados neste ambiente (Node.js 22, Chromium do Playwright), na versão final:
+
+| Verificação | Comando | Resultado |
+|---|---|---|
+| Lint | `npm run lint` | 0 erros, 0 avisos |
+| Tipos | `npm run typecheck` | 0 erros nos 3 pacotes |
+| Unitários e integridade (core, etl) | `npm test` | 191 aprovados em 15 arquivos |
+| Componentes (site) | `npm test` | 26 aprovados em 5 arquivos |
+| Metadados | `npm run check-metadata` | Consistentes; CFF válido; ORCID válido |
+| Build | `npm run build` | Concluído |
+| Navegador | `npm run test:e2e` | 58 aprovados (desktop e celular) |
+| Dependências | `npm audit` | 0 vulnerabilidades |
+
+Não executados aqui: Firefox e WebKit (só Chromium está disponível neste ambiente), CodeQL
+(roda no GitHub) e a ingestão completa a partir das fontes (exige baixar arquivos de mais
+de 1 GB; o fluxo é exercitado mensalmente pelo workflow de ingestão).
+
+## 5. Documentação criada ou atualizada
+
+| Arquivo | Conteúdo |
+|---|---|
+| `README.md` | Reescrito: propósito, funcionalidades, arquitetura com diagrama, tecnologias, estrutura, execução num clone limpo, testes, dados, limitações, licença, autoria e identificação acadêmica |
+| `docs/ARQUITETURA.md` | Componentes, fluxo de dados (diagramas Mermaid), artefatos, automação e decisões |
+| `docs/DADOS.md` | Fontes, níveis de dado (original, tratado, indicador, sinal), transformações, fórmulas, critérios, alertas, reprodução e limitações |
+| `docs/DESENVOLVIMENTO.md` | Ambiente, comandos, testes, CI, publicação, ingestão, versão citável e problemas comuns |
+| `SECURITY.md` | Superfície, controles, limitações e como relatar vulnerabilidades |
+| `CHANGELOG.md`, `CONTRIBUTING.md`, `.env.example` | Criados |
+| `CITATION.cff`, `.zenodo.json`, `CONTEXT.md`, `docs/PADROES.md` | Sem referência institucional; metadados coerentes com o Zenodo e o ORCID |
+
+## 6. Identificação científica: DOI, Zenodo e ORCID
+
+Verificado por consulta às APIs públicas do Zenodo, do DataCite (resolução do DOI) e do ORCID.
+
+| Elemento | Resultado | Situação |
+|---|---|---|
+| DOI de conceito | `10.5281/zenodo.22839933` resolve (HTTP 302) para o registro no Zenodo | Aprovado |
+| DOI da versão 1.1.0 | `10.5281/zenodo.22948694`, publicado em 25/09/2026 | Aprovado |
+| Outras versões | 1.0.1, `10.5281/zenodo.22839934`, de 19/09/2026 | Documentado no CHANGELOG |
+| Registro no Zenodo | Público e acessível (HTTP 200), acesso aberto | Aprovado |
+| ORCID | `0009-0009-7250-6151`: dígito verificador válido; registro público com nome de crédito "Danilo Valim"; presente no criador do registro do Zenodo | Aprovado |
+| Obra no perfil ORCID | O perfil público não lista o NETRANK entre as obras | Pendente (ação do autor) |
+| `CITATION.cff` | Válido no schema CFF 1.2.0; DOI de conceito e de versão; ORCID; data igual à do Zenodo | Corrigido |
+| README | Seção "Identificação acadêmica e citação" com DOI, registro, ORCID, versão e citação | Corrigido |
+| Integração GitHub–Zenodo | `.zenodo.json` presente; a ativação do webhook só é visível na conta do autor | Não verificável daqui |
+| Licença | Repositório: AGPL-3.0 (código) e CC BY 4.0 (dados e documentação). Zenodo 1.1.0: CC BY 4.0 | Divergente até a próxima versão |
+| Metadados entre plataformas | Título, versão, autor e ORCID coerentes. A descrição do registro 1.1.0 no Zenodo ainda cita a Seconser | Pendente (ação do autor) |
+
+### Ações que dependem do autor
+
+1. **Descrição do registro no Zenodo.** Em zenodo.org, abra o registro 1.1.0, clique em
+   *Edit*, substitua a descrição pelo texto de `.zenodo.json` e publique. Editar metadados não
+   gera DOI novo. Alternativa: publicar a próxima versão (passo 3), que já usa o texto novo.
+2. **Obra no ORCID.** Em orcid.org, *Works → Add → Search & link → DataCite*, autorize e
+   importe o registro do NETRANK; ou *Add manually* com o DOI de conceito. No DataCite, a
+   opção de atualização automática do ORCID passa a incluir as próximas versões.
+3. **Próxima versão citável (sugerida: 1.2.0).** Siga `docs/DESENVOLVIMENTO.md`, seção
+   "Nova versão citável". O Zenodo cria um DOI de versão sob o mesmo DOI de conceito, com a
+   licença AGPL-3.0 e a descrição nova.
+4. **Integração GitHub–Zenodo.** Em zenodo.org, *Settings → GitHub*, confirme que o
+   repositório `DaniloSFValim/rankingprovedoresrj` está ativado.
+
+## 7. Pendências e limitações
+
+| Item | Motivo |
+|---|---|
+| Descrição e licença do registro 1.1.0 no Zenodo | Exigem acesso à conta do autor |
+| Obra ausente no perfil ORCID | Exige login do autor no ORCID |
+| Histórico do Git contém o e-mail removido e os textos institucionais antigos | Reescrever o histórico de `main` é destrutivo e não foi feito; o conteúdo atual está limpo |
+| CSP com `'unsafe-inline'` | Exigência da exportação estática do Next.js e do ECharts (ver `SECURITY.md`) |
+| Cabeçalhos de `_headers` | Só aplicados no Cloudflare Workers; confirmar com uma requisição ao site publicado após o deploy |
+| Testes de navegador só no Chromium | Firefox e WebKit não estão disponíveis neste ambiente |
+| `docs/PADROES.md` diverge das cópias do OpenLux e do CADEX | As referências a outros projetos e à Prefeitura foram retiradas desta cópia |
+| Limitações dos dados (declaratórios, velocidade contratada, densidade em municípios de veraneio) | Inerentes às fontes; documentadas em `docs/DADOS.md` e sinalizadas por alertas |
+
+## 8. Avaliação de maturidade
+
+| Dimensão | Avaliação |
+|---|---|
+| Arquitetura | Madura: camadas separadas, cálculo puro testado, site estático sem superfície de servidor |
+| Qualidade de código | Boa: lint e tipos estritos sem erros; código morto removido |
+| Testes | Boa: unitários, componentes, integridade dos dados e navegador com acessibilidade, todos no CI |
+| Segurança | Boa para um site estático: sem vulnerabilidades conhecidas, cabeçalhos restritivos, XSS tratado, sem segredos |
+| Dados e reprodutibilidade | Boa: procedência registrada, níveis de dado separados, nada estimado, pipeline reprodutível e automatizado |
+| Documentação | Boa: README executável num clone limpo, arquitetura, dados, desenvolvimento e segurança |
+| Identificação acadêmica | Parcial: DOI, ORCID e CFF corretos e verificados no repositório; registro no Zenodo e perfil ORCID dependem de ação do autor |
+
+O software está em condições de avaliação técnica independente. Para fechar a parte de
+identificação acadêmica, faltam as quatro ações do autor listadas na seção 6.

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import type { EChartsOption } from 'echarts';
 import { Grafico } from '@/componentes/Grafico';
 import type { MunicipioIndice } from '@/lib/dados';
+import { escaparHtml } from '@/lib/formato';
 
 /**
  * Mapa de calor dos municípios, com métrica alternável.
@@ -87,11 +88,11 @@ export function MapaMunicipios({ municipios }: { municipios: MunicipioIndice[] }
           const dados = (p as { data?: { nome?: string; metrica?: number | null; acessos?: number; provedores?: number; lider?: string | null } }).data;
           if (!dados) return '';
           return (
-            `<b>${dados.nome}</b><br/>` +
+            `<b>${escaparHtml(dados.nome)}</b><br/>` +
             `${config.rotulo}: <b>${dados.metrica === null || dados.metrica === undefined ? 'n/d' : dados.metrica.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}${config.sufixo}</b><br/>` +
             `Acessos: ${(dados.acessos ?? 0).toLocaleString('pt-BR')}<br/>` +
             `Provedores: ${dados.provedores ?? 0}<br/>` +
-            `Líder: ${dados.lider ?? 'n/d'}`
+            `Líder: ${escaparHtml(dados.lider ?? 'n/d')}`
           );
         },
       },

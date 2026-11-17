@@ -1,33 +1,39 @@
 cff-version: 1.2.0
-message: "Se usar este trabalho, cite-o conforme os metadados abaixo."
+message: "Se usar este software, cite-o conforme os metadados abaixo."
 type: software
 title: "NETRANK RJ: Painel do Mercado de Banda Larga Fixa no Estado do Rio de Janeiro"
 abstract: >-
-  Painel público e pipeline reprodutível de análise do mercado de banda larga
-  fixa nos 92 municípios do Estado do Rio de Janeiro, construído sobre os dados
-  abertos de acessos da Anatel, o cadastro de CNPJ da Receita Federal e os
-  domicílios do Censo 2022 (IBGE). Calcula participação de mercado, índices de
-  concentração (CR-n e HHI), densidade de acessos por domicílio e distribuição
-  por velocidade contratada, com atualização mensal automatizada. Desenvolvido
-  como instrumento de apoio ao monitoramento de serviços concedidos pela
-  Secretaria Municipal de Conservação e Serviços Públicos de Niterói (Seconser).
+  Software independente, de finalidade acadêmica e de pesquisa: painel público
+  e pipeline reprodutível de análise do mercado de banda larga fixa nos 92
+  municípios do Estado do Rio de Janeiro. Usa apenas dados públicos: os acessos
+  de banda larga fixa publicados pela Anatel, os domicílios do Censo 2022 e a
+  malha municipal do IBGE, e o cadastro de CNPJ da Receita Federal. Calcula
+  participação de mercado, índices de concentração (CR-n e HHI), densidade de
+  acessos por domicílio e distribuição por velocidade contratada, com
+  atualização mensal automatizada e alertas de qualidade dos dados declarados.
 authors:
   - family-names: Valim
-    given-names: "Danilo S. F."
+    given-names: Danilo
     orcid: "https://orcid.org/0009-0009-7250-6151"
     affiliation: "Universidade Federal Rural do Rio de Janeiro (UFRRJ)"
 repository-code: "https://github.com/DaniloSFValim/rankingprovedoresrj"
 url: "https://netranking-rj.labdados.org"
 doi: "10.5281/zenodo.22839933"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22839933"
+    description: "DOI de conceito: todas as versões, resolve para a mais recente."
+  - type: doi
+    value: "10.5281/zenodo.22948694"
+    description: "DOI da versão 1.1.0."
 license: AGPL-3.0-only
 version: "1.1.0"
-date-released: "2026-09-24"
+date-released: "2026-09-25"
 keywords:
   - banda larga fixa
   - telecomunicações
   - concentração de mercado
   - índice Herfindahl-Hirschman
-  - políticas públicas
   - dados abertos
   - Anatel
   - Rio de Janeiro
@@ -42,6 +48,11 @@ references:
     authors:
       - name: "Instituto Brasileiro de Geografia e Estatística (IBGE)"
     url: "https://sidra.ibge.gov.br/tabela/4712"
+  - type: data
+    title: "Malha Municipal"
+    authors:
+      - name: "Instituto Brasileiro de Geografia e Estatística (IBGE)"
+    url: "https://servicodados.ibge.gov.br/api/docs/malhas"
   - type: data
     title: "Cadastro Nacional da Pessoa Jurídica — dados abertos"
     authors:

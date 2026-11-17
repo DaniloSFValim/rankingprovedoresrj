@@ -78,7 +78,7 @@ export function Destaques({ movimentacoes }: { movimentacoes: Movimentacoes }) {
   }
 
   return (
-    <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
       {cartoes.map((c) => (
         <div key={c.rotulo} className="border-t-2 border-tinta pt-3">
           <div className="text-sm text-grafite-400">{c.rotulo}</div>

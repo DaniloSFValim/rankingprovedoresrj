@@ -6,9 +6,9 @@ indicadores, alertas ou a forma de apresentar os dados.
 ## O que o painel é
 
 Painel estático sobre os acessos de banda larga fixa nos 92 municípios do
-Estado do Rio de Janeiro, a partir dos dados abertos da Anatel. Serve de apoio
-ao monitoramento de serviços concedidos da Seconser (Niterói). É um trabalho
-independente e citável (DOI 10.5281/zenodo.22839933), sem vínculo com a Anatel.
+Estado do Rio de Janeiro, a partir de dados públicos (Anatel, IBGE, Receita
+Federal). Software independente, de autoria própria, com finalidade acadêmica
+e de pesquisa, citável pelo DOI 10.5281/zenodo.22839933.
 
 ## Decisões
 
@@ -17,10 +17,11 @@ HHI) são mostrados como números. Não rotulamos um mercado como "concentrado"
 ou "competitivo", e não citamos limites regulatórios (como as faixas de HHI do
 CADE): isso seria conclusão concorrencial, que o painel não faz.
 
-**Não é site oficial.** O painel cita a Seconser porque nasceu como apoio à
-fiscalização, mas não é da Prefeitura nem expressa posição dela. Qualquer texto
-que mencione a Secretaria deve deixar isso explícito: concentração de mercado é
-tema sensível com as prestadoras que a Prefeitura acompanha.
+**Produto independente.** O projeto se apresenta só como software
+independente do autor. Não é associado, em nenhum texto, metadado ou elemento
+visual, a prefeitura, secretaria, órgão público ou empresa, nem descrito como
+ferramenta de fiscalização ou gestão governamental. As instituições que
+publicam os dados são citadas como fontes, sem sugerir vínculo.
 
 **Piso nas movimentações.** As listas de variação percentual e de avanço no
 ranking só incluem provedores com ao menos 1.000 acessos no mês anterior (100 na

@@ -1,7 +1,12 @@
-# Cabecalhos para Cloudflare Pages.
-# Artefatos de dados: cache curto no navegador, longo na CDN.
-/data/*
-  Cache-Control: public, max-age=300, s-maxage=86400
-
-/_next/static/*
-  Cache-Control: public, max-age=31536000, immutable
+# Cabeçalhos de segurança aplicados pelo Cloudflare Workers (static assets).
+# O site é estático e não usa recursos de terceiros: fontes, scripts e dados
+# vêm do próprio domínio. 'unsafe-inline' em script-src é exigido pelos
+# scripts de hidratação que a exportação estática do Next embute no HTML;
+# em style-src, pelos estilos que o ECharts aplica nos elementos.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin

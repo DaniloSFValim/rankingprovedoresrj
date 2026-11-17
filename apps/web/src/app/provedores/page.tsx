@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { lerIndiceProvedores, lerKpis } from '@/lib/dados';
+import { lerIndiceProvedores } from '@/lib/dados';
 import { inteiro, percentual } from '@/lib/formato';
 import { MARCA } from '@/lib/marca';
 
@@ -12,10 +12,9 @@ export const metadata = {
 
 export default function PaginaProvedores() {
   const provedores = lerIndiceProvedores();
-  const kpis = lerKpis();
 
   return (
-    <main className="space-y-12">
+    <div className="space-y-12">
       <div>
         <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta md:text-4xl">
           Provedores do {MARCA.ufSigla}
@@ -25,7 +24,7 @@ export default function PaginaProvedores() {
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {provedores.map((p) => (
           <Link
             key={p.id}
@@ -50,6 +49,6 @@ export default function PaginaProvedores() {
           </Link>
         ))}
       </div>
-    </main>
+    </div>
   );
 }
