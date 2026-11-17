@@ -8,6 +8,12 @@ arquivada no Zenodo sob o DOI de conceito
 
 ## [Não publicado]
 
+### Alterado
+
+- Bloco de identificação acadêmica no rodapé e no README: software acadêmico de
+  inteligência de dados, com DOI (Zenodo), ORCID e GitHub.
+- DOI da versão 1.2.0 no `CITATION.cff`, no README e no CHANGELOG.
+
 ## [1.2.0] - 2026-11-17
 
 DOI da versão: [10.5281/zenodo.24312771](https://doi.org/10.5281/zenodo.24312771).
