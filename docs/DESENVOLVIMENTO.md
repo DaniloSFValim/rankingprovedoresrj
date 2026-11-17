@@ -56,7 +56,8 @@ Para os testes de navegador num ambiente que já tem Chromium e não pode baixá
 ## Publicação
 
 - `deploy.yml` publica `apps/web/out` no Cloudflare Workers (`wrangler.toml`, só arquivos
-  estáticos) a cada push em `main` e ao fim de cada ingestão. Recusa publicar se
+  estáticos) a cada push em `main` e ao fim de cada ingestão. É o único caminho de publicação: a integração
+  de Git da Cloudflare (Workers Builds) fica desconectada para não duplicar o deploy. Recusa publicar se
   `meta.json` estiver marcado como dados demonstrativos.
 - Segredos do repositório: `CLOUDFLARE_API_TOKEN` e `CLOUDFLARE_ACCOUNT_ID`; na ingestão
   pela Base dos Dados, `GCP_SERVICE_ACCOUNT_JSON`; opcional, `DADOS_GOV_BR_API_KEY`.

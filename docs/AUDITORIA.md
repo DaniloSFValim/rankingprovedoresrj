@@ -147,7 +147,6 @@ para a 1.2.0.
 
 | Item | Motivo |
 |---|---|
-| Integração Workers Builds da Cloudflare falha em todo PR | Duplica o deploy oficial (`deploy.yml`); desconectar no painel da Cloudflare |
 | Histórico do Git contém o e-mail removido e os textos institucionais antigos | Reescrever o histórico de `main` é destrutivo e não foi feito; o conteúdo atual está limpo |
 | CSP com `'unsafe-inline'` | Exigência da exportação estática do Next.js e do ECharts (ver `SECURITY.md`) |
 | Cabeçalhos de `_headers` | Só aplicados no Cloudflare Workers; confirmar com uma requisição ao site publicado após o deploy |
