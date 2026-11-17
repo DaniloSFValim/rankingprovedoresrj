@@ -68,6 +68,7 @@ import {
 import { FONTE_ANATEL } from './sources/anatel.js';
 import { baixarDomicilios, lerDomicilios } from './pipeline/domicilios.js';
 import { atualizarCadastroReceita, lerCacheReceita, sondarFontesReceita } from './pipeline/receita.js';
+import { arquivarPublicacao } from './pipeline/arquivo.js';
 import { abrirBanco, type Banco } from './warehouse/db.js';
 
 /**
@@ -803,6 +804,17 @@ async function principal(): Promise<void> {
       case 'build':
         build(db);
         break;
+      case 'arquivar': {
+        const r = arquivarPublicacao(db);
+        if (r.tipo === 'gravado') {
+          console.log(`Publicação arquivada: ${r.entrada.arquivo} (${r.entrada.linhas} linhas, ${r.entrada.competenciaInicial} a ${r.entrada.competenciaFinal}).`);
+        } else if (r.tipo === 'inalterado') {
+          console.log('Publicação igual à última arquivada. Nada gravado.');
+        } else {
+          console.log('Warehouse vazio. Nada arquivado.');
+        }
+        break;
+      }
       case 'receita': {
         await atualizarCadastroReceita(db);
         break;
@@ -825,6 +837,7 @@ async function principal(): Promise<void> {
           'Comandos:\n' +
             '  descobrir                lista os arquivos da Anatel no catalogo aberto\n' +
             '  sincronizar [--anos N]   descobre, baixa e importa sem intervencao\n' +
+            '  arquivar                 grava o retrato da publicacao atual em data/arquivo-anatel\n' +
             '  atualizar <url> [--forcar]  baixa, importa e reconstroi os artefatos\n' +
             '  importar <csv> [--latin1]   importa um arquivo ja baixado\n' +
             '  demo                     gera fixture sintetica e roda o pipeline\n' +

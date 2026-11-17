@@ -8,6 +8,11 @@ arquivada no Zenodo sob o DOI de conceito
 
 ## [Não publicado]
 
+### Adicionado
+
+- Arquivo das publicações da Anatel (`data/arquivo-anatel`, comando `arquivar`): um
+  retrato por publicação, para medir revisões de competências já publicadas.
+
 ### Alterado
 
 - Bloco de identificação acadêmica no rodapé e no README: software acadêmico de
