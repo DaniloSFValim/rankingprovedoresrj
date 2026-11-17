@@ -60,6 +60,12 @@ competência ausente aparece como lacuna (`null`), nunca como zero ou valor esti
 | Variação mensal e em 12 meses | Diferença absoluta e percentual contra a mesma prestadora ou recorte no período anterior |
 | Ranking | Ordem decrescente de acessos; empates recebem a mesma posição (1, 2, 2, 4) |
 
+### Salto isolado na série do Estado
+
+Mês que se afasta 5% ou mais da média dos dois vizinhos, enquanto os vizinhos ficam a até
+3% entre si (`saltosIsolados`, em `packages/core/src/serie.ts`). Hoje marca out/2024. A
+página inicial mostra o aviso abaixo do gráfico; o número não muda.
+
 ### O que os números medem e o que não medem
 
 | Medida | É | Não é |

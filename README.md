@@ -211,20 +211,21 @@ ORCID: https://orcid.org/0009-0009-7250-6151
 | DOI da versão 1.1.0 | [10.5281/zenodo.22948694](https://doi.org/10.5281/zenodo.22948694) |
 | Registro no Zenodo | [zenodo.org/records/22948694](https://zenodo.org/records/22948694) |
 | ORCID do autor | [0009-0009-7250-6151](https://orcid.org/0009-0009-7250-6151) |
-| Versão citável | 1.1.0, publicada em 25/09/2026 |
+| Versão atual do código | 1.2.0, de 17/11/2026; o DOI desta versão é atribuído pelo Zenodo ao publicar o release |
+| Última versão arquivada | 1.1.0, de 25/09/2026 |
 
 Use o DOI de conceito para citar o projeto e o DOI de versão para citar exatamente a versão
 usada.
 
-> Valim, D. (2026). *NETRANK RJ: Painel do Mercado de Banda Larga Fixa no Estado do Rio de
-> Janeiro* (versão 1.1.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.22839933
+> Valim, D. (2026). *NETRANK RJ: Plataforma de Inteligência de Dados da Banda Larga Fixa no
+> Estado do Rio de Janeiro* (versão 1.2.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.22839933
 
 ```bibtex
 @software{valim_netrank_rj_2026,
   author    = {Valim, Danilo},
-  title     = {{NETRANK RJ}: Painel do Mercado de Banda Larga Fixa no Estado do Rio de Janeiro},
+  title     = {{NETRANK RJ}: Plataforma de Inteligência de Dados da Banda Larga Fixa no Estado do Rio de Janeiro},
   year      = {2026},
-  version   = {1.1.0},
+  version   = {1.2.0},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.22839933},
   url       = {https://doi.org/10.5281/zenodo.22839933}
