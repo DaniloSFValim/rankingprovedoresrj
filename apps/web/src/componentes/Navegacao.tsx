@@ -14,7 +14,7 @@ const ITENS = [
   { href: '/sobre/', rotulo: 'Sobre' },
 ] as const;
 
-export function Navegacao({ meta, cidades, itensBusca = [] }: { meta: Meta; cidades: CidadeOpcao[]; itensBusca?: ItemBusca[] }) {
+export function Navegacao({ meta, cidades, itensBusca }: { meta: Meta; cidades: CidadeOpcao[]; itensBusca?: ItemBusca[] }) {
   return (
     <header className="sticky top-0 z-30 border-b border-grafite-700 bg-white">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
@@ -40,11 +40,9 @@ export function Navegacao({ meta, cidades, itensBusca = [] }: { meta: Meta; cida
         </nav>
 
         <div className="ml-auto flex w-full flex-col items-end gap-4 md:w-auto md:flex-row">
-          {itensBusca.length > 0 && (
-            <div className="w-full md:w-80">
-              <BuscaAvancada itens={itensBusca} placeholder="Buscar..." />
-            </div>
-          )}
+          <div className="w-full md:w-80">
+            <BuscaAvancada itens={itensBusca} placeholder="Buscar..." />
+          </div>
           <SeletorCidadeNav cidades={cidades} />
           <div className="hidden text-right sm:block">
             <div className="text-xs text-grafite-400">Dados de</div>

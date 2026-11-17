@@ -1,10 +1,10 @@
 {
   "title": "NETRANK RJ: Painel do Mercado de Banda Larga Fixa no Estado do Rio de Janeiro",
   "upload_type": "software",
-  "description": "<p>Painel público e pipeline reprodutível de análise do mercado de banda larga fixa nos 92 municípios do Estado do Rio de Janeiro, construído sobre os dados abertos de acessos da Anatel, o cadastro de CNPJ da Receita Federal e os domicílios do Censo 2022 (IBGE).</p><p>Calcula participação de mercado, índices de concentração (CR-n e HHI), densidade de acessos por domicílio e distribuição por velocidade contratada, com atualização mensal automatizada.</p><p>Desenvolvido como instrumento de apoio ao monitoramento de serviços concedidos pela Secretaria Municipal de Conservação e Serviços Públicos de Niterói (Seconser). Os indicadores são estatísticos e não constituem conclusão jurídica, concorrencial ou regulatória.</p><p>Painel: <a href=\"https://netranking-rj.labdados.org\">netranking-rj.labdados.org</a></p>",
+  "description": "<p>Software independente, de finalidade acadêmica e de pesquisa: painel público e pipeline reprodutível de análise do mercado de banda larga fixa nos 92 municípios do Estado do Rio de Janeiro.</p><p>Usa apenas dados públicos: os acessos de banda larga fixa publicados pela Anatel, os domicílios do Censo 2022 e a malha municipal do IBGE, e o cadastro de CNPJ da Receita Federal. Calcula participação de mercado, índices de concentração (CR-n e HHI), densidade de acessos por domicílio e distribuição por velocidade contratada, com atualização mensal automatizada e alertas de qualidade dos dados declarados.</p><p>Os indicadores são estatísticos e não constituem conclusão jurídica, concorrencial ou regulatória. Sem vínculo com as instituições que publicam os dados nem com qualquer órgão público.</p><p>Painel: <a href=\"https://netranking-rj.labdados.org\">netranking-rj.labdados.org</a></p>",
   "creators": [
     {
-      "name": "Valim, Danilo S. F.",
+      "name": "Valim, Danilo",
       "orcid": "0009-0009-7250-6151",
       "affiliation": "Universidade Federal Rural do Rio de Janeiro (UFRRJ)"
     }
@@ -18,13 +18,20 @@
     "telecomunicações",
     "concentração de mercado",
     "índice Herfindahl-Hirschman",
-    "políticas públicas",
     "dados abertos",
     "Anatel",
     "Rio de Janeiro"
   ],
   "related_identifiers": [
-    { "identifier": "https://netranking-rj.labdados.org", "relation": "isDocumentedBy", "resource_type": "other" },
-    { "identifier": "https://github.com/DaniloSFValim/rankingprovedoresrj", "relation": "isSupplementTo", "resource_type": "software" }
+    {
+      "identifier": "https://netranking-rj.labdados.org",
+      "relation": "isDocumentedBy",
+      "resource_type": "other"
+    },
+    {
+      "identifier": "https://github.com/DaniloSFValim/rankingprovedoresrj",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
   ]
 }

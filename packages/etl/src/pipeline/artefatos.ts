@@ -190,7 +190,7 @@ function carregarContexto(db: Banco): Contexto {
         nome: nomeParaExibicao(e.nome),
         cnpj: e.cnpj ?? null,
         grupoEconomico: e.grupo,
-        tipoAtuacao: (e.tipo_atuacao as any) || 'INDEFINIDO',
+        tipoAtuacao: (e.tipo_atuacao as EmpresaResumo['tipoAtuacao']) || 'INDEFINIDO',
       },
     ]),
   );

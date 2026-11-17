@@ -14,19 +14,41 @@ export interface ItemBusca {
 }
 
 interface Props {
-  itens: ItemBusca[];
+  /** Itens já disponíveis. Sem eles, o índice é baixado de `fonte` no primeiro foco. */
+  itens?: ItemBusca[];
+  fonte?: string;
   placeholder?: string;
   aoSelecionarItem?: (item: ItemBusca) => void;
 }
 
 export function BuscaAvancada({
-  itens,
+  itens: itensIniciais,
+  fonte = '/busca.json',
   placeholder = 'Buscar municípios, provedores...',
   aoSelecionarItem,
 }: Props) {
   const [busca, setBusca] = useState('');
   const [aberto, setAberto] = useState(false);
   const [indiceFoco, setIndiceFoco] = useState(0);
+  const [itensCarregados, setItensCarregados] = useState<ItemBusca[] | null>(null);
+  const [estadoIndice, setEstadoIndice] = useState<'ocioso' | 'carregando' | 'erro'>('ocioso');
+  const itens = useMemo(() => itensIniciais ?? itensCarregados ?? [], [itensIniciais, itensCarregados]);
+
+  /** Baixa o índice uma vez, quando a busca é usada pela primeira vez. */
+  const carregarIndice = () => {
+    if (itensIniciais || itensCarregados || estadoIndice === 'carregando') return;
+    setEstadoIndice('carregando');
+    fetch(fonte)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json() as Promise<ItemBusca[]>;
+      })
+      .then((dados) => {
+        setItensCarregados(dados);
+        setEstadoIndice('ocioso');
+      })
+      .catch(() => setEstadoIndice('erro'));
+  };
   const container = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
 
@@ -94,7 +116,10 @@ export function BuscaAvancada({
           setIndiceFoco(0);
           setAberto(true);
         }}
-        onFocus={() => setAberto(true)}
+        onFocus={() => {
+          carregarIndice();
+          setAberto(true);
+        }}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         className="w-full rounded-lg border border-grafite-700 bg-grafite-900 px-4 py-2 text-sm text-tinta placeholder:text-grafite-500 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-marca-400"
@@ -138,7 +163,19 @@ export function BuscaAvancada({
         </div>
       )}
 
-      {aberto && termo && resultados.length === 0 && (
+      {aberto && termo && estadoIndice === 'carregando' && (
+        <div className="absolute left-0 right-0 top-full z-50 mt-1 rounded-lg border border-grafite-700 bg-grafite-900 px-4 py-3 text-center text-sm text-grafite-400" role="status">
+          Carregando índice de busca…
+        </div>
+      )}
+
+      {aberto && termo && estadoIndice === 'erro' && (
+        <div className="absolute left-0 right-0 top-full z-50 mt-1 rounded-lg border border-grafite-700 bg-grafite-900 px-4 py-3 text-center text-sm text-grafite-400" role="alert">
+          Não foi possível carregar a busca. Use o menu ou recarregue a página.
+        </div>
+      )}
+
+      {aberto && termo && estadoIndice === 'ocioso' && resultados.length === 0 && (
         <div className="absolute left-0 right-0 top-full z-50 mt-1 rounded-lg border border-grafite-700 bg-grafite-900 px-4 py-3 text-center text-sm text-grafite-400">
           Nenhum resultado para “{busca}”
         </div>

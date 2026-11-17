@@ -1,13 +1,16 @@
 name: CI
 
-# Garante que o motor de calculo e a exportacao estatica continuam integros.
-# Nao publica nada: o deploy e feito pelo workflow Deploy. O build usa os
-# artefatos reais versionados em apps/web/public/data.
+# Valida o projeto a cada push e pull request: lint, tipos, testes (incluindo a
+# integridade dos artefatos publicados), metadados de citação, build e testes de
+# navegador. Não publica nada: o deploy é feito pelo workflow Deploy.
 
 on:
   push:
     branches: ['**']
   pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   verificar:
@@ -20,14 +23,59 @@ jobs:
           node-version: '22'
           cache: npm
 
-      - name: Instalar dependencias
+      - name: Instalar dependências
         run: npm ci
 
-      - name: Testes
+      - name: Lint
+        run: npm run lint
+
+      - name: Verificação de tipos
+        run: npm run typecheck
+
+      - name: Testes (unitários, componentes e integridade dos dados)
         run: npm test
 
-      - name: Verificacao de tipos do ETL
-        run: npx tsc --noEmit -p packages/etl/tsconfig.json
+      - name: Metadados de citação (CITATION.cff, .zenodo.json, ORCID)
+        run: npm run check-metadata
 
-      - name: Build da exportacao estatica
+      - name: Build da exportação estática
         run: npm run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: apps/web/out
+          retention-days: 3
+
+  navegador:
+    needs: verificar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: apps/web/out
+
+      - name: Instalar Chromium do Playwright
+        run: npx playwright install --with-deps chromium
+        working-directory: apps/web
+
+      - name: Testes de navegador (fluxos, acessibilidade, celular)
+        run: npm run test:e2e
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-falhas
+          path: apps/web/test-results
+          retention-days: 7

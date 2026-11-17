@@ -102,3 +102,15 @@ test('página Sobre apresenta citação com DOI de conceito', async ({ page }) =
   ).toBeVisible();
   await expect(page.locator('#main-content')).not.toContainText(/Seconser|Prefeitura de Niterói/i);
 });
+
+test('busca do cabeçalho carrega o índice e leva ao município', async ({ page, isMobile }) => {
+  await page.goto('/sobre/');
+  const campo = page.getByRole('combobox', { name: 'Busca avançada' });
+  if (isMobile) await campo.scrollIntoViewIfNeeded();
+  await campo.click();
+  await campo.fill('Niter');
+  const resultado = page.locator('#busca-avancada-resultados a[href="/municipios/niteroi/"]');
+  await expect(resultado).toBeVisible();
+  await resultado.click();
+  await expect(page).toHaveURL(/\/municipios\/niteroi\/$/);
+});

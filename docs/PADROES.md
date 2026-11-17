@@ -45,7 +45,6 @@ Registro citável no Zenodo, DOI 10.5281/zenodo.<concept>.
 - Afiliação: UFRRJ, em todos os projetos.
 - DOI: sempre o de conceito, nunca o de versão.
 - Sem link para o GitHub no site. O repositório continua público.
-- O CADEX não é canal oficial da Prefeitura, e o rodapé diz isso.
 - Os dados vêm do Zenodo e do ORCID, pelo script `atualiza-citacao.mjs` de
   cada repositório.
 
@@ -55,7 +54,6 @@ Registro citável no Zenodo, DOI 10.5281/zenodo.<concept>.
 |---|---|---|
 | NETRANK RJ | AGPL-3.0-only | CC BY 4.0 |
 | OpenLux | MIT | Dados de cada município pertencem ao município |
-| CADEX | AGPL-3.0-only | Sem registro no Zenodo (ver seção 6) |
 
 Quando um projeto tem duas licenças, o código fica em `LICENSE-CODIGO` e o
 resto em `LICENSE`. O README explica a divisão.
@@ -64,8 +62,9 @@ resto em `LICENSE`. O README explica a divisão.
 
 - Sem brasão, logotipo ou nome de órgão público no site, salvo autorização
   escrita.
-- O NETRANK e o CADEX dizem, no rodapé ou na página Sobre, que são sistemas
-  independentes e não são canal oficial de órgão público.
+- Cada projeto se apresenta como software independente do autor, sem
+  associação a órgão público, e cita as fontes públicas de dados sem sugerir
+  vínculo com elas.
 - Nome de crédito e afiliação iguais no ORCID, no Zenodo e no rodapé.
 
 ## 6. Metadados e citação
@@ -80,30 +79,11 @@ resto em `LICENSE`. O README explica a divisão.
 - O DOI de conceito é o único citado em texto de site e de citação.
 - Projetos sem registro no Zenodo não têm `.zenodo.json` nem `CITATION.cff`.
 
-## 7. Estado atual
+## 7. Estado atual do NETRANK RJ
 
-Pendências por projeto:
+- O registro no Zenodo (versão 1.1.0) tem licença CC BY 4.0 e descrição antiga.
+  A AGPL-3.0 do código e a descrição nova passam a valer no próximo release.
+- A integração GitHub–Zenodo só pode ser confirmada pelo autor, na conta do
+  Zenodo (aba GitHub).
 
-- **NETRANK:** registro no Zenodo tem a versão 1.1.0 com CC BY 4.0. A AGPL
-  passa a valer no próximo release.
-- **OpenLux:** a versão atual é 1.5.0, mas a última versão no Zenodo é 1.3.0.
-  O novo release no Zenodo depende de ação do autor. O título do registro
-  ainda está em português, e o novo título segue em português.
-- **CADEX:** o registro do Zenodo `10.5281/zenodo.23546537` está público com
-  o título "Lançamento Oficial". Ele precisa ser corrigido ou retirado no
-  próprio Zenodo pelo autor, antes de qualquer novo registro.
-
-Pendências gerais:
-
-- Os documentos oficiais em PDF do CADEX (notificação, auto de infração,
-  embargo, apreensão e certidão) ainda saem com cabeçalho da Prefeitura.
-- O seletor de fonte do console admin do OpenLux ainda oferece Inter, Roboto,
-  Georgia e Monoespaçada. O padrão é Public Sans.
-
-## 8. Próximos passos
-
-1. Corrigir o CI do OpenLux. O problema é de configuração do Actions do
-   repositório, não do código.
-2. Autor faz release do OpenLux (1.5.0) e do NETRANK (próxima versão), para
-   que o Zenodo reflita os metadados.
-3. Decidir os PDFs oficiais do CADEX e o registro do Zenodo.
+As pendências dos outros projetos ficam nos repositórios deles.
