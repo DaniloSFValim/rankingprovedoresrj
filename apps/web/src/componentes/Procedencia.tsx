@@ -106,57 +106,32 @@ export function RodapeProcedencia({ meta }: { meta: Meta }) {
   );
 }
 
-const REPOSITORIO = 'https://github.com/DaniloSFValim/rankingprovedoresrj';
-
 /**
- * Identificação acadêmica do produto: o mesmo bloco em todos os projetos do
- * autor (nome, natureza, DOI, ORCID, GitHub). Os dados vêm de citacao.json.
+ * Identificação do produto no padrão compartilhado (docs/PADROES.md, §3):
+ * autor e afiliação, licenças, DOI de conceito e ano. Sem link para o
+ * repositório. Os dados vêm de citacao.json.
  */
 export function LinhasCitacao() {
   const ano = new Date(citacao.dataPublicacao).getFullYear();
-  const itens = [
-    {
-      rotulo: 'DOI',
-      href: `https://doi.org/${citacao.doiConceito}`,
-      valor: citacao.doiConceito,
-      nota: 'registro no Zenodo',
-    },
-    {
-      rotulo: 'ORCID',
-      href: `https://orcid.org/${citacao.orcid}`,
-      valor: citacao.orcid,
-      nota: `${citacao.autor}, UFRRJ`,
-    },
-    {
-      rotulo: 'GitHub',
-      href: REPOSITORIO,
-      valor: 'DaniloSFValim/rankingprovedoresrj',
-      nota: 'código-fonte e versões',
-    },
-  ];
   return (
     <div className="border-t border-grafite-700 px-4 py-6 text-sm text-grafite-400">
-      <div className="mx-auto max-w-7xl space-y-3">
-        <div>
-          <p className="font-semibold text-tinta">{MARCA.nome}</p>
-          <p className="text-xs">Software acadêmico · Inteligência de dados · versão {citacao.versao}</p>
-        </div>
-        <dl className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-          {itens.map((item) => (
-            <div key={item.rotulo}>
-              <dt className="text-xs text-grafite-400">{item.rotulo}</dt>
-              <dd>
-                <a href={item.href} target="_blank" rel="noopener noreferrer" className={`${LINK} numerico`}>
-                  {item.valor}
-                </a>
-                <span className="block text-xs">{item.nota}</span>
-              </dd>
-            </div>
-          ))}
-        </dl>
-        <p className="text-xs">
-          Código sob AGPL-3.0; documentação e dados sob CC BY 4.0. © {ano} {citacao.autor}.
+      <div className="mx-auto max-w-7xl space-y-1">
+        <p>
+          Desenvolvido por {citacao.autor} (UFRRJ), ORCID{' '}
+          <a href={`https://orcid.org/${citacao.orcid}`} target="_blank" rel="noopener noreferrer" className={`${LINK} numerico`}>
+            {citacao.orcid}
+          </a>
+          .
         </p>
+        <p>Código sob AGPL-3.0-only; documentação e dados sob CC BY 4.0.</p>
+        <p>
+          Registro citável no Zenodo, DOI{' '}
+          <a href={`https://doi.org/${citacao.doiConceito}`} target="_blank" rel="noopener noreferrer" className={`${LINK} numerico`}>
+            {citacao.doiConceito}
+          </a>
+          .
+        </p>
+        <p>© {ano} {citacao.autor}.</p>
       </div>
     </div>
   );

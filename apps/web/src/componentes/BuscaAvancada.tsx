@@ -130,7 +130,7 @@ export function BuscaAvancada({
 
       {aberto && termo && resultados.length > 0 && (
         <div
-          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-96 overflow-y-auto rounded-lg border border-grafite-700 bg-grafite-900 shadow-lg"
+          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-96 overflow-y-auto rounded-lg border border-grafite-700 bg-grafite-900"
           id="busca-avancada-resultados"
           role="listbox"
         >
