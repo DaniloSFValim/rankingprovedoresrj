@@ -174,7 +174,7 @@ cruzadas viraram testes permanentes em
 
 | # | Item | Verificação | Resultado |
 |---|---|---|---|
-| 1 | Integridade da base de acessos | Total do Estado igual nos KPIs, no ranking e na série (4.350.330); série do Estado igual à soma das 1.259 prestadoras em cada um dos 21 meses | Aprovado |
+| 1 | Integridade da base de acessos | Total do Estado igual nos KPIs, no ranking e na série (4.350.330); série do Estado igual à soma das prestadoras em cada mês (1.259 prestadoras em 21 meses na base de 12/11; 1.379 em 33 meses depois da ingestão de 17/11, que passou a incluir 2024) | Aprovado |
 | 2 | Municípios do RJ | 92 municípios, códigos `33xxxxx`, os mesmos da malha do IBGE | Aprovado |
 | 3 | Nomes e códigos IBGE | Nome de cada município igual ao da malha do IBGE; junção sempre pelo código | Aprovado |
 | 4 | Prestadoras | Identidade pela raiz do CNPJ, sem raiz repetida; nomes iguais com CNPJ diferente (Claro, Oi, Vivo) aparecem com o CNPJ ao lado | Aprovado |
@@ -199,6 +199,12 @@ metodologia.
 **Terminologia.** O painel mede acessos registrados, não pessoas, domicílios nem cobertura
 de rede. Os textos que falavam em "cobertura" foram trocados, e `docs/DADOS.md` ganhou a
 tabela "O que os números medem e o que não medem".
+
+**Ingestão de 17/11/2026.** A base passou a começar em janeiro de 2024 (33 competências,
+1.379 prestadoras). Os testes de integridade passam sobre a base nova. Outubro de 2024 tem
+4.413.205 acessos, contra 4.083.589 em setembro e 4.144.803 em novembro: um salto isolado
+de 8% que volta no mês seguinte, padrão de declaração e não de clientes. O número é
+publicado como declarado.
 
 **Desempenho.** Na última ingestão real (12/11/2026, GitHub Actions): leitura da base da
 Anatel em 3 min 19 s, artefatos e site em 59 s, consulta à Receita Federal em 26 min 50 s.
