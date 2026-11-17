@@ -138,7 +138,7 @@ export default async function PaginaProvedor({ params }: Props) {
       {perfil.perfilAcessos && perfil.perfilAcessos.acessosComVelocidade > 0 && (
         <Secao
           titulo="Velocidade contratada"
-          descricao={`${percentual(perfil.perfilAcessos.percentualAbaixo50, 1)} dos acessos abaixo de 50 Mbps · ${percentual(perfil.acessos ? (perfil.perfilAcessos.acessosPessoaFisica / perfil.acessos) * 100 : null, 1)} de pessoa física`}
+          descricao={`${percentual(perfil.perfilAcessos.percentualAbaixo50, 1)} dos acessos abaixo de 50 Mbps; ${percentual(perfil.acessos ? (perfil.perfilAcessos.acessosPessoaFisica / perfil.acessos) * 100 : null, 1)} de pessoa física`}
         >
           <div className="cartao p-4">
             <BarrasVelocidade perfil={perfil.perfilAcessos} />
@@ -226,7 +226,7 @@ export default async function PaginaProvedor({ params }: Props) {
               rotulo="Atividade principal (CNAE)"
               valor={
                 receita.cnaePrincipal &&
-                [receita.cnaePrincipal.codigo, receita.cnaePrincipal.descricao].filter(Boolean).join(' · ')
+                [receita.cnaePrincipal.codigo, receita.cnaePrincipal.descricao].filter(Boolean).join('; ')
               }
             />
             <Campo
