@@ -167,7 +167,7 @@ Detalhes em [`docs/DESENVOLVIMENTO.md`](docs/DESENVOLVIMENTO.md).
 | [IBGE, Malha Municipal (API de malhas)](https://servicodados.ibge.gov.br/api/docs/malhas) | Geometria dos municípios no mapa | Fixa |
 | Receita Federal, CNPJ (dados abertos, via BrasilAPI e Minha Receita) | Razão social, situação cadastral e porte das prestadoras | A cada 30 dias |
 
-Período dos dados: janeiro de 2025 a setembro de 2026. O mês mais recente é preliminar: a
+Período dos dados: janeiro de 2024 a setembro de 2026. O mês mais recente é preliminar: a
 Anatel o revisa para cima na publicação seguinte.
 
 Fontes, transformações, critérios, tratamento de lacunas e limitações conhecidas estão em
