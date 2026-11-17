@@ -166,7 +166,48 @@ Verificado por consulta às APIs públicas do Zenodo, do DataCite (resolução d
 | `docs/PADROES.md` diverge das cópias do OpenLux e do CADEX | As referências a outros projetos e à Prefeitura foram retiradas desta cópia |
 | Limitações dos dados (declaratórios, velocidade contratada, densidade em municípios de veraneio) | Inerentes às fontes; documentadas em `docs/DADOS.md` e sinalizadas por alertas |
 
-## 8. Avaliação de maturidade
+## 8. Auditoria do escopo científico e funcional
+
+Feita sobre os artefatos publicados (competência de setembro de 2026). As verificações
+cruzadas viraram testes permanentes em
+`packages/etl/src/__tests__/integridade-artefatos.test.ts` (17 testes).
+
+| # | Item | Verificação | Resultado |
+|---|---|---|---|
+| 1 | Integridade da base de acessos | Total do Estado igual nos KPIs, no ranking e na série (4.350.330); série do Estado igual à soma das 1.259 prestadoras em cada um dos 21 meses | Aprovado |
+| 2 | Municípios do RJ | 92 municípios, códigos `33xxxxx`, os mesmos da malha do IBGE | Aprovado |
+| 3 | Nomes e códigos IBGE | Nome de cada município igual ao da malha do IBGE; junção sempre pelo código | Aprovado |
+| 4 | Prestadoras | Identidade pela raiz do CNPJ, sem raiz repetida; nomes iguais com CNPJ diferente (Claro, Oi, Vivo) aparecem com o CNPJ ao lado | Aprovado |
+| 5 | Duplicidades | Nenhum id, slug ou raiz de CNPJ repetido; nenhuma prestadora repetida no ranking de um município | Aprovado |
+| 6 | Agrupamentos | Soma da presença de cada provedor igual aos seus acessos; soma por município a partir dos provedores igual ao total do município | Aprovado |
+| 7 | Rankings | Ordem decrescente, empates com a mesma posição; posição e acessos da página do provedor iguais aos do ranking | Aprovado |
+| 8 | Cálculos | Participações somam 100; CR crescente; HHI recalculado igual ao publicado; densidade recalculada igual à publicada | Aprovado |
+| 9 | Coerência entre tabelas, gráficos e mapas | Índice de municípios (fonte do mapa) igual aos arquivos de cada município em total, HHI e líder | Aprovado |
+| 10 | Fontes | `meta.json` registra fonte, URL, arquivo, período, data de coleta e de processamento | Aprovado |
+| 11 | Busca e seletores | Busca ignora acentos e caixa e prioriza o que começa com o termo (testes de componente e de navegador) | Aprovado |
+| 12 | Desempenho | Ver abaixo | Aprovado, com ressalva |
+
+**Corrigido nesta etapa.** A série por prestadora (`estado/series-empresas.json`) gravava
+zero nos meses sem declaração, contra a regra de lacuna como `null` (8.236 zeros). O ETL
+foi corrigido; o arquivo publicado muda na próxima ingestão. O arquivo não alimenta
+nenhuma página.
+
+**Removido.** `apps/web/src/lib/mapas.ts`, sem uso, rotulava mercados como "Concentrado -
+Baixa Competição" e tinha uma escala de "cobertura": as duas coisas contrariam a
+metodologia.
+
+**Terminologia.** O painel mede acessos registrados, não pessoas, domicílios nem cobertura
+de rede. Os textos que falavam em "cobertura" foram trocados, e `docs/DADOS.md` ganhou a
+tabela "O que os números medem e o que não medem".
+
+**Desempenho.** Na última ingestão real (12/11/2026, GitHub Actions): leitura da base da
+Anatel em 3 min 19 s, artefatos e site em 59 s, consulta à Receita Federal em 26 min 50 s.
+O tempo da Receita vem das pausas entre consultas, que respeitam o limite da API pública;
+há cache e só CNPJ novo ou vencido é reconsultado. O cálculo dos indicadores, medido com
+`npx tsx scripts/bench-indicadores.ts` sobre volume sintético do tamanho da base real
+(340.284 combinações prestadora × local × mês), levou 184 ms.
+
+## 9. Avaliação de maturidade
 
 | Dimensão | Avaliação |
 |---|---|

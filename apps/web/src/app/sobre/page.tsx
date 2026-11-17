@@ -12,7 +12,7 @@ function gerarBibtex(): string {
   const ano = citacao.dataPublicacao.slice(0, 4);
   return `@software{valim_netrank_rj_${ano},
   author    = {Valim, Danilo},
-  title     = {{${MARCA.nome}}: ${MARCA.subtitulo}},
+  title     = {${citacao.tituloPublicado.replace(MARCA.nome, `{${MARCA.nome}}`)}},
   year      = {${ano}},
   version   = {${citacao.versao}},
   publisher = {Zenodo},
@@ -37,9 +37,10 @@ export default function PaginaSobre() {
         </p>
         <div className="space-y-3 text-sm text-grafite-400">
           <p>
-            Software independente, de autoria própria, com finalidade acadêmica e de pesquisa. Organiza os
-            dados públicos de acessos de banda larga fixa dos municípios fluminenses em indicadores comparáveis
-            de participação, concentração, densidade e velocidade contratada.
+            Plataforma independente de inteligência de dados sobre o mercado de banda larga fixa fluminense, de
+            autoria própria e finalidade acadêmica e de pesquisa. Transforma os dados públicos de acessos dos 92
+            municípios do Estado em rankings, indicadores de participação e concentração, comparações entre
+            municípios, evolução mensal e mapas.
           </p>
           <p>
             Usa apenas dados públicos: a Anatel publica os acessos, o IBGE os domicílios e a malha municipal, e
@@ -55,7 +56,7 @@ export default function PaginaSobre() {
         <section>
           <h2 className="text-xl font-bold text-tinta mb-4">Como citar este projeto</h2>
           <div className="text-sm leading-relaxed text-grafite-200 bg-white p-4 rounded-md border border-grafite-700 overflow-x-auto mb-4">
-            Valim, D. ({citacao.dataPublicacao.slice(0, 4)}). <em>{MARCA.nome}: {MARCA.subtitulo}</em>{' '}
+            Valim, D. ({citacao.dataPublicacao.slice(0, 4)}). <em>{citacao.tituloPublicado}</em>{' '}
             (versão {citacao.versao}) [Software]. Zenodo.{' '}
             <a href={`https://doi.org/${citacao.doiConceito}`} className="text-marca-400 underline underline-offset-4">
               https://doi.org/{citacao.doiConceito}
@@ -131,7 +132,7 @@ export default function PaginaSobre() {
             </dd>
           </div>
           <div className="pt-3 border-t border-grafite-800">
-            <dt className="font-medium text-marca-400">Período de Cobertura</dt>
+            <dt className="font-medium text-marca-400">Período dos dados</dt>
             <dd className="text-grafite-300">
               {new Date(p.coletadoEm).toLocaleString('pt-BR')} a{' '}
               {new Date(p.processadoEm).toLocaleString('pt-BR')}
@@ -204,6 +205,8 @@ export default function PaginaSobre() {
             <dd>
               Acessos de pessoa física por 100 domicílios particulares ocupados (Censo 2022, IBGE). Casas de
               veraneio e acessos registrados em outro município distorcem o valor; leia como ponto de verificação.
+              Não é o percentual de domicílios com internet: um domicílio pode ter mais de um acesso, e
+              acessos de empresas ficam de fora.
             </dd>
           </div>
           <div>

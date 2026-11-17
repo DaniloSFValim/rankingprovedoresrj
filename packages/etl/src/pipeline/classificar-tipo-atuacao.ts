@@ -7,7 +7,7 @@
  * - AMBOS: Grande empresa que faz backbone e entrega direto
  * - INDEFINIDO: Dados insuficientes para classificar
  *
- * Baseado em: grupo econômico, cobertura territorial, e patterns conhecidos.
+ * Baseado em: grupo econômico, presença territorial, e patterns conhecidos.
  */
 
 export type TipoAtuacao = 'OPERADORA' | 'PROVEDOR' | 'AMBOS' | 'INDEFINIDO';
@@ -27,7 +27,7 @@ interface DadosClassificacao {
  * 1. Operadoras nacionais conhecidas (Claro, OI, Vivo, TIM)
  * 2. Provedores satelitais puros (Hughes, Starlink)
  * 3. Telebras (estatal de backbone)
- * 4. Heurísticas por cobertura e grupo econômico
+ * 4. Heurísticas por presença territorial e grupo econômico
  */
 export function classificarTipoAtuacao(dados: DadosClassificacao): TipoAtuacao {
   const nome = dados.nome.toLowerCase();
@@ -95,7 +95,7 @@ export function classificarTipoAtuacao(dados: DadosClassificacao): TipoAtuacao {
     return 'INDEFINIDO';
   }
 
-  // Heurísticas baseadas em cobertura territorial
+  // Heurísticas baseadas em presença territorial
   // Presença em 70+ municípios + grupo independente = ambição de operadora regional
   if (municipios >= 70 && grupo.includes('independente')) {
     return 'AMBOS';

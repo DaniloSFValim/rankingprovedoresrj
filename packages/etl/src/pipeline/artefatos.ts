@@ -495,7 +495,8 @@ export function construirArtefatos(db: Banco, opcoes: OpcoesBuild): {
       id: e.id,
       slug: e.slug,
       nome: e.nome,
-      pontos: ctx.competencias.map((c) => ctx.estadoPorCompetencia.get(c)?.get(e.id) ?? 0),
+      // Mês sem declaração da empresa fica null (lacuna), nunca zero.
+      pontos: ctx.competencias.map((c) => ctx.estadoPorCompetencia.get(c)?.get(e.id) ?? null),
     })),
   );
 
