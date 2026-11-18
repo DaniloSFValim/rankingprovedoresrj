@@ -1,0 +1,15 @@
+{
+  "descricao": "Retratos das publicações da Anatel (acessos de banda larga fixa, recorte RJ), um por publicação distinta. Fonte: Anatel, dados abertos. Ver README.md nesta pasta.",
+  "publicacoes": [
+    {
+      "arquivo": "publicacao-2026-11-18.csv.gz",
+      "coletadoEm": "2026-11-18",
+      "fonte": "https://www.anatel.gov.br/dadosabertos/paineis_de_dados/acessos/acessos_banda_larga_fixa.zip",
+      "competenciaInicial": "2024-01",
+      "competenciaFinal": "2026-09",
+      "linhas": 117551,
+      "totalAcessos": 138282293,
+      "sha256": "e66cb08a8c443ce73f920eb6ecc86394e637b03a640e5cfb98b223b4e2660884"
+    }
+  ]
+}
