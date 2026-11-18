@@ -104,7 +104,8 @@ ocupados (IBGE, Censo 2022, tabela 4712).
 - A ingestão (`dados-reais.yml`) roda no dia 12 de cada mês e pode ser
   disparada manualmente. Mudanças no ETL (`packages/etl`) só chegam ao site
   depois que a ingestão roda de novo; um merge não basta.
-- Os artefatos JSON ficam em `apps/web/public/data`.
+- Os artefatos JSON ficam em `apps/web/public/data`. Cada publicação distinta da Anatel
+  também é guardada em `data/arquivo-anatel`, para medir revisões.
 
 ## Apresentação
 

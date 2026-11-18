@@ -66,6 +66,12 @@ Mês que se afasta 5% ou mais da média dos dois vizinhos, enquanto os vizinhos 
 3% entre si (`saltosIsolados`, em `packages/core/src/serie.ts`). Hoje marca out/2024. A
 página inicial mostra o aviso abaixo do gráfico; o número não muda.
 
+### Arquivo das publicações
+
+A Anatel revisa competências já publicadas. O warehouse guarda só a versão mais recente;
+`data/arquivo-anatel` guarda um retrato de cada publicação distinta (ver o README da
+pasta), para medir essas revisões.
+
 ### O que os números medem e o que não medem
 
 | Medida | É | Não é |

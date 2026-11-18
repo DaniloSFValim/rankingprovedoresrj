@@ -163,6 +163,11 @@ jobs:
         continue-on-error: true
         run: npm run etl -- receita
 
+      # Retrato da publicação da Anatel, para medir revisões entre publicações.
+      # Só grava quando o conteúdo muda.
+      - name: Arquivar a publicacao da Anatel
+        run: npm run etl -- arquivar
+
       # --------------------------------------------------------------- build
       - name: Reconstruir artefatos e site
         env:
@@ -183,7 +188,7 @@ jobs:
         run: |
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add apps/web/public/data data/receita data/ibge
+          git add apps/web/public/data data/receita data/ibge data/arquivo-anatel
           if git diff --staged --quiet; then
             echo "Nenhuma mudanca nos dados. Nada a publicar."
             exit 0
